@@ -4,7 +4,7 @@
 
     <groupId>org</groupId>
     <artifactId>jbiowh-persistence</artifactId>
-    <version>1.0.0</version>
+    <version>5.0.0</version>
     <packaging>jar</packaging>
 
     <name>jbiowh-persistence</name>
