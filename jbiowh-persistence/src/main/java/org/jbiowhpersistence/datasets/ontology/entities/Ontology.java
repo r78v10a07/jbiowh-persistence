@@ -1,0 +1,427 @@
+package org.jbiowhpersistence.datasets.ontology.entities;
+
+import java.io.Serializable;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
+import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
+import org.jbiowhpersistence.datasets.protein.entities.Protein;
+
+/**
+ * This Class is the Ontology Entity
+ *
+ * $Author: r78v10a07@gmail.com $ 
+ * $LastChangedDate: 2013-05-29 11:24:54 +0200 (Wed, 29 May 2013) $ 
+ * $LastChangedRevision: 591 $
+ * @since Jun 28, 2011
+ */
+@Entity
+@Table(name = "Ontology")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Ontology.findAll", query = "SELECT o FROM Ontology o"),
+    @NamedQuery(name = "Ontology.findByWid", query = "SELECT o FROM Ontology o WHERE o.wid = :wid"),
+    @NamedQuery(name = "Ontology.findById", query = "SELECT o FROM Ontology o WHERE UPPER(o.id) like :id"),
+    @NamedQuery(name = "Ontology.findByName", query = "SELECT o FROM Ontology o WHERE UPPER(o.name) like :name"),
+    @NamedQuery(name = "Ontology.findByNameSpace", query = "SELECT o FROM Ontology o WHERE o.nameSpace = :nameSpace"),
+    @NamedQuery(name = "Ontology.findByDef", query = "SELECT o FROM Ontology o WHERE UPPER(o.def) like :def"),
+    @NamedQuery(name = "Ontology.findByComment", query = "SELECT o FROM Ontology o WHERE UPPER(o.comment) like :comment"),
+    @NamedQuery(name = "Ontology.findByIsObsolete", query = "SELECT o FROM Ontology o WHERE o.isObsolete = :isObsolete"),
+    @NamedQuery(name = "Ontology.findByDataSetWID", query = "SELECT o FROM Ontology o WHERE o.dataSetWID = :dataSetWID")})
+public class Ontology implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "WID")
+    private Long wid;
+    @Basic(optional = false)
+    @Column(name = "Id")
+    private String id;
+    @Basic(optional = false)
+    @Column(name = "Name")
+    private String name;
+    @Basic(optional = false)
+    @Column(name = "NameSpace")
+    private String nameSpace;
+    @Column(name = "Def")
+    private String def;
+    @Column(name = "Comment")
+    private String comment;
+    @Basic(optional = false)
+    @Column(name = "IsObsolete")
+    private boolean isObsolete;
+    @Basic(optional = false)
+    @Column(name = "DataSetWID")
+    private long dataSetWID;
+    /*
+     * Ontology relationships
+     */
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ontology")
+    @MapKey(name = "ontologyAlternativeIdPK")
+    private Map<OntologyAlternativeIdPK, OntologyAlternativeId> ontologyAlternativeId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ontology")
+    @MapKey(name = "ontologyIsAPK")
+    private Map<OntologyIsAPK, OntologyIsA> ontologyIsA;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ontology")
+    @MapKey(name = "ontologyPMIDPK")
+    private Map<OntologyPMIDPK, OntologyPMID> ontologyPMID;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ontology")
+    @MapKey(name = "ontologyRelationPK")
+    private Map<OntologyRelationPK, OntologyRelation> ontologyRelation;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "Ontology_has_OntologySubset",
+    joinColumns =
+    @JoinColumn(name = "Ontology_WID", referencedColumnName = "WID"),
+    inverseJoinColumns =
+    @JoinColumn(name = "OntologySubset_WID", referencedColumnName = "WID"))
+    private Set<OntologySubset> ontologySubset;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ontology")
+    @MapKey(name = "ontologyhasOntologySynonymPK")
+    private Map<OntologyhasOntologySynonymPK, OntologyhasOntologySynonym> ontologyhasOntologySynonym;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ontology")
+    @MapKey(name = "ontologyToConsiderPK")
+    private Map<OntologyToConsiderPK, OntologyToConsider> ontologyToConsider;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "Ontology_has_OntologyXRef",
+    joinColumns =
+    @JoinColumn(name = "Ontology_WID", referencedColumnName = "WID"),
+    inverseJoinColumns =
+    @JoinColumn(name = "OntologyXRef_WID", referencedColumnName = "WID"))
+    private Set<OntologyXRef> ontologyXRef;
+    // External Gene Relationship
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "DataSetWID", referencedColumnName = "WID", insertable = false, unique = false, nullable = false, updatable = false)
+    private DataSet dataSet;
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "ontology")
+    private Set<Protein> protein;
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "ontology")
+    private Set<GeneInfo> geneInfo;
+
+    public Ontology() {
+    }
+
+    public Ontology(Long wid) {
+        this.wid = wid;
+    }
+
+    public Ontology(Long wid, String id, String name, String nameSpace, boolean isObsolete, long dataSetWID) {
+        this.wid = wid;
+        this.id = id;
+        this.name = name;
+        this.nameSpace = nameSpace;
+        this.isObsolete = isObsolete;
+        this.dataSetWID = dataSetWID;
+    }
+    
+    public void setRelationsToNull() {
+        setProtein(null);
+        setGeneInfo(null);
+    }
+
+    public DataSet getDataSet() {
+        return dataSet;
+    }
+
+    public void setDataSet(DataSet dataSet) {
+        this.dataSet = dataSet;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public long getDataSetWID() {
+        return dataSetWID;
+    }
+
+    public void setDataSetWID(long dataSetWID) {
+        this.dataSetWID = dataSetWID;
+    }
+
+    public String getDef() {
+        return def;
+    }
+
+    public void setDef(String def) {
+        this.def = def;
+    }
+
+    public Set<GeneInfo> getGeneInfo() {
+        return geneInfo;
+    }
+
+    public void setGeneInfo(Set<GeneInfo> geneInfo) {
+        this.geneInfo = geneInfo;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public boolean isIsObsolete() {
+        return isObsolete;
+    }
+
+    public void setIsObsolete(boolean isObsolete) {
+        this.isObsolete = isObsolete;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNameSpace() {
+        return nameSpace;
+    }
+
+    public void setNameSpace(String nameSpace) {
+        this.nameSpace = nameSpace;
+    }
+
+    public Map<OntologyAlternativeIdPK, OntologyAlternativeId> getOntologyAlternativeId() {
+        return ontologyAlternativeId;
+    }
+
+    public void setOntologyAlternativeId(Map<OntologyAlternativeIdPK, OntologyAlternativeId> ontologyAlternativeId) {
+        this.ontologyAlternativeId = ontologyAlternativeId;
+    }
+
+    public Map<OntologyIsAPK, OntologyIsA> getOntologyIsA() {
+        return ontologyIsA;
+    }
+
+    public void setOntologyIsA(Map<OntologyIsAPK, OntologyIsA> ontologyIsA) {
+        this.ontologyIsA = ontologyIsA;
+    }
+
+    public Map<OntologyPMIDPK, OntologyPMID> getOntologyPMID() {
+        return ontologyPMID;
+    }
+
+    public void setOntologyPMID(Map<OntologyPMIDPK, OntologyPMID> ontologyPMID) {
+        this.ontologyPMID = ontologyPMID;
+    }
+
+    public Map<OntologyRelationPK, OntologyRelation> getOntologyRelation() {
+        return ontologyRelation;
+    }
+
+    public void setOntologyRelation(Map<OntologyRelationPK, OntologyRelation> ontologyRelation) {
+        this.ontologyRelation = ontologyRelation;
+    }
+
+    public Set<OntologySubset> getOntologySubset() {
+        return ontologySubset;
+    }
+
+    public void setOntologySubset(Set<OntologySubset> ontologySubset) {
+        this.ontologySubset = ontologySubset;
+    }
+
+    public Map<OntologyToConsiderPK, OntologyToConsider> getOntologyToConsider() {
+        return ontologyToConsider;
+    }
+
+    public void setOntologyToConsider(Map<OntologyToConsiderPK, OntologyToConsider> ontologyToConsider) {
+        this.ontologyToConsider = ontologyToConsider;
+    }
+
+    public Set<OntologyXRef> getOntologyXRef() {
+        return ontologyXRef;
+    }
+
+    public void setOntologyXRef(Set<OntologyXRef> ontologyXRef) {
+        this.ontologyXRef = ontologyXRef;
+    }
+
+    public Map<OntologyhasOntologySynonymPK, OntologyhasOntologySynonym> getOntologyhasOntologySynonym() {
+        return ontologyhasOntologySynonym;
+    }
+
+    public void setOntologyhasOntologySynonym(Map<OntologyhasOntologySynonymPK, OntologyhasOntologySynonym> ontologyhasOntologySynonym) {
+        this.ontologyhasOntologySynonym = ontologyhasOntologySynonym;
+    }
+
+    public Set<Protein> getProtein() {
+        return protein;
+    }
+
+    public void setProtein(Set<Protein> protein) {
+        this.protein = protein;
+    }
+
+    public Long getWid() {
+        return wid;
+    }
+
+    public void setWid(Long wid) {
+        this.wid = wid;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Ontology other = (Ontology) obj;
+        if (!Objects.equals(this.wid, other.wid)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.nameSpace, other.nameSpace)) {
+            return false;
+        }
+        if (!Objects.equals(this.def, other.def)) {
+            return false;
+        }
+        if (!Objects.equals(this.comment, other.comment)) {
+            return false;
+        }
+        if (this.isObsolete != other.isObsolete) {
+            return false;
+        }
+        if (this.dataSetWID != other.dataSetWID) {
+            return false;
+        }
+        if (!Objects.equals(this.ontologyAlternativeId, other.ontologyAlternativeId)) {
+            return false;
+        }
+        if (!Objects.equals(this.ontologyIsA, other.ontologyIsA)) {
+            return false;
+        }
+        if (!Objects.equals(this.ontologyPMID, other.ontologyPMID)) {
+            return false;
+        }
+        if (!Objects.equals(this.ontologyRelation, other.ontologyRelation)) {
+            return false;
+        }
+        if (!Objects.equals(this.ontologySubset, other.ontologySubset)) {
+            return false;
+        }
+        if (!Objects.equals(this.ontologyhasOntologySynonym, other.ontologyhasOntologySynonym)) {
+            return false;
+        }
+        if (!Objects.equals(this.ontologyToConsider, other.ontologyToConsider)) {
+            return false;
+        }
+        if (!Objects.equals(this.ontologyXRef, other.ontologyXRef)) {
+            return false;
+        }
+        if (!Objects.equals(this.dataSet, other.dataSet)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (wid != null ? wid.hashCode() : 0);
+        return hash;
+    }
+    
+    @Override
+    public String toString() {
+        Iterator it;
+        StringBuilder alIdString = new StringBuilder();
+        StringBuilder isAString = new StringBuilder();
+        StringBuilder pmidString = new StringBuilder();
+        StringBuilder relationString = new StringBuilder();
+        StringBuilder subsetString = new StringBuilder();
+        StringBuilder synonymString = new StringBuilder();
+        StringBuilder toConsiderString = new StringBuilder();
+        StringBuilder xRefString = new StringBuilder();
+
+        if (ontologyAlternativeId != null) {
+            it = ontologyAlternativeId.values().iterator();
+            while (it.hasNext()) {
+                alIdString.append("\n\t\t").append(((OntologyAlternativeId) it.next()).toString());
+            }
+        }
+        if (ontologyIsA != null) {
+            it = ontologyIsA.values().iterator();
+            while (it.hasNext()) {
+                isAString.append("\n\t\t").append(((OntologyIsA) it.next()).toString());
+            }
+        }
+        if (ontologyPMID != null) {
+            it = ontologyPMID.values().iterator();
+            while (it.hasNext()) {
+                pmidString.append("\n\t\t").append(((OntologyPMID) it.next()).toString());
+            }
+        }
+        if (ontologyRelation != null) {
+            it = ontologyRelation.values().iterator();
+            while (it.hasNext()) {
+                relationString.append("\n\t\t").append(((OntologyRelation) it.next()).toString());
+            }
+        }
+        if (ontologySubset != null) {
+            it = ontologySubset.iterator();
+            while (it.hasNext()) {
+                subsetString.append("\n\t\t").append(((OntologySubset) it.next()).toString());
+            }
+        }
+        if (ontologyhasOntologySynonym != null) {
+            it = ontologyhasOntologySynonym.values().iterator();
+            while (it.hasNext()) {
+                synonymString.append("\n\t\t").append(((OntologyhasOntologySynonym) it.next()).toString());
+            }
+        }
+        if (ontologyToConsider != null) {
+            it = ontologyToConsider.values().iterator();
+            while (it.hasNext()) {
+                toConsiderString.append("\n\t\t").append(((OntologyToConsider) it.next()).toString());
+            }
+        }
+        if (ontologyXRef != null) {
+            it = ontologyXRef.iterator();
+            while (it.hasNext()) {
+                xRefString.append("\n\t\t").append(((OntologyXRef) it.next()).toString());
+            }
+        }
+        return "Ontology["
+                + " wid=" + wid
+                + " id=" + id
+                + " name=" + name
+                + " nameSpace=" + nameSpace
+                + " def=" + def
+                + " comment=" + comment
+                + " isObsolete=" + isObsolete
+                + " dataSetWID=" + dataSetWID
+                + " ]"
+                + "\n\tAltId:" + alIdString.toString()
+                + "\n\tIsA:" + isAString.toString()
+                + "\n\tPMID:" + pmidString.toString()
+                + "\n\tRelation:" + relationString.toString()
+                + "\n\tSubset:" + subsetString.toString()
+                + "\n\tSynonym:" + synonymString.toString()
+                + "\n\tToConsider:" + toConsiderString.toString()
+                + "\n\tXRef:" + xRefString.toString();
+    }
+}
