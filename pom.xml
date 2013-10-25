@@ -4,7 +4,7 @@
 
     <groupId>org</groupId>
     <artifactId>jbiowh-persistence</artifactId>
-    <version>5.0.0</version>
+    <version>5.0.1</version>
     <packaging>jar</packaging>
 
     <name>jbiowh-persistence</name>
@@ -50,7 +50,7 @@
         <dependency>
             <groupId>org</groupId>
             <artifactId>jbiowh-core</artifactId>
-            <version>5.0.0</version>
+            <version>5.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
