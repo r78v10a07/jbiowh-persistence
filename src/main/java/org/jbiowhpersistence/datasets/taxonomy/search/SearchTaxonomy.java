@@ -12,9 +12,9 @@ import org.jbiowhpersistence.utils.search.SearchFactory;
 /**
  * This Class perform the search over the Taxonomy module
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2013-03-19 09:38:47 +0100 (Tue, 19 Mar 2013) $
- * $LastChangedRevision: 396 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2013-03-19 09:38:47 +0100
+ * (Tue, 19 Mar 2013) $ $LastChangedRevision: 396 $
+ *
  * @since Jun 23, 2011
  */
 public class SearchTaxonomy extends SearchFactory {
@@ -26,7 +26,7 @@ public class SearchTaxonomy extends SearchFactory {
      * This Class perform the search over the Taxonomy module
      */
     public SearchTaxonomy() {
-        HashMap<String, Class> fields = new HashMap<>();
+        HashMap<String, Class> fields = new HashMap();
         fields.put(TAXID, Long.class);
         fields.put(SYNONYM, String.class);
         setFields(fields);
@@ -34,7 +34,7 @@ public class SearchTaxonomy extends SearchFactory {
 
     @Override
     public List search(String search, JPLConstrains constrains)
-            throws SQLException {        
+            throws SQLException {
         List searchList = new ArrayList();
         List searchRow = new ArrayList();
 
@@ -63,14 +63,12 @@ public class SearchTaxonomy extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldBeforeWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case SYNONYM:
-                    data.put(field, " INNER JOIN " + getFieldOnEntity().get(field) + " n ");
-                    break;
-                default:
-                    data.put(field, "");
+            if (field.equals(SYNONYM)) {
+                data.put(field, " INNER JOIN " + getFieldOnEntity().get(field) + " n ");
+            } else {
+                data.put(field, "");
             }
         }
         return data;
@@ -78,15 +76,12 @@ public class SearchTaxonomy extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldAfterWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case TAXID:
-                    data.put(field, "g.taxId");
-                    break;
-                case SYNONYM:
-                    data.put(field, "n.taxonomySynonymPK.synonym");
-                    break;
+            if (field.equals(TAXID)) {
+                data.put(field, "g.taxId");
+            } else if (field.equals(SYNONYM)) {
+                data.put(field, "n.taxonomySynonymPK.synonym");
             }
         }
         return data;
@@ -94,14 +89,12 @@ public class SearchTaxonomy extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldOnEntity() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case SYNONYM:
-                    data.put(field, "g.synonym");
-                    break;
-                default:
-                    data.put(field, "");
+            if (field.equals(SYNONYM)) {
+                data.put(field, "g.synonym");
+            } else {
+                data.put(field, "");
             }
         }
         return data;
@@ -109,7 +102,7 @@ public class SearchTaxonomy extends SearchFactory {
 
     @Override
     protected HashMap<Class, List> getConstrainFieldOnEntity() {
-        HashMap<Class, List> data = new HashMap<>();
+        HashMap<Class, List> data = new HashMap();
         return data;
     }
 

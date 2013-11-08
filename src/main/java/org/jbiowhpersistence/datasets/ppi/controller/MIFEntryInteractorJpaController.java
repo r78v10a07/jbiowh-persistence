@@ -77,7 +77,7 @@ public class MIFEntryInteractorJpaController extends AbstractMIFJpaController<MI
                 }
             }
             if (!mifEntryInteractor.getMifInteractorInteractorType().isEmpty()) {
-                Set<MIFInteractorInteractorType> attachedMifInteractorInteractorType = new HashSet<>();
+                Set<MIFInteractorInteractorType> attachedMifInteractorInteractorType = new HashSet();
                 for (MIFInteractorInteractorType mifInteractorInteractorTypeMIFInteractorInteractorTypeToAttach : mifEntryInteractor.getMifInteractorInteractorType()) {
                     MIFInteractorInteractorType mifInteractorInteractorType = em.find(mifInteractorInteractorTypeMIFInteractorInteractorTypeToAttach.getClass(), mifInteractorInteractorTypeMIFInteractorInteractorTypeToAttach.getWid());
                     if (mifInteractorInteractorType != null) {
@@ -153,63 +153,63 @@ public class MIFEntryInteractorJpaController extends AbstractMIFJpaController<MI
                 mifParticipantExperimentalInteractorNew = em.getReference(mifParticipantExperimentalInteractorNew.getClass(), mifParticipantExperimentalInteractorNew.getWid());
                 mifEntryInteractor.setMifParticipantExperimentalInteractor(mifParticipantExperimentalInteractorNew);
             }
-            Set<MIFInteractorInteractorType> attachedMifInteractorInteractorTypeNew = new HashSet<>();
+            Set<MIFInteractorInteractorType> attachedMifInteractorInteractorTypeNew = new HashSet();
             for (MIFInteractorInteractorType mifInteractorInteractorTypeNewMIFInteractorInteractorTypeToAttach : mifInteractorInteractorTypeNew) {
                 mifInteractorInteractorTypeNewMIFInteractorInteractorTypeToAttach = em.getReference(mifInteractorInteractorTypeNewMIFInteractorInteractorTypeToAttach.getClass(), mifInteractorInteractorTypeNewMIFInteractorInteractorTypeToAttach.getWid());
                 attachedMifInteractorInteractorTypeNew.add(mifInteractorInteractorTypeNewMIFInteractorInteractorTypeToAttach);
             }
             mifInteractorInteractorTypeNew = attachedMifInteractorInteractorTypeNew;
             mifEntryInteractor.setMifInteractorInteractorType(mifInteractorInteractorTypeNew);
-            Set<MIFOtherAlias> attachedMifOtherAliasNew = new HashSet<>();
+            Set<MIFOtherAlias> attachedMifOtherAliasNew = new HashSet();
             for (MIFOtherAlias mifOtherAliasNewMIFOtherAliasToAttach : mifOtherAliasNew) {
                 mifOtherAliasNewMIFOtherAliasToAttach = em.getReference(mifOtherAliasNewMIFOtherAliasToAttach.getClass(), mifOtherAliasNewMIFOtherAliasToAttach.getWid());
                 attachedMifOtherAliasNew.add(mifOtherAliasNewMIFOtherAliasToAttach);
             }
             mifOtherAliasNew = attachedMifOtherAliasNew;
             mifEntryInteractor.setMifOtherAlias(mifOtherAliasNew);
-            Set<MIFOtherAttribute> attachedMifOtherAttributeNew = new HashSet<>();
+            Set<MIFOtherAttribute> attachedMifOtherAttributeNew = new HashSet();
             for (MIFOtherAttribute mifOtherAttributeNewMIFOtherAttributeToAttach : mifOtherAttributeNew) {
                 mifOtherAttributeNewMIFOtherAttributeToAttach = em.getReference(mifOtherAttributeNewMIFOtherAttributeToAttach.getClass(), mifOtherAttributeNewMIFOtherAttributeToAttach.getWid());
                 attachedMifOtherAttributeNew.add(mifOtherAttributeNewMIFOtherAttributeToAttach);
             }
             mifOtherAttributeNew = attachedMifOtherAttributeNew;
             mifEntryInteractor.setMifOtherAttribute(mifOtherAttributeNew);
-            Set<MIFOtherBioSourceType> attachedMifOtherBioSourceTypeNew = new HashSet<>();
+            Set<MIFOtherBioSourceType> attachedMifOtherBioSourceTypeNew = new HashSet();
             for (MIFOtherBioSourceType mifOtherBioSourceTypeNewMIFOtherBioSourceTypeToAttach : mifOtherBioSourceTypeNew) {
                 mifOtherBioSourceTypeNewMIFOtherBioSourceTypeToAttach = em.getReference(mifOtherBioSourceTypeNewMIFOtherBioSourceTypeToAttach.getClass(), mifOtherBioSourceTypeNewMIFOtherBioSourceTypeToAttach.getWid());
                 attachedMifOtherBioSourceTypeNew.add(mifOtherBioSourceTypeNewMIFOtherBioSourceTypeToAttach);
             }
             mifOtherBioSourceTypeNew = attachedMifOtherBioSourceTypeNew;
             mifEntryInteractor.setMifOtherBioSourceType(mifOtherBioSourceTypeNew);
-            Set<MIFOtherXRef> attachedMifOtherXRefNew = new HashSet<>();
+            Set<MIFOtherXRef> attachedMifOtherXRefNew = new HashSet();
             for (MIFOtherXRef mifOtherXRefNewMIFOtherXRefToAttach : mifOtherXRefNew) {
                 mifOtherXRefNewMIFOtherXRefToAttach = em.getReference(mifOtherXRefNewMIFOtherXRefToAttach.getClass(), mifOtherXRefNewMIFOtherXRefToAttach.getWid());
                 attachedMifOtherXRefNew.add(mifOtherXRefNewMIFOtherXRefToAttach);
             }
             mifOtherXRefNew = attachedMifOtherXRefNew;
             mifEntryInteractor.setMifOtherXRef(mifOtherXRefNew);
-            Set<MIFOtherXRefGO> attachedMifOtherXRefGONew = new HashSet<>();
+            Set<MIFOtherXRefGO> attachedMifOtherXRefGONew = new HashSet();
             for (MIFOtherXRefGO mifOtherXRefGONewMIFOtherXRefGOToAttach : mifOtherXRefGONew) {
                 mifOtherXRefGONewMIFOtherXRefGOToAttach = em.getReference(mifOtherXRefGONewMIFOtherXRefGOToAttach.getClass(), mifOtherXRefGONewMIFOtherXRefGOToAttach.getWid());
                 attachedMifOtherXRefGONew.add(mifOtherXRefGONewMIFOtherXRefGOToAttach);
             }
             mifOtherXRefGONew = attachedMifOtherXRefGONew;
             mifEntryInteractor.setMifOtherXRefGO(mifOtherXRefGONew);
-            Set<MIFOtherXRefPubMed> attachedMifOtherXRefPubMedNew = new HashSet<>();
+            Set<MIFOtherXRefPubMed> attachedMifOtherXRefPubMedNew = new HashSet();
             for (MIFOtherXRefPubMed mifOtherXRefPubMedNewMIFOtherXRefPubMedToAttach : mifOtherXRefPubMedNew) {
                 mifOtherXRefPubMedNewMIFOtherXRefPubMedToAttach = em.getReference(mifOtherXRefPubMedNewMIFOtherXRefPubMedToAttach.getClass(), mifOtherXRefPubMedNewMIFOtherXRefPubMedToAttach.getWid());
                 attachedMifOtherXRefPubMedNew.add(mifOtherXRefPubMedNewMIFOtherXRefPubMedToAttach);
             }
             mifOtherXRefPubMedNew = attachedMifOtherXRefPubMedNew;
             mifEntryInteractor.setMifOtherXRefPubMed(mifOtherXRefPubMedNew);
-            Set<MIFOtherXRefRefSeq> attachedMifOtherXRefRefSeqNew = new HashSet<>();
+            Set<MIFOtherXRefRefSeq> attachedMifOtherXRefRefSeqNew = new HashSet();
             for (MIFOtherXRefRefSeq mifOtherXRefRefSeqNewMIFOtherXRefRefSeqToAttach : mifOtherXRefRefSeqNew) {
                 mifOtherXRefRefSeqNewMIFOtherXRefRefSeqToAttach = em.getReference(mifOtherXRefRefSeqNewMIFOtherXRefRefSeqToAttach.getClass(), mifOtherXRefRefSeqNewMIFOtherXRefRefSeqToAttach.getWid());
                 attachedMifOtherXRefRefSeqNew.add(mifOtherXRefRefSeqNewMIFOtherXRefRefSeqToAttach);
             }
             mifOtherXRefRefSeqNew = attachedMifOtherXRefRefSeqNew;
             mifEntryInteractor.setMifOtherXRefRefSeq(mifOtherXRefRefSeqNew);
-            Set<MIFOtherXRefUniprot> attachedMifOtherXRefUniprotNew = new HashSet<>();
+            Set<MIFOtherXRefUniprot> attachedMifOtherXRefUniprotNew = new HashSet();
             for (MIFOtherXRefUniprot mifOtherXRefUniprotNewMIFOtherXRefUniprotToAttach : mifOtherXRefUniprotNew) {
                 mifOtherXRefUniprotNewMIFOtherXRefUniprotToAttach = em.getReference(mifOtherXRefUniprotNewMIFOtherXRefUniprotToAttach.getClass(), mifOtherXRefUniprotNewMIFOtherXRefUniprotToAttach.getWid());
                 attachedMifOtherXRefUniprotNew.add(mifOtherXRefUniprotNewMIFOtherXRefUniprotToAttach);

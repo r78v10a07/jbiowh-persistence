@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This Class is the MIFOtherXRefGO entity
@@ -279,6 +280,7 @@ public class MIFOtherXRefGO implements Serializable {
         this.mifInteractorInteractorType = mifInteractorInteractorType;
     }
 
+    @XmlTransient
     public Set<MIFOtherAttribute> getMifOtherAttribute() {
         return mifOtherAttribute;
     }

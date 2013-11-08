@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
 
 /**
@@ -96,6 +97,7 @@ public class MIFOtherBioSourceType implements Serializable {
         this.mifEntryExperiment = mifEntryExperiment;
     }
 
+    @XmlTransient
     public Set<MIFBioSourceTypeCellType> getMifBioSourceTypeCellType() {
         return mifBioSourceTypeCellType;
     }
@@ -104,6 +106,7 @@ public class MIFOtherBioSourceType implements Serializable {
         this.mifBioSourceTypeCellType = mifBioSourceTypeCellType;
     }
 
+    @XmlTransient
     public Set<MIFBioSourceTypeCompartment> getMifBioSourceTypeCompartment() {
         return mifBioSourceTypeCompartment;
     }
@@ -112,6 +115,7 @@ public class MIFOtherBioSourceType implements Serializable {
         this.mifBioSourceTypeCompartment = mifBioSourceTypeCompartment;
     }
 
+    @XmlTransient
     public Set<MIFBioSourceTypeTissue> getMifBioSourceTypeTissueD() {
         return mifBioSourceTypeTissueD;
     }
@@ -136,6 +140,7 @@ public class MIFOtherBioSourceType implements Serializable {
         this.mifInteractionParticipant = mifInteractionParticipant;
     }
 
+    @XmlTransient
     public Set<MIFOtherAlias> getMifOtherAlias() {
         return mifOtherAlias;
     }

@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This Class is the Protein Comment entity
@@ -107,6 +108,7 @@ public class ProteinComment implements Serializable {
         this.proteinWID = proteinWID;
     }
 
+    @XmlTransient
     public Set<ProteinCommentInteract> getProteinCommentInteract() {
         return proteinCommentInteract;
     }
@@ -115,6 +117,7 @@ public class ProteinComment implements Serializable {
         this.proteinCommentInteract = proteinCommentInteract;
     }
 
+    @XmlTransient
     public Set<ProteinCommentIsoform> getProteinCommentIsoform() {
         return proteinCommentIsoform;
     }
@@ -123,6 +126,7 @@ public class ProteinComment implements Serializable {
         this.proteinCommentIsoform = proteinCommentIsoform;
     }
 
+    @XmlTransient
     public Map<ProteinCommentEventPK, ProteinCommentEvent> getProteinCommentEvent() {
         return proteinCommentEvent;
     }
@@ -131,6 +135,7 @@ public class ProteinComment implements Serializable {
         this.proteinCommentEvent = proteinCommentEvent;
     }
 
+    @XmlTransient
     public Map<ProteinCommentLinkPK, ProteinCommentLink> getProteinCommentLink() {
         return proteinCommentLink;
     }
@@ -139,6 +144,7 @@ public class ProteinComment implements Serializable {
         this.proteinCommentLink = proteinCommentLink;
     }
 
+    @XmlTransient
     public Map<ProteinCommentConflictPK, ProteinCommentConflict> getProteinCommentConflict() {
         return proteinCommentConflict;
     }
@@ -147,6 +153,7 @@ public class ProteinComment implements Serializable {
         this.proteinCommentConflict = proteinCommentConflict;
     }
 
+    @XmlTransient
     public Set<ProteinCommentSubCellularLocation> getProteinCommentSubCellularLocation() {
         return proteinCommentSubCellularLocation;
     }
@@ -155,6 +162,7 @@ public class ProteinComment implements Serializable {
         this.proteinCommentSubCellularLocation = proteinCommentSubCellularLocation;
     }
 
+    @XmlTransient
     public Set<ProteinOtherLocation> getProteinOtherLocation() {
         return proteinOtherLocation;
     }

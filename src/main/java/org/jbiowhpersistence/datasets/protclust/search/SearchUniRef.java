@@ -11,9 +11,9 @@ import org.jbiowhpersistence.utils.search.SearchFactory;
 /**
  * This Class perform the search over the UniRef module
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-11-08 14:37:19 +0100 (Thu, 08 Nov 2012) $
- * $LastChangedRevision: 322 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-11-08 14:37:19 +0100
+ * (Thu, 08 Nov 2012) $ $LastChangedRevision: 322 $
+ *
  * @since Sep 1, 2011
  */
 public class SearchUniRef extends SearchFactory {
@@ -25,7 +25,7 @@ public class SearchUniRef extends SearchFactory {
      * This Class perform the search over the UniRef module
      */
     public SearchUniRef() {
-        HashMap<String, Class> fields = new HashMap<>();
+        HashMap<String, Class> fields = new HashMap();
         fields.put(ID, String.class);
         fields.put(NAME, String.class);
         setFields(fields);
@@ -60,7 +60,7 @@ public class SearchUniRef extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldBeforeWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
             data.put(field, "");
         }
@@ -69,15 +69,12 @@ public class SearchUniRef extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldAfterWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case ID:
-                    data.put(field, "g.id");
-                    break;
-                case NAME:
-                    data.put(field, "g.name");
-                    break;
+            if (field.equals(ID)) {
+                data.put(field, "g.id");
+            } else if (field.equals(NAME)) {
+                data.put(field, "g.name");
             }
         }
         return data;
@@ -85,7 +82,7 @@ public class SearchUniRef extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldOnEntity() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
             data.put(field, "");
         }
@@ -94,7 +91,7 @@ public class SearchUniRef extends SearchFactory {
 
     @Override
     protected HashMap<Class, List> getConstrainFieldOnEntity() {
-        HashMap<Class, List> data = new HashMap<>();
+        HashMap<Class, List> data = new HashMap();
         return data;
     }
 

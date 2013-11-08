@@ -20,11 +20,12 @@ public class JpaEntitiesSelected {
 
     private static JpaEntitiesSelected singleton;
     private List<Class> entities;
-    private List<String> loadedByDefault = new ArrayList<>(
-            Arrays.asList(new String[]{"DataSet", "Taxonomy", "Ontology"}));
+    private List<String> loadedByDefault;
 
     private JpaEntitiesSelected() {
-        entities = new ArrayList<>();
+        entities = new ArrayList();
+        loadedByDefault = new ArrayList(
+            Arrays.asList(new String[]{"DataSet", "Taxonomy", "Ontology"}));
     }
 
     /**

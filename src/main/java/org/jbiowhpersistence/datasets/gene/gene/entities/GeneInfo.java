@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.*;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 import org.jbiowhpersistence.datasets.disease.omim.entities.OMIM;
 import org.jbiowhpersistence.datasets.gene.gene.GeneTables;
@@ -185,6 +186,7 @@ public class GeneInfo implements Serializable {
         setOmim(null);
     }
 
+    @XmlTransient
     public Set<GeneRNT> getGeneRNT() {
         return geneRNT;
     }
@@ -201,6 +203,7 @@ public class GeneInfo implements Serializable {
         this.dataSet = dataSet;
     }
 
+    @XmlTransient
     public Set<Ontology> getOntology() {
         return ontology;
     }
@@ -217,6 +220,7 @@ public class GeneInfo implements Serializable {
         this.genePTT = genePTT;
     }
 
+    @XmlTransient
     public Set<OMIM> getOmim() {
         return omim;
     }
@@ -225,6 +229,7 @@ public class GeneInfo implements Serializable {
         this.omim = omim;
     }
 
+    @XmlTransient
     public Set<KEGGPathway> getkEGGPathways() {
         return kEGGPathways;
     }
@@ -233,6 +238,7 @@ public class GeneInfo implements Serializable {
         this.kEGGPathways = kEGGPathways;
     }
 
+    @XmlTransient
     public Set<KEGGGene> getkEGGGenes() {
         return kEGGGenes;
     }
@@ -242,6 +248,7 @@ public class GeneInfo implements Serializable {
                 kEGGGenes;
     }
 
+    @XmlTransient
     public Set<Protein> getProtein() {
         return protein;
     }
@@ -282,6 +289,7 @@ public class GeneInfo implements Serializable {
         this.fullNameFromNomenclatureAuthority = fullNameFromNomenclatureAuthority;
     }
 
+    @XmlTransient
     public Map<Gene2AccessionPK, Gene2Accession> getGene2Accession() {
         return gene2Accession;
     }
@@ -290,6 +298,7 @@ public class GeneInfo implements Serializable {
         this.gene2Accession = gene2Accession;
     }
 
+    @XmlTransient
     public Set<Gene2Ensembl> getGene2Ensembl() {
         return gene2Ensembl;
     }
@@ -298,6 +307,7 @@ public class GeneInfo implements Serializable {
         this.gene2Ensembl = gene2Ensembl;
     }
 
+    @XmlTransient
     public Map<Gene2PMIDPK, Gene2PMID> getGene2PMID() {
         return gene2PMID;
     }
@@ -306,6 +316,7 @@ public class GeneInfo implements Serializable {
         this.gene2PMID = gene2PMID;
     }
 
+    @XmlTransient
     public Map<Gene2STSPK, Gene2STS> getGene2STS() {
         return gene2STS;
     }
@@ -314,6 +325,7 @@ public class GeneInfo implements Serializable {
         this.gene2STS = gene2STS;
     }
 
+    @XmlTransient
     public Map<Gene2UniGenePK, Gene2UniGene> getGene2UniGene() {
         return gene2UniGene;
     }
@@ -322,6 +334,7 @@ public class GeneInfo implements Serializable {
         this.gene2UniGene = gene2UniGene;
     }
 
+    @XmlTransient
     public Map<GeneGroupPK, GeneGroup> getGeneGroup() {
         return geneGroup;
     }
@@ -338,6 +351,7 @@ public class GeneInfo implements Serializable {
         this.geneID = geneID;
     }
 
+    @XmlTransient
     public Map<GeneInfoDBXrefsPK, GeneInfoDBXrefs> getGeneInfoDBXrefs() {
         return geneInfoDBXrefs;
     }
@@ -346,6 +360,7 @@ public class GeneInfo implements Serializable {
         this.geneInfoDBXrefs = geneInfoDBXrefs;
     }
 
+    @XmlTransient
     public Map<GeneInfoSynonymsPK, GeneInfoSynonyms> getGeneInfoSynonyms() {
         return geneInfoSynonyms;
     }

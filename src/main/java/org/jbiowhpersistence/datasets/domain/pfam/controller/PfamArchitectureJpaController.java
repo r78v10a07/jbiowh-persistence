@@ -72,14 +72,14 @@ public class PfamArchitectureJpaController extends AbstractPFamJpaController<Pfa
             Set<PfamAbioWH> pfamANew = pfamArchitecture.getPfamA();
             Set<PfamClans> pfamClansesOld = persistentPfamArchitecture.getPfamClanses();
             Set<PfamClans> pfamClansesNew = pfamArchitecture.getPfamClanses();
-            Set<PfamAbioWH> attachedPfamANew = new HashSet<>();
+            Set<PfamAbioWH> attachedPfamANew = new HashSet();
             for (PfamAbioWH pfamANewPfamAToAttach : pfamANew) {
                 pfamANewPfamAToAttach = em.getReference(pfamANewPfamAToAttach.getClass(), pfamANewPfamAToAttach.getWid());
                 attachedPfamANew.add(pfamANewPfamAToAttach);
             }
             pfamANew = attachedPfamANew;
             pfamArchitecture.setPfamA(pfamANew);
-            Set<PfamClans> attachedPfamClansesNew = new HashSet<>();
+            Set<PfamClans> attachedPfamClansesNew = new HashSet();
             for (PfamClans pfamClansesNewPfamClansToAttach : pfamClansesNew) {
                 pfamClansesNewPfamClansToAttach = em.getReference(pfamClansesNewPfamClansToAttach.getClass(), pfamClansesNewPfamClansToAttach.getWid());
                 attachedPfamClansesNew.add(pfamClansesNewPfamClansToAttach);

@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This class is the PfamARegFullSignificant entity
@@ -152,6 +153,7 @@ public class PfamARegFullSignificant implements Serializable {
         this.pfamA = pfamA;
     }
 
+    @XmlTransient
     public Set<PfamAPDBReg> getPfamAPDBRegs() {
         return pfamAPDBRegs;
     }

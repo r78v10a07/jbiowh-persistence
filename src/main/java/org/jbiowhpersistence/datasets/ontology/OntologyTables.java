@@ -59,7 +59,7 @@ public class OntologyTables {
      */
     public List<String> getTables() {
         if (tables == null) {
-            tables = new ArrayList<>();
+            tables = new ArrayList();
             tables.add(ONTOLOGY);
             tables.add(ONTOLOGY_HAS_ONTOLOGYSUBSET);
             tables.add(ONTOLOGY_HAS_ONTOLOGYSYNONYM);

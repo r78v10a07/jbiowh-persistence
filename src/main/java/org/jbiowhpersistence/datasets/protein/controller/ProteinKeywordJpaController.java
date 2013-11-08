@@ -50,7 +50,7 @@ public class ProteinKeywordJpaController extends AbstractJpaController<ProteinKe
             em.getTransaction().begin();
             if (!proteinKeyword.getProteinhasProteinKeyword().isEmpty()) {
                 ProteinJpaController pController = new ProteinJpaController(emf);
-                Map<ProteinhasProteinKeywordPK, ProteinhasProteinKeyword> attachProteinhasProteinKeyword = new HashMap<>();
+                Map<ProteinhasProteinKeywordPK, ProteinhasProteinKeyword> attachProteinhasProteinKeyword = new HashMap();
                 for (ProteinhasProteinKeyword proteinhasProteinKeywordToAttach : proteinKeyword.getProteinhasProteinKeyword().values()) {
                     ProteinhasProteinKeyword proteinhasProteinKeyword = em.find(proteinhasProteinKeywordToAttach.getClass(), proteinhasProteinKeywordToAttach.getProteinhasProteinKeywordPK());
                     if (proteinhasProteinKeyword != null) {

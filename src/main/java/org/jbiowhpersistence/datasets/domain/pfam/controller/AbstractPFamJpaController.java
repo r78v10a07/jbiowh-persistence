@@ -65,7 +65,7 @@ public abstract class AbstractPFamJpaController<T> extends AbstractJpaController
     protected Set<PfamArchitecture> createPfamArchitecture(EntityManagerFactory emf, EntityManager em, Set<PfamArchitecture> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             PfamArchitectureJpaController instance = new PfamArchitectureJpaController(emf);
-            Set<PfamArchitecture> attachObjSet = new HashSet<>();
+            Set<PfamArchitecture> attachObjSet = new HashSet();
             for (PfamArchitecture object : objectList) {
                 PfamArchitecture objectOnDB = em.find(PfamArchitecture.class, object.getWid());
                 if (objectOnDB != null) {
@@ -78,7 +78,7 @@ public abstract class AbstractPFamJpaController<T> extends AbstractJpaController
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -94,7 +94,7 @@ public abstract class AbstractPFamJpaController<T> extends AbstractJpaController
     protected Set<PfamClans> createPfamClans(EntityManagerFactory emf, EntityManager em, Set<PfamClans> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             PfamClansJpaController instance = new PfamClansJpaController(emf);
-            Set<PfamClans> attachObjSet = new HashSet<>();
+            Set<PfamClans> attachObjSet = new HashSet();
             for (PfamClans object : objectList) {
                 PfamClans objectOnDB = em.find(PfamClans.class, object.getWid());
                 if (objectOnDB != null) {
@@ -107,7 +107,7 @@ public abstract class AbstractPFamJpaController<T> extends AbstractJpaController
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -148,7 +148,7 @@ public abstract class AbstractPFamJpaController<T> extends AbstractJpaController
     protected Set<PfamLiteratureReferences> createPfamLiteratureReferences(EntityManagerFactory emf, EntityManager em, Set<PfamLiteratureReferences> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             PfamLiteratureReferencesJpaController instance = new PfamLiteratureReferencesJpaController(emf);
-            Set<PfamLiteratureReferences> attachObjSet = new HashSet<>();
+            Set<PfamLiteratureReferences> attachObjSet = new HashSet();
             for (PfamLiteratureReferences object : objectList) {
                 PfamLiteratureReferences objectOnDB = em.find(PfamLiteratureReferences.class, object.getWid());
                 if (objectOnDB != null) {
@@ -161,7 +161,7 @@ public abstract class AbstractPFamJpaController<T> extends AbstractJpaController
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -177,7 +177,7 @@ public abstract class AbstractPFamJpaController<T> extends AbstractJpaController
     protected Map<PfamProteomeRegionsPK, PfamProteomeRegions> createPfamProteomeRegions(EntityManagerFactory emf, EntityManager em, Map<PfamProteomeRegionsPK, PfamProteomeRegions> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             PfamProteomeRegionsJpaController instance = new PfamProteomeRegionsJpaController(emf);
-            Map<PfamProteomeRegionsPK, PfamProteomeRegions> attachObjSet = new HashMap<>();
+            Map<PfamProteomeRegionsPK, PfamProteomeRegions> attachObjSet = new HashMap();
             for (PfamProteomeRegions object : objectList.values()) {
                 PfamProteomeRegions objectOnDB = em.find(PfamProteomeRegions.class, object.getPfamProteomeRegionsPK());
                 if (objectOnDB != null) {
@@ -191,7 +191,7 @@ public abstract class AbstractPFamJpaController<T> extends AbstractJpaController
             }
             return attachObjSet;
         }
-        return new HashMap<>();
+        return new HashMap();
     }
 
     /**
@@ -207,7 +207,7 @@ public abstract class AbstractPFamJpaController<T> extends AbstractJpaController
     protected Set<PfamARegFullSignificant> createPfamARegFullSignificant(EntityManagerFactory emf, EntityManager em, Set<PfamARegFullSignificant> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             PfamARegFullSignificantJpaController instance = new PfamARegFullSignificantJpaController(emf);
-            Set<PfamARegFullSignificant> attachObjSet = new HashSet<>();
+            Set<PfamARegFullSignificant> attachObjSet = new HashSet();
             for (PfamARegFullSignificant object : objectList) {
                 PfamARegFullSignificant objectOnDB = em.find(PfamARegFullSignificant.class, object.getWid());
                 if (objectOnDB != null) {
@@ -220,7 +220,7 @@ public abstract class AbstractPFamJpaController<T> extends AbstractJpaController
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -236,7 +236,7 @@ public abstract class AbstractPFamJpaController<T> extends AbstractJpaController
     protected Set<PfamARegFullInsignificant> createPfamARegFullInsignificant(EntityManagerFactory emf, EntityManager em, Set<PfamARegFullInsignificant> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             PfamARegFullInsignificantJpaController instance = new PfamARegFullInsignificantJpaController(emf);
-            Set<PfamARegFullInsignificant> attachObjSet = new HashSet<>();
+            Set<PfamARegFullInsignificant> attachObjSet = new HashSet();
             for (PfamARegFullInsignificant object : objectList) {
                 PfamARegFullInsignificant objectOnDB = em.find(PfamARegFullInsignificant.class, object.getWid());
                 if (objectOnDB != null) {
@@ -249,6 +249,6 @@ public abstract class AbstractPFamJpaController<T> extends AbstractJpaController
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 }

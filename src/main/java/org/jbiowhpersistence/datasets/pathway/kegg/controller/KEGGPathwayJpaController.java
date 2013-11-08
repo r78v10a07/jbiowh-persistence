@@ -88,42 +88,42 @@ public class KEGGPathwayJpaController extends AbstractKEGGJpaController<KEGGPath
             Set<KEGGGene> kEGGGenesNew = keggPathway.getkEGGGenes();
             Set<KEGGReaction> kEGGReactionsOld = persistentKEGGPathway.getkEGGReactions();
             Set<KEGGReaction> kEGGReactionsNew = keggPathway.getkEGGReactions();
-            Set<GeneInfo> attachedGeneInfoNew = new HashSet<>();
+            Set<GeneInfo> attachedGeneInfoNew = new HashSet();
             for (GeneInfo geneInfoNewGeneInfoToAttach : geneInfoNew) {
                 geneInfoNewGeneInfoToAttach = em.getReference(geneInfoNewGeneInfoToAttach.getClass(), geneInfoNewGeneInfoToAttach.getWid());
                 attachedGeneInfoNew.add(geneInfoNewGeneInfoToAttach);
             }
             geneInfoNew = attachedGeneInfoNew;
             keggPathway.setGeneInfo(geneInfoNew);
-            Set<Protein> attachedProteinNew = new HashSet<>();
+            Set<Protein> attachedProteinNew = new HashSet();
             for (Protein proteinNewProteinToAttach : proteinNew) {
                 proteinNewProteinToAttach = em.getReference(proteinNewProteinToAttach.getClass(), proteinNewProteinToAttach.getWid());
                 attachedProteinNew.add(proteinNewProteinToAttach);
             }
             proteinNew = attachedProteinNew;
             keggPathway.setProtein(proteinNew);
-            Set<KEGGCompound> attachedkEGGCompoundsNew = new HashSet<>();
+            Set<KEGGCompound> attachedkEGGCompoundsNew = new HashSet();
             for (KEGGCompound kEGGCompoundsNewKEGGCompoundToAttach : kEGGCompoundsNew) {
                 kEGGCompoundsNewKEGGCompoundToAttach = em.getReference(kEGGCompoundsNewKEGGCompoundToAttach.getClass(), kEGGCompoundsNewKEGGCompoundToAttach.getWid());
                 attachedkEGGCompoundsNew.add(kEGGCompoundsNewKEGGCompoundToAttach);
             }
             kEGGCompoundsNew = attachedkEGGCompoundsNew;
             keggPathway.setkEGGCompounds(kEGGCompoundsNew);
-            Set<KEGGEnzyme> attachedkEGGEnzymesNew = new HashSet<>();
+            Set<KEGGEnzyme> attachedkEGGEnzymesNew = new HashSet();
             for (KEGGEnzyme kEGGEnzymesNewKEGGEnzymeToAttach : kEGGEnzymesNew) {
                 kEGGEnzymesNewKEGGEnzymeToAttach = em.getReference(kEGGEnzymesNewKEGGEnzymeToAttach.getClass(), kEGGEnzymesNewKEGGEnzymeToAttach.getWid());
                 attachedkEGGEnzymesNew.add(kEGGEnzymesNewKEGGEnzymeToAttach);
             }
             kEGGEnzymesNew = attachedkEGGEnzymesNew;
             keggPathway.setkEGGEnzymes(kEGGEnzymesNew);
-            Set<KEGGGene> attachedkEGGGenesNew = new HashSet<>();
+            Set<KEGGGene> attachedkEGGGenesNew = new HashSet();
             for (KEGGGene kEGGGenesNewKEGGGeneToAttach : kEGGGenesNew) {
                 kEGGGenesNewKEGGGeneToAttach = em.getReference(kEGGGenesNewKEGGGeneToAttach.getClass(), kEGGGenesNewKEGGGeneToAttach.getWid());
                 attachedkEGGGenesNew.add(kEGGGenesNewKEGGGeneToAttach);
             }
             kEGGGenesNew = attachedkEGGGenesNew;
             keggPathway.setkEGGGenes(kEGGGenesNew);
-            Set<KEGGReaction> attachedkEGGReactionsNew = new HashSet<>();
+            Set<KEGGReaction> attachedkEGGReactionsNew = new HashSet();
             for (KEGGReaction kEGGReactionsNewKEGGReactionToAttach : kEGGReactionsNew) {
                 kEGGReactionsNewKEGGReactionToAttach = em.getReference(kEGGReactionsNewKEGGReactionToAttach.getClass(), kEGGReactionsNewKEGGReactionToAttach.getWid());
                 attachedkEGGReactionsNew.add(kEGGReactionsNewKEGGReactionToAttach);

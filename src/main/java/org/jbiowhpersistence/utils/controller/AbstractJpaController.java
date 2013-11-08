@@ -115,7 +115,7 @@ public abstract class AbstractJpaController<T> {
     protected Set<Ontology> createOntology(EntityManagerFactory emf, EntityManager em, Set<Ontology> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             OntologyJpaController instance = new OntologyJpaController(emf);
-            Set<Ontology> attachObjSet = new HashSet<>();
+            Set<Ontology> attachObjSet = new HashSet();
             for (Ontology object : objectList) {
                 Ontology objectOnDB = em.find(Ontology.class, object.getWid());
                 if (objectOnDB != null) {
@@ -128,7 +128,7 @@ public abstract class AbstractJpaController<T> {
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -144,7 +144,7 @@ public abstract class AbstractJpaController<T> {
     protected Set<GeneInfo> createGeneInfo(EntityManagerFactory emf, EntityManager em, Set<GeneInfo> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             GeneInfoJpaController instance = new GeneInfoJpaController(emf);
-            Set<GeneInfo> attachObjSet = new HashSet<>();
+            Set<GeneInfo> attachObjSet = new HashSet();
             for (GeneInfo object : objectList) {
                 GeneInfo objectOnDB = em.find(GeneInfo.class, object.getWid());
                 if (objectOnDB != null) {
@@ -157,7 +157,7 @@ public abstract class AbstractJpaController<T> {
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -173,7 +173,7 @@ public abstract class AbstractJpaController<T> {
     protected Set<PfamAbioWH> createPfamA(EntityManagerFactory emf, EntityManager em, Set<PfamAbioWH> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             PfamAbioWHJpaController instance = new PfamAbioWHJpaController(emf);
-            Set<PfamAbioWH> attachObjSet = new HashSet<>();
+            Set<PfamAbioWH> attachObjSet = new HashSet();
             for (PfamAbioWH object : objectList) {
                 PfamAbioWH objectOnDB = em.find(PfamAbioWH.class, object.getWid());
                 if (objectOnDB != null) {
@@ -186,7 +186,7 @@ public abstract class AbstractJpaController<T> {
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -202,7 +202,7 @@ public abstract class AbstractJpaController<T> {
     protected Set<Protein> createProtein(EntityManagerFactory emf, EntityManager em, Set<Protein> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             ProteinJpaController instance = new ProteinJpaController(emf);
-            Set<Protein> attachObjSet = new HashSet<>();
+            Set<Protein> attachObjSet = new HashSet();
             for (Protein object : objectList) {
                 Protein objectOnDB = em.find(Protein.class, object.getWid());
                 if (objectOnDB != null) {
@@ -215,7 +215,7 @@ public abstract class AbstractJpaController<T> {
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -231,7 +231,7 @@ public abstract class AbstractJpaController<T> {
     protected Set<KEGGPathway> createKEGGPathway(EntityManagerFactory emf, EntityManager em, Set<KEGGPathway> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             KEGGPathwayJpaController instance = new KEGGPathwayJpaController(emf);
-            Set<KEGGPathway> attachObjSet = new HashSet<>();
+            Set<KEGGPathway> attachObjSet = new HashSet();
             for (KEGGPathway object : objectList) {
                 KEGGPathway objectOnDB = em.find(KEGGPathway.class, object.getWid());
                 if (objectOnDB != null) {
@@ -244,7 +244,7 @@ public abstract class AbstractJpaController<T> {
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -260,7 +260,7 @@ public abstract class AbstractJpaController<T> {
     protected Set<KEGGGene> createKEGGGene(EntityManagerFactory emf, EntityManager em, Set<KEGGGene> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             KEGGGeneJpaController instance = new KEGGGeneJpaController(emf);
-            Set<KEGGGene> attachObjSet = new HashSet<>();
+            Set<KEGGGene> attachObjSet = new HashSet();
             for (KEGGGene object : objectList) {
                 KEGGGene objectOnDB = em.find(KEGGGene.class, object.getWid());
                 if (objectOnDB != null) {
@@ -273,7 +273,7 @@ public abstract class AbstractJpaController<T> {
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -289,7 +289,7 @@ public abstract class AbstractJpaController<T> {
     protected Set<KEGGEnzyme> createKEGGEnzyme(EntityManagerFactory emf, EntityManager em, Set<KEGGEnzyme> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             KEGGEnzymeJpaController instance = new KEGGEnzymeJpaController(emf);
-            Set<KEGGEnzyme> attachObjSet = new HashSet<>();
+            Set<KEGGEnzyme> attachObjSet = new HashSet();
             for (KEGGEnzyme object : objectList) {
                 KEGGEnzyme objectOnDB = em.find(KEGGEnzyme.class, object.getWid());
                 if (objectOnDB != null) {
@@ -302,7 +302,7 @@ public abstract class AbstractJpaController<T> {
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -318,7 +318,7 @@ public abstract class AbstractJpaController<T> {
     protected Set<KEGGCompound> createKEGGCompound(EntityManagerFactory emf, EntityManager em, Set<KEGGCompound> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             KEGGCompoundJpaController instance = new KEGGCompoundJpaController(emf);
-            Set<KEGGCompound> attachObjSet = new HashSet<>();
+            Set<KEGGCompound> attachObjSet = new HashSet();
             for (KEGGCompound object : objectList) {
                 KEGGCompound objectOnDB = em.find(KEGGCompound.class, object.getWid());
                 if (objectOnDB != null) {
@@ -331,7 +331,7 @@ public abstract class AbstractJpaController<T> {
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -347,7 +347,7 @@ public abstract class AbstractJpaController<T> {
     protected Set<UniRefEntry> createUniRefEntry(EntityManagerFactory emf, EntityManager em, Set<UniRefEntry> objectList, Protein protein) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             UniRefEntryJpaController instance = new UniRefEntryJpaController(emf);
-            Set<UniRefEntry> attachObjSet = new HashSet<>();
+            Set<UniRefEntry> attachObjSet = new HashSet();
             for (UniRefEntry object : objectList) {
                 UniRefEntry objectOnDB = em.find(UniRefEntry.class, object.getWid());
                 if (objectOnDB != null) {
@@ -360,7 +360,7 @@ public abstract class AbstractJpaController<T> {
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -376,7 +376,7 @@ public abstract class AbstractJpaController<T> {
     protected Set<UniRefMember> createUniRefMember(EntityManagerFactory emf, EntityManager em, Set<UniRefMember> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             UniRefMemberJpaController instance = new UniRefMemberJpaController(emf);
-            Set<UniRefMember> attachObjSet = new HashSet<>();
+            Set<UniRefMember> attachObjSet = new HashSet();
             for (UniRefMember object : objectList) {
                 UniRefMember objectOnDB = em.find(UniRefMember.class, object.getWid());
                 if (objectOnDB != null) {
@@ -389,7 +389,7 @@ public abstract class AbstractJpaController<T> {
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -405,7 +405,7 @@ public abstract class AbstractJpaController<T> {
     protected Set<MIFEntryInteraction> createMIFEntryInteraction(EntityManagerFactory emf, EntityManager em, Set<MIFEntryInteraction> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             MIFEntryInteractionJpaController instance = new MIFEntryInteractionJpaController(emf);
-            Set<MIFEntryInteraction> attachObjSet = new HashSet<>();
+            Set<MIFEntryInteraction> attachObjSet = new HashSet();
             for (MIFEntryInteraction object : objectList) {
                 MIFEntryInteraction objectOnDB = em.find(MIFEntryInteraction.class, object.getWid());
                 if (objectOnDB != null) {
@@ -418,7 +418,7 @@ public abstract class AbstractJpaController<T> {
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -434,7 +434,7 @@ public abstract class AbstractJpaController<T> {
     protected Set<DrugBank> createDrugBank(EntityManagerFactory emf, EntityManager em, Set<DrugBank> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             DrugBankJpaController instance = new DrugBankJpaController(emf);
-            Set<DrugBank> attachObjSet = new HashSet<>();
+            Set<DrugBank> attachObjSet = new HashSet();
             for (DrugBank object : objectList) {
                 DrugBank objectOnDB = em.find(object.getClass(), object.getWid());
                 if (objectOnDB != null) {
@@ -447,7 +447,7 @@ public abstract class AbstractJpaController<T> {
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**

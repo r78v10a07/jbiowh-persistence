@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 import org.jbiowhpersistence.datasets.pathway.kegg.KEGGTables;
 import org.jbiowhpersistence.datasets.pathway.kegg.entities.compound.KEGGCompound;
@@ -129,6 +130,7 @@ public class KEGGReaction implements Serializable {
         this.dataSet = dataSet;
     }
 
+    @XmlTransient
     public Set<KEGGPathway> getkEGGPathways() {
         return kEGGPathways;
     }
@@ -137,6 +139,7 @@ public class KEGGReaction implements Serializable {
         this.kEGGPathways = kEGGPathways;
     }
 
+    @XmlTransient
     public Set<KEGGEnzyme> getkEGGEnzyme() {
         return kEGGEnzyme;
     }
@@ -145,6 +148,7 @@ public class KEGGReaction implements Serializable {
         this.kEGGEnzyme = kEGGEnzyme;
     }
 
+    @XmlTransient
     public Set<KEGGGlycan> getkEGGGlycanAsProduct() {
         return kEGGGlycanAsProduct;
     }
@@ -153,6 +157,7 @@ public class KEGGReaction implements Serializable {
         this.kEGGGlycanAsProduct = kEGGGlycanAsProduct;
     }
 
+    @XmlTransient
     public Set<KEGGGlycan> getkEGGGlycanAsSubstrate() {
         return kEGGGlycanAsSubstrate;
     }
@@ -161,6 +166,7 @@ public class KEGGReaction implements Serializable {
         this.kEGGGlycanAsSubstrate = kEGGGlycanAsSubstrate;
     }
 
+    @XmlTransient
     public Set<KEGGCompound> getkEGGCompoundAsProduct() {
         return kEGGCompoundAsProduct;
     }
@@ -169,6 +175,7 @@ public class KEGGReaction implements Serializable {
         this.kEGGCompoundAsProduct = kEGGCompoundAsProduct;
     }
 
+    @XmlTransient
     public Set<KEGGCompound> getkEGGCompoundAsSubstrate() {
         return kEGGCompoundAsSubstrate;
     }
@@ -177,6 +184,7 @@ public class KEGGReaction implements Serializable {
         this.kEGGCompoundAsSubstrate = kEGGCompoundAsSubstrate;
     }
 
+    @XmlTransient
     public Set<KEGGReactionName> getkEGGReactionName() {
         return kEGGReactionName;
     }

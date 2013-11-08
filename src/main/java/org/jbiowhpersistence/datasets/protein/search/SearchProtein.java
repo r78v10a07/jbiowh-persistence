@@ -23,6 +23,7 @@ import org.jbiowhpersistence.utils.search.SearchFactory;
  *
  * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-12-27 15:38:46 +0100
  * (Thu, 27 Dec 2012) $ $LastChangedRevision: 591 $
+ *
  * @since Aug 12, 2011
  */
 public class SearchProtein extends SearchFactory {
@@ -36,7 +37,7 @@ public class SearchProtein extends SearchFactory {
      * This Class perform the search over the Protein module
      */
     public SearchProtein() {
-        HashMap<String, Class> fields = new HashMap<>();
+        HashMap<String, Class> fields = new HashMap();
         fields.put(ACC, String.class);
         fields.put(NAME, String.class);
         fields.put(LONGNAME, String.class);
@@ -94,25 +95,19 @@ public class SearchProtein extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldBeforeWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         HashMap<String, String> fieldOnEntity = getFieldOnEntity();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case ACC:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " a ");
-                    break;
-                case NAME:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " n ");
-                    break;
-                case LONGNAME:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " l ");
-                    break;
-                case EC:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " e ");
-                    break;
-                default:
-                    data.put(field, "");
-                    break;
+            if (field.equals(ACC)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " a ");
+            } else if (field.equals(NAME)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " n ");
+            } else if (field.equals(LONGNAME)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " l ");
+            } else if (field.equals(EC)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " e ");
+            } else {
+                data.put(field, "");
             }
         }
         return data;
@@ -120,21 +115,16 @@ public class SearchProtein extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldAfterWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case ACC:
-                    data.put(field, "a.proteinAccessionNumberPK.accessionNumber");
-                    break;
-                case NAME:
-                    data.put(field, "n.proteinNamePK.name");
-                    break;
-                case LONGNAME:
-                    data.put(field, "l.name");
-                    break;
-                case EC:
-                    data.put(field, "e.proteinECPK.id");
-                    break;
+            if (field.equals(ACC)) {
+                data.put(field, "a.proteinAccessionNumberPK.accessionNumber");
+            } else if (field.equals(NAME)) {
+                data.put(field, "n.proteinNamePK.name");
+            } else if (field.equals(LONGNAME)) {
+                data.put(field, "l.name");
+            } else if (field.equals(EC)) {
+                data.put(field, "e.proteinECPK.id");
             }
         }
         return data;
@@ -142,24 +132,18 @@ public class SearchProtein extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldOnEntity() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case ACC:
-                    data.put(field, "g.proteinAccessionNumber");
-                    break;
-                case NAME:
-                    data.put(field, "g.proteinName");
-                    break;
-                case LONGNAME:
-                    data.put(field, "g.proteinLongName");
-                    break;
-                case EC:
-                    data.put(field, "g.proteinEC");
-                    break;
-                default:
-                    data.put(field, "");
-                    break;
+            if (field.equals(ACC)) {
+                data.put(field, "g.proteinAccessionNumber");
+            } else if (field.equals(NAME)) {
+                data.put(field, "g.proteinName");
+            } else if (field.equals(LONGNAME)) {
+                data.put(field, "g.proteinLongName");
+            } else if (field.equals(EC)) {
+                data.put(field, "g.proteinEC");
+            } else {
+                data.put(field, "");
             }
         }
         return data;
@@ -167,7 +151,7 @@ public class SearchProtein extends SearchFactory {
 
     @Override
     protected HashMap<Class, List> getConstrainFieldOnEntity() {
-        HashMap<Class, List> data = new HashMap<>();
+        HashMap<Class, List> data = new HashMap();
 
         List listT = new ArrayList();
         listT.add("");

@@ -84,7 +84,7 @@ public class PfamAbioWHJpaController extends AbstractPFamJpaController<PfamAbioW
             pfamA.setDataSet(createDataSet(emf, em, pfamA.getDataSet()));
 
             if (!pfamA.getPfamContextRegions().isEmpty()) {
-                Set<PfamContextRegions> attachedPfamContextRegions = new HashSet<>();
+                Set<PfamContextRegions> attachedPfamContextRegions = new HashSet();
                 for (PfamContextRegions pfamContextRegionsPfamContextRegionsToAttach : pfamA.getPfamContextRegions()) {
                     PfamContextRegions pfamContextRegionsPfamContextRegionsToAttachOnDB = em.find(pfamContextRegionsPfamContextRegionsToAttach.getClass(), pfamContextRegionsPfamContextRegionsToAttach.getWid());
                     if (pfamContextRegionsPfamContextRegionsToAttachOnDB != null) {
@@ -96,7 +96,7 @@ public class PfamAbioWHJpaController extends AbstractPFamJpaController<PfamAbioW
                 pfamA.setPfamContextRegions(attachedPfamContextRegions);
             }
             if (!pfamA.getPfamInterpros().isEmpty()) {
-                Set<PfamInterpro> attachedPfamInterpros = new HashSet<>();
+                Set<PfamInterpro> attachedPfamInterpros = new HashSet();
                 for (PfamInterpro pfamInterprosPfamInterproToAttach : pfamA.getPfamInterpros()) {
                     PfamInterpro pfamInterprosPfamInterproToAttachOnDB = em.find(pfamInterprosPfamInterproToAttach.getClass(), pfamInterprosPfamInterproToAttach.getPfamAWID());
                     if (pfamInterprosPfamInterproToAttachOnDB != null) {
@@ -108,7 +108,7 @@ public class PfamAbioWHJpaController extends AbstractPFamJpaController<PfamAbioW
                 pfamA.setPfamInterpros(attachedPfamInterpros);
             }
             if (!pfamA.getPfamNestedLocationses().isEmpty()) {
-                Set<PfamNestedLocations> attachedPfamNestedLocationses = new HashSet<>();
+                Set<PfamNestedLocations> attachedPfamNestedLocationses = new HashSet();
                 for (PfamNestedLocations pfamNestedLocationsesPfamNestedLocationsToAttach : pfamA.getPfamNestedLocationses()) {
                     PfamNestedLocations pfamNestedLocationsesPfamNestedLocationsToAttachOnDB = em.find(pfamNestedLocationsesPfamNestedLocationsToAttach.getClass(), pfamNestedLocationsesPfamNestedLocationsToAttach.getWid());
                     if (pfamNestedLocationsesPfamNestedLocationsToAttachOnDB != null) {
@@ -120,7 +120,7 @@ public class PfamAbioWHJpaController extends AbstractPFamJpaController<PfamAbioW
                 pfamA.setPfamNestedLocationses(attachedPfamNestedLocationses);
             }
             if (!pfamA.getPfamANCBIRegs().isEmpty()) {
-                Set<PfamANCBIReg> attachedPfamANCBIRegs = new HashSet<>();
+                Set<PfamANCBIReg> attachedPfamANCBIRegs = new HashSet();
                 for (PfamANCBIReg pfamANCBIRegsPfamANCBIRegToAttach : pfamA.getPfamANCBIRegs()) {
                     PfamANCBIReg pfamANCBIRegsPfamANCBIRegToAttachOnDB = em.find(pfamANCBIRegsPfamANCBIRegToAttach.getClass(), pfamANCBIRegsPfamANCBIRegToAttach.getWid());
                     if (pfamANCBIRegsPfamANCBIRegToAttachOnDB != null) {
@@ -132,7 +132,7 @@ public class PfamAbioWHJpaController extends AbstractPFamJpaController<PfamAbioW
                 pfamA.setPfamANCBIRegs(attachedPfamANCBIRegs);
             }
             if (!pfamA.getPfamADatabaseLinkses().isEmpty()) {
-                Set<PfamADatabaseLinks> attachedPfamADatabaseLinkses = new HashSet<>();
+                Set<PfamADatabaseLinks> attachedPfamADatabaseLinkses = new HashSet();
                 for (PfamADatabaseLinks pfamADatabaseLinksesPfamADatabaseLinksToAttach : pfamA.getPfamADatabaseLinkses()) {
                     PfamADatabaseLinks pfamADatabaseLinksesPfamADatabaseLinksToAttachOnDB = em.find(pfamADatabaseLinksesPfamADatabaseLinksToAttach.getClass(), pfamADatabaseLinksesPfamADatabaseLinksToAttach.getWid());
                     if (pfamADatabaseLinksesPfamADatabaseLinksToAttachOnDB != null) {
@@ -146,7 +146,7 @@ public class PfamAbioWHJpaController extends AbstractPFamJpaController<PfamAbioW
 
             if (!pfamA.getPfamAhasPfamLiteratureReferences().isEmpty()) {
                 PfamLiteratureReferencesJpaController kController = new PfamLiteratureReferencesJpaController(emf);
-                Map<PfamAhasPfamLiteratureReferencesPK, PfamAhasPfamLiteratureReferences> attachPfamLiteratureReferences = new HashMap<>();
+                Map<PfamAhasPfamLiteratureReferencesPK, PfamAhasPfamLiteratureReferences> attachPfamLiteratureReferences = new HashMap();
                 for (PfamAhasPfamLiteratureReferences pfamAhasPfamLiteratureReferencesToAttach : pfamA.getPfamAhasPfamLiteratureReferences().values()) {
                     PfamAhasPfamLiteratureReferences pfamAhasPfamLiteratureReferencesOnDB = em.find(pfamAhasPfamLiteratureReferencesToAttach.getClass(), pfamAhasPfamLiteratureReferencesToAttach.getPfamAhasPfamLiteratureReferencesPK());
                     if (pfamAhasPfamLiteratureReferencesOnDB != null) {
@@ -210,77 +210,77 @@ public class PfamAbioWHJpaController extends AbstractPFamJpaController<PfamAbioW
             Set<PfamANCBIReg> pfamANCBIRegsNew = pfamA.getPfamANCBIRegs();
             Set<PfamADatabaseLinks> pfamADatabaseLinksesOld = persistentPfamA.getPfamADatabaseLinkses();
             Set<PfamADatabaseLinks> pfamADatabaseLinksesNew = pfamA.getPfamADatabaseLinkses();
-            Set<Protein> attachedProteinInsignificantNew = new HashSet<>();
+            Set<Protein> attachedProteinInsignificantNew = new HashSet();
             for (Protein proteinInsignificantNewProteinToAttach : proteinInsignificantNew) {
                 proteinInsignificantNewProteinToAttach = em.getReference(proteinInsignificantNewProteinToAttach.getClass(), proteinInsignificantNewProteinToAttach.getWid());
                 attachedProteinInsignificantNew.add(proteinInsignificantNewProteinToAttach);
             }
             proteinInsignificantNew = attachedProteinInsignificantNew;
             pfamA.setProteinInsignificant(proteinInsignificantNew);
-            Set<Protein> attachedProteinSignificantNew = new HashSet<>();
+            Set<Protein> attachedProteinSignificantNew = new HashSet();
             for (Protein proteinSignificantNewProteinToAttach : proteinSignificantNew) {
                 proteinSignificantNewProteinToAttach = em.getReference(proteinSignificantNewProteinToAttach.getClass(), proteinSignificantNewProteinToAttach.getWid());
                 attachedProteinSignificantNew.add(proteinSignificantNewProteinToAttach);
             }
             proteinSignificantNew = attachedProteinSignificantNew;
             pfamA.setProteinSignificant(proteinSignificantNew);
-            Set<PfamARegFullSignificant> attachedPfamARegFullSignificantsNew = new HashSet<>();
+            Set<PfamARegFullSignificant> attachedPfamARegFullSignificantsNew = new HashSet();
             for (PfamARegFullSignificant pfamARegFullSignificantsNewPfamARegFullSignificantToAttach : pfamARegFullSignificantsNew) {
                 pfamARegFullSignificantsNewPfamARegFullSignificantToAttach = em.getReference(pfamARegFullSignificantsNewPfamARegFullSignificantToAttach.getClass(), pfamARegFullSignificantsNewPfamARegFullSignificantToAttach.getWid());
                 attachedPfamARegFullSignificantsNew.add(pfamARegFullSignificantsNewPfamARegFullSignificantToAttach);
             }
             pfamARegFullSignificantsNew = attachedPfamARegFullSignificantsNew;
             pfamA.setPfamARegFullSignificants(pfamARegFullSignificantsNew);
-            Set<PfamARegFullInsignificant> attachedPfamARegFullInsignificantsNew = new HashSet<>();
+            Set<PfamARegFullInsignificant> attachedPfamARegFullInsignificantsNew = new HashSet();
             for (PfamARegFullInsignificant pfamARegFullInsignificantsNewPfamARegFullInsignificantToAttach : pfamARegFullInsignificantsNew) {
                 pfamARegFullInsignificantsNewPfamARegFullInsignificantToAttach = em.getReference(pfamARegFullInsignificantsNewPfamARegFullInsignificantToAttach.getClass(), pfamARegFullInsignificantsNewPfamARegFullInsignificantToAttach.getWid());
                 attachedPfamARegFullInsignificantsNew.add(pfamARegFullInsignificantsNewPfamARegFullInsignificantToAttach);
             }
             pfamARegFullInsignificantsNew = attachedPfamARegFullInsignificantsNew;
             pfamA.setPfamARegFullInsignificants(pfamARegFullInsignificantsNew);
-            Set<PfamArchitecture> attachedPfamArchitecturesNew = new HashSet<>();
+            Set<PfamArchitecture> attachedPfamArchitecturesNew = new HashSet();
             for (PfamArchitecture pfamArchitecturesNewPfamArchitectureToAttach : pfamArchitecturesNew) {
                 pfamArchitecturesNewPfamArchitectureToAttach = em.getReference(pfamArchitecturesNewPfamArchitectureToAttach.getClass(), pfamArchitecturesNewPfamArchitectureToAttach.getWid());
                 attachedPfamArchitecturesNew.add(pfamArchitecturesNewPfamArchitectureToAttach);
             }
             pfamArchitecturesNew = attachedPfamArchitecturesNew;
             pfamA.setPfamArchitectures(pfamArchitecturesNew);
-            Set<PfamClans> attachedPfamClansesNew = new HashSet<>();
+            Set<PfamClans> attachedPfamClansesNew = new HashSet();
             for (PfamClans pfamClansesNewPfamClansToAttach : pfamClansesNew) {
                 pfamClansesNewPfamClansToAttach = em.getReference(pfamClansesNewPfamClansToAttach.getClass(), pfamClansesNewPfamClansToAttach.getWid());
                 attachedPfamClansesNew.add(pfamClansesNewPfamClansToAttach);
             }
             pfamClansesNew = attachedPfamClansesNew;
             pfamA.setPfamClanses(pfamClansesNew);
-            Set<PfamContextRegions> attachedPfamContextRegionsNew = new HashSet<>();
+            Set<PfamContextRegions> attachedPfamContextRegionsNew = new HashSet();
             for (PfamContextRegions pfamContextRegionsNewPfamContextRegionsToAttach : pfamContextRegionsNew) {
                 pfamContextRegionsNewPfamContextRegionsToAttach = em.getReference(pfamContextRegionsNewPfamContextRegionsToAttach.getClass(), pfamContextRegionsNewPfamContextRegionsToAttach.getWid());
                 attachedPfamContextRegionsNew.add(pfamContextRegionsNewPfamContextRegionsToAttach);
             }
             pfamContextRegionsNew = attachedPfamContextRegionsNew;
             pfamA.setPfamContextRegions(pfamContextRegionsNew);
-            Set<PfamInterpro> attachedPfamInterprosNew = new HashSet<>();
+            Set<PfamInterpro> attachedPfamInterprosNew = new HashSet();
             for (PfamInterpro pfamInterprosNewPfamInterproToAttach : pfamInterprosNew) {
                 pfamInterprosNewPfamInterproToAttach = em.getReference(pfamInterprosNewPfamInterproToAttach.getClass(), pfamInterprosNewPfamInterproToAttach.getPfamAWID());
                 attachedPfamInterprosNew.add(pfamInterprosNewPfamInterproToAttach);
             }
             pfamInterprosNew = attachedPfamInterprosNew;
             pfamA.setPfamInterpros(pfamInterprosNew);
-            Set<PfamNestedLocations> attachedPfamNestedLocationsesNew = new HashSet<>();
+            Set<PfamNestedLocations> attachedPfamNestedLocationsesNew = new HashSet();
             for (PfamNestedLocations pfamNestedLocationsesNewPfamNestedLocationsToAttach : pfamNestedLocationsesNew) {
                 pfamNestedLocationsesNewPfamNestedLocationsToAttach = em.getReference(pfamNestedLocationsesNewPfamNestedLocationsToAttach.getClass(), pfamNestedLocationsesNewPfamNestedLocationsToAttach.getWid());
                 attachedPfamNestedLocationsesNew.add(pfamNestedLocationsesNewPfamNestedLocationsToAttach);
             }
             pfamNestedLocationsesNew = attachedPfamNestedLocationsesNew;
             pfamA.setPfamNestedLocationses(pfamNestedLocationsesNew);
-            Set<PfamANCBIReg> attachedPfamANCBIRegsNew = new HashSet<>();
+            Set<PfamANCBIReg> attachedPfamANCBIRegsNew = new HashSet();
             for (PfamANCBIReg pfamANCBIRegsNewPfamANCBIRegToAttach : pfamANCBIRegsNew) {
                 pfamANCBIRegsNewPfamANCBIRegToAttach = em.getReference(pfamANCBIRegsNewPfamANCBIRegToAttach.getClass(), pfamANCBIRegsNewPfamANCBIRegToAttach.getWid());
                 attachedPfamANCBIRegsNew.add(pfamANCBIRegsNewPfamANCBIRegToAttach);
             }
             pfamANCBIRegsNew = attachedPfamANCBIRegsNew;
             pfamA.setPfamANCBIRegs(pfamANCBIRegsNew);
-            Set<PfamADatabaseLinks> attachedPfamADatabaseLinksesNew = new HashSet<>();
+            Set<PfamADatabaseLinks> attachedPfamADatabaseLinksesNew = new HashSet();
             for (PfamADatabaseLinks pfamADatabaseLinksesNewPfamADatabaseLinksToAttach : pfamADatabaseLinksesNew) {
                 pfamADatabaseLinksesNewPfamADatabaseLinksToAttach = em.getReference(pfamADatabaseLinksesNewPfamADatabaseLinksToAttach.getClass(), pfamADatabaseLinksesNewPfamADatabaseLinksToAttach.getWid());
                 attachedPfamADatabaseLinksesNew.add(pfamADatabaseLinksesNewPfamADatabaseLinksToAttach);

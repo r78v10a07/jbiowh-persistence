@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This Class is the MIFParticipantExperimentalInteractor entity
@@ -64,6 +65,7 @@ public class MIFParticipantExperimentalInteractor implements Serializable {
         this.mIFInteractionParticipantWID = mIFInteractionParticipantWID;
     }
 
+    @XmlTransient
     public Set<MIFEntryInteractor> getMifEntryInteractor() {
         return mifEntryInteractor;
     }
@@ -80,6 +82,7 @@ public class MIFParticipantExperimentalInteractor implements Serializable {
         this.mifInteractionParticipant = mifInteractionParticipant;
     }
 
+    @XmlTransient
     public Map<MIFOtherExperimentRefPK, MIFOtherExperimentRef> getMifOtherExperimentRef() {
         return mifOtherExperimentRef;
     }

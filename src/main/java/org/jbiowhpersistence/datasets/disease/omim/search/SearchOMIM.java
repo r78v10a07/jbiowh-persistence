@@ -13,9 +13,9 @@ import org.jbiowhpersistence.utils.search.SearchFactory;
 /**
  * This Class perform the search over the OMIM module
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2013-05-29 11:24:54 +0200 (Wed, 29 May 2013) $
- * $LastChangedRevision: 591 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2013-05-29 11:24:54 +0200
+ * (Wed, 29 May 2013) $ $LastChangedRevision: 591 $
+ *
  * @since Jul 25, 2012
  */
 public class SearchOMIM extends SearchFactory {
@@ -25,7 +25,7 @@ public class SearchOMIM extends SearchFactory {
     public final String TX = "Text";
 
     public SearchOMIM() {
-        HashMap<String, Class> fields = new HashMap<>();
+        HashMap<String, Class> fields = new HashMap();
         fields.put(OMIM_ID, Long.class);
         fields.put(TITLE, String.class);
         fields.put(TX, String.class);
@@ -45,7 +45,6 @@ public class SearchOMIM extends SearchFactory {
         if (search == null || search.isEmpty()) {
             return search(searchList, constrains);
         }
-
 
         searchRow.add("");
         if (BioWHPattern.getInstance().isLong(search)) {
@@ -70,16 +69,13 @@ public class SearchOMIM extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldBeforeWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         HashMap<String, String> fieldOnEntity = getFieldOnEntity();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case TITLE:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " s ");
-                    break;
-                default:
-                    data.put(field, "");
-                    break;
+            if (field.equals(TITLE)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " s ");
+            } else {
+                data.put(field, "");
             }
         }
         return data;
@@ -87,18 +83,14 @@ public class SearchOMIM extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldAfterWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case OMIM_ID:
-                    data.put(field, "g.omimId");
-                    break;
-                case TITLE:
-                    data.put(field, "s.oMIMTIPK.ti");
-                    break;
-                case TX:
-                    data.put(field, "g.tx");
-                    break;
+            if (field.equals(OMIM_ID)) {
+                data.put(field, "g.omimId");
+            } else if (field.equals(TITLE)) {
+                data.put(field, "s.oMIMTIPK.ti");
+            } else if (field.equals(TX)) {
+                data.put(field, "g.tx");
             }
         }
         return data;
@@ -106,15 +98,12 @@ public class SearchOMIM extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldOnEntity() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case TITLE:
-                    data.put(field, "g.omimTIs");
-                    break;
-                default:
-                    data.put(field, "");
-                    break;
+            if (field.equals(TITLE)) {
+                data.put(field, "g.omimTIs");
+            } else {
+                data.put(field, "");
             }
         }
         return data;
@@ -122,7 +111,7 @@ public class SearchOMIM extends SearchFactory {
 
     @Override
     protected HashMap<Class, List> getConstrainFieldOnEntity() {
-        HashMap<Class, List> data = new HashMap<>();
+        HashMap<Class, List> data = new HashMap();
 
         List listG = new ArrayList();
         listG.add("g.geneInfo");

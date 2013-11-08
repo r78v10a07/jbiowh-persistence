@@ -61,7 +61,7 @@ public class TaxonomyTables {
      */
     public List<String> getTables() {
         if (tables == null) {
-            tables = new ArrayList<>();
+            tables = new ArrayList();
             tables.add(CITTAX);
             tables.add(DIVISIONTEMP);
             tables.add(GENCODETEMP);

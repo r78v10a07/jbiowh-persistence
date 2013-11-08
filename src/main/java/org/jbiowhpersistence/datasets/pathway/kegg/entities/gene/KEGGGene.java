@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 import org.jbiowhpersistence.datasets.gene.gene.GeneTables;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
@@ -107,6 +108,7 @@ public class KEGGGene implements Serializable {
         this.dataSet = dataSet;
     }
 
+    @XmlTransient
     public Set<GeneInfo> getGeneInfos() {
         return geneInfos;
     }
@@ -115,6 +117,7 @@ public class KEGGGene implements Serializable {
         this.geneInfos = geneInfos;
     }
 
+    @XmlTransient
     public Map<KEGGGeneOrthologyPK, KEGGGeneOrthology> getkEGGGeneOrthology() {
         return kEGGGeneOrthology;
     }
@@ -123,6 +126,7 @@ public class KEGGGene implements Serializable {
         this.kEGGGeneOrthology = kEGGGeneOrthology;
     }
 
+    @XmlTransient
     public Map<KEGGGeneDrugTargetPK, KEGGGeneDrugTarget> getkEGGGeneDrugTarget() {
         return kEGGGeneDrugTarget;
     }
@@ -131,6 +135,7 @@ public class KEGGGene implements Serializable {
         this.kEGGGeneDrugTarget = kEGGGeneDrugTarget;
     }
 
+    @XmlTransient
     public Set<KEGGGeneDisease> getkEGGGeneDisease() {
         return kEGGGeneDisease;
     }
@@ -139,6 +144,7 @@ public class KEGGGene implements Serializable {
         this.kEGGGeneDisease = kEGGGeneDisease;
     }
 
+    @XmlTransient
     public Set<KEGGPathway> getkEGGPathways() {
         return kEGGPathways;
     }
@@ -154,6 +160,7 @@ public class KEGGGene implements Serializable {
         return null;
     }
 
+    @XmlTransient
     public Set<KEGGGeneName> getkEGGGeneName() {
         return kEGGGeneName;
     }
@@ -162,6 +169,7 @@ public class KEGGGene implements Serializable {
         this.kEGGGeneName = kEGGGeneName;
     }
 
+    @XmlTransient
     public Map<KEGGGeneDBLinkPK, KEGGGeneDBLink> getkEGGGeneDBLink() {
         return kEGGGeneDBLink;
     }

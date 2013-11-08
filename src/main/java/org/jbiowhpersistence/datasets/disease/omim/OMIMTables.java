@@ -63,7 +63,7 @@ public class OMIMTables {
      */
     public List<String> getTables() {
         if (tables == null) {
-            tables = new ArrayList<>();
+            tables = new ArrayList();
 
             tables.add(OMIM);
             tables.add(OMIMAV);

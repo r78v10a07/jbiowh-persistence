@@ -78,7 +78,7 @@ public class GeneTables {
      */
     public List<String> getTables() {
         if (tables == null) {
-            tables = new ArrayList<>();
+            tables = new ArrayList();
             tables.add(GENE2ACCESSION);
             tables.add(GENE2ACCESSION_HAS_PROTEIN);
             tables.add(GENE2ACCESSIONTEMP);

@@ -32,7 +32,7 @@ public class SearchKEGGEnzyme extends SearchFactory {
     public final String ORTHOLOGYENTRY = "Orthology Entry";
 
     public SearchKEGGEnzyme() {
-        HashMap<String, Class> fields = new HashMap<>();
+        HashMap<String, Class> fields = new HashMap();
         fields.put(ENTRY, String.class);
         fields.put(NAME, String.class);
         fields.put(SYSNAME, String.class);
@@ -77,33 +77,25 @@ public class SearchKEGGEnzyme extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldBeforeWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         HashMap<String, String> fieldOnEntity = getFieldOnEntity();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case NAME:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " n ");
-                    break;
-                case SYSNAME:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " s ");
-                    break;
-                case CLASS:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " c ");
-                    break;
-                case DBLINKID:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " dId ");
-                    break;
-                case DBLINKDB:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " dDb ");
-                    break;
-                case ORTHOLOGYNAME:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " oN ");
-                    break;
-                case ORTHOLOGYENTRY:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " oE ");
-                    break;
-                default:
-                    data.put(field, "");
+            if (field.equals(NAME)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " n ");
+            } else if (field.equals(SYSNAME)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " s ");
+            } else if (field.equals(CLASS)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " c ");
+            } else if (field.equals(DBLINKID)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " dId ");
+            } else if (field.equals(DBLINKDB)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " dDb ");
+            } else if (field.equals(ORTHOLOGYNAME)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " oN ");
+            } else if (field.equals(ORTHOLOGYENTRY)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " oE ");
+            } else {
+                data.put(field, "");
             }
         }
         return data;
@@ -111,36 +103,26 @@ public class SearchKEGGEnzyme extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldAfterWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case ENTRY:
-                    data.put(field, "g.entry");
-                    break;
-                case NAME:
-                    data.put(field, "n.name");
-                    break;
-                case SYSNAME:
-                    data.put(field, "s.sySName");
-                    break;
-                case CLASS:
-                    data.put(field, "c.class1");
-                    break;
-                case COMMENT:
-                    data.put(field, "g.comment");
-                    break;
-                case DBLINKID:
-                    data.put(field, "dId.kEGGEnzymeDBLinkPK.id");
-                    break;
-                case DBLINKDB:
-                    data.put(field, "dDb.kEGGEnzymeDBLinkPK.db");
-                    break;
-                case ORTHOLOGYNAME:
-                    data.put(field, "oN.name");
-                    break;
-                case ORTHOLOGYENTRY:
-                    data.put(field, "oE.kEGGEnzymeOrthologyPK.entry");
-                    break;
+            if (field.equals(ENTRY)) {
+                data.put(field, "g.entry");
+            } else if (field.equals(NAME)) {
+                data.put(field, "n.name");
+            } else if (field.equals(SYSNAME)) {
+                data.put(field, "s.sySName");
+            } else if (field.equals(CLASS)) {
+                data.put(field, "c.class1");
+            } else if (field.equals(COMMENT)) {
+                data.put(field, "g.comment");
+            } else if (field.equals(DBLINKID)) {
+                data.put(field, "dId.kEGGEnzymeDBLinkPK.id");
+            } else if (field.equals(DBLINKDB)) {
+                data.put(field, "dDb.kEGGEnzymeDBLinkPK.db");
+            } else if (field.equals(ORTHOLOGYNAME)) {
+                data.put(field, "oN.name");
+            } else if (field.equals(ORTHOLOGYENTRY)) {
+                data.put(field, "oE.kEGGEnzymeOrthologyPK.entry");
             }
         }
         return data;
@@ -148,33 +130,24 @@ public class SearchKEGGEnzyme extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldOnEntity() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case NAME:
-                    data.put(field, "g.kEGGEnzymeName");
-                    break;
-                case SYSNAME:
-                    data.put(field, "g.kEGGEnzymeSysName");
-                    break;
-                case CLASS:
-                    data.put(field, "g.kEGGEnzymeClass");
-                    break;
-                case DBLINKID:
-                    data.put(field, "g.kEGGEnzymeDBLink");
-                    break;
-                case DBLINKDB:
-                    data.put(field, "g.kEGGEnzymeDBLink");
-                    break;
-                case ORTHOLOGYNAME:
-                    data.put(field, "g.kEGGEnzymeOrthology");
-                    break;
-                case ORTHOLOGYENTRY:
-                    data.put(field, "g.kEGGEnzymeOrthology");
-                    break;
-                default:
-                    data.put(field, "");
-                    break;
+            if (field.equals(NAME)) {
+                data.put(field, "g.kEGGEnzymeName");
+            } else if (field.equals(SYSNAME)) {
+                data.put(field, "g.kEGGEnzymeSysName");
+            } else if (field.equals(CLASS)) {
+                data.put(field, "g.kEGGEnzymeClass");
+            } else if (field.equals(DBLINKID)) {
+                data.put(field, "g.kEGGEnzymeDBLink");
+            } else if (field.equals(DBLINKDB)) {
+                data.put(field, "g.kEGGEnzymeDBLink");
+            } else if (field.equals(ORTHOLOGYNAME)) {
+                data.put(field, "g.kEGGEnzymeOrthology");
+            } else if (field.equals(ORTHOLOGYENTRY)) {
+                data.put(field, "g.kEGGEnzymeOrthology");
+            } else {
+                data.put(field, "");
             }
         }
         return data;
@@ -182,7 +155,7 @@ public class SearchKEGGEnzyme extends SearchFactory {
 
     @Override
     protected HashMap<Class, List> getConstrainFieldOnEntity() {
-        HashMap<Class, List> data = new HashMap<>();
+        HashMap<Class, List> data = new HashMap();
 
         List listP = new ArrayList();
         listP.add("g.kEGGPathways");

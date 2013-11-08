@@ -57,7 +57,7 @@ public class PfamLiteratureReferencesJpaController extends AbstractPFamJpaContro
             
             if (!pfamLiteratureReferences.getPfamAhasPfamLiteratureReferences().isEmpty()) {
                 PfamAbioWHJpaController kController = new PfamAbioWHJpaController(emf);
-                Map<PfamAhasPfamLiteratureReferencesPK, PfamAhasPfamLiteratureReferences> attachPfamLiteratureReferences = new HashMap<>();
+                Map<PfamAhasPfamLiteratureReferencesPK, PfamAhasPfamLiteratureReferences> attachPfamLiteratureReferences = new HashMap();
                 for (PfamAhasPfamLiteratureReferences pfamAhasPfamLiteratureReferencesToAttach : pfamLiteratureReferences.getPfamAhasPfamLiteratureReferences().values()) {
                     PfamAhasPfamLiteratureReferences pfamAhasPfamLiteratureReferencesOnDB = em.find(pfamAhasPfamLiteratureReferencesToAttach.getClass(), pfamAhasPfamLiteratureReferencesToAttach.getPfamAhasPfamLiteratureReferencesPK());
                     if (pfamAhasPfamLiteratureReferencesOnDB != null) {
@@ -80,7 +80,7 @@ public class PfamLiteratureReferencesJpaController extends AbstractPFamJpaContro
             
             if (!pfamLiteratureReferences.getPfamClanshasPfamLiteratureReferences().isEmpty()) {
                 PfamClansJpaController kController = new PfamClansJpaController(emf);
-                Map<PfamClanshasPfamLiteratureReferencesPK, PfamClanshasPfamLiteratureReferences> attachPfamLiteratureReferences = new HashMap<>();
+                Map<PfamClanshasPfamLiteratureReferencesPK, PfamClanshasPfamLiteratureReferences> attachPfamLiteratureReferences = new HashMap();
                 for (PfamClanshasPfamLiteratureReferences pfamClanshasPfamLiteratureReferencesToAttach : pfamLiteratureReferences.getPfamClanshasPfamLiteratureReferences().values()) {
                     PfamClanshasPfamLiteratureReferences pfamClanshasPfamLiteratureReferencesOnDB = em.find(pfamClanshasPfamLiteratureReferencesToAttach.getClass(), pfamClanshasPfamLiteratureReferencesToAttach.getPfamClanshasPfamLiteratureReferencesPK());
                     if (pfamClanshasPfamLiteratureReferencesOnDB != null) {

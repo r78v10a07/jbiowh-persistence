@@ -122,7 +122,7 @@ public class KEGGTables {
      */
     public List<String> getTables() {
         if (tables == null) {
-            tables = new ArrayList<>();
+            tables = new ArrayList();
 
             tables.add(KEGGCOMPOUND);
             tables.add(KEGGCOMPOUNDENZYME);

@@ -71,14 +71,14 @@ public class KEGGGeneJpaController extends AbstractKEGGJpaController<KEGGGene> i
             Set<GeneInfo> geneInfosNew = keggGene.getGeneInfos();
             Set<KEGGPathway> kEGGPathwaysOld = persistentKEGGGene.getkEGGPathways();
             Set<KEGGPathway> kEGGPathwaysNew = keggGene.getkEGGPathways();
-            Set<GeneInfo> attachedGeneInfosNew = new HashSet<>();
+            Set<GeneInfo> attachedGeneInfosNew = new HashSet();
             for (GeneInfo geneInfosNewGeneInfoToAttach : geneInfosNew) {
                 geneInfosNewGeneInfoToAttach = em.getReference(geneInfosNewGeneInfoToAttach.getClass(), geneInfosNewGeneInfoToAttach.getWid());
                 attachedGeneInfosNew.add(geneInfosNewGeneInfoToAttach);
             }
             geneInfosNew = attachedGeneInfosNew;
             keggGene.setGeneInfos(geneInfosNew);
-            Set<KEGGPathway> attachedkEGGPathwaysNew = new HashSet<>();
+            Set<KEGGPathway> attachedkEGGPathwaysNew = new HashSet();
             for (KEGGPathway kEGGPathwaysNewKEGGPathwayToAttach : kEGGPathwaysNew) {
                 kEGGPathwaysNewKEGGPathwayToAttach = em.getReference(kEGGPathwaysNewKEGGPathwayToAttach.getClass(), kEGGPathwaysNewKEGGPathwayToAttach.getWid());
                 attachedkEGGPathwaysNew.add(kEGGPathwaysNewKEGGPathwayToAttach);

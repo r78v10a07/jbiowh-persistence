@@ -47,7 +47,7 @@ public class UniRefEntryJpaController extends AbstractJpaController<UniRefEntry>
             em = getEntityManager();
             em.getTransaction().begin();
             if (!uniRefEntry.getUniRefEntryProperty().isEmpty()) {
-                Set<UniRefEntryProperty> attachedUniRefEntryProperty = new HashSet<>();
+                Set<UniRefEntryProperty> attachedUniRefEntryProperty = new HashSet();
                 for (UniRefEntryProperty uniRefEntryPropertyUniRefEntryPropertyToAttach : uniRefEntry.getUniRefEntryProperty()) {
                     UniRefEntryProperty uniRefEntryPropertyUniRefEntryProperty = em.find(uniRefEntryPropertyUniRefEntryPropertyToAttach.getClass(), uniRefEntryPropertyUniRefEntryPropertyToAttach.getWid());
                     if (uniRefEntryPropertyUniRefEntryProperty != null) {
@@ -85,7 +85,7 @@ public class UniRefEntryJpaController extends AbstractJpaController<UniRefEntry>
             UniRefEntry persistentUniRefEntry = em.find(UniRefEntry.class, uniRefEntry.getWid());
             Set<UniRefEntryProperty> uniRefEntryPropertyOld = persistentUniRefEntry.getUniRefEntryProperty();
             Set<UniRefEntryProperty> uniRefEntryPropertyNew = uniRefEntry.getUniRefEntryProperty();
-            Set<UniRefEntryProperty> attachedUniRefEntryPropertyNew = new HashSet<>();
+            Set<UniRefEntryProperty> attachedUniRefEntryPropertyNew = new HashSet();
             for (UniRefEntryProperty uniRefEntryPropertyNewUniRefEntryPropertyToAttach : uniRefEntryPropertyNew) {
                 uniRefEntryPropertyNewUniRefEntryPropertyToAttach = em.getReference(uniRefEntryPropertyNewUniRefEntryPropertyToAttach.getClass(), uniRefEntryPropertyNewUniRefEntryPropertyToAttach.getWid());
                 attachedUniRefEntryPropertyNew.add(uniRefEntryPropertyNewUniRefEntryPropertyToAttach);

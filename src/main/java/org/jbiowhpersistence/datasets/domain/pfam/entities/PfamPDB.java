@@ -17,6 +17,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This class is the PfamPDB entity
@@ -77,6 +78,7 @@ public class PfamPDB implements Serializable {
         this.pdbId = pdbId;
     }
 
+    @XmlTransient
     public Set<PfamPDBResidueData> getPfamPDBResidueDatas() {
         return pfamPDBResidueDatas;
     }

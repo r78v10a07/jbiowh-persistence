@@ -86,28 +86,28 @@ public class MIFEntrySourceJpaController extends AbstractMIFJpaController<MIFEnt
                 mIFEntrySetEntryNew = em.getReference(mIFEntrySetEntryNew.getClass(), mIFEntrySetEntryNew.getWid());
                 mifEntrySource.setmIFEntrySetEntry(mIFEntrySetEntryNew);
             }
-            Set<MIFOtherAlias> attachedmIFOtherAliasNew = new HashSet<>();
+            Set<MIFOtherAlias> attachedmIFOtherAliasNew = new HashSet();
             for (MIFOtherAlias mIFOtherAliasNewMIFOtherAliasToAttach : mIFOtherAliasNew) {
                 mIFOtherAliasNewMIFOtherAliasToAttach = em.getReference(mIFOtherAliasNewMIFOtherAliasToAttach.getClass(), mIFOtherAliasNewMIFOtherAliasToAttach.getWid());
                 attachedmIFOtherAliasNew.add(mIFOtherAliasNewMIFOtherAliasToAttach);
             }
             mIFOtherAliasNew = attachedmIFOtherAliasNew;
             mifEntrySource.setmIFOtherAlias(mIFOtherAliasNew);
-            Set<MIFOtherAttribute> attachedmIFOtherAttributeNew = new HashSet<>();
+            Set<MIFOtherAttribute> attachedmIFOtherAttributeNew = new HashSet();
             for (MIFOtherAttribute mIFOtherAttributeNewMIFOtherAttributeToAttach : mIFOtherAttributeNew) {
                 mIFOtherAttributeNewMIFOtherAttributeToAttach = em.getReference(mIFOtherAttributeNewMIFOtherAttributeToAttach.getClass(), mIFOtherAttributeNewMIFOtherAttributeToAttach.getWid());
                 attachedmIFOtherAttributeNew.add(mIFOtherAttributeNewMIFOtherAttributeToAttach);
             }
             mIFOtherAttributeNew = attachedmIFOtherAttributeNew;
             mifEntrySource.setmIFOtherAttribute(mIFOtherAttributeNew);
-            Set<MIFOtherBibRef> attachedmIFOtherBibRefNew = new HashSet<>();
+            Set<MIFOtherBibRef> attachedmIFOtherBibRefNew = new HashSet();
             for (MIFOtherBibRef mIFOtherBibRefNewMIFOtherBibRefToAttach : mIFOtherBibRefNew) {
                 mIFOtherBibRefNewMIFOtherBibRefToAttach = em.getReference(mIFOtherBibRefNewMIFOtherBibRefToAttach.getClass(), mIFOtherBibRefNewMIFOtherBibRefToAttach.getWid());
                 attachedmIFOtherBibRefNew.add(mIFOtherBibRefNewMIFOtherBibRefToAttach);
             }
             mIFOtherBibRefNew = attachedmIFOtherBibRefNew;
             mifEntrySource.setmIFOtherBibRef(mIFOtherBibRefNew);
-            Set<MIFOtherXRef> attachedmIFOtherXRefNew = new HashSet<>();
+            Set<MIFOtherXRef> attachedmIFOtherXRefNew = new HashSet();
             for (MIFOtherXRef mIFOtherXRefNewMIFOtherXRefToAttach : mIFOtherXRefNew) {
                 mIFOtherXRefNewMIFOtherXRefToAttach = em.getReference(mIFOtherXRefNewMIFOtherXRefToAttach.getClass(), mIFOtherXRefNewMIFOtherXRefToAttach.getWid());
                 attachedmIFOtherXRefNew.add(mIFOtherXRefNewMIFOtherXRefToAttach);

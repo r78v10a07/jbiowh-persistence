@@ -62,7 +62,7 @@ public class PfamARegFullSignificantJpaController extends AbstractPFamJpaControl
                 }
             }
             if (!pfamARegFullSignificant.getPfamAPDBRegs().isEmpty()) {
-                Set<PfamAPDBReg> attachedPfamAPDBRegs = new HashSet<>();
+                Set<PfamAPDBReg> attachedPfamAPDBRegs = new HashSet();
                 for (PfamAPDBReg pfamAPDBRegsToAttach : pfamARegFullSignificant.getPfamAPDBRegs()) {
                     PfamAPDBReg pfamAPDBRegsToAttachOnDB = em.find(pfamAPDBRegsToAttach.getClass(), pfamAPDBRegsToAttach.getWid());
                     if (pfamAPDBRegsToAttachOnDB != null) {
@@ -100,7 +100,7 @@ public class PfamARegFullSignificantJpaController extends AbstractPFamJpaControl
             for (PfamAPDBReg pfamAPDBRegsOldPfamAPDBReg : pfamAPDBRegsOld) {
                 if (!pfamAPDBRegsNew.contains(pfamAPDBRegsOldPfamAPDBReg)) {
                     if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<>();
+                        illegalOrphanMessages = new ArrayList();
                     }
                     illegalOrphanMessages.add("You must retain PfamAPDBReg " + pfamAPDBRegsOldPfamAPDBReg + " since its pfamARegFullSignificant field is not nullable.");
                 }
@@ -116,7 +116,7 @@ public class PfamARegFullSignificantJpaController extends AbstractPFamJpaControl
                 pfamSeqhasProteinNew = em.getReference(pfamSeqhasProteinNew.getClass(), pfamSeqhasProteinNew.getPfamSeqhasProteinPK());
                 pfamARegFullSignificant.setPfamSeqhasProtein(pfamSeqhasProteinNew);
             }
-            Set<PfamAPDBReg> attachedPfamAPDBRegsNew = new HashSet<>();
+            Set<PfamAPDBReg> attachedPfamAPDBRegsNew = new HashSet();
             for (PfamAPDBReg pfamAPDBRegsNewPfamAPDBRegToAttach : pfamAPDBRegsNew) {
                 pfamAPDBRegsNewPfamAPDBRegToAttach = em.getReference(pfamAPDBRegsNewPfamAPDBRegToAttach.getClass(), pfamAPDBRegsNewPfamAPDBRegToAttach.getWid());
                 attachedPfamAPDBRegsNew.add(pfamAPDBRegsNewPfamAPDBRegToAttach);
@@ -189,7 +189,7 @@ public class PfamARegFullSignificantJpaController extends AbstractPFamJpaControl
             Set<PfamAPDBReg> pfamAPDBRegsOrphanCheck = pfamARegFullSignificant.getPfamAPDBRegs();
             for (PfamAPDBReg pfamAPDBRegsOrphanCheckPfamAPDBReg : pfamAPDBRegsOrphanCheck) {
                 if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<>();
+                    illegalOrphanMessages = new ArrayList();
                 }
                 illegalOrphanMessages.add("This PfamARegFullSignificant (" + pfamARegFullSignificant + ") cannot be destroyed since the PfamAPDBReg " + pfamAPDBRegsOrphanCheckPfamAPDBReg + " in its pfamAPDBRegs field has a non-nullable pfamARegFullSignificant field.");
             }

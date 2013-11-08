@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This Class is the MIFEntryInteractor entity
@@ -109,6 +110,7 @@ public class MIFEntryInteractor implements Serializable {
         this.mifInteractionParticipant = mifInteractionParticipant;
     }
 
+    @XmlTransient
     public Set<MIFInteractorInteractorType> getMifInteractorInteractorType() {
         return mifInteractorInteractorType;
     }
@@ -117,6 +119,7 @@ public class MIFEntryInteractor implements Serializable {
         this.mifInteractorInteractorType = mifInteractorInteractorType;
     }
 
+    @XmlTransient
     public Set<MIFOtherAlias> getMifOtherAlias() {
         return mifOtherAlias;
     }
@@ -125,6 +128,7 @@ public class MIFEntryInteractor implements Serializable {
         this.mifOtherAlias = mifOtherAlias;
     }
 
+    @XmlTransient
     public Set<MIFOtherAttribute> getMifOtherAttribute() {
         return mifOtherAttribute;
     }
@@ -133,6 +137,7 @@ public class MIFEntryInteractor implements Serializable {
         this.mifOtherAttribute = mifOtherAttribute;
     }
 
+    @XmlTransient
     public Set<MIFOtherBioSourceType> getMifOtherBioSourceType() {
         return mifOtherBioSourceType;
     }
@@ -141,6 +146,7 @@ public class MIFEntryInteractor implements Serializable {
         this.mifOtherBioSourceType = mifOtherBioSourceType;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRef> getMifOtherXRef() {
         return mifOtherXRef;
     }
@@ -149,6 +155,7 @@ public class MIFEntryInteractor implements Serializable {
         this.mifOtherXRef = mifOtherXRef;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRefGO> getMifOtherXRefGO() {
         return mifOtherXRefGO;
     }
@@ -157,6 +164,7 @@ public class MIFEntryInteractor implements Serializable {
         this.mifOtherXRefGO = mifOtherXRefGO;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRefPubMed> getMifOtherXRefPubMed() {
         return mifOtherXRefPubMed;
     }
@@ -165,6 +173,7 @@ public class MIFEntryInteractor implements Serializable {
         this.mifOtherXRefPubMed = mifOtherXRefPubMed;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRefRefSeq> getMifOtherXRefRefSeq() {
         return mifOtherXRefRefSeq;
     }
@@ -173,6 +182,7 @@ public class MIFEntryInteractor implements Serializable {
         this.mifOtherXRefRefSeq = mifOtherXRefRefSeq;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRefUniprot> getMifOtherXRefUniprot() {
         return mifOtherXRefUniprot;
     }

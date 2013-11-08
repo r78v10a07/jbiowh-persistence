@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 import org.jbiowhpersistence.datasets.protclust.UniRefTables;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
@@ -97,6 +98,7 @@ public class UniRefEntry implements Serializable {
         this.dataSet = dataSet;
     }
     
+    @XmlTransient
     public Set<Protein> getProtein() {
         return protein;
     }
@@ -105,6 +107,7 @@ public class UniRefEntry implements Serializable {
         this.protein = protein;
     }
 
+    @XmlTransient
     public Set<UniRefMember> getUniRefMember() {
         return uniRefMember;
     }
@@ -121,6 +124,7 @@ public class UniRefEntry implements Serializable {
         this.taxonomy = taxonomy;
     }
 
+    @XmlTransient
     public Set<UniRefEntryProperty> getUniRefEntryProperty() {
         return uniRefEntryProperty;
     }

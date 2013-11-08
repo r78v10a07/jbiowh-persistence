@@ -16,6 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.domain.pfam.PFamTables;
 
 /**
@@ -86,6 +87,7 @@ public class PfamArchitecture implements Serializable {
         setPfamClanses(null);
     }
 
+    @XmlTransient
     public Set<PfamAbioWH> getPfamA() {
         return pfamA;
     }
@@ -94,6 +96,7 @@ public class PfamArchitecture implements Serializable {
         this.pfamA = pfamA;
     }
 
+    @XmlTransient
     public Set<PfamClans> getPfamClanses() {
         return pfamClanses;
     }

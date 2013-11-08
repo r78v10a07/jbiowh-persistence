@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 import org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBank;
 import org.jbiowhpersistence.datasets.pathway.kegg.KEGGTables;
@@ -152,6 +153,7 @@ public class KEGGCompound implements Serializable {
         this.dataSet = dataSet;
     }
 
+    @XmlTransient
     public Set<DrugBank> getDrugBanks() {
         return drugBanks;
     }
@@ -160,6 +162,7 @@ public class KEGGCompound implements Serializable {
         this.drugBanks = drugBanks;
     }
 
+    @XmlTransient
     public Set<KEGGPathway> getkEGGPathways() {
         return kEGGPathways;
     }
@@ -168,6 +171,7 @@ public class KEGGCompound implements Serializable {
         this.kEGGPathways = kEGGPathways;
     }
 
+    @XmlTransient
     public Set<KEGGRPair> getkEGGRPair() {
         return kEGGRPair;
     }
@@ -176,6 +180,7 @@ public class KEGGCompound implements Serializable {
         this.kEGGRPair = kEGGRPair;
     }
 
+    @XmlTransient
     public Set<KEGGEnzyme> getkEGGEnzymeAsCofactor() {
         return kEGGEnzymeAsCofactor;
     }
@@ -184,6 +189,7 @@ public class KEGGCompound implements Serializable {
         this.kEGGEnzymeAsCofactor = kEGGEnzymeAsCofactor;
     }
 
+    @XmlTransient
     public Set<KEGGEnzyme> getkEGGEnzymeAsEffector() {
         return kEGGEnzymeAsEffector;
     }
@@ -192,6 +198,7 @@ public class KEGGCompound implements Serializable {
         this.kEGGEnzymeAsEffector = kEGGEnzymeAsEffector;
     }
 
+    @XmlTransient
     public Set<KEGGEnzyme> getkEGGEnzymeAsInhibitor() {
         return kEGGEnzymeAsInhibitor;
     }
@@ -200,6 +207,7 @@ public class KEGGCompound implements Serializable {
         this.kEGGEnzymeAsInhibitor = kEGGEnzymeAsInhibitor;
     }
 
+    @XmlTransient
     public Set<KEGGReaction> getkEGGReactionAsProduct() {
         return kEGGReactionAsProduct;
     }
@@ -208,6 +216,7 @@ public class KEGGCompound implements Serializable {
         this.kEGGReactionAsProduct = kEGGReactionAsProduct;
     }
 
+    @XmlTransient
     public Set<KEGGReaction> getkEGGReactionAsSubstrate() {
         return kEGGReactionAsSubstrate;
     }
@@ -216,6 +225,7 @@ public class KEGGCompound implements Serializable {
         this.kEGGReactionAsSubstrate = kEGGReactionAsSubstrate;
     }
 
+    @XmlTransient
     public Map<KEGGCompoundDBLinkPK, KEGGCompoundDBLink> getkEGGCompoundDBLink() {
         return kEGGCompoundDBLink;
     }
@@ -224,6 +234,7 @@ public class KEGGCompound implements Serializable {
         this.kEGGCompoundDBLink = kEGGCompoundDBLink;
     }
 
+    @XmlTransient
     public Set<KEGGCompoundName> getkEGGCompoundName() {
         return kEGGCompoundName;
     }

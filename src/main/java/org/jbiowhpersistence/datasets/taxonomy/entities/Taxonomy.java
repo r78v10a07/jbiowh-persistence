@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 
 /**
@@ -216,6 +217,7 @@ public class Taxonomy implements Serializable {
         this.parentTaxId = parentTaxId;
     }
 
+    @XmlTransient
     public Map<TaxonomyPMIDPK, TaxonomyPMID> getPmid() {
         return pmid;
     }
@@ -232,6 +234,7 @@ public class Taxonomy implements Serializable {
         this.rank = rank;
     }
 
+    @XmlTransient
     public Map<TaxonomySynonymPK, TaxonomySynonym> getSynonym() {
         return synonym;
     }
@@ -272,6 +275,7 @@ public class Taxonomy implements Serializable {
         this.taxonomyMCGenCodeWID = taxonomyMCGenCodeWID;
     }
 
+    @XmlTransient
     public Set<TaxonomyUnParseCitation> getUnparse() {
         return unparse;
     }

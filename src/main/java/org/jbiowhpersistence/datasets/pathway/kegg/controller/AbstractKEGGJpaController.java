@@ -32,7 +32,7 @@ public abstract class AbstractKEGGJpaController<T> extends AbstractJpaController
     protected Set<KEGGReaction> createKEGGReaction(EntityManagerFactory emf, EntityManager em, Set<KEGGReaction> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             KEGGReactionJpaController instance = new KEGGReactionJpaController(emf);
-            Set<KEGGReaction> attachObjSet = new HashSet<>();
+            Set<KEGGReaction> attachObjSet = new HashSet();
             for (KEGGReaction object : objectList) {
                 KEGGReaction objectOnDB = em.find(KEGGReaction.class, object.getWid());
                 if (objectOnDB != null) {
@@ -45,7 +45,7 @@ public abstract class AbstractKEGGJpaController<T> extends AbstractJpaController
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
     
     /**
@@ -61,7 +61,7 @@ public abstract class AbstractKEGGJpaController<T> extends AbstractJpaController
     protected Set<KEGGGlycan> createKEGGGlycan(EntityManagerFactory emf, EntityManager em, Set<KEGGGlycan> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             KEGGGlycanJpaController instance = new KEGGGlycanJpaController(emf);
-            Set<KEGGGlycan> attachObjSet = new HashSet<>();
+            Set<KEGGGlycan> attachObjSet = new HashSet();
             for (KEGGGlycan object : objectList) {
                 KEGGGlycan objectOnDB = em.find(KEGGGlycan.class, object.getWid());
                 if (objectOnDB != null) {
@@ -74,6 +74,6 @@ public abstract class AbstractKEGGJpaController<T> extends AbstractJpaController
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 }

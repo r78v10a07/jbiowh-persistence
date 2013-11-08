@@ -69,7 +69,7 @@ public class MIFEntryExperimentJpaController extends AbstractMIFJpaController<MI
             mifEntryExperiment.setMifEntryInteraction(createMIFEntryInteraction(emf, em, mifEntryExperiment.getMifEntryInteraction()));
 
             if (!mifEntryExperiment.getMifExperimentFeatDetecMethod().isEmpty()) {
-                Set<MIFExperimentFeatDetecMethod> attachedMifExperimentFeatDetecMethod = new HashSet<>();
+                Set<MIFExperimentFeatDetecMethod> attachedMifExperimentFeatDetecMethod = new HashSet();
                 for (MIFExperimentFeatDetecMethod mifExperimentFeatDetecMethodMIFExperimentFeatDetecMethodToAttach : mifEntryExperiment.getMifExperimentFeatDetecMethod()) {
                     MIFExperimentFeatDetecMethod mifExperimentFeatDetecMethod = em.find(mifExperimentFeatDetecMethodMIFExperimentFeatDetecMethodToAttach.getClass(), mifExperimentFeatDetecMethodMIFExperimentFeatDetecMethodToAttach.getWid());
                     if (mifExperimentFeatDetecMethod != null) {
@@ -81,7 +81,7 @@ public class MIFEntryExperimentJpaController extends AbstractMIFJpaController<MI
                 mifEntryExperiment.setMifExperimentFeatDetecMethod(attachedMifExperimentFeatDetecMethod);
             }
             if (!mifEntryExperiment.getMifExperimentInterDetecMethod().isEmpty()) {
-                Set<MIFExperimentInterDetecMethod> attachedMifExperimentInterDetecMethod = new HashSet<>();
+                Set<MIFExperimentInterDetecMethod> attachedMifExperimentInterDetecMethod = new HashSet();
                 for (MIFExperimentInterDetecMethod mifExperimentInterDetecMethodMIFExperimentInterDetecMethodToAttach : mifEntryExperiment.getMifExperimentInterDetecMethod()) {
                     MIFExperimentInterDetecMethod mifExperimentInterDetecMethod = em.find(mifExperimentInterDetecMethodMIFExperimentInterDetecMethodToAttach.getClass(), mifExperimentInterDetecMethodMIFExperimentInterDetecMethodToAttach.getWid());
                     if (mifExperimentInterDetecMethod != null) {
@@ -93,7 +93,7 @@ public class MIFEntryExperimentJpaController extends AbstractMIFJpaController<MI
                 mifEntryExperiment.setMifExperimentInterDetecMethod(attachedMifExperimentInterDetecMethod);
             }
             if (!mifEntryExperiment.getMifExperimentPartIdentMethod().isEmpty()) {
-                Set<MIFExperimentPartIdentMethod> attachedMifExperimentPartIdentMethod = new HashSet<>();
+                Set<MIFExperimentPartIdentMethod> attachedMifExperimentPartIdentMethod = new HashSet();
                 for (MIFExperimentPartIdentMethod mifExperimentPartIdentMethodMIFExperimentPartIdentMethodToAttach : mifEntryExperiment.getMifExperimentPartIdentMethod()) {
                     MIFExperimentPartIdentMethod mifExperimentPartIdent = em.find(mifExperimentPartIdentMethodMIFExperimentPartIdentMethodToAttach.getClass(), mifExperimentPartIdentMethodMIFExperimentPartIdentMethodToAttach.getWid());
                     if (mifExperimentPartIdent != null) {
@@ -173,91 +173,91 @@ public class MIFEntryExperimentJpaController extends AbstractMIFJpaController<MI
                 mifEntrySetEntryNew = em.getReference(mifEntrySetEntryNew.getClass(), mifEntrySetEntryNew.getWid());
                 mifEntryExperiment.setMifEntrySetEntry(mifEntrySetEntryNew);
             }
-            Set<MIFExperimentFeatDetecMethod> attachedMifExperimentFeatDetecMethodNew = new HashSet<>();
+            Set<MIFExperimentFeatDetecMethod> attachedMifExperimentFeatDetecMethodNew = new HashSet();
             for (MIFExperimentFeatDetecMethod mifExperimentFeatDetecMethodNewMIFExperimentFeatDetecMethodToAttach : mifExperimentFeatDetecMethodNew) {
                 mifExperimentFeatDetecMethodNewMIFExperimentFeatDetecMethodToAttach = em.getReference(mifExperimentFeatDetecMethodNewMIFExperimentFeatDetecMethodToAttach.getClass(), mifExperimentFeatDetecMethodNewMIFExperimentFeatDetecMethodToAttach.getWid());
                 attachedMifExperimentFeatDetecMethodNew.add(mifExperimentFeatDetecMethodNewMIFExperimentFeatDetecMethodToAttach);
             }
             mifExperimentFeatDetecMethodNew = attachedMifExperimentFeatDetecMethodNew;
             mifEntryExperiment.setMifExperimentFeatDetecMethod(mifExperimentFeatDetecMethodNew);
-            Set<MIFExperimentInterDetecMethod> attachedMifExperimentInterDetecMethodNew = new HashSet<>();
+            Set<MIFExperimentInterDetecMethod> attachedMifExperimentInterDetecMethodNew = new HashSet();
             for (MIFExperimentInterDetecMethod mifExperimentInterDetecMethodNewMIFExperimentInterDetecMethodToAttach : mifExperimentInterDetecMethodNew) {
                 mifExperimentInterDetecMethodNewMIFExperimentInterDetecMethodToAttach = em.getReference(mifExperimentInterDetecMethodNewMIFExperimentInterDetecMethodToAttach.getClass(), mifExperimentInterDetecMethodNewMIFExperimentInterDetecMethodToAttach.getWid());
                 attachedMifExperimentInterDetecMethodNew.add(mifExperimentInterDetecMethodNewMIFExperimentInterDetecMethodToAttach);
             }
             mifExperimentInterDetecMethodNew = attachedMifExperimentInterDetecMethodNew;
             mifEntryExperiment.setMifExperimentInterDetecMethod(mifExperimentInterDetecMethodNew);
-            Set<MIFExperimentPartIdentMethod> attachedMifExperimentPartIdentMethodNew = new HashSet<>();
+            Set<MIFExperimentPartIdentMethod> attachedMifExperimentPartIdentMethodNew = new HashSet();
             for (MIFExperimentPartIdentMethod mifExperimentPartIdentMethodNewMIFExperimentPartIdentMethodToAttach : mifExperimentPartIdentMethodNew) {
                 mifExperimentPartIdentMethodNewMIFExperimentPartIdentMethodToAttach = em.getReference(mifExperimentPartIdentMethodNewMIFExperimentPartIdentMethodToAttach.getClass(), mifExperimentPartIdentMethodNewMIFExperimentPartIdentMethodToAttach.getWid());
                 attachedMifExperimentPartIdentMethodNew.add(mifExperimentPartIdentMethodNewMIFExperimentPartIdentMethodToAttach);
             }
             mifExperimentPartIdentMethodNew = attachedMifExperimentPartIdentMethodNew;
             mifEntryExperiment.setMifExperimentPartIdentMethod(mifExperimentPartIdentMethodNew);
-            Set<MIFOtherAlias> attachedMifOtherAliasNew = new HashSet<>();
+            Set<MIFOtherAlias> attachedMifOtherAliasNew = new HashSet();
             for (MIFOtherAlias mifOtherAliasNewMIFOtherAliasToAttach : mifOtherAliasNew) {
                 mifOtherAliasNewMIFOtherAliasToAttach = em.getReference(mifOtherAliasNewMIFOtherAliasToAttach.getClass(), mifOtherAliasNewMIFOtherAliasToAttach.getWid());
                 attachedMifOtherAliasNew.add(mifOtherAliasNewMIFOtherAliasToAttach);
             }
             mifOtherAliasNew = attachedMifOtherAliasNew;
             mifEntryExperiment.setMifOtherAlias(mifOtherAliasNew);
-            Set<MIFOtherAttribute> attachedMifOtherAttributeNew = new HashSet<>();
+            Set<MIFOtherAttribute> attachedMifOtherAttributeNew = new HashSet();
             for (MIFOtherAttribute mifOtherAttributeNewMIFOtherAttributeToAttach : mifOtherAttributeNew) {
                 mifOtherAttributeNewMIFOtherAttributeToAttach = em.getReference(mifOtherAttributeNewMIFOtherAttributeToAttach.getClass(), mifOtherAttributeNewMIFOtherAttributeToAttach.getWid());
                 attachedMifOtherAttributeNew.add(mifOtherAttributeNewMIFOtherAttributeToAttach);
             }
             mifOtherAttributeNew = attachedMifOtherAttributeNew;
             mifEntryExperiment.setMifOtherAttribute(mifOtherAttributeNew);
-            Set<MIFOtherBibRef> attachedMifOtherBibRefNew = new HashSet<>();
+            Set<MIFOtherBibRef> attachedMifOtherBibRefNew = new HashSet();
             for (MIFOtherBibRef mifOtherBibRefNewMIFOtherBibRefToAttach : mifOtherBibRefNew) {
                 mifOtherBibRefNewMIFOtherBibRefToAttach = em.getReference(mifOtherBibRefNewMIFOtherBibRefToAttach.getClass(), mifOtherBibRefNewMIFOtherBibRefToAttach.getWid());
                 attachedMifOtherBibRefNew.add(mifOtherBibRefNewMIFOtherBibRefToAttach);
             }
             mifOtherBibRefNew = attachedMifOtherBibRefNew;
             mifEntryExperiment.setMifOtherBibRef(mifOtherBibRefNew);
-            Set<MIFOtherBioSourceType> attachedMifOtherBioSourceTypeNew = new HashSet<>();
+            Set<MIFOtherBioSourceType> attachedMifOtherBioSourceTypeNew = new HashSet();
             for (MIFOtherBioSourceType mifOtherBioSourceTypeNewMIFOtherBioSourceTypeToAttach : mifOtherBioSourceTypeNew) {
                 mifOtherBioSourceTypeNewMIFOtherBioSourceTypeToAttach = em.getReference(mifOtherBioSourceTypeNewMIFOtherBioSourceTypeToAttach.getClass(), mifOtherBioSourceTypeNewMIFOtherBioSourceTypeToAttach.getWid());
                 attachedMifOtherBioSourceTypeNew.add(mifOtherBioSourceTypeNewMIFOtherBioSourceTypeToAttach);
             }
             mifOtherBioSourceTypeNew = attachedMifOtherBioSourceTypeNew;
             mifEntryExperiment.setMifOtherBioSourceType(mifOtherBioSourceTypeNew);
-            Set<MIFOtherConfidence> attachedMifOtherConfidenceNew = new HashSet<>();
+            Set<MIFOtherConfidence> attachedMifOtherConfidenceNew = new HashSet();
             for (MIFOtherConfidence mifOtherConfidenceNewMIFOtherConfidenceToAttach : mifOtherConfidenceNew) {
                 mifOtherConfidenceNewMIFOtherConfidenceToAttach = em.getReference(mifOtherConfidenceNewMIFOtherConfidenceToAttach.getClass(), mifOtherConfidenceNewMIFOtherConfidenceToAttach.getWid());
                 attachedMifOtherConfidenceNew.add(mifOtherConfidenceNewMIFOtherConfidenceToAttach);
             }
             mifOtherConfidenceNew = attachedMifOtherConfidenceNew;
             mifEntryExperiment.setMifOtherConfidence(mifOtherConfidenceNew);
-            Set<MIFOtherXRef> attachedMifOtherXRefNew = new HashSet<>();
+            Set<MIFOtherXRef> attachedMifOtherXRefNew = new HashSet();
             for (MIFOtherXRef mifOtherXRefNewMIFOtherXRefToAttach : mifOtherXRefNew) {
                 mifOtherXRefNewMIFOtherXRefToAttach = em.getReference(mifOtherXRefNewMIFOtherXRefToAttach.getClass(), mifOtherXRefNewMIFOtherXRefToAttach.getWid());
                 attachedMifOtherXRefNew.add(mifOtherXRefNewMIFOtherXRefToAttach);
             }
             mifOtherXRefNew = attachedMifOtherXRefNew;
             mifEntryExperiment.setMifOtherXRef(mifOtherXRefNew);
-            Set<MIFOtherXRefGO> attachedMifOtherXRefGONew = new HashSet<>();
+            Set<MIFOtherXRefGO> attachedMifOtherXRefGONew = new HashSet();
             for (MIFOtherXRefGO mifOtherXRefGONewMIFOtherXRefGOToAttach : mifOtherXRefGONew) {
                 mifOtherXRefGONewMIFOtherXRefGOToAttach = em.getReference(mifOtherXRefGONewMIFOtherXRefGOToAttach.getClass(), mifOtherXRefGONewMIFOtherXRefGOToAttach.getWid());
                 attachedMifOtherXRefGONew.add(mifOtherXRefGONewMIFOtherXRefGOToAttach);
             }
             mifOtherXRefGONew = attachedMifOtherXRefGONew;
             mifEntryExperiment.setMifOtherXRefGO(mifOtherXRefGONew);
-            Set<MIFOtherXRefPubMed> attachedMifOtherXRefPubMedNew = new HashSet<>();
+            Set<MIFOtherXRefPubMed> attachedMifOtherXRefPubMedNew = new HashSet();
             for (MIFOtherXRefPubMed mifOtherXRefPubMedNewMIFOtherXRefPubMedToAttach : mifOtherXRefPubMedNew) {
                 mifOtherXRefPubMedNewMIFOtherXRefPubMedToAttach = em.getReference(mifOtherXRefPubMedNewMIFOtherXRefPubMedToAttach.getClass(), mifOtherXRefPubMedNewMIFOtherXRefPubMedToAttach.getWid());
                 attachedMifOtherXRefPubMedNew.add(mifOtherXRefPubMedNewMIFOtherXRefPubMedToAttach);
             }
             mifOtherXRefPubMedNew = attachedMifOtherXRefPubMedNew;
             mifEntryExperiment.setMifOtherXRefPubMed(mifOtherXRefPubMedNew);
-            Set<MIFOtherXRefRefSeq> attachedMifOtherXRefRefSeqNew = new HashSet<>();
+            Set<MIFOtherXRefRefSeq> attachedMifOtherXRefRefSeqNew = new HashSet();
             for (MIFOtherXRefRefSeq mifOtherXRefRefSeqNewMIFOtherXRefRefSeqToAttach : mifOtherXRefRefSeqNew) {
                 mifOtherXRefRefSeqNewMIFOtherXRefRefSeqToAttach = em.getReference(mifOtherXRefRefSeqNewMIFOtherXRefRefSeqToAttach.getClass(), mifOtherXRefRefSeqNewMIFOtherXRefRefSeqToAttach.getWid());
                 attachedMifOtherXRefRefSeqNew.add(mifOtherXRefRefSeqNewMIFOtherXRefRefSeqToAttach);
             }
             mifOtherXRefRefSeqNew = attachedMifOtherXRefRefSeqNew;
             mifEntryExperiment.setMifOtherXRefRefSeq(mifOtherXRefRefSeqNew);
-            Set<MIFOtherXRefUniprot> attachedMifOtherXRefUniprotNew = new HashSet<>();
+            Set<MIFOtherXRefUniprot> attachedMifOtherXRefUniprotNew = new HashSet();
             for (MIFOtherXRefUniprot mifOtherXRefUniprotNewMIFOtherXRefUniprotToAttach : mifOtherXRefUniprotNew) {
                 mifOtherXRefUniprotNewMIFOtherXRefUniprotToAttach = em.getReference(mifOtherXRefUniprotNewMIFOtherXRefUniprotToAttach.getClass(), mifOtherXRefUniprotNewMIFOtherXRefUniprotToAttach.getWid());
                 attachedMifOtherXRefUniprotNew.add(mifOtherXRefUniprotNewMIFOtherXRefUniprotToAttach);

@@ -27,69 +27,62 @@ import org.jbiowhpersistence.utils.msms.MSFactory;
  * @since Sep 5, 2013
  */
 public class MSPrideParser extends MSData implements MSFactory {
-    
+
     @Override
     public void parseXML(File xmlFile, EntityManagerFactory factory) throws IllegalAccessException, JAXBException {
         try {
-            HashMap<String, List<Protein>> map = new HashMap<>();
+            HashMap<String, List<Protein>> map = new HashMap();
             HashMap parm = new HashMap();
             ProteinJpaController pCont = new ProteinJpaController(factory);
             JAXBContext jc = JAXBContext.newInstance("org.jbiowhcore.utility.fileformats.pride.xml");
             Unmarshaller unmarshaller = jc.createUnmarshaller();
             ExperimentCollection expColl = (ExperimentCollection) unmarshaller.unmarshal(xmlFile);
-            
+
             if (expColl != null && expColl.getExperiment() != null && expColl.getExperiment().getGelFreeIdentification() != null) {
                 for (GelFreeIdentificationType g : expColl.getExperiment().getGelFreeIdentification()) {
                     map.clear();
                     parm.clear();
                     List<Protein> proteins = null;
-                    switch (g.getDatabase().toUpperCase()) {
-                        case "IPI":
-                            if (g.getAccession().contains(".")) {
-                                parm.put("id", g.getAccession().substring(0, g.getAccession().indexOf(".")));
-                            } else{
-                                parm.put("id", g.getAccession());
-                            }
-                            proteins = pCont.useNamedQuery("Protein.findIPIId", parm);
-                            break;
-                        case "UNIPROT":
-                            parm.put("accessionNumber", g.getAccession());
-                            proteins = pCont.useNamedQuery("Protein.findProteinByAccessionNumber", parm);
-                            break;
-                        case "SWISS-PROT":
-                            parm.put("accessionNumber", g.getAccession());
-                            proteins = pCont.useNamedQuery("Protein.findProteinByAccessionNumber", parm);
-                            break;
-                        case "NRDB": {
-                            proteins = new ArrayList<>();
-                            parm.put("proteinGi", Long.parseLong(g.getAccession()));
-                            List<GeneInfo> genes = pCont.useNamedQuery("GeneInfo.findByProteinGi", parm);
-                            for (GeneInfo ge : genes) {
-                                if (ge.getProtein() != null && !ge.getProtein().isEmpty()) {
-                                    proteins.addAll(ge.getProtein());
-                                }
-                            }
-                            break;
+
+                    if (g.getDatabase().toUpperCase().equals("IPI")) {
+                        if (g.getAccession().contains(".")) {
+                            parm.put("id", g.getAccession().substring(0, g.getAccession().indexOf(".")));
+                        } else {
+                            parm.put("id", g.getAccession());
                         }
-                        case "REFSEQ": {
-                            proteins = new ArrayList<>();
-                            if (g.getAccession().contains(".")) {
+                        proteins = pCont.useNamedQuery("Protein.findIPIId", parm);
+                    } else if (g.getDatabase().toUpperCase().equals("UNIPROT")) {
+                        parm.put("accessionNumber", g.getAccession());
+                        proteins = pCont.useNamedQuery("Protein.findProteinByAccessionNumber", parm);
+                    } else if (g.getDatabase().toUpperCase().equals("SWISS-PROT")) {
+                        parm.put("accessionNumber", g.getAccession());
+                        proteins = pCont.useNamedQuery("Protein.findProteinByAccessionNumber", parm);
+                    } else if (g.getDatabase().toUpperCase().equals("NRDB")) {
+                        proteins = new ArrayList();
+                        parm.put("proteinGi", Long.parseLong(g.getAccession()));
+                        List<GeneInfo> genes = pCont.useNamedQuery("GeneInfo.findByProteinGi", parm);
+                        for (GeneInfo ge : genes) {
+                            if (ge.getProtein() != null && !ge.getProtein().isEmpty()) {
+                                proteins.addAll(ge.getProtein());
+                            }
+                        }
+                    } else if (g.getDatabase().toUpperCase().equals("REFSEQ")) {
+                        proteins = new ArrayList();
+                        if (g.getAccession().contains(".")) {
                             parm.put("proteinAccession", g.getAccession().substring(0, g.getAccession().indexOf(".")));
-                            }else{
-                                parm.put("proteinAccession", g.getAccession());
-                            }
-                            List<GeneInfo> genes = pCont.useNamedQuery("GeneInfo.findByProteinAccession", parm);
-                            for (GeneInfo ge : genes) {
-                                if (ge.getProtein() != null && !ge.getProtein().isEmpty()) {
-                                    proteins.addAll(ge.getProtein());
-                                }
-                            }
-                            break;
+                        } else {
+                            parm.put("proteinAccession", g.getAccession());
                         }
-                        default: {
-                            throw new IllegalAccessException("The database: " + g.getDatabase() + " is not included in the parser");
+                        List<GeneInfo> genes = pCont.useNamedQuery("GeneInfo.findByProteinAccession", parm);
+                        for (GeneInfo ge : genes) {
+                            if (ge.getProtein() != null && !ge.getProtein().isEmpty()) {
+                                proteins.addAll(ge.getProtein());
+                            }
                         }
+                    } else {
+                        throw new IllegalAccessException("The database: " + g.getDatabase() + " is not included in the parser");
                     }
+
                     VerbLogger.getInstance().log(this.getClass(), "MS XML Parser. Adding Id: " + g.getAccession());
                     if (proteins != null && !proteins.isEmpty()) {
                         map.put(g.getAccession(), proteins);

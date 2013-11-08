@@ -22,6 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.domain.pfam.PFamTables;
 
 /**
@@ -137,6 +138,7 @@ public class PfamClans implements Serializable {
         setPfamClanshasPfamLiteratureReferences(null);
     }
 
+    @XmlTransient
     public Map<PfamClanshasPfamLiteratureReferencesPK, PfamClanshasPfamLiteratureReferences> getPfamClanshasPfamLiteratureReferences() {
         return pfamClanshasPfamLiteratureReferences;
     }
@@ -145,6 +147,7 @@ public class PfamClans implements Serializable {
         this.pfamClanshasPfamLiteratureReferences = pfamClanshasPfamLiteratureReferences;
     }
 
+    @XmlTransient
     public Set<PfamClanDatabaseLinks> getPfamClanDatabaseLinkses() {
         return pfamClanDatabaseLinkses;
     }
@@ -153,6 +156,7 @@ public class PfamClans implements Serializable {
         this.pfamClanDatabaseLinkses = pfamClanDatabaseLinkses;
     }
 
+    @XmlTransient
     public Set<PfamAbioWH> getPfamA() {
         return pfamA;
     }
@@ -161,6 +165,7 @@ public class PfamClans implements Serializable {
         this.pfamA = pfamA;
     }
 
+    @XmlTransient
     public Set<PfamArchitecture> getPfamArchitectures() {
         return pfamArchitectures;
     }

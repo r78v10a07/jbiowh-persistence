@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
 
@@ -197,6 +198,7 @@ public class GeneBank implements Serializable {
         this.geneBankFeatureses = geneBankFeatureses;
     }
 
+    @XmlTransient
     public Set<GeneBankCDS> getGeneBankCDSs() {
         return geneBankCDSs;
     }

@@ -21,7 +21,7 @@ public class SearchKEGGReaction extends SearchFactory {
     public final String ENTRY = "Entry";
 
     public SearchKEGGReaction() {
-        HashMap<String, Class> fields = new HashMap<>();
+        HashMap<String, Class> fields = new HashMap();
         fields.put(ENTRY, String.class);
         setFields(fields);
     }
@@ -55,7 +55,7 @@ public class SearchKEGGReaction extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldBeforeWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
             data.put(field, "");
         }
@@ -64,12 +64,10 @@ public class SearchKEGGReaction extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldAfterWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case ENTRY:
-                    data.put(field, "g.entry");
-                    break;
+            if (field.equals(ENTRY)) {
+                data.put(field, "g.entry");
             }
         }
         return data;
@@ -77,7 +75,7 @@ public class SearchKEGGReaction extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldOnEntity() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
             data.put(field, "");
         }
@@ -86,7 +84,7 @@ public class SearchKEGGReaction extends SearchFactory {
 
     @Override
     protected HashMap<Class, List> getConstrainFieldOnEntity() {
-        HashMap<Class, List> data = new HashMap<>();
+        HashMap<Class, List> data = new HashMap();
         return data;
     }
 }

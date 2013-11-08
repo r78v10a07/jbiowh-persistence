@@ -33,7 +33,7 @@ public class SearchKEGGGene extends SearchFactory {
     public final String DRUGTARGET = "DrugTarget";
 
     public SearchKEGGGene() {
-        HashMap<String, Class> fields = new HashMap<>();
+        HashMap<String, Class> fields = new HashMap();
         fields.put(ENTRY, String.class);
         fields.put(NAME, String.class);
         fields.put(DEFINITION, String.class);
@@ -79,36 +79,27 @@ public class SearchKEGGGene extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldBeforeWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         HashMap<String, String> fieldOnEntity = getFieldOnEntity();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case NAME:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " n ");
-                    break;
-                case DISEASEENTRY:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " dE ");
-                    break;
-                case DISEASENAME:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " dN ");
-                    break;
-                case DBLINKID:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " dId ");
-                    break;
-                case DBLINKDB:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " dDb ");
-                    break;
-                case ORTHOLOGYNAME:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " oN ");
-                    break;
-                case ORTHOLOGYENTRY:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " oE ");
-                    break;
-                case DRUGTARGET:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " d ");
-                    break;
-                default:
-                    data.put(field, "");
+            if (field.equals(NAME)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " n ");
+            } else if (field.equals(DISEASEENTRY)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " dE ");
+            } else if (field.equals(DISEASENAME)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " dN ");
+            } else if (field.equals(DBLINKID)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " dId ");
+            } else if (field.equals(DBLINKDB)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " dDb ");
+            } else if (field.equals(ORTHOLOGYNAME)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " oN ");
+            } else if (field.equals(ORTHOLOGYENTRY)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " oE ");
+            } else if (field.equals(DRUGTARGET)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " d ");
+            } else {
+                data.put(field, "");
             }
         }
         return data;
@@ -116,39 +107,28 @@ public class SearchKEGGGene extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldAfterWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case ENTRY:
-                    data.put(field, "g.entry");
-                    break;
-                case NAME:
-                    data.put(field, "n.name");
-                    break;
-                case DEFINITION:
-                    data.put(field, "g.definition");
-                    break;
-                case DISEASEENTRY:
-                    data.put(field, "dE.entry");
-                    break;
-                case DISEASENAME:
-                    data.put(field, "dN.disease");
-                    break;
-                case DBLINKID:
-                    data.put(field, "dId.kegggenedblinkPK.id");
-                    break;
-                case DBLINKDB:
-                    data.put(field, "dDb.kegggenedblinkPK.db");
-                    break;
-                case ORTHOLOGYNAME:
-                    data.put(field, "oN.name");
-                    break;
-                case ORTHOLOGYENTRY:
-                    data.put(field, "oE.kEGGGeneOrthologyPK.entry");
-                    break;
-                case DRUGTARGET:
-                    data.put(field, "d.kEGGGeneDrugTargetPK.name");
-                    break;
+            if (field.equals(ENTRY)) {
+                data.put(field, "g.entry");
+            } else if (field.equals(NAME)) {
+                data.put(field, "n.name");
+            } else if (field.equals(DEFINITION)) {
+                data.put(field, "g.definition");
+            } else if (field.equals(DISEASEENTRY)) {
+                data.put(field, "dE.entry");
+            } else if (field.equals(DISEASENAME)) {
+                data.put(field, "dN.disease");
+            } else if (field.equals(DBLINKID)) {
+                data.put(field, "dId.kegggenedblinkPK.id");
+            } else if (field.equals(DBLINKDB)) {
+                data.put(field, "dDb.kegggenedblinkPK.db");
+            } else if (field.equals(ORTHOLOGYNAME)) {
+                data.put(field, "oN.name");
+            } else if (field.equals(ORTHOLOGYENTRY)) {
+                data.put(field, "oE.kEGGGeneOrthologyPK.entry");
+            } else if (field.equals(DRUGTARGET)) {
+                data.put(field, "d.kEGGGeneDrugTargetPK.name");
             }
         }
         return data;
@@ -156,36 +136,26 @@ public class SearchKEGGGene extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldOnEntity() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case NAME:
-                    data.put(field, "g.kEGGGeneName");
-                    break;
-                case DISEASEENTRY:
-                    data.put(field, "g.kEGGGeneDisease");
-                    break;
-                case DISEASENAME:
-                    data.put(field, "g.kEGGGeneDisease");
-                    break;
-                case DBLINKID:
-                    data.put(field, "g.kEGGGeneDBLink");
-                    break;
-                case DBLINKDB:
-                    data.put(field, "g.kEGGGeneDBLink");
-                    break;
-                case ORTHOLOGYNAME:
-                    data.put(field, "g.kEGGGeneOrthology");
-                    break;
-                case ORTHOLOGYENTRY:
-                    data.put(field, "g.kEGGGeneOrthology");
-                    break;
-                case DRUGTARGET:
-                    data.put(field, "g.kEGGGeneDrugTarget");
-                    break;
-                default:
-                    data.put(field, "");
-                    break;
+            if (field.equals(NAME)) {
+                data.put(field, "g.kEGGGeneName");
+            } else if (field.equals(DISEASEENTRY)) {
+                data.put(field, "g.kEGGGeneDisease");
+            } else if (field.equals(DISEASENAME)) {
+                data.put(field, "g.kEGGGeneDisease");
+            } else if (field.equals(DBLINKID)) {
+                data.put(field, "g.kEGGGeneDBLink");
+            } else if (field.equals(DBLINKDB)) {
+                data.put(field, "g.kEGGGeneDBLink");
+            } else if (field.equals(ORTHOLOGYNAME)) {
+                data.put(field, "g.kEGGGeneOrthology");
+            } else if (field.equals(ORTHOLOGYENTRY)) {
+                data.put(field, "g.kEGGGeneOrthology");
+            } else if (field.equals(DRUGTARGET)) {
+                data.put(field, "g.kEGGGeneDrugTarget");
+            } else {
+                data.put(field, "");
             }
         }
         return data;
@@ -193,7 +163,7 @@ public class SearchKEGGGene extends SearchFactory {
 
     @Override
     protected HashMap<Class, List> getConstrainFieldOnEntity() {
-        HashMap<Class, List> data = new HashMap<>();
+        HashMap<Class, List> data = new HashMap();
 
         List listP = new ArrayList();
         listP.add("g.kEGGPathways");

@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This Class is the OMIMCS entity
@@ -62,6 +63,7 @@ public class OMIMCS implements Serializable {
         this.omim = omim;
     }
 
+    @XmlTransient
     public Set<OMIMCSData> getOmimCSDatas() {
         return omimCSDatas;
     }

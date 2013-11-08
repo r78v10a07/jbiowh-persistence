@@ -18,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
 import org.jbiowhpersistence.datasets.gene.genebank.GeneBankTables;
 import org.jbiowhpersistence.datasets.gene.genome.entities.GenePTT;
@@ -141,6 +142,7 @@ public class GeneBankCDS implements Serializable {
         this.geneBank = geneBank;
     }
 
+    @XmlTransient
     public Set<GeneInfo> getGeneInfo() {
         return geneInfo;
     }

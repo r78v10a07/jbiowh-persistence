@@ -153,7 +153,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
             em = getEntityManager();
             em.getTransaction().begin();
             if (!drugBank.getDrugBankGeneralRef().isEmpty()) {
-                Set<DrugBankGeneralRef> attachedDrugBankGeneralRef = new HashSet<>();
+                Set<DrugBankGeneralRef> attachedDrugBankGeneralRef = new HashSet();
                 for (DrugBankGeneralRef drugBankGeneralRefDrugBankGeneralRefToAttach : drugBank.getDrugBankGeneralRef()) {
                     DrugBankGeneralRef drugBankGeneral = em.find(drugBankGeneralRefDrugBankGeneralRefToAttach.getClass(), drugBankGeneralRefDrugBankGeneralRefToAttach.getWid());
                     if (drugBankGeneral != null) {
@@ -165,7 +165,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankGeneralRef(attachedDrugBankGeneralRef);
             }
             if (!drugBank.getDrugBankCarriers().isEmpty()) {
-                Set<DrugBankCarriers> attachedDrugBankCarriers = new HashSet<>();
+                Set<DrugBankCarriers> attachedDrugBankCarriers = new HashSet();
                 for (DrugBankCarriers drugBankCarriersDrugBankCarriersToAttach : drugBank.getDrugBankCarriers()) {
                     DrugBankCarriers drugBankCarriers = em.find(drugBankCarriersDrugBankCarriersToAttach.getClass(), drugBankCarriersDrugBankCarriersToAttach.getWid());
                     if (drugBankCarriers != null) {
@@ -177,7 +177,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankCarriers(attachedDrugBankCarriers);
             }
             if (!drugBank.getDrugBankTransporters().isEmpty()) {
-                Set<DrugBankTransporters> attachedDrugBankTransporters = new HashSet<>();
+                Set<DrugBankTransporters> attachedDrugBankTransporters = new HashSet();
                 for (DrugBankTransporters drugBankTransportersDrugBankTransportersToAttach : drugBank.getDrugBankTransporters()) {
                     DrugBankTransporters drugBankTransporters = em.find(drugBankTransportersDrugBankTransportersToAttach.getClass(), drugBankTransportersDrugBankTransportersToAttach.getWid());
                     if (drugBankTransporters != null) {
@@ -189,7 +189,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankTransporters(attachedDrugBankTransporters);
             }
             if (!drugBank.getDrugBankEnzymes().isEmpty()) {
-                Set<DrugBankEnzymes> attachedDrugBankEnzymes = new HashSet<>();
+                Set<DrugBankEnzymes> attachedDrugBankEnzymes = new HashSet();
                 for (DrugBankEnzymes drugBankEnzymesDrugBankEnzymesToAttach : drugBank.getDrugBankEnzymes()) {
                     DrugBankEnzymes drugBankEnzymes = em.find(drugBankEnzymesDrugBankEnzymesToAttach.getClass(), drugBankEnzymesDrugBankEnzymesToAttach.getWid());
                     if (drugBankEnzymes != null) {
@@ -201,7 +201,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankEnzymes(attachedDrugBankEnzymes);
             }
             if (!drugBank.getDrugBankTargets().isEmpty()) {
-                Set<DrugBankTargets> attachedDrugBankTargets = new HashSet<>();
+                Set<DrugBankTargets> attachedDrugBankTargets = new HashSet();
                 for (DrugBankTargets drugBankTargetsDrugBankTargetsToAttach : drugBank.getDrugBankTargets()) {
                     DrugBankTargets drugBankTargets = em.find(drugBankTargetsDrugBankTargetsToAttach.getClass(), drugBankTargetsDrugBankTargetsToAttach.getWid());
                     if (drugBankTargets != null) {
@@ -213,7 +213,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankTargets(attachedDrugBankTargets);
             }
             if (!drugBank.getDrugBankExternalLinks().isEmpty()) {
-                Set<DrugBankExternalLinks> attachedDrugBankExternalLinks = new HashSet<>();
+                Set<DrugBankExternalLinks> attachedDrugBankExternalLinks = new HashSet();
                 for (DrugBankExternalLinks drugBankExternalLinksDrugBankExternalLinksToAttach : drugBank.getDrugBankExternalLinks()) {
                     DrugBankExternalLinks drugBankExternalLinks = em.find(drugBankExternalLinksDrugBankExternalLinksToAttach.getClass(), drugBankExternalLinksDrugBankExternalLinksToAttach.getWid());
                     if (drugBankExternalLinks != null) {
@@ -225,7 +225,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankExternalLinks(attachedDrugBankExternalLinks);
             }
             if (!drugBank.getDrugBankExternalIdentifiers().isEmpty()) {
-                Set<DrugBankExternalIdentifiers> attachedDrugBankExternalIdentifiers = new HashSet<>();
+                Set<DrugBankExternalIdentifiers> attachedDrugBankExternalIdentifiers = new HashSet();
                 for (DrugBankExternalIdentifiers drugBankExternalIdentifiersDrugBankExternalIdentifiersToAttach : drugBank.getDrugBankExternalIdentifiers()) {
                     DrugBankExternalIdentifiers drugBankExternalIdentifiers = em.find(drugBankExternalIdentifiersDrugBankExternalIdentifiersToAttach.getClass(), drugBankExternalIdentifiersDrugBankExternalIdentifiersToAttach.getWid());
                     if (drugBankExternalIdentifiers != null) {
@@ -237,7 +237,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankExternalIdentifiers(attachedDrugBankExternalIdentifiers);
             }
             if (!drugBank.getDrugBankExperimentalProperties().isEmpty()) {
-                Set<DrugBankExperimentalProperties> attachedDrugBankExperimentalProperties = new HashSet<>();
+                Set<DrugBankExperimentalProperties> attachedDrugBankExperimentalProperties = new HashSet();
                 for (DrugBankExperimentalProperties drugBankExperimentalPropertiesDrugBankExperimentalPropertiesToAttach : drugBank.getDrugBankExperimentalProperties()) {
                     DrugBankExperimentalProperties drugBankExperimentalProperties = em.find(drugBankExperimentalPropertiesDrugBankExperimentalPropertiesToAttach.getClass(), drugBankExperimentalPropertiesDrugBankExperimentalPropertiesToAttach.getWid());
                     if (drugBankExperimentalProperties != null) {
@@ -249,7 +249,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankExperimentalProperties(attachedDrugBankExperimentalProperties);
             }
             if (!drugBank.getDrugBankCalculatedProperties().isEmpty()) {
-                Set<DrugBankCalculatedProperties> attachedDrugBankCalculatedProperties = new HashSet<>();
+                Set<DrugBankCalculatedProperties> attachedDrugBankCalculatedProperties = new HashSet();
                 for (DrugBankCalculatedProperties drugBankCalculatedPropertiesDrugBankCalculatedPropertiesToAttach : drugBank.getDrugBankCalculatedProperties()) {
                     DrugBankCalculatedProperties drugBankCalculatedProperties = em.find(drugBankCalculatedPropertiesDrugBankCalculatedPropertiesToAttach.getClass(), drugBankCalculatedPropertiesDrugBankCalculatedPropertiesToAttach.getWid());
                     if (drugBankCalculatedProperties != null) {
@@ -261,7 +261,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankCalculatedProperties(attachedDrugBankCalculatedProperties);
             }
             if (!drugBank.getDrugBankProteinSequences().isEmpty()) {
-                Set<DrugBankProteinSequences> attachedDrugBankProteinSequences = new HashSet<>();
+                Set<DrugBankProteinSequences> attachedDrugBankProteinSequences = new HashSet();
                 for (DrugBankProteinSequences drugBankProteinSequencesDrugBankProteinSequencesToAttach : drugBank.getDrugBankProteinSequences()) {
                     DrugBankProteinSequences drugBankProteinSequences = em.find(drugBankProteinSequencesDrugBankProteinSequencesToAttach.getClass(), drugBankProteinSequencesDrugBankProteinSequencesToAttach.getWid());
                     if (drugBankProteinSequences != null) {
@@ -273,7 +273,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankProteinSequences(attachedDrugBankProteinSequences);
             }
             if (!drugBank.getDrugBankFoodInteractions().isEmpty()) {
-                Set<DrugBankFoodInteractions> attachedDrugBankFoodInteractions = new HashSet<>();
+                Set<DrugBankFoodInteractions> attachedDrugBankFoodInteractions = new HashSet();
                 for (DrugBankFoodInteractions drugBankFoodInteractionsDrugBankFoodInteractionsToAttach : drugBank.getDrugBankFoodInteractions()) {
                     DrugBankFoodInteractions drugBankFoodInteractions = em.find(drugBankFoodInteractionsDrugBankFoodInteractionsToAttach.getClass(), drugBankFoodInteractionsDrugBankFoodInteractionsToAttach.getWid());
                     if (drugBankFoodInteractions != null) {
@@ -285,7 +285,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankFoodInteractions(attachedDrugBankFoodInteractions);
             }
             if (!drugBank.getDrugBankPatents().isEmpty()) {
-                Set<DrugBankPatents> attachedDrugBankPatents = new HashSet<>();
+                Set<DrugBankPatents> attachedDrugBankPatents = new HashSet();
                 for (DrugBankPatents drugBankPatentsDrugBankPatentsToAttach : drugBank.getDrugBankPatents()) {
                     DrugBankPatents drugBankPatents = em.find(drugBankPatentsDrugBankPatentsToAttach.getClass(), drugBankPatentsDrugBankPatentsToAttach.getWid());
                     if (drugBankPatents != null) {
@@ -298,7 +298,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankPatents(attachedDrugBankPatents);
             }
             if (!drugBank.getDrugBankAHFSCodes().isEmpty()) {
-                Set<DrugBankAHFSCodes> attachedDrugBankAHFSCodes = new HashSet<>();
+                Set<DrugBankAHFSCodes> attachedDrugBankAHFSCodes = new HashSet();
                 for (DrugBankAHFSCodes drugBankAHFSCodesDrugBankAHFSCodesToAttach : drugBank.getDrugBankAHFSCodes()) {
                     DrugBankAHFSCodes drugBankAHFSCodes = em.find(drugBankAHFSCodesDrugBankAHFSCodesToAttach.getClass(), drugBankAHFSCodesDrugBankAHFSCodesToAttach.getWid());
                     if (drugBankAHFSCodes != null) {
@@ -310,7 +310,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankAHFSCodes(attachedDrugBankAHFSCodes);
             }
             if (!drugBank.getDrugBankATCCodes().isEmpty()) {
-                Set<DrugBankATCCodes> attachedDrugBankATCCodes = new HashSet<>();
+                Set<DrugBankATCCodes> attachedDrugBankATCCodes = new HashSet();
                 for (DrugBankATCCodes drugBankATCCodesDrugBankATCCodesToAttach : drugBank.getDrugBankATCCodes()) {
                     DrugBankATCCodes drugBankATCCodes = em.find(drugBankATCCodesDrugBankATCCodesToAttach.getClass(), drugBankATCCodesDrugBankATCCodesToAttach.getWid());
                     if (drugBankATCCodes != null) {
@@ -322,7 +322,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankATCCodes(attachedDrugBankATCCodes);
             }
             if (!drugBank.getDrugBankDosages().isEmpty()) {
-                Set<DrugBankDosages> attachedDrugBankDosages = new HashSet<>();
+                Set<DrugBankDosages> attachedDrugBankDosages = new HashSet();
                 for (DrugBankDosages drugBankDosagesDrugBankDosagesToAttach : drugBank.getDrugBankDosages()) {
                     DrugBankDosages drugBankDosages = em.find(drugBankDosagesDrugBankDosagesToAttach.getClass(), drugBankDosagesDrugBankDosagesToAttach.getWid());
                     if (drugBankDosages != null) {
@@ -334,7 +334,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankDosages(attachedDrugBankDosages);
             }
             if (!drugBank.getDrugBankAffectedOrganisms().isEmpty()) {
-                Set<DrugBankAffectedOrganisms> attachedDrugBankAffectedOrganisms = new HashSet<>();
+                Set<DrugBankAffectedOrganisms> attachedDrugBankAffectedOrganisms = new HashSet();
                 for (DrugBankAffectedOrganisms drugBankAffectedOrganismsDrugBankAffectedOrganismsToAttach : drugBank.getDrugBankAffectedOrganisms()) {
                     DrugBankAffectedOrganisms drugBankAffectedOrganisms = em.find(drugBankAffectedOrganismsDrugBankAffectedOrganismsToAttach.getClass(), drugBankAffectedOrganismsDrugBankAffectedOrganismsToAttach.getWid());
                     if (drugBankAffectedOrganisms != null) {
@@ -346,7 +346,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankAffectedOrganisms(attachedDrugBankAffectedOrganisms);
             }
             if (!drugBank.getDrugBankCategories().isEmpty()) {
-                Set<DrugBankCategories> attachedDrugBankCategories = new HashSet<>();
+                Set<DrugBankCategories> attachedDrugBankCategories = new HashSet();
                 for (DrugBankCategories drugBankCategoriesDrugBankCategoriesToAttach : drugBank.getDrugBankCategories()) {
                     DrugBankCategories drugBankCategories = em.find(drugBankCategoriesDrugBankCategoriesToAttach.getClass(), drugBankCategoriesDrugBankCategoriesToAttach.getWid());
                     if (drugBankCategories != null) {
@@ -359,7 +359,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankCategories(attachedDrugBankCategories);
             }
             if (!drugBank.getDrugBankPrices().isEmpty()) {
-                Set<DrugBankPrices> attachedDrugBankPrices = new HashSet<>();
+                Set<DrugBankPrices> attachedDrugBankPrices = new HashSet();
                 for (DrugBankPrices drugBankPricesDrugBankPricesToAttach : drugBank.getDrugBankPrices()) {
                     DrugBankPrices drugBankPrices = em.find(drugBankPricesDrugBankPricesToAttach.getClass(), drugBankPricesDrugBankPricesToAttach.getWid());
                     if (drugBankPrices != null) {
@@ -371,7 +371,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankPrices(attachedDrugBankPrices);
             }
             if (!drugBank.getDrugBankManufacturers().isEmpty()) {
-                Set<DrugBankManufacturers> attachedDrugBankManufacturers = new HashSet<>();
+                Set<DrugBankManufacturers> attachedDrugBankManufacturers = new HashSet();
                 for (DrugBankManufacturers drugBankManufacturersDrugBankManufacturersToAttach : drugBank.getDrugBankManufacturers()) {
                     DrugBankManufacturers drugBankManufacturers = em.find(drugBankManufacturersDrugBankManufacturersToAttach.getClass(), drugBankManufacturersDrugBankManufacturersToAttach.getWid());
                     if (drugBankManufacturers != null) {
@@ -383,7 +383,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankManufacturers(attachedDrugBankManufacturers);
             }
             if (!drugBank.getDrugBankPackagers().isEmpty()) {
-                Set<DrugBankPackagers> attachedDrugBankPackagers = new HashSet<>();
+                Set<DrugBankPackagers> attachedDrugBankPackagers = new HashSet();
                 for (DrugBankPackagers drugBankPackagersDrugBankPackagersToAttach : drugBank.getDrugBankPackagers()) {
                     DrugBankPackagers drugBankPackagers = em.find(drugBankPackagersDrugBankPackagersToAttach.getClass(), drugBankPackagersDrugBankPackagersToAttach.getWid());
                     if (drugBankPackagers != null) {
@@ -395,7 +395,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankPackagers(attachedDrugBankPackagers);
             }
             if (!drugBank.getDrugBankMixtures().isEmpty()) {
-                Set<DrugBankMixtures> attachedDrugBankMixtures = new HashSet<>();
+                Set<DrugBankMixtures> attachedDrugBankMixtures = new HashSet();
                 for (DrugBankMixtures drugBankMixturesDrugBankMixturesToAttach : drugBank.getDrugBankMixtures()) {
                     DrugBankMixtures drugBankMixtures = em.find(drugBankMixturesDrugBankMixturesToAttach.getClass(), drugBankMixturesDrugBankMixturesToAttach.getWid());
                     if (drugBankMixtures != null) {
@@ -407,7 +407,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankMixtures(attachedDrugBankMixtures);
             }
             if (!drugBank.getDrugBankBrands().isEmpty()) {
-                Set<DrugBankBrands> attachedDrugBankBrands = new HashSet<>();
+                Set<DrugBankBrands> attachedDrugBankBrands = new HashSet();
                 for (DrugBankBrands drugBankBrandsDrugBankBrandsToAttach : drugBank.getDrugBankBrands()) {
                     DrugBankBrands drugBankBrands = em.find(drugBankBrandsDrugBankBrandsToAttach.getClass(), drugBankBrandsDrugBankBrandsToAttach.getWid());
                     if (drugBankBrands != null) {
@@ -419,7 +419,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankBrands(attachedDrugBankBrands);
             }
             if (!drugBank.getDrugBankSynonyms().isEmpty()) {
-                Set<DrugBankSynonyms> attachedDrugBankSynonyms = new HashSet<>();
+                Set<DrugBankSynonyms> attachedDrugBankSynonyms = new HashSet();
                 for (DrugBankSynonyms drugBankSynonymsDrugBankSynonymsToAttach : drugBank.getDrugBankSynonyms()) {
                     DrugBankSynonyms drugBankSynonyms = em.find(drugBankSynonymsDrugBankSynonymsToAttach.getClass(), drugBankSynonymsDrugBankSynonymsToAttach.getWid());
                     if (drugBankSynonyms != null) {
@@ -431,7 +431,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankSynonyms(attachedDrugBankSynonyms);
             }
             if (!drugBank.getDrugBankTaxonomySubstructures().isEmpty()) {
-                Set<DrugBankTaxonomySubstructures> attachedDrugBankTaxonomySubstructures = new HashSet<>();
+                Set<DrugBankTaxonomySubstructures> attachedDrugBankTaxonomySubstructures = new HashSet();
                 for (DrugBankTaxonomySubstructures drugBankTaxonomySubstructuresDrugBankTaxonomySubstructuresToAttach : drugBank.getDrugBankTaxonomySubstructures()) {
                     DrugBankTaxonomySubstructures drugBankTaxonomySubstructures = em.find(drugBankTaxonomySubstructuresDrugBankTaxonomySubstructuresToAttach.getClass(), drugBankTaxonomySubstructuresDrugBankTaxonomySubstructuresToAttach.getWid());
                     if (drugBankTaxonomySubstructures != null) {
@@ -443,7 +443,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankTaxonomySubstructures(attachedDrugBankTaxonomySubstructures);
             }
             if (!drugBank.getDrugBankTaxonomy().isEmpty()) {
-                Set<DrugBankTaxonomy> attachedDrugBankTaxonomy = new HashSet<>();
+                Set<DrugBankTaxonomy> attachedDrugBankTaxonomy = new HashSet();
                 for (DrugBankTaxonomy drugBankTaxonomyDrugBankTaxonomyToAttach : drugBank.getDrugBankTaxonomy()) {
                     DrugBankTaxonomy drugBankTaxonomy = em.find(drugBankTaxonomyDrugBankTaxonomyToAttach.getClass(), drugBankTaxonomyDrugBankTaxonomyToAttach.getWid());
                     if (drugBankTaxonomy != null) {
@@ -455,7 +455,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankTaxonomy(attachedDrugBankTaxonomy);
             }
             if (!drugBank.getDrugBankGroup().isEmpty()) {
-                Set<DrugBankGroup> attachedDrugBankGroup = new HashSet<>();
+                Set<DrugBankGroup> attachedDrugBankGroup = new HashSet();
                 for (DrugBankGroup drugBankGroupDrugBankGroupToAttach : drugBank.getDrugBankGroup()) {
                     DrugBankGroup drugBankGroup = em.find(drugBankGroupDrugBankGroupToAttach.getClass(), drugBankGroupDrugBankGroupToAttach.getWid());
                     if (drugBankGroup != null) {
@@ -467,7 +467,7 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
                 drugBank.setDrugBankGroup(attachedDrugBankGroup);
             }
             if (!drugBank.getDrugBankSecondAccessionNumbers().isEmpty()) {
-                Set<DrugBankSecondAccessionNumbers> attachedDrugBankSecondAccessionNumbers = new HashSet<>();
+                Set<DrugBankSecondAccessionNumbers> attachedDrugBankSecondAccessionNumbers = new HashSet();
                 for (DrugBankSecondAccessionNumbers drugBankSecondAccessionNumbersDrugBankSecondAccessionNumbersToAttach : drugBank.getDrugBankSecondAccessionNumbers()) {
                     DrugBankSecondAccessionNumbers drugBankSecondAccessionNumbers = em.find(drugBankSecondAccessionNumbersDrugBankSecondAccessionNumbersToAttach.getClass(), drugBankSecondAccessionNumbersDrugBankSecondAccessionNumbersToAttach.getWid());
                     if (drugBankSecondAccessionNumbers != null) {
@@ -569,224 +569,224 @@ public class DrugBankJpaController extends AbstractJpaController<DrugBank> imple
             Set<Protein> proteinAsTransportersNew = drugBank.getProteinAsTransporters();
             Set<Protein> proteinOld = persistentDrugBank.getProtein();
             Set<Protein> proteinNew = drugBank.getProtein();
-            Set<KEGGCompound> attachedkEGGCompoundsNew = new HashSet<>();
+            Set<KEGGCompound> attachedkEGGCompoundsNew = new HashSet();
             for (KEGGCompound kEGGCompoundsNewKEGGCompoundToAttach : kEGGCompoundsNew) {
                 kEGGCompoundsNewKEGGCompoundToAttach = em.getReference(kEGGCompoundsNewKEGGCompoundToAttach.getClass(), kEGGCompoundsNewKEGGCompoundToAttach.getWid());
                 attachedkEGGCompoundsNew.add(kEGGCompoundsNewKEGGCompoundToAttach);
             }
             kEGGCompoundsNew = attachedkEGGCompoundsNew;
             drugBank.setkEGGCompounds(kEGGCompoundsNew);
-            Set<DrugBankGeneralRef> attachedDrugBankGeneralRefNew = new HashSet<>();
+            Set<DrugBankGeneralRef> attachedDrugBankGeneralRefNew = new HashSet();
             for (DrugBankGeneralRef drugBankGeneralRefNewDrugBankGeneralRefToAttach : drugBankGeneralRefNew) {
                 drugBankGeneralRefNewDrugBankGeneralRefToAttach = em.getReference(drugBankGeneralRefNewDrugBankGeneralRefToAttach.getClass(), drugBankGeneralRefNewDrugBankGeneralRefToAttach.getWid());
                 attachedDrugBankGeneralRefNew.add(drugBankGeneralRefNewDrugBankGeneralRefToAttach);
             }
             drugBankGeneralRefNew = attachedDrugBankGeneralRefNew;
             drugBank.setDrugBankGeneralRef(drugBankGeneralRefNew);
-            Set<DrugBankCarriers> attachedDrugBankCarriersNew = new HashSet<>();
+            Set<DrugBankCarriers> attachedDrugBankCarriersNew = new HashSet();
             for (DrugBankCarriers drugBankCarriersNewDrugBankCarriersToAttach : drugBankCarriersNew) {
                 drugBankCarriersNewDrugBankCarriersToAttach = em.getReference(drugBankCarriersNewDrugBankCarriersToAttach.getClass(), drugBankCarriersNewDrugBankCarriersToAttach.getWid());
                 attachedDrugBankCarriersNew.add(drugBankCarriersNewDrugBankCarriersToAttach);
             }
             drugBankCarriersNew = attachedDrugBankCarriersNew;
             drugBank.setDrugBankCarriers(drugBankCarriersNew);
-            Set<DrugBankTransporters> attachedDrugBankTransportersNew = new HashSet<>();
+            Set<DrugBankTransporters> attachedDrugBankTransportersNew = new HashSet();
             for (DrugBankTransporters drugBankTransportersNewDrugBankTransportersToAttach : drugBankTransportersNew) {
                 drugBankTransportersNewDrugBankTransportersToAttach = em.getReference(drugBankTransportersNewDrugBankTransportersToAttach.getClass(), drugBankTransportersNewDrugBankTransportersToAttach.getWid());
                 attachedDrugBankTransportersNew.add(drugBankTransportersNewDrugBankTransportersToAttach);
             }
             drugBankTransportersNew = attachedDrugBankTransportersNew;
             drugBank.setDrugBankTransporters(drugBankTransportersNew);
-            Set<DrugBankEnzymes> attachedDrugBankEnzymesNew = new HashSet<>();
+            Set<DrugBankEnzymes> attachedDrugBankEnzymesNew = new HashSet();
             for (DrugBankEnzymes drugBankEnzymesNewDrugBankEnzymesToAttach : drugBankEnzymesNew) {
                 drugBankEnzymesNewDrugBankEnzymesToAttach = em.getReference(drugBankEnzymesNewDrugBankEnzymesToAttach.getClass(), drugBankEnzymesNewDrugBankEnzymesToAttach.getWid());
                 attachedDrugBankEnzymesNew.add(drugBankEnzymesNewDrugBankEnzymesToAttach);
             }
             drugBankEnzymesNew = attachedDrugBankEnzymesNew;
             drugBank.setDrugBankEnzymes(drugBankEnzymesNew);
-            Set<DrugBankTargets> attachedDrugBankTargetsNew = new HashSet<>();
+            Set<DrugBankTargets> attachedDrugBankTargetsNew = new HashSet();
             for (DrugBankTargets drugBankTargetsNewDrugBankTargetsToAttach : drugBankTargetsNew) {
                 drugBankTargetsNewDrugBankTargetsToAttach = em.getReference(drugBankTargetsNewDrugBankTargetsToAttach.getClass(), drugBankTargetsNewDrugBankTargetsToAttach.getWid());
                 attachedDrugBankTargetsNew.add(drugBankTargetsNewDrugBankTargetsToAttach);
             }
             drugBankTargetsNew = attachedDrugBankTargetsNew;
             drugBank.setDrugBankTargets(drugBankTargetsNew);
-            Set<DrugBankExternalLinks> attachedDrugBankExternalLinksNew = new HashSet<>();
+            Set<DrugBankExternalLinks> attachedDrugBankExternalLinksNew = new HashSet();
             for (DrugBankExternalLinks drugBankExternalLinksNewDrugBankExternalLinksToAttach : drugBankExternalLinksNew) {
                 drugBankExternalLinksNewDrugBankExternalLinksToAttach = em.getReference(drugBankExternalLinksNewDrugBankExternalLinksToAttach.getClass(), drugBankExternalLinksNewDrugBankExternalLinksToAttach.getWid());
                 attachedDrugBankExternalLinksNew.add(drugBankExternalLinksNewDrugBankExternalLinksToAttach);
             }
             drugBankExternalLinksNew = attachedDrugBankExternalLinksNew;
             drugBank.setDrugBankExternalLinks(drugBankExternalLinksNew);
-            Set<DrugBankExternalIdentifiers> attachedDrugBankExternalIdentifiersNew = new HashSet<>();
+            Set<DrugBankExternalIdentifiers> attachedDrugBankExternalIdentifiersNew = new HashSet();
             for (DrugBankExternalIdentifiers drugBankExternalIdentifiersNewDrugBankExternalIdentifiersToAttach : drugBankExternalIdentifiersNew) {
                 drugBankExternalIdentifiersNewDrugBankExternalIdentifiersToAttach = em.getReference(drugBankExternalIdentifiersNewDrugBankExternalIdentifiersToAttach.getClass(), drugBankExternalIdentifiersNewDrugBankExternalIdentifiersToAttach.getWid());
                 attachedDrugBankExternalIdentifiersNew.add(drugBankExternalIdentifiersNewDrugBankExternalIdentifiersToAttach);
             }
             drugBankExternalIdentifiersNew = attachedDrugBankExternalIdentifiersNew;
             drugBank.setDrugBankExternalIdentifiers(drugBankExternalIdentifiersNew);
-            Set<DrugBankExperimentalProperties> attachedDrugBankExperimentalPropertiesNew = new HashSet<>();
+            Set<DrugBankExperimentalProperties> attachedDrugBankExperimentalPropertiesNew = new HashSet();
             for (DrugBankExperimentalProperties drugBankExperimentalPropertiesNewDrugBankExperimentalPropertiesToAttach : drugBankExperimentalPropertiesNew) {
                 drugBankExperimentalPropertiesNewDrugBankExperimentalPropertiesToAttach = em.getReference(drugBankExperimentalPropertiesNewDrugBankExperimentalPropertiesToAttach.getClass(), drugBankExperimentalPropertiesNewDrugBankExperimentalPropertiesToAttach.getWid());
                 attachedDrugBankExperimentalPropertiesNew.add(drugBankExperimentalPropertiesNewDrugBankExperimentalPropertiesToAttach);
             }
             drugBankExperimentalPropertiesNew = attachedDrugBankExperimentalPropertiesNew;
             drugBank.setDrugBankExperimentalProperties(drugBankExperimentalPropertiesNew);
-            Set<DrugBankCalculatedProperties> attachedDrugBankCalculatedPropertiesNew = new HashSet<>();
+            Set<DrugBankCalculatedProperties> attachedDrugBankCalculatedPropertiesNew = new HashSet();
             for (DrugBankCalculatedProperties drugBankCalculatedPropertiesNewDrugBankCalculatedPropertiesToAttach : drugBankCalculatedPropertiesNew) {
                 drugBankCalculatedPropertiesNewDrugBankCalculatedPropertiesToAttach = em.getReference(drugBankCalculatedPropertiesNewDrugBankCalculatedPropertiesToAttach.getClass(), drugBankCalculatedPropertiesNewDrugBankCalculatedPropertiesToAttach.getWid());
                 attachedDrugBankCalculatedPropertiesNew.add(drugBankCalculatedPropertiesNewDrugBankCalculatedPropertiesToAttach);
             }
             drugBankCalculatedPropertiesNew = attachedDrugBankCalculatedPropertiesNew;
             drugBank.setDrugBankCalculatedProperties(drugBankCalculatedPropertiesNew);
-            Set<DrugBankProteinSequences> attachedDrugBankProteinSequencesNew = new HashSet<>();
+            Set<DrugBankProteinSequences> attachedDrugBankProteinSequencesNew = new HashSet();
             for (DrugBankProteinSequences drugBankProteinSequencesNewDrugBankProteinSequencesToAttach : drugBankProteinSequencesNew) {
                 drugBankProteinSequencesNewDrugBankProteinSequencesToAttach = em.getReference(drugBankProteinSequencesNewDrugBankProteinSequencesToAttach.getClass(), drugBankProteinSequencesNewDrugBankProteinSequencesToAttach.getWid());
                 attachedDrugBankProteinSequencesNew.add(drugBankProteinSequencesNewDrugBankProteinSequencesToAttach);
             }
             drugBankProteinSequencesNew = attachedDrugBankProteinSequencesNew;
             drugBank.setDrugBankProteinSequences(drugBankProteinSequencesNew);
-            Set<DrugBankFoodInteractions> attachedDrugBankFoodInteractionsNew = new HashSet<>();
+            Set<DrugBankFoodInteractions> attachedDrugBankFoodInteractionsNew = new HashSet();
             for (DrugBankFoodInteractions drugBankFoodInteractionsNewDrugBankFoodInteractionsToAttach : drugBankFoodInteractionsNew) {
                 drugBankFoodInteractionsNewDrugBankFoodInteractionsToAttach = em.getReference(drugBankFoodInteractionsNewDrugBankFoodInteractionsToAttach.getClass(), drugBankFoodInteractionsNewDrugBankFoodInteractionsToAttach.getWid());
                 attachedDrugBankFoodInteractionsNew.add(drugBankFoodInteractionsNewDrugBankFoodInteractionsToAttach);
             }
             drugBankFoodInteractionsNew = attachedDrugBankFoodInteractionsNew;
             drugBank.setDrugBankFoodInteractions(drugBankFoodInteractionsNew);
-            Set<DrugBankPatents> attachedDrugBankPatentsNew = new HashSet<>();
+            Set<DrugBankPatents> attachedDrugBankPatentsNew = new HashSet();
             for (DrugBankPatents drugBankPatentsNewDrugBankPatentsToAttach : drugBankPatentsNew) {
                 drugBankPatentsNewDrugBankPatentsToAttach = em.getReference(drugBankPatentsNewDrugBankPatentsToAttach.getClass(), drugBankPatentsNewDrugBankPatentsToAttach.getWid());
                 attachedDrugBankPatentsNew.add(drugBankPatentsNewDrugBankPatentsToAttach);
             }
             drugBankPatentsNew = attachedDrugBankPatentsNew;
             drugBank.setDrugBankPatents(drugBankPatentsNew);
-            Set<DrugBankAHFSCodes> attachedDrugBankAHFSCodesNew = new HashSet<>();
+            Set<DrugBankAHFSCodes> attachedDrugBankAHFSCodesNew = new HashSet();
             for (DrugBankAHFSCodes drugBankAHFSCodesNewDrugBankAHFSCodesToAttach : drugBankAHFSCodesNew) {
                 drugBankAHFSCodesNewDrugBankAHFSCodesToAttach = em.getReference(drugBankAHFSCodesNewDrugBankAHFSCodesToAttach.getClass(), drugBankAHFSCodesNewDrugBankAHFSCodesToAttach.getWid());
                 attachedDrugBankAHFSCodesNew.add(drugBankAHFSCodesNewDrugBankAHFSCodesToAttach);
             }
             drugBankAHFSCodesNew = attachedDrugBankAHFSCodesNew;
             drugBank.setDrugBankAHFSCodes(drugBankAHFSCodesNew);
-            Set<DrugBankATCCodes> attachedDrugBankATCCodesNew = new HashSet<>();
+            Set<DrugBankATCCodes> attachedDrugBankATCCodesNew = new HashSet();
             for (DrugBankATCCodes drugBankATCCodesNewDrugBankATCCodesToAttach : drugBankATCCodesNew) {
                 drugBankATCCodesNewDrugBankATCCodesToAttach = em.getReference(drugBankATCCodesNewDrugBankATCCodesToAttach.getClass(), drugBankATCCodesNewDrugBankATCCodesToAttach.getWid());
                 attachedDrugBankATCCodesNew.add(drugBankATCCodesNewDrugBankATCCodesToAttach);
             }
             drugBankATCCodesNew = attachedDrugBankATCCodesNew;
             drugBank.setDrugBankATCCodes(drugBankATCCodesNew);
-            Set<DrugBankDosages> attachedDrugBankDosagesNew = new HashSet<>();
+            Set<DrugBankDosages> attachedDrugBankDosagesNew = new HashSet();
             for (DrugBankDosages drugBankDosagesNewDrugBankDosagesToAttach : drugBankDosagesNew) {
                 drugBankDosagesNewDrugBankDosagesToAttach = em.getReference(drugBankDosagesNewDrugBankDosagesToAttach.getClass(), drugBankDosagesNewDrugBankDosagesToAttach.getWid());
                 attachedDrugBankDosagesNew.add(drugBankDosagesNewDrugBankDosagesToAttach);
             }
             drugBankDosagesNew = attachedDrugBankDosagesNew;
             drugBank.setDrugBankDosages(drugBankDosagesNew);
-            Set<DrugBankAffectedOrganisms> attachedDrugBankAffectedOrganismsNew = new HashSet<>();
+            Set<DrugBankAffectedOrganisms> attachedDrugBankAffectedOrganismsNew = new HashSet();
             for (DrugBankAffectedOrganisms drugBankAffectedOrganismsNewDrugBankAffectedOrganismsToAttach : drugBankAffectedOrganismsNew) {
                 drugBankAffectedOrganismsNewDrugBankAffectedOrganismsToAttach = em.getReference(drugBankAffectedOrganismsNewDrugBankAffectedOrganismsToAttach.getClass(), drugBankAffectedOrganismsNewDrugBankAffectedOrganismsToAttach.getWid());
                 attachedDrugBankAffectedOrganismsNew.add(drugBankAffectedOrganismsNewDrugBankAffectedOrganismsToAttach);
             }
             drugBankAffectedOrganismsNew = attachedDrugBankAffectedOrganismsNew;
             drugBank.setDrugBankAffectedOrganisms(drugBankAffectedOrganismsNew);
-            Set<DrugBankCategories> attachedDrugBankCategoriesNew = new HashSet<>();
+            Set<DrugBankCategories> attachedDrugBankCategoriesNew = new HashSet();
             for (DrugBankCategories drugBankCategoriesNewDrugBankCategoriesToAttach : drugBankCategoriesNew) {
                 drugBankCategoriesNewDrugBankCategoriesToAttach = em.getReference(drugBankCategoriesNewDrugBankCategoriesToAttach.getClass(), drugBankCategoriesNewDrugBankCategoriesToAttach.getWid());
                 attachedDrugBankCategoriesNew.add(drugBankCategoriesNewDrugBankCategoriesToAttach);
             }
             drugBankCategoriesNew = attachedDrugBankCategoriesNew;
             drugBank.setDrugBankCategories(drugBankCategoriesNew);
-            Set<DrugBankPrices> attachedDrugBankPricesNew = new HashSet<>();
+            Set<DrugBankPrices> attachedDrugBankPricesNew = new HashSet();
             for (DrugBankPrices drugBankPricesNewDrugBankPricesToAttach : drugBankPricesNew) {
                 drugBankPricesNewDrugBankPricesToAttach = em.getReference(drugBankPricesNewDrugBankPricesToAttach.getClass(), drugBankPricesNewDrugBankPricesToAttach.getWid());
                 attachedDrugBankPricesNew.add(drugBankPricesNewDrugBankPricesToAttach);
             }
             drugBankPricesNew = attachedDrugBankPricesNew;
             drugBank.setDrugBankPrices(drugBankPricesNew);
-            Set<DrugBankManufacturers> attachedDrugBankManufacturersNew = new HashSet<>();
+            Set<DrugBankManufacturers> attachedDrugBankManufacturersNew = new HashSet();
             for (DrugBankManufacturers drugBankManufacturersNewDrugBankManufacturersToAttach : drugBankManufacturersNew) {
                 drugBankManufacturersNewDrugBankManufacturersToAttach = em.getReference(drugBankManufacturersNewDrugBankManufacturersToAttach.getClass(), drugBankManufacturersNewDrugBankManufacturersToAttach.getWid());
                 attachedDrugBankManufacturersNew.add(drugBankManufacturersNewDrugBankManufacturersToAttach);
             }
             drugBankManufacturersNew = attachedDrugBankManufacturersNew;
             drugBank.setDrugBankManufacturers(drugBankManufacturersNew);
-            Set<DrugBankPackagers> attachedDrugBankPackagersNew = new HashSet<>();
+            Set<DrugBankPackagers> attachedDrugBankPackagersNew = new HashSet();
             for (DrugBankPackagers drugBankPackagersNewDrugBankPackagersToAttach : drugBankPackagersNew) {
                 drugBankPackagersNewDrugBankPackagersToAttach = em.getReference(drugBankPackagersNewDrugBankPackagersToAttach.getClass(), drugBankPackagersNewDrugBankPackagersToAttach.getWid());
                 attachedDrugBankPackagersNew.add(drugBankPackagersNewDrugBankPackagersToAttach);
             }
             drugBankPackagersNew = attachedDrugBankPackagersNew;
             drugBank.setDrugBankPackagers(drugBankPackagersNew);
-            Set<DrugBankMixtures> attachedDrugBankMixturesNew = new HashSet<>();
+            Set<DrugBankMixtures> attachedDrugBankMixturesNew = new HashSet();
             for (DrugBankMixtures drugBankMixturesNewDrugBankMixturesToAttach : drugBankMixturesNew) {
                 drugBankMixturesNewDrugBankMixturesToAttach = em.getReference(drugBankMixturesNewDrugBankMixturesToAttach.getClass(), drugBankMixturesNewDrugBankMixturesToAttach.getWid());
                 attachedDrugBankMixturesNew.add(drugBankMixturesNewDrugBankMixturesToAttach);
             }
             drugBankMixturesNew = attachedDrugBankMixturesNew;
             drugBank.setDrugBankMixtures(drugBankMixturesNew);
-            Set<DrugBankBrands> attachedDrugBankBrandsNew = new HashSet<>();
+            Set<DrugBankBrands> attachedDrugBankBrandsNew = new HashSet();
             for (DrugBankBrands drugBankBrandsNewDrugBankBrandsToAttach : drugBankBrandsNew) {
                 drugBankBrandsNewDrugBankBrandsToAttach = em.getReference(drugBankBrandsNewDrugBankBrandsToAttach.getClass(), drugBankBrandsNewDrugBankBrandsToAttach.getWid());
                 attachedDrugBankBrandsNew.add(drugBankBrandsNewDrugBankBrandsToAttach);
             }
             drugBankBrandsNew = attachedDrugBankBrandsNew;
             drugBank.setDrugBankBrands(drugBankBrandsNew);
-            Set<DrugBankSynonyms> attachedDrugBankSynonymsNew = new HashSet<>();
+            Set<DrugBankSynonyms> attachedDrugBankSynonymsNew = new HashSet();
             for (DrugBankSynonyms drugBankSynonymsNewDrugBankSynonymsToAttach : drugBankSynonymsNew) {
                 drugBankSynonymsNewDrugBankSynonymsToAttach = em.getReference(drugBankSynonymsNewDrugBankSynonymsToAttach.getClass(), drugBankSynonymsNewDrugBankSynonymsToAttach.getWid());
                 attachedDrugBankSynonymsNew.add(drugBankSynonymsNewDrugBankSynonymsToAttach);
             }
             drugBankSynonymsNew = attachedDrugBankSynonymsNew;
             drugBank.setDrugBankSynonyms(drugBankSynonymsNew);
-            Set<DrugBankTaxonomySubstructures> attachedDrugBankTaxonomySubstructuresNew = new HashSet<>();
+            Set<DrugBankTaxonomySubstructures> attachedDrugBankTaxonomySubstructuresNew = new HashSet();
             for (DrugBankTaxonomySubstructures drugBankTaxonomySubstructuresNewDrugBankTaxonomySubstructuresToAttach : drugBankTaxonomySubstructuresNew) {
                 drugBankTaxonomySubstructuresNewDrugBankTaxonomySubstructuresToAttach = em.getReference(drugBankTaxonomySubstructuresNewDrugBankTaxonomySubstructuresToAttach.getClass(), drugBankTaxonomySubstructuresNewDrugBankTaxonomySubstructuresToAttach.getWid());
                 attachedDrugBankTaxonomySubstructuresNew.add(drugBankTaxonomySubstructuresNewDrugBankTaxonomySubstructuresToAttach);
             }
             drugBankTaxonomySubstructuresNew = attachedDrugBankTaxonomySubstructuresNew;
             drugBank.setDrugBankTaxonomySubstructures(drugBankTaxonomySubstructuresNew);
-            Set<DrugBankTaxonomy> attachedDrugBankTaxonomyNew = new HashSet<>();
+            Set<DrugBankTaxonomy> attachedDrugBankTaxonomyNew = new HashSet();
             for (DrugBankTaxonomy drugBankTaxonomyNewDrugBankTaxonomyToAttach : drugBankTaxonomyNew) {
                 drugBankTaxonomyNewDrugBankTaxonomyToAttach = em.getReference(drugBankTaxonomyNewDrugBankTaxonomyToAttach.getClass(), drugBankTaxonomyNewDrugBankTaxonomyToAttach.getWid());
                 attachedDrugBankTaxonomyNew.add(drugBankTaxonomyNewDrugBankTaxonomyToAttach);
             }
             drugBankTaxonomyNew = attachedDrugBankTaxonomyNew;
             drugBank.setDrugBankTaxonomy(drugBankTaxonomyNew);
-            Set<DrugBankGroup> attachedDrugBankGroupNew = new HashSet<>();
+            Set<DrugBankGroup> attachedDrugBankGroupNew = new HashSet();
             for (DrugBankGroup drugBankGroupNewDrugBankGroupToAttach : drugBankGroupNew) {
                 drugBankGroupNewDrugBankGroupToAttach = em.getReference(drugBankGroupNewDrugBankGroupToAttach.getClass(), drugBankGroupNewDrugBankGroupToAttach.getWid());
                 attachedDrugBankGroupNew.add(drugBankGroupNewDrugBankGroupToAttach);
             }
             drugBankGroupNew = attachedDrugBankGroupNew;
             drugBank.setDrugBankGroup(drugBankGroupNew);
-            Set<DrugBankSecondAccessionNumbers> attachedDrugBankSecondAccessionNumbersNew = new HashSet<>();
+            Set<DrugBankSecondAccessionNumbers> attachedDrugBankSecondAccessionNumbersNew = new HashSet();
             for (DrugBankSecondAccessionNumbers drugBankSecondAccessionNumbersNewDrugBankSecondAccessionNumbersToAttach : drugBankSecondAccessionNumbersNew) {
                 drugBankSecondAccessionNumbersNewDrugBankSecondAccessionNumbersToAttach = em.getReference(drugBankSecondAccessionNumbersNewDrugBankSecondAccessionNumbersToAttach.getClass(), drugBankSecondAccessionNumbersNewDrugBankSecondAccessionNumbersToAttach.getWid());
                 attachedDrugBankSecondAccessionNumbersNew.add(drugBankSecondAccessionNumbersNewDrugBankSecondAccessionNumbersToAttach);
             }
             drugBankSecondAccessionNumbersNew = attachedDrugBankSecondAccessionNumbersNew;
             drugBank.setDrugBankSecondAccessionNumbers(drugBankSecondAccessionNumbersNew);
-            Set<Protein> attachedProteinAsCarriersNew = new HashSet<>();
+            Set<Protein> attachedProteinAsCarriersNew = new HashSet();
             for (Protein proteinAsCarriersNewProteinToAttach : proteinAsCarriersNew) {
                 proteinAsCarriersNewProteinToAttach = em.getReference(proteinAsCarriersNewProteinToAttach.getClass(), proteinAsCarriersNewProteinToAttach.getWid());
                 attachedProteinAsCarriersNew.add(proteinAsCarriersNewProteinToAttach);
             }
             proteinAsCarriersNew = attachedProteinAsCarriersNew;
             drugBank.setProteinAsCarriers(proteinAsCarriersNew);
-            Set<Protein> attachedProteinAsEnzymeNew = new HashSet<>();
+            Set<Protein> attachedProteinAsEnzymeNew = new HashSet();
             for (Protein proteinAsEnzymeNewProteinToAttach : proteinAsEnzymeNew) {
                 proteinAsEnzymeNewProteinToAttach = em.getReference(proteinAsEnzymeNewProteinToAttach.getClass(), proteinAsEnzymeNewProteinToAttach.getWid());
                 attachedProteinAsEnzymeNew.add(proteinAsEnzymeNewProteinToAttach);
             }
             proteinAsEnzymeNew = attachedProteinAsEnzymeNew;
             drugBank.setProteinAsEnzyme(proteinAsEnzymeNew);
-            Set<Protein> attachedProteinAsTransportersNew = new HashSet<>();
+            Set<Protein> attachedProteinAsTransportersNew = new HashSet();
             for (Protein proteinAsTransportersNewProteinToAttach : proteinAsTransportersNew) {
                 proteinAsTransportersNewProteinToAttach = em.getReference(proteinAsTransportersNewProteinToAttach.getClass(), proteinAsTransportersNewProteinToAttach.getWid());
                 attachedProteinAsTransportersNew.add(proteinAsTransportersNewProteinToAttach);
             }
             proteinAsTransportersNew = attachedProteinAsTransportersNew;
             drugBank.setProteinAsTransporters(proteinAsTransportersNew);
-            Set<Protein> attachedProteinNew = new HashSet<>();
+            Set<Protein> attachedProteinNew = new HashSet();
             for (Protein proteinNewProteinToAttach : proteinNew) {
                 proteinNewProteinToAttach = em.getReference(proteinNewProteinToAttach.getClass(), proteinNewProteinToAttach.getWid());
                 attachedProteinNew.add(proteinNewProteinToAttach);

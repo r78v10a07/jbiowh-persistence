@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This Class is the MIFOtherConfidence entity
@@ -128,6 +129,7 @@ public class MIFOtherConfidence implements Serializable {
         this.mifInteractionParticipant = mifInteractionParticipant;
     }
 
+    @XmlTransient
     public Set<MIFOtherAlias> getMifOtherAlias() {
         return mifOtherAlias;
     }
@@ -136,6 +138,7 @@ public class MIFOtherConfidence implements Serializable {
         this.mifOtherAlias = mifOtherAlias;
     }
 
+    @XmlTransient
     public Map<MIFOtherExperimentRefPK, MIFOtherExperimentRef> getMifOtherWIDExperimentRef() {
         return mifOtherWIDExperimentRef;
     }
@@ -144,6 +147,7 @@ public class MIFOtherConfidence implements Serializable {
         this.mifOtherWIDExperimentRef = mifOtherWIDExperimentRef;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRef> getMifOtherXRef() {
         return mifOtherXRef;
     }
@@ -152,6 +156,7 @@ public class MIFOtherConfidence implements Serializable {
         this.mifOtherXRef = mifOtherXRef;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRefGO> getMifOtherXRefGO() {
         return mifOtherXRefGO;
     }
@@ -160,6 +165,7 @@ public class MIFOtherConfidence implements Serializable {
         this.mifOtherXRefGO = mifOtherXRefGO;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRefPubMed> getMifOtherXRefPubMed() {
         return mifOtherXRefPubMed;
     }
@@ -168,6 +174,7 @@ public class MIFOtherConfidence implements Serializable {
         this.mifOtherXRefPubMed = mifOtherXRefPubMed;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRefRefSeq> getMifOtherXRefRefSeq() {
         return mifOtherXRefRefSeq;
     }
@@ -176,6 +183,7 @@ public class MIFOtherConfidence implements Serializable {
         this.mifOtherXRefRefSeq = mifOtherXRefRefSeq;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRefUniprot> getMifOtherXRefUniprot() {
         return mifOtherXRefUniprot;
     }

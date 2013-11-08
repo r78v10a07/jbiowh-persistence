@@ -15,6 +15,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This class is the PfamLiteratureReferences entity
@@ -68,6 +69,7 @@ public class PfamLiteratureReferences implements Serializable {
         setPfamAhasPfamLiteratureReferences(null);
     }
 
+    @XmlTransient
     public Map<PfamClanshasPfamLiteratureReferencesPK, PfamClanshasPfamLiteratureReferences> getPfamClanshasPfamLiteratureReferences() {
         return pfamClanshasPfamLiteratureReferences;
     }
@@ -76,6 +78,7 @@ public class PfamLiteratureReferences implements Serializable {
         this.pfamClanshasPfamLiteratureReferences = pfamClanshasPfamLiteratureReferences;
     }
 
+    @XmlTransient
     public Map<PfamAhasPfamLiteratureReferencesPK, PfamAhasPfamLiteratureReferences> getPfamAhasPfamLiteratureReferences() {
         return pfamAhasPfamLiteratureReferences;
     }

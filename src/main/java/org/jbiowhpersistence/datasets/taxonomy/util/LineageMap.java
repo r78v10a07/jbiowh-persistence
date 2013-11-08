@@ -25,8 +25,8 @@ public class LineageMap {
      * @param taxIds a taxonomy list
      */
     public LineageMap(String[] taxIds) {
-        lineageMap = new HashMap<>();
-        notTaxonomy = new HashSet<>();
+        lineageMap = new HashMap();
+        notTaxonomy = new HashSet();
         createTaxMap(taxIds);
     }
 

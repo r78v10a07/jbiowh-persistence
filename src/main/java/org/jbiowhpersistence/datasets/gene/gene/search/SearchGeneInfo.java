@@ -37,7 +37,7 @@ public class SearchGeneInfo extends SearchFactory {
      * Create the Gene search object
      */
     public SearchGeneInfo() {
-        HashMap<String, Class> fields = new HashMap<>();
+        HashMap<String, Class> fields = new HashMap();
         fields.put(GENEID, Long.class);
         fields.put(PROTEINGI, Long.class);
         fields.put(SYMBOL, String.class);
@@ -92,19 +92,15 @@ public class SearchGeneInfo extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldBeforeWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         HashMap<String, String> fieldOnEntity = getFieldOnEntity();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case SYNONYM:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " s ");
-                    break;
-                case PROTEINGI:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " p ");
-                    break;
-                default:
-                    data.put(field, "");
-                    break;
+            if (field.equals(SYNONYM)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " s ");
+            } else if (field.equals(PROTEINGI)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " p ");
+            } else {
+                data.put(field, "");
             }
         }
         return data;
@@ -112,27 +108,20 @@ public class SearchGeneInfo extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldAfterWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case GENEID:
-                    data.put(field, "g.geneID");
-                    break;
-                case SYMBOL:
-                    data.put(field, "g.symbol");
-                    break;
-                case LOCUSTAG:
-                    data.put(field, "g.locusTag");
-                    break;
-                case DESCRIPTION:
-                    data.put(field, "g.description");
-                    break;
-                case SYNONYM:
-                    data.put(field, "s.geneInfoSynonymsPK.synonyms");
-                    break;
-                case PROTEINGI:
-                    data.put(field, "p.proteinGi");
-                    break;
+            if (field.equals(GENEID)) {
+                data.put(field, "g.geneID");
+            } else if (field.equals(SYMBOL)) {
+                data.put(field, "g.symbol");
+            } else if (field.equals(LOCUSTAG)) {
+                data.put(field, "g.locusTag");
+            } else if (field.equals(DESCRIPTION)) {
+                data.put(field, "g.description");
+            } else if (field.equals(SYNONYM)) {
+                data.put(field, "s.geneInfoSynonymsPK.synonyms");
+            } else if (field.equals(PROTEINGI)) {
+                data.put(field, "p.proteinGi");
             }
         }
         return data;
@@ -140,18 +129,14 @@ public class SearchGeneInfo extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldOnEntity() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case SYNONYM:
-                    data.put(field, "g.geneInfoSynonyms");
-                    break;
-                case PROTEINGI:
-                    data.put(field, "g.gene2Accession");
-                    break;
-                default:
-                    data.put(field, "");
-                    break;
+            if (field.equals(SYNONYM)) {
+                data.put(field, "g.geneInfoSynonyms");
+            } else if (field.equals(PROTEINGI)) {
+                data.put(field, "g.gene2Accession");
+            } else {
+                data.put(field, "");
             }
         }
         return data;
@@ -159,7 +144,7 @@ public class SearchGeneInfo extends SearchFactory {
 
     @Override
     protected HashMap<Class, List> getConstrainFieldOnEntity() {
-        HashMap<Class, List> data = new HashMap<>();
+        HashMap<Class, List> data = new HashMap();
 
         List listT = new ArrayList();
         listT.add("g.taxonomy");

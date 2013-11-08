@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This Class is the Protein Feature entity
@@ -72,6 +73,7 @@ public class ProteinFeature implements Serializable {
         this.proteinWID = proteinWID;
     }
 
+    @XmlTransient
     public Set<ProteinFeatureVariation> getProteinFeatureVariation() {
         return proteinFeatureVariation;
     }

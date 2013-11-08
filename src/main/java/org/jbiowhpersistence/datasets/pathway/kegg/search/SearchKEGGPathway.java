@@ -31,7 +31,7 @@ public class SearchKEGGPathway extends SearchFactory {
     public final String TITLE = "Title";
 
     public SearchKEGGPathway() {
-        HashMap<String, Class> fields = new HashMap<>();
+        HashMap<String, Class> fields = new HashMap();
         fields.put(ID, String.class);
         fields.put(NUMBER, String.class);
         fields.put(TITLE, String.class);
@@ -69,7 +69,7 @@ public class SearchKEGGPathway extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldBeforeWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
             data.put(field, "");
         }
@@ -78,18 +78,14 @@ public class SearchKEGGPathway extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldAfterWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case ID:
-                    data.put(field, "g.entry");
-                    break;
-                case NUMBER:
-                    data.put(field, "g.number");
-                    break;
-                case TITLE:
-                    data.put(field, "g.title");
-                    break;
+            if (field.equals(ID)) {
+                data.put(field, "g.entry");
+            } else if (field.equals(NUMBER)) {
+                data.put(field, "g.number");
+            } else if (field.equals(TITLE)) {
+                data.put(field, "g.title");
             }
         }
         return data;
@@ -97,7 +93,7 @@ public class SearchKEGGPathway extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldOnEntity() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
             data.put(field, "");
         }
@@ -106,7 +102,7 @@ public class SearchKEGGPathway extends SearchFactory {
 
     @Override
     protected HashMap<Class, List> getConstrainFieldOnEntity() {
-        HashMap<Class, List> data = new HashMap<>();
+        HashMap<Class, List> data = new HashMap();
 
         List listT = new ArrayList();
         listT.add("");

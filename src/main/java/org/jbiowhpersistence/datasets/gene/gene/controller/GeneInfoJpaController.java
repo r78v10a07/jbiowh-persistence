@@ -108,7 +108,7 @@ public class GeneInfoJpaController extends AbstractJpaController<GeneInfo> imple
             }            
             if (!geneInfo.getOmim().isEmpty()) {
                 OMIMJpaController mController = new OMIMJpaController(emf);
-                Set<OMIM> objSet = new HashSet<>();
+                Set<OMIM> objSet = new HashSet();
                 for (OMIM object : geneInfo.getOmim()) {
                     OMIM objectOnDB = em.find(OMIM.class, object.getWid());
                     if (objectOnDB != null) {
@@ -162,35 +162,35 @@ public class GeneInfoJpaController extends AbstractJpaController<GeneInfo> imple
                 genePTTNew = em.getReference(genePTTNew.getClass(), genePTTNew.getProteinGi());
                 geneInfo.setGenePTT(genePTTNew);
             }
-            Set<Ontology> attachedOntologyNew = new HashSet<>();
+            Set<Ontology> attachedOntologyNew = new HashSet();
             for (Ontology ontologyNewOntologyToAttach : ontologyNew) {
                 ontologyNewOntologyToAttach = em.getReference(ontologyNewOntologyToAttach.getClass(), ontologyNewOntologyToAttach.getWid());
                 attachedOntologyNew.add(ontologyNewOntologyToAttach);
             }
             ontologyNew = attachedOntologyNew;
             geneInfo.setOntology(ontologyNew);
-            Set<OMIM> attachedOmimNew = new HashSet<>();
+            Set<OMIM> attachedOmimNew = new HashSet();
             for (OMIM omimNewOMIMToAttach : omimNew) {
                 omimNewOMIMToAttach = em.getReference(omimNewOMIMToAttach.getClass(), omimNewOMIMToAttach.getWid());
                 attachedOmimNew.add(omimNewOMIMToAttach);
             }
             omimNew = attachedOmimNew;
             geneInfo.setOmim(omimNew);
-            Set<KEGGPathway> attachedkEGGPathwaysNew = new HashSet<>();
+            Set<KEGGPathway> attachedkEGGPathwaysNew = new HashSet();
             for (KEGGPathway kEGGPathwaysNewKEGGPathwayToAttach : kEGGPathwaysNew) {
                 kEGGPathwaysNewKEGGPathwayToAttach = em.getReference(kEGGPathwaysNewKEGGPathwayToAttach.getClass(), kEGGPathwaysNewKEGGPathwayToAttach.getWid());
                 attachedkEGGPathwaysNew.add(kEGGPathwaysNewKEGGPathwayToAttach);
             }
             kEGGPathwaysNew = attachedkEGGPathwaysNew;
             geneInfo.setkEGGPathways(kEGGPathwaysNew);
-            Set<KEGGGene> attachedkEGGGenesNew = new HashSet<>();
+            Set<KEGGGene> attachedkEGGGenesNew = new HashSet();
             for (KEGGGene kEGGGenesNewKEGGGeneToAttach : kEGGGenesNew) {
                 kEGGGenesNewKEGGGeneToAttach = em.getReference(kEGGGenesNewKEGGGeneToAttach.getClass(), kEGGGenesNewKEGGGeneToAttach.getWid());
                 attachedkEGGGenesNew.add(kEGGGenesNewKEGGGeneToAttach);
             }
             kEGGGenesNew = attachedkEGGGenesNew;
             geneInfo.setkEGGGenes(kEGGGenesNew);
-            Set<Protein> attachedProteinNew = new HashSet<>();
+            Set<Protein> attachedProteinNew = new HashSet();
             for (Protein proteinNewProteinToAttach : proteinNew) {
                 proteinNewProteinToAttach = em.getReference(proteinNewProteinToAttach.getClass(), proteinNewProteinToAttach.getWid());
                 attachedProteinNew.add(proteinNewProteinToAttach);
@@ -304,7 +304,7 @@ public class GeneInfoJpaController extends AbstractJpaController<GeneInfo> imple
             Set<Gene2Ensembl> gene2EnsemblOrphanCheck = geneInfo.getGene2Ensembl();
             for (Gene2Ensembl gene2EnsemblOrphanCheckGene2Ensembl : gene2EnsemblOrphanCheck) {
                 if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<>();
+                    illegalOrphanMessages = new ArrayList();
                 }
                 illegalOrphanMessages.add("This GeneInfo (" + geneInfo + ") cannot be destroyed since the Gene2Ensembl " + gene2EnsemblOrphanCheckGene2Ensembl + " in its gene2Ensembl field has a non-nullable geneInfo field.");
             }

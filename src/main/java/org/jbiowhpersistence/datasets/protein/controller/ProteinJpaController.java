@@ -134,7 +134,7 @@ public class ProteinJpaController extends AbstractJpaController<Protein> impleme
             em = getEntityManager();
             em.getTransaction().begin();
             if (!protein.getProteinFeature().isEmpty()) {
-                Set<ProteinFeature> attachedProteinFeature = new HashSet<>();
+                Set<ProteinFeature> attachedProteinFeature = new HashSet();
                 for (ProteinFeature proteinFeatureProteinFeature : protein.getProteinFeature()) {
                     ProteinFeature proteinFeatureProteinFeatureOnDB = em.find(proteinFeatureProteinFeature.getClass(), proteinFeatureProteinFeature.getWid());
                     if (proteinFeatureProteinFeatureOnDB != null) {
@@ -146,7 +146,7 @@ public class ProteinJpaController extends AbstractJpaController<Protein> impleme
                 protein.setProteinFeature(attachedProteinFeature);
             }
             if (!protein.getProteinDBReference().isEmpty()) {
-                Set<ProteinDBReference> attachedProteinDBReference = new HashSet<>();
+                Set<ProteinDBReference> attachedProteinDBReference = new HashSet();
                 for (ProteinDBReference proteinDBReferenceProteinDBReferenceToAttach : protein.getProteinDBReference()) {
                     ProteinDBReference proteinDBReferenceProteinDBReference = em.find(proteinDBReferenceProteinDBReferenceToAttach.getClass(), proteinDBReferenceProteinDBReferenceToAttach.getWid());
                     if (proteinDBReferenceProteinDBReference != null) {
@@ -158,7 +158,7 @@ public class ProteinJpaController extends AbstractJpaController<Protein> impleme
                 protein.setProteinDBReference(attachedProteinDBReference);
             }
             if (!protein.getProteinLongName().isEmpty()) {
-                Set<ProteinLongName> attachedProteinLongName = new HashSet<>();
+                Set<ProteinLongName> attachedProteinLongName = new HashSet();
                 for (ProteinLongName proteinLongNameProteinLongNameToAttach : protein.getProteinLongName()) {
                     ProteinLongName proteinLongNameProteinLongName = em.find(proteinLongNameProteinLongNameToAttach.getClass(), proteinLongNameProteinLongNameToAttach.getWid());
                     if (proteinLongNameProteinLongName != null) {
@@ -170,7 +170,7 @@ public class ProteinJpaController extends AbstractJpaController<Protein> impleme
                 protein.setProteinLongName(attachedProteinLongName);
             }
             if (!protein.getProteinComment().isEmpty()) {
-                Set<ProteinComment> attachedProteinComment = new HashSet<>();
+                Set<ProteinComment> attachedProteinComment = new HashSet();
                 for (ProteinComment proteinCommentProteinCommentToAttach : protein.getProteinComment()) {
                     ProteinComment proteinCommentProteinComment = em.find(proteinCommentProteinCommentToAttach.getClass(), proteinCommentProteinCommentToAttach.getWid());
                     if (proteinCommentProteinComment != null) {
@@ -183,7 +183,7 @@ public class ProteinJpaController extends AbstractJpaController<Protein> impleme
             }
             if (!protein.getProteinhasProteinKeyword().isEmpty()) {
                 ProteinKeywordJpaController kController = new ProteinKeywordJpaController(emf);
-                Map<ProteinhasProteinKeywordPK, ProteinhasProteinKeyword> attachProteinhasProteinKeyword = new HashMap<>();
+                Map<ProteinhasProteinKeywordPK, ProteinhasProteinKeyword> attachProteinhasProteinKeyword = new HashMap();
                 for (ProteinhasProteinKeyword proteinhasProteinKeywordToAttach : protein.getProteinhasProteinKeyword().values()) {
                     ProteinhasProteinKeyword proteinhasProteinKeyword = em.find(proteinhasProteinKeywordToAttach.getClass(), proteinhasProteinKeywordToAttach.getProteinhasProteinKeywordPK());
                     if (proteinhasProteinKeyword != null) {
@@ -206,7 +206,7 @@ public class ProteinJpaController extends AbstractJpaController<Protein> impleme
             protein.setTaxonomy(createTaxonomy(emf, em, protein.getTaxonomy()));
             if (!protein.getTaxonomyHost().isEmpty()) {
                 TaxonomyJpaController taxController = new TaxonomyJpaController(emf);
-                Set<Taxonomy> attachTaxonomyHost = new HashSet<>();
+                Set<Taxonomy> attachTaxonomyHost = new HashSet();
                 for (Taxonomy taxToAttach : protein.getTaxonomyHost()) {
                     Taxonomy tax = em.find(Taxonomy.class, taxToAttach.getWid());
                     if (tax != null) {
@@ -300,7 +300,7 @@ public class ProteinJpaController extends AbstractJpaController<Protein> impleme
             Set<ProteinLongName> proteinLongNameNew = protein.getProteinLongName();
             Set<Ontology> ontologyOld = persistentProtein.getOntology();
             Set<Ontology> ontologyNew = protein.getOntology();
-            Set<GeneInfo> attachedGeneInfoNew = new HashSet<>();
+            Set<GeneInfo> attachedGeneInfoNew = new HashSet();
             if (genePTTNew != null) {
                 genePTTNew = em.getReference(genePTTNew.getClass(), genePTTNew.getProteinGi());
                 protein.setGenePTT(genePTTNew);
@@ -311,98 +311,98 @@ public class ProteinJpaController extends AbstractJpaController<Protein> impleme
             }
             geneInfoNew = attachedGeneInfoNew;
             protein.setGeneInfo(geneInfoNew);
-            Set<KEGGPathway> attachedkEGGPathwaysNew = new HashSet<>();
+            Set<KEGGPathway> attachedkEGGPathwaysNew = new HashSet();
             for (KEGGPathway kEGGPathwaysNewKEGGPathwayToAttach : kEGGPathwaysNew) {
                 kEGGPathwaysNewKEGGPathwayToAttach = em.getReference(kEGGPathwaysNewKEGGPathwayToAttach.getClass(), kEGGPathwaysNewKEGGPathwayToAttach.getWid());
                 attachedkEGGPathwaysNew.add(kEGGPathwaysNewKEGGPathwayToAttach);
             }
             kEGGPathwaysNew = attachedkEGGPathwaysNew;
             protein.setkEGGPathways(kEGGPathwaysNew);
-            Set<KEGGEnzyme> attachedkEGGEnzymesNew = new HashSet<>();
+            Set<KEGGEnzyme> attachedkEGGEnzymesNew = new HashSet();
             for (KEGGEnzyme kEGGEnzymesNewKEGGEnzymeToAttach : kEGGEnzymesNew) {
                 kEGGEnzymesNewKEGGEnzymeToAttach = em.getReference(kEGGEnzymesNewKEGGEnzymeToAttach.getClass(), kEGGEnzymesNewKEGGEnzymeToAttach.getWid());
                 attachedkEGGEnzymesNew.add(kEGGEnzymesNewKEGGEnzymeToAttach);
             }
             kEGGEnzymesNew = attachedkEGGEnzymesNew;
             protein.setkEGGEnzymes(kEGGEnzymesNew);
-            Set<UniRefEntry> attachedUniRefEntryNew = new HashSet<>();
+            Set<UniRefEntry> attachedUniRefEntryNew = new HashSet();
             for (UniRefEntry uniRefEntryNewUniRefEntryToAttach : uniRefEntryNew) {
                 uniRefEntryNewUniRefEntryToAttach = em.getReference(uniRefEntryNewUniRefEntryToAttach.getClass(), uniRefEntryNewUniRefEntryToAttach.getWid());
                 attachedUniRefEntryNew.add(uniRefEntryNewUniRefEntryToAttach);
             }
             uniRefEntryNew = attachedUniRefEntryNew;
             protein.setUniRefEntry(uniRefEntryNew);
-            Set<DrugBank> attachedDrugBankAsCarriersNew = new HashSet<>();
+            Set<DrugBank> attachedDrugBankAsCarriersNew = new HashSet();
             for (DrugBank drugBankAsCarriersNewDrugBankToAttach : drugBankAsCarriersNew) {
                 drugBankAsCarriersNewDrugBankToAttach = em.getReference(drugBankAsCarriersNewDrugBankToAttach.getClass(), drugBankAsCarriersNewDrugBankToAttach.getWid());
                 attachedDrugBankAsCarriersNew.add(drugBankAsCarriersNewDrugBankToAttach);
             }
             drugBankAsCarriersNew = attachedDrugBankAsCarriersNew;
             protein.setDrugBankAsCarriers(drugBankAsCarriersNew);
-            Set<DrugBank> attachedDrugBankAsTransportersNew = new HashSet<>();
+            Set<DrugBank> attachedDrugBankAsTransportersNew = new HashSet();
             for (DrugBank drugBankAsTransportersNewDrugBankToAttach : drugBankAsTransportersNew) {
                 drugBankAsTransportersNewDrugBankToAttach = em.getReference(drugBankAsTransportersNewDrugBankToAttach.getClass(), drugBankAsTransportersNewDrugBankToAttach.getWid());
                 attachedDrugBankAsTransportersNew.add(drugBankAsTransportersNewDrugBankToAttach);
             }
             drugBankAsTransportersNew = attachedDrugBankAsTransportersNew;
             protein.setDrugBankAsTransporters(drugBankAsTransportersNew);
-            Set<DrugBank> attachedDrugBankAsEnzymeNew = new HashSet<>();
+            Set<DrugBank> attachedDrugBankAsEnzymeNew = new HashSet();
             for (DrugBank drugBankAsEnzymeNewDrugBankToAttach : drugBankAsEnzymeNew) {
                 drugBankAsEnzymeNewDrugBankToAttach = em.getReference(drugBankAsEnzymeNewDrugBankToAttach.getClass(), drugBankAsEnzymeNewDrugBankToAttach.getWid());
                 attachedDrugBankAsEnzymeNew.add(drugBankAsEnzymeNewDrugBankToAttach);
             }
             drugBankAsEnzymeNew = attachedDrugBankAsEnzymeNew;
             protein.setDrugBankAsEnzyme(drugBankAsEnzymeNew);
-            Set<DrugBank> attachedDrugBankNew = new HashSet<>();
+            Set<DrugBank> attachedDrugBankNew = new HashSet();
             for (DrugBank drugBankNewDrugBankToAttach : drugBankNew) {
                 drugBankNewDrugBankToAttach = em.getReference(drugBankNewDrugBankToAttach.getClass(), drugBankNewDrugBankToAttach.getWid());
                 attachedDrugBankNew.add(drugBankNewDrugBankToAttach);
             }
             drugBankNew = attachedDrugBankNew;
             protein.setDrugBank(drugBankNew);
-            Set<UniRefMember> attachedUniRefMemberNew = new HashSet<>();
+            Set<UniRefMember> attachedUniRefMemberNew = new HashSet();
             for (UniRefMember uniRefMemberNewUniRefMemberToAttach : uniRefMemberNew) {
                 uniRefMemberNewUniRefMemberToAttach = em.getReference(uniRefMemberNewUniRefMemberToAttach.getClass(), uniRefMemberNewUniRefMemberToAttach.getWid());
                 attachedUniRefMemberNew.add(uniRefMemberNewUniRefMemberToAttach);
             }
             uniRefMemberNew = attachedUniRefMemberNew;
             protein.setUniRefMember(uniRefMemberNew);
-            Set<MIFEntryInteraction> attachedmIFEntryInteractionNew = new HashSet<>();
+            Set<MIFEntryInteraction> attachedmIFEntryInteractionNew = new HashSet();
             for (MIFEntryInteraction mIFEntryInteractionNewMIFEntryInteractionToAttach : mIFEntryInteractionNew) {
                 mIFEntryInteractionNewMIFEntryInteractionToAttach = em.getReference(mIFEntryInteractionNewMIFEntryInteractionToAttach.getClass(), mIFEntryInteractionNewMIFEntryInteractionToAttach.getWid());
                 attachedmIFEntryInteractionNew.add(mIFEntryInteractionNewMIFEntryInteractionToAttach);
             }
             mIFEntryInteractionNew = attachedmIFEntryInteractionNew;
             protein.setmIFEntryInteraction(mIFEntryInteractionNew);
-            Set<ProteinComment> attachedProteinCommentNew = new HashSet<>();
+            Set<ProteinComment> attachedProteinCommentNew = new HashSet();
             for (ProteinComment proteinCommentNewProteinCommentToAttach : proteinCommentNew) {
                 proteinCommentNewProteinCommentToAttach = em.getReference(proteinCommentNewProteinCommentToAttach.getClass(), proteinCommentNewProteinCommentToAttach.getWid());
                 attachedProteinCommentNew.add(proteinCommentNewProteinCommentToAttach);
             }
             proteinCommentNew = attachedProteinCommentNew;
             protein.setProteinComment(proteinCommentNew);
-            Set<ProteinFeature> attachedProteinFeatureNew = new HashSet<>();
+            Set<ProteinFeature> attachedProteinFeatureNew = new HashSet();
             for (ProteinFeature proteinFeatureNewProteinFeatureToAttach : proteinFeatureNew) {
                 proteinFeatureNewProteinFeatureToAttach = em.getReference(proteinFeatureNewProteinFeatureToAttach.getClass(), proteinFeatureNewProteinFeatureToAttach.getWid());
                 attachedProteinFeatureNew.add(proteinFeatureNewProteinFeatureToAttach);
             }
             proteinFeatureNew = attachedProteinFeatureNew;
             protein.setProteinFeature(proteinFeatureNew);
-            Set<ProteinDBReference> attachedProteinDBReferenceNew = new HashSet<>();
+            Set<ProteinDBReference> attachedProteinDBReferenceNew = new HashSet();
             for (ProteinDBReference proteinDBReferenceNewProteinDBReferenceToAttach : proteinDBReferenceNew) {
                 proteinDBReferenceNewProteinDBReferenceToAttach = em.getReference(proteinDBReferenceNewProteinDBReferenceToAttach.getClass(), proteinDBReferenceNewProteinDBReferenceToAttach.getWid());
                 attachedProteinDBReferenceNew.add(proteinDBReferenceNewProteinDBReferenceToAttach);
             }
             proteinDBReferenceNew = attachedProteinDBReferenceNew;
             protein.setProteinDBReference(proteinDBReferenceNew);
-            Set<ProteinLongName> attachedProteinLongNameNew = new HashSet<>();
+            Set<ProteinLongName> attachedProteinLongNameNew = new HashSet();
             for (ProteinLongName proteinLongNameNewProteinLongNameToAttach : proteinLongNameNew) {
                 proteinLongNameNewProteinLongNameToAttach = em.getReference(proteinLongNameNewProteinLongNameToAttach.getClass(), proteinLongNameNewProteinLongNameToAttach.getWid());
                 attachedProteinLongNameNew.add(proteinLongNameNewProteinLongNameToAttach);
             }
             proteinLongNameNew = attachedProteinLongNameNew;
             protein.setProteinLongName(proteinLongNameNew);
-            Set<Ontology> attachedOntologyNew = new HashSet<>();
+            Set<Ontology> attachedOntologyNew = new HashSet();
             for (Ontology ontologyNewOntologyToAttach : ontologyNew) {
                 ontologyNewOntologyToAttach = em.getReference(ontologyNewOntologyToAttach.getClass(), ontologyNewOntologyToAttach.getWid());
                 attachedOntologyNew.add(ontologyNewOntologyToAttach);

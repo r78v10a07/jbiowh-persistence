@@ -46,7 +46,7 @@ public class UniRefTables {
      */
     public List<String> getTables() {
         if (tables == null) {
-            tables = new ArrayList<>();
+            tables = new ArrayList();
 
             tables.add(UNIREFENTRY);
             tables.add(UNIREFENTRYPROPERTY);

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.*;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 import org.jbiowhpersistence.datasets.drug.drugbank.DrugBankTables;
 import org.jbiowhpersistence.datasets.pathway.kegg.KEGGTables;
@@ -239,6 +240,7 @@ public class DrugBank implements Serializable {
         this.dataSet = dataSet;
     }
     
+    @XmlTransient
     public Set<KEGGCompound> getkEGGCompounds() {
         return kEGGCompounds;
     }
@@ -247,6 +249,7 @@ public class DrugBank implements Serializable {
         this.kEGGCompounds = kEGGCompounds;
     }
 
+    @XmlTransient
     public Set<DrugBankGeneralRef> getDrugBankGeneralRef() {
         return drugBankGeneralRef;
     }
@@ -255,6 +258,7 @@ public class DrugBank implements Serializable {
         this.drugBankGeneralRef = drugBankGeneralRef;
     }
 
+    @XmlTransient
     public Set<DrugBankCarriers> getDrugBankCarriers() {
         return drugBankCarriers;
     }
@@ -263,6 +267,7 @@ public class DrugBank implements Serializable {
         this.drugBankCarriers = drugBankCarriers;
     }
 
+    @XmlTransient
     public Set<DrugBankTransporters> getDrugBankTransporters() {
         return drugBankTransporters;
     }
@@ -271,6 +276,7 @@ public class DrugBank implements Serializable {
         this.drugBankTransporters = drugBankTransporters;
     }
 
+    @XmlTransient
     public Set<DrugBankEnzymes> getDrugBankEnzymes() {
         return drugBankEnzymes;
     }
@@ -279,6 +285,7 @@ public class DrugBank implements Serializable {
         this.drugBankEnzymes = drugBankEnzymes;
     }
 
+    @XmlTransient
     public Set<DrugBankTargets> getDrugBankTargets() {
         return drugBankTargets;
     }
@@ -287,6 +294,7 @@ public class DrugBank implements Serializable {
         this.drugBankTargets = drugBankTargets;
     }
 
+    @XmlTransient
     public Set<DrugBankExternalLinks> getDrugBankExternalLinks() {
         return drugBankExternalLinks;
     }
@@ -295,6 +303,7 @@ public class DrugBank implements Serializable {
         this.drugBankExternalLinks = drugBankExternalLinks;
     }
 
+    @XmlTransient
     public Set<DrugBankExternalIdentifiers> getDrugBankExternalIdentifiers() {
         return drugBankExternalIdentifiers;
     }
@@ -303,6 +312,7 @@ public class DrugBank implements Serializable {
         this.drugBankExternalIdentifiers = drugBankExternalIdentifiers;
     }
 
+    @XmlTransient
     public Set<DrugBankExperimentalProperties> getDrugBankExperimentalProperties() {
         return drugBankExperimentalProperties;
     }
@@ -311,6 +321,7 @@ public class DrugBank implements Serializable {
         this.drugBankExperimentalProperties = drugBankExperimentalProperties;
     }
 
+    @XmlTransient
     public Set<DrugBankCalculatedProperties> getDrugBankCalculatedProperties() {
         return drugBankCalculatedProperties;
     }
@@ -319,6 +330,7 @@ public class DrugBank implements Serializable {
         this.drugBankCalculatedProperties = drugBankCalculatedProperties;
     }
 
+    @XmlTransient
     public Set<DrugBankProteinSequences> getDrugBankProteinSequences() {
         return drugBankProteinSequences;
     }
@@ -327,6 +339,7 @@ public class DrugBank implements Serializable {
         this.drugBankProteinSequences = drugBankProteinSequences;
     }
 
+    @XmlTransient
     public Map<DrugBankDrugInteractionsPK, DrugBankDrugInteractions> getDrugBankDrugInteractions() {
         return drugBankDrugInteractions;
     }
@@ -335,6 +348,7 @@ public class DrugBank implements Serializable {
         this.drugBankDrugInteractions = drugBankDrugInteractions;
     }
 
+    @XmlTransient
     public Set<DrugBankFoodInteractions> getDrugBankFoodInteractions() {
         return drugBankFoodInteractions;
     }
@@ -343,6 +357,7 @@ public class DrugBank implements Serializable {
         this.drugBankFoodInteractions = drugBankFoodInteractions;
     }
 
+    @XmlTransient
     public Set<DrugBankPatents> getDrugBankPatents() {
         return drugBankPatents;
     }
@@ -351,6 +366,7 @@ public class DrugBank implements Serializable {
         this.drugBankPatents = drugBankPatents;
     }
 
+    @XmlTransient
     public Set<DrugBankAHFSCodes> getDrugBankAHFSCodes() {
         return drugBankAHFSCodes;
     }
@@ -359,6 +375,7 @@ public class DrugBank implements Serializable {
         this.drugBankAHFSCodes = drugBankAHFSCodes;
     }
 
+    @XmlTransient
     public Set<DrugBankATCCodes> getDrugBankATCCodes() {
         return drugBankATCCodes;
     }
@@ -367,6 +384,7 @@ public class DrugBank implements Serializable {
         this.drugBankATCCodes = drugBankATCCodes;
     }
 
+    @XmlTransient
     public Set<DrugBankDosages> getDrugBankDosages() {
         return drugBankDosages;
     }
@@ -375,6 +393,7 @@ public class DrugBank implements Serializable {
         this.drugBankDosages = drugBankDosages;
     }
 
+    @XmlTransient
     public Set<DrugBankAffectedOrganisms> getDrugBankAffectedOrganisms() {
         return drugBankAffectedOrganisms;
     }
@@ -383,6 +402,7 @@ public class DrugBank implements Serializable {
         this.drugBankAffectedOrganisms = drugBankAffectedOrganisms;
     }
 
+    @XmlTransient
     public Set<DrugBankCategories> getDrugBankCategories() {
         return drugBankCategories;
     }
@@ -391,6 +411,7 @@ public class DrugBank implements Serializable {
         this.drugBankCategories = drugBankCategories;
     }
 
+    @XmlTransient
     public Set<DrugBankPrices> getDrugBankPrices() {
         return drugBankPrices;
     }
@@ -399,6 +420,7 @@ public class DrugBank implements Serializable {
         this.drugBankPrices = drugBankPrices;
     }
 
+    @XmlTransient
     public Set<DrugBankManufacturers> getDrugBankManufacturers() {
         return drugBankManufacturers;
     }
@@ -407,6 +429,7 @@ public class DrugBank implements Serializable {
         this.drugBankManufacturers = drugBankManufacturers;
     }
 
+    @XmlTransient
     public Set<DrugBankPackagers> getDrugBankPackagers() {
         return drugBankPackagers;
     }
@@ -415,6 +438,7 @@ public class DrugBank implements Serializable {
         this.drugBankPackagers = drugBankPackagers;
     }
 
+    @XmlTransient
     public Set<DrugBankMixtures> getDrugBankMixtures() {
         return drugBankMixtures;
     }
@@ -423,6 +447,7 @@ public class DrugBank implements Serializable {
         this.drugBankMixtures = drugBankMixtures;
     }
 
+    @XmlTransient
     public Set<DrugBankBrands> getDrugBankBrands() {
         return drugBankBrands;
     }
@@ -431,6 +456,7 @@ public class DrugBank implements Serializable {
         this.drugBankBrands = drugBankBrands;
     }
 
+    @XmlTransient
     public Set<DrugBankSynonyms> getDrugBankSynonyms() {
         return drugBankSynonyms;
     }
@@ -439,6 +465,7 @@ public class DrugBank implements Serializable {
         this.drugBankSynonyms = drugBankSynonyms;
     }
 
+    @XmlTransient
     public Set<DrugBankTaxonomySubstructures> getDrugBankTaxonomySubstructures() {
         return drugBankTaxonomySubstructures;
     }
@@ -447,6 +474,7 @@ public class DrugBank implements Serializable {
         this.drugBankTaxonomySubstructures = drugBankTaxonomySubstructures;
     }
 
+    @XmlTransient
     public Set<DrugBankTaxonomy> getDrugBankTaxonomy() {
         return drugBankTaxonomy;
     }
@@ -455,6 +483,7 @@ public class DrugBank implements Serializable {
         this.drugBankTaxonomy = drugBankTaxonomy;
     }
 
+    @XmlTransient
     public Set<DrugBankGroup> getDrugBankGroup() {
         return drugBankGroup;
     }
@@ -463,6 +492,7 @@ public class DrugBank implements Serializable {
         this.drugBankGroup = drugBankGroup;
     }
 
+    @XmlTransient
     public Set<DrugBankSecondAccessionNumbers> getDrugBankSecondAccessionNumbers() {
         return drugBankSecondAccessionNumbers;
     }
@@ -479,6 +509,7 @@ public class DrugBank implements Serializable {
         this.cASNumber = cASNumber;
     }
 
+    @XmlTransient
     public Set<Protein> getProteinAsCarriers() {
         return proteinAsCarriers;
     }
@@ -487,6 +518,7 @@ public class DrugBank implements Serializable {
         this.proteinAsCarriers = proteinAsCarriers;
     }
 
+    @XmlTransient
     public Set<Protein> getProteinAsEnzyme() {
         return proteinAsEnzyme;
     }
@@ -495,6 +527,7 @@ public class DrugBank implements Serializable {
         this.proteinAsEnzyme = proteinAsEnzyme;
     }
 
+    @XmlTransient
     public Set<Protein> getProteinAsTransporters() {
         return proteinAsTransporters;
     }
@@ -503,6 +536,7 @@ public class DrugBank implements Serializable {
         this.proteinAsTransporters = proteinAsTransporters;
     }
 
+    @XmlTransient
     public Set<Protein> getProtein() {
         return protein;
     }

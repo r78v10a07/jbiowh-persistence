@@ -63,7 +63,7 @@ public class OMIMJpaController extends AbstractJpaController<OMIM> implements Se
             em = getEntityManager();
             em.getTransaction().begin();
             if (!omim.getOmimAVs().isEmpty()) {
-                Set<OMIMAV> attachedOmimAVs = new HashSet<>();
+                Set<OMIMAV> attachedOmimAVs = new HashSet();
                 for (OMIMAV omimAVsOMIMAVToAttach : omim.getOmimAVs()) {
                     OMIMAV omimAVsOMIMAV = em.find(omimAVsOMIMAVToAttach.getClass(), omimAVsOMIMAVToAttach.getWid());
                     if (omimAVsOMIMAV != null) {
@@ -75,7 +75,7 @@ public class OMIMJpaController extends AbstractJpaController<OMIM> implements Se
                 omim.setOmimAVs(attachedOmimAVs);
             }
             if (!omim.getOmimCSs().isEmpty()) {
-                Set<OMIMCS> attachedOmimCSs = new HashSet<>();
+                Set<OMIMCS> attachedOmimCSs = new HashSet();
                 for (OMIMCS omimCSsOMIMCSToAttach : omim.getOmimCSs()) {
                     OMIMCS omimCSsOMIMCS = em.find(omimCSsOMIMCSToAttach.getClass(), omimCSsOMIMCSToAttach.getWid());
                     if (omimCSsOMIMCS != null) {
@@ -87,7 +87,7 @@ public class OMIMJpaController extends AbstractJpaController<OMIM> implements Se
                 omim.setOmimCSs(attachedOmimCSs);
             }
             if (!omim.getOmimRFs().isEmpty()) {
-                Set<OMIMRF> attachedOmimRFs = new HashSet<>();
+                Set<OMIMRF> attachedOmimRFs = new HashSet();
                 for (OMIMRF omimRFsOMIMRFToAttach : omim.getOmimRFs()) {
                     OMIMRF omimRFsOMIMRF = em.find(omimRFsOMIMRFToAttach.getClass(), omimRFsOMIMRFToAttach.getWid());
                     if (omimRFsOMIMRF != null) {
@@ -99,7 +99,7 @@ public class OMIMJpaController extends AbstractJpaController<OMIM> implements Se
                 omim.setOmimRFs(attachedOmimRFs);
             }
             if (!omim.getOmimSAs().isEmpty()) {
-                Set<OMIMSA> attachedOmimSAs = new HashSet<>();
+                Set<OMIMSA> attachedOmimSAs = new HashSet();
                 for (OMIMSA omimSAsOMIMSAToAttach : omim.getOmimSAs()) {
                     OMIMSA omimSAsOMIMSA = em.find(omimSAsOMIMSAToAttach.getClass(), omimSAsOMIMSAToAttach.getWid());
                     if (omimSAsOMIMSA != null) {
@@ -143,35 +143,35 @@ public class OMIMJpaController extends AbstractJpaController<OMIM> implements Se
             Set<OMIMSA> omimSAsNew = omim.getOmimSAs();
             Set<GeneInfo> geneInfosOld = persistentOMIM.getGeneInfos();
             Set<GeneInfo> geneInfosNew = omim.getGeneInfos();
-            Set<OMIMAV> attachedOmimAVsNew = new HashSet<>();
+            Set<OMIMAV> attachedOmimAVsNew = new HashSet();
             for (OMIMAV omimAVsNewOMIMAVToAttach : omimAVsNew) {
                 omimAVsNewOMIMAVToAttach = em.getReference(omimAVsNewOMIMAVToAttach.getClass(), omimAVsNewOMIMAVToAttach.getWid());
                 attachedOmimAVsNew.add(omimAVsNewOMIMAVToAttach);
             }
             omimAVsNew = attachedOmimAVsNew;
             omim.setOmimAVs(omimAVsNew);
-            Set<OMIMCS> attachedOmimCSsNew = new HashSet<>();
+            Set<OMIMCS> attachedOmimCSsNew = new HashSet();
             for (OMIMCS omimCSsNewOMIMCSToAttach : omimCSsNew) {
                 omimCSsNewOMIMCSToAttach = em.getReference(omimCSsNewOMIMCSToAttach.getClass(), omimCSsNewOMIMCSToAttach.getWid());
                 attachedOmimCSsNew.add(omimCSsNewOMIMCSToAttach);
             }
             omimCSsNew = attachedOmimCSsNew;
             omim.setOmimCSs(omimCSsNew);
-            Set<OMIMRF> attachedOmimRFsNew = new HashSet<>();
+            Set<OMIMRF> attachedOmimRFsNew = new HashSet();
             for (OMIMRF omimRFsNewOMIMRFToAttach : omimRFsNew) {
                 omimRFsNewOMIMRFToAttach = em.getReference(omimRFsNewOMIMRFToAttach.getClass(), omimRFsNewOMIMRFToAttach.getWid());
                 attachedOmimRFsNew.add(omimRFsNewOMIMRFToAttach);
             }
             omimRFsNew = attachedOmimRFsNew;
             omim.setOmimRFs(omimRFsNew);
-            Set<OMIMSA> attachedOmimSAsNew = new HashSet<>();
+            Set<OMIMSA> attachedOmimSAsNew = new HashSet();
             for (OMIMSA omimSAsNewOMIMSAToAttach : omimSAsNew) {
                 omimSAsNewOMIMSAToAttach = em.getReference(omimSAsNewOMIMSAToAttach.getClass(), omimSAsNewOMIMSAToAttach.getWid());
                 attachedOmimSAsNew.add(omimSAsNewOMIMSAToAttach);
             }
             omimSAsNew = attachedOmimSAsNew;
             omim.setOmimSAs(omimSAsNew);
-            Set<GeneInfo> attachedGeneInfosNew = new HashSet<>();
+            Set<GeneInfo> attachedGeneInfosNew = new HashSet();
             for (GeneInfo geneInfosNewGeneInfoToAttach : geneInfosNew) {
                 geneInfosNewGeneInfoToAttach = em.getReference(geneInfosNewGeneInfoToAttach.getClass(), geneInfosNewGeneInfoToAttach.getWid());
                 attachedGeneInfosNew.add(geneInfosNewGeneInfoToAttach);

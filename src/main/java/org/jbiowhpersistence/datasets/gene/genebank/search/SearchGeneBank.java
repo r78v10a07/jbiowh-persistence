@@ -27,7 +27,7 @@ public class SearchGeneBank extends SearchFactory {
     public final String DESCRIPTION = "Description";
 
     public SearchGeneBank() {
-        HashMap<String, Class> fields = new HashMap<>();
+        HashMap<String, Class> fields = new HashMap();
         fields.put(GI, Long.class);
         fields.put(PROTEINGI, Long.class);
         fields.put(TAXID, Integer.class);
@@ -74,16 +74,13 @@ public class SearchGeneBank extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldBeforeWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         HashMap<String, String> fieldOnEntity = getFieldOnEntity();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case PROTEINGI:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " p ");
-                    break;
-                default:
-                    data.put(field, "");
-                    break;
+            if (field.equals(PROTEINGI)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " p ");
+            } else {
+                data.put(field, "");
             }
         }
         return data;
@@ -92,24 +89,18 @@ public class SearchGeneBank extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldAfterWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case GI:
-                    data.put(field, "g.gi");
-                    break;
-                case LOCUSNAME:
-                    data.put(field, "g.locusName");
-                    break;
-                case DESCRIPTION:
-                    data.put(field, "g.description");
-                    break;
-                case TAXID:
-                    data.put(field, "g.taxId");
-                    break;
-                case PROTEINGI:
-                    data.put(field, "p.proteinGi");
-                    break;
+            if (field.equals(GI)) {
+                data.put(field, "g.gi");
+            } else if (field.equals(LOCUSNAME)) {
+                data.put(field, "g.locusName");
+            } else if (field.equals(DESCRIPTION)) {
+                data.put(field, "g.description");
+            } else if (field.equals(TAXID)) {
+                data.put(field, "g.taxId");
+            } else if (field.equals(PROTEINGI)) {
+                data.put(field, "p.proteinGi");
             }
         }
         return data;
@@ -117,15 +108,12 @@ public class SearchGeneBank extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldOnEntity() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case PROTEINGI:
-                    data.put(field, "g.geneBankCDSs");
-                    break;
-                default:
-                    data.put(field, "");
-                    break;
+            if (field.equals(PROTEINGI)) {
+                data.put(field, "g.geneBankCDSs");
+            } else {
+                data.put(field, "");
             }
         }
         return data;
@@ -133,7 +121,7 @@ public class SearchGeneBank extends SearchFactory {
 
     @Override
     protected HashMap<Class, List> getConstrainFieldOnEntity() {
-        HashMap<Class, List> data = new HashMap<>();
+        HashMap<Class, List> data = new HashMap();
 
         List listT = new ArrayList();
         listT.add("g.taxonomy");

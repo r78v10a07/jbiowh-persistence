@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This Class is the Protein DB reference entity
@@ -65,6 +66,7 @@ public class ProteinDBReference implements Serializable {
         this.id = id;
     }
 
+    @XmlTransient
     public Map<ProteinDBReferencePropertyPK, ProteinDBReferenceProperty> getProteinDBReferenceProperty() {
         return proteinDBReferenceProperty;
     }

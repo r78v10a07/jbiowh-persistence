@@ -98,7 +98,7 @@ public class ProteinTables {
      */
     public List<String> getTables() {
         if (tables == null) {
-            tables = new ArrayList<>();
+            tables = new ArrayList();
             tables.add(PROTEIN);
             tables.add(PROTEIN_HAS_DRUGBANK);
             tables.add(PROTEIN_HAS_DRUGBANKASENZYME);

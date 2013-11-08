@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This Class is the MIFEntrySetEntry entity
@@ -57,6 +58,7 @@ public class MIFEntrySetEntry implements Serializable {
         this.mIFEntrySetWID = mIFEntrySetWID;
     }
 
+    @XmlTransient
     public Set<MIFEntryExperiment> getMifEntryExperiment() {
         return mifEntryExperiment;
     }
@@ -65,6 +67,7 @@ public class MIFEntrySetEntry implements Serializable {
         this.mifEntryExperiment = mifEntryExperiment;
     }
 
+    @XmlTransient
     public Set<MIFEntryInteraction> getMifEntryInteraction() {
         return mifEntryInteraction;
     }
@@ -73,6 +76,7 @@ public class MIFEntrySetEntry implements Serializable {
         this.mifEntryInteraction = mifEntryInteraction;
     }
 
+    @XmlTransient
     public Set<MIFEntryInteractor> getMifEntryInteractor() {
         return mifEntryInteractor;
     }
@@ -81,6 +85,7 @@ public class MIFEntrySetEntry implements Serializable {
         this.mifEntryInteractor = mifEntryInteractor;
     }
 
+    @XmlTransient
     public Set<MIFEntrySource> getMifEntrySource() {
         return mifEntrySource;
     }

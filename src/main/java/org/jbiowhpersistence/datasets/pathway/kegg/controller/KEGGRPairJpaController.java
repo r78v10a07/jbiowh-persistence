@@ -67,7 +67,7 @@ public class KEGGRPairJpaController extends AbstractKEGGJpaController<KEGGRPair>
             KEGGRPair persistentKEGGRPair = em.find(KEGGRPair.class, keggRPair.getWid());
             Set<KEGGCompound> kEGGCompoundOld = persistentKEGGRPair.getkEGGCompound();
             Set<KEGGCompound> kEGGCompoundNew = keggRPair.getkEGGCompound();
-            Set<KEGGCompound> attachedkEGGCompoundNew = new HashSet<>();
+            Set<KEGGCompound> attachedkEGGCompoundNew = new HashSet();
             for (KEGGCompound kEGGCompoundNewKEGGCompoundToAttach : kEGGCompoundNew) {
                 kEGGCompoundNewKEGGCompoundToAttach = em.getReference(kEGGCompoundNewKEGGCompoundToAttach.getClass(), kEGGCompoundNewKEGGCompoundToAttach.getWid());
                 attachedkEGGCompoundNew.add(kEGGCompoundNewKEGGCompoundToAttach);

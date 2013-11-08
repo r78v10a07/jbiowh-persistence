@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
 
 /**
@@ -178,6 +179,7 @@ public class MIFEntryInteraction implements Serializable {
         this.mIFEntrySetEntryWID = mIFEntrySetEntryWID;
     }
 
+    @XmlTransient
     public Set<MIFEntryExperiment> getMifEntryExperiment() {
         return mifEntryExperiment;
     }
@@ -186,6 +188,7 @@ public class MIFEntryInteraction implements Serializable {
         this.mifEntryExperiment = mifEntryExperiment;
     }
 
+    @XmlTransient
     public Set<MIFInteractionInferredInteraction> getMifInteractionInferredInteraction() {
         return mifInteractionInferredInteraction;
     }
@@ -194,6 +197,7 @@ public class MIFEntryInteraction implements Serializable {
         this.mifInteractionInferredInteraction = mifInteractionInferredInteraction;
     }
 
+    @XmlTransient
     public Set<MIFInteractionInteractionType> getMifInteractionInteractionType() {
         return mifInteractionInteractionType;
     }
@@ -202,6 +206,7 @@ public class MIFEntryInteraction implements Serializable {
         this.mifInteractionInteractionType = mifInteractionInteractionType;
     }
 
+    @XmlTransient
     public Set<MIFInteractionParticipant> getMifInteractionParticipant() {
         return mifInteractionParticipant;
     }
@@ -210,6 +215,7 @@ public class MIFEntryInteraction implements Serializable {
         this.mifInteractionParticipant = mifInteractionParticipant;
     }
 
+    @XmlTransient
     public Set<MIFOtherAlias> getMifOtherAlias() {
         return mifOtherAlias;
     }
@@ -218,6 +224,7 @@ public class MIFEntryInteraction implements Serializable {
         this.mifOtherAlias = mifOtherAlias;
     }
 
+    @XmlTransient
     public Set<MIFOtherAttribute> getMifOtherAttribute() {
         return mifOtherAttribute;
     }
@@ -226,6 +233,7 @@ public class MIFEntryInteraction implements Serializable {
         this.mifOtherAttribute = mifOtherAttribute;
     }
 
+    @XmlTransient
     public Map<MIFOtherAvailabilityPK, MIFOtherAvailability> getMifOtherAvailability() {
         return mifOtherAvailability;
     }
@@ -234,6 +242,7 @@ public class MIFEntryInteraction implements Serializable {
         this.mifOtherAvailability = mifOtherAvailability;
     }
 
+    @XmlTransient
     public Set<MIFOtherConfidence> getMifOtherConfidence() {
         return mifOtherConfidence;
     }
@@ -242,6 +251,7 @@ public class MIFEntryInteraction implements Serializable {
         this.mifOtherConfidence = mifOtherConfidence;
     }
 
+    @XmlTransient
     public Map<MIFOtherExperimentRefPK, MIFOtherExperimentRef> getMifOtherExperimentRef() {
         return mifOtherExperimentRef;
     }
@@ -250,6 +260,7 @@ public class MIFEntryInteraction implements Serializable {
         this.mifOtherExperimentRef = mifOtherExperimentRef;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRef> getMifOtherXRef() {
         return mifOtherXRef;
     }
@@ -258,6 +269,7 @@ public class MIFEntryInteraction implements Serializable {
         this.mifOtherXRef = mifOtherXRef;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRefGO> getMifOtherXRefGO() {
         return mifOtherXRefGO;
     }
@@ -266,6 +278,7 @@ public class MIFEntryInteraction implements Serializable {
         this.mifOtherXRefGO = mifOtherXRefGO;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRefPubMed> getMifOtherXRefPubMed() {
         return mifOtherXRefPubMed;
     }
@@ -274,6 +287,7 @@ public class MIFEntryInteraction implements Serializable {
         this.mifOtherXRefPubMed = mifOtherXRefPubMed;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRefRefSeq> getMifOtherXRefRefSeq() {
         return mifOtherXRefRefSeq;
     }
@@ -282,6 +296,7 @@ public class MIFEntryInteraction implements Serializable {
         this.mifOtherXRefRefSeq = mifOtherXRefRefSeq;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRefUniprot> getMifOtherXRefUniprot() {
         return mifOtherXRefUniprot;
     }
@@ -290,6 +305,7 @@ public class MIFEntryInteraction implements Serializable {
         this.mifOtherXRefUniprot = mifOtherXRefUniprot;
     }
 
+    @XmlTransient
     public Map<MIFParticipantParameterPK, MIFParticipantParameter> getMifParticipantParameter() {
         return mifParticipantParameter;
     }
@@ -314,6 +330,7 @@ public class MIFEntryInteraction implements Serializable {
         this.negative = negative;
     }
 
+    @XmlTransient
     public Set<Protein> getProtein() {
         return protein;
     }

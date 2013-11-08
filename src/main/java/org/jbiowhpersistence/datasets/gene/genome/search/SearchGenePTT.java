@@ -15,6 +15,7 @@ import org.jbiowhpersistence.utils.search.SearchFactory;
  *
  * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-11-08 14:37:19 +0100
  * (Thu, 08 Nov 2012) $ $LastChangedRevision: 591 $
+ *
  * @since Jul 23, 2012
  */
 public class SearchGenePTT extends SearchFactory {
@@ -35,7 +36,7 @@ public class SearchGenePTT extends SearchFactory {
      * Creates the GenePTT search object
      */
     public SearchGenePTT() {
-        HashMap<String, Class> fields = new HashMap<>();
+        HashMap<String, Class> fields = new HashMap();
         fields.put(PTO, Long.class);
         fields.put(PFROM, String.class);
         fields.put(STRAND, String.class);
@@ -84,7 +85,7 @@ public class SearchGenePTT extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldBeforeWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
             data.put(field, "");
         }
@@ -93,39 +94,28 @@ public class SearchGenePTT extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldAfterWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case PTO:
-                    data.put(field, "g.pTo");
-                    break;
-                case PFROM:
-                    data.put(field, "g.pFrom");
-                    break;
-                case STRAND:
-                    data.put(field, "g.strand");
-                    break;
-                case PLENGTH:
-                    data.put(field, "g.pLength");
-                    break;
-                case PROTEINGI:
-                    data.put(field, "g.proteinGi");
-                    break;
-                case GENESYMBOL:
-                    data.put(field, "g.geneSymbol");
-                    break;
-                case GENELOCUSTAG:
-                    data.put(field, "g.geneLocusTag");
-                    break;
-                case COG:
-                    data.put(field, "g.cog");
-                    break;
-                case PRODUCT:
-                    data.put(field, "g.product");
-                    break;
-                case PTTFILE:
-                    data.put(field, "g.pTTFile");
-                    break;
+            if (field.equals(PTO)) {
+                data.put(field, "g.pTo");
+            } else if (field.equals(PFROM)) {
+                data.put(field, "g.pFrom");
+            } else if (field.equals(STRAND)) {
+                data.put(field, "g.strand");
+            } else if (field.equals(PLENGTH)) {
+                data.put(field, "g.pLength");
+            } else if (field.equals(PROTEINGI)) {
+                data.put(field, "g.proteinGi");
+            } else if (field.equals(GENESYMBOL)) {
+                data.put(field, "g.geneSymbol");
+            } else if (field.equals(GENELOCUSTAG)) {
+                data.put(field, "g.geneLocusTag");
+            } else if (field.equals(COG)) {
+                data.put(field, "g.cog");
+            } else if (field.equals(PRODUCT)) {
+                data.put(field, "g.product");
+            } else if (field.equals(PTTFILE)) {
+                data.put(field, "g.pTTFile");
             }
         }
         return data;
@@ -133,7 +123,7 @@ public class SearchGenePTT extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldOnEntity() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
             data.put(field, "");
         }
@@ -142,7 +132,7 @@ public class SearchGenePTT extends SearchFactory {
 
     @Override
     protected HashMap<Class, List> getConstrainFieldOnEntity() {
-        HashMap<Class, List> data = new HashMap<>();
+        HashMap<Class, List> data = new HashMap();
 
         List listG = new ArrayList();
         listG.add("g.geneInfo");
