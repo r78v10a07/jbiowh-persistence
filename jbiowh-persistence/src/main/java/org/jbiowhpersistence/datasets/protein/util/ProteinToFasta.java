@@ -68,7 +68,7 @@ public class ProteinToFasta {
      * not initialized for printing
      */
     public List<String> proteinFastatoFile(Collection objects) throws FileNotFoundException {
-        List<String> notFoundIds = new ArrayList<>();
+        List<String> notFoundIds = new ArrayList();
         if (objects != null && !objects.isEmpty()) {
             for (Object obj : objects) {
                 if (obj instanceof String) {

@@ -93,14 +93,14 @@ public class MIFEntrySetEntryJpaController extends AbstractMIFJpaController<MIFE
                 mIFEntrySetNew = em.getReference(mIFEntrySetNew.getClass(), mIFEntrySetNew.getWid());
                 mifEntrySetEntry.setmIFEntrySet(mIFEntrySetNew);
             }
-            Set<MIFEntryExperiment> attachedMifEntryExperimentNew = new HashSet<>();
+            Set<MIFEntryExperiment> attachedMifEntryExperimentNew = new HashSet();
             for (MIFEntryExperiment mifEntryExperimentNewMIFEntryExperimentToAttach : mifEntryExperimentNew) {
                 mifEntryExperimentNewMIFEntryExperimentToAttach = em.getReference(mifEntryExperimentNewMIFEntryExperimentToAttach.getClass(), mifEntryExperimentNewMIFEntryExperimentToAttach.getWid());
                 attachedMifEntryExperimentNew.add(mifEntryExperimentNewMIFEntryExperimentToAttach);
             }
             mifEntryExperimentNew = attachedMifEntryExperimentNew;
             mifEntrySetEntry.setMifEntryExperiment(mifEntryExperimentNew);
-            Set<MIFEntryInteractor> attachedMifEntryInteractorNew = new HashSet<>();
+            Set<MIFEntryInteractor> attachedMifEntryInteractorNew = new HashSet();
             for (MIFEntryInteractor mifEntryInteractorNewMIFEntryInteractorToAttach : mifEntryInteractorNew) {
                 mifEntryInteractorNewMIFEntryInteractorToAttach = em.getReference(mifEntryInteractorNewMIFEntryInteractorToAttach.getClass(), mifEntryInteractorNewMIFEntryInteractorToAttach.getWid());
                 attachedMifEntryInteractorNew.add(mifEntryInteractorNewMIFEntryInteractorToAttach);

@@ -32,7 +32,7 @@ public class SearchDrugBank extends SearchFactory {
      * Creates the DrugBank search object
      */
     public SearchDrugBank() {
-        HashMap<String, Class> fields = new HashMap<>();
+        HashMap<String, Class> fields = new HashMap();
         fields.put(ID, String.class);
         fields.put(NAME, String.class);
         fields.put(CAS, String.class);
@@ -92,19 +92,15 @@ public class SearchDrugBank extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldBeforeWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         HashMap<String, String> fieldOnEntity = getFieldOnEntity();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case CATEGORY:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " c ");
-                    break;
-                case SYNONYM:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " s ");
-                    break;
-                default:
-                    data.put(field, "");
-                    break;
+            if (field.equals(CATEGORY)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " c ");
+            } else if (field.equals(SYNONYM)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " s ");
+            } else {
+                data.put(field, "");
             }
         }
         return data;
@@ -112,30 +108,22 @@ public class SearchDrugBank extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldAfterWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case ID:
-                    data.put(field, "g.id");
-                    break;
-                case NAME:
-                    data.put(field, "g.name");
-                    break;
-                case CAS:
-                    data.put(field, "g.cASNumber");
-                    break;
-                case INDICATION:
-                    data.put(field, "g.indication");
-                    break;
-                case DESCRIPTION:
-                    data.put(field, "g.description");
-                    break;
-                case CATEGORY:
-                    data.put(field, "c.category");
-                    break;
-                case SYNONYM:
-                    data.put(field, "s.synonym");
-                    break;
+            if (field.equals(ID)) {
+                data.put(field, "g.id");
+            } else if (field.equals(NAME)) {
+                data.put(field, "g.name");
+            } else if (field.equals(CAS)) {
+                data.put(field, "g.cASNumber");
+            } else if (field.equals(INDICATION)) {
+                data.put(field, "g.indication");
+            } else if (field.equals(DESCRIPTION)) {
+                data.put(field, "g.description");
+            } else if (field.equals(CATEGORY)) {
+                data.put(field, "c.category");
+            } else if (field.equals(SYNONYM)) {
+                data.put(field, "s.synonym");
             }
         }
         return data;
@@ -143,18 +131,14 @@ public class SearchDrugBank extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldOnEntity() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case CATEGORY:
-                    data.put(field, "g.drugBankCategories");
-                    break;
-                case SYNONYM:
-                    data.put(field, "g.drugBankSynonyms");
-                    break;
-                default:
-                    data.put(field, "");
-                    break;
+            if (field.equals(CATEGORY)) {
+                data.put(field, "g.drugBankCategories");
+            } else if (field.equals(SYNONYM)) {
+                data.put(field, "g.drugBankSynonyms");
+            } else {
+                data.put(field, "");
             }
         }
         return data;
@@ -162,7 +146,7 @@ public class SearchDrugBank extends SearchFactory {
 
     @Override
     protected HashMap<Class, List> getConstrainFieldOnEntity() {
-        HashMap<Class, List> data = new HashMap<>();
+        HashMap<Class, List> data = new HashMap();
 
         List listP = new ArrayList();
         listP.add("g.protein");

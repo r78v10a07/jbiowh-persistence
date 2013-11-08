@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This Class is the MIFEntrySource entity
@@ -70,6 +71,7 @@ public class MIFEntrySource implements Serializable {
         this.mIFEntrySetEntryWID = mIFEntrySetEntryWID;
     }
 
+    @XmlTransient
     public Set<MIFOtherAlias> getmIFOtherAlias() {
         return mIFOtherAlias;
     }
@@ -78,6 +80,7 @@ public class MIFEntrySource implements Serializable {
         this.mIFOtherAlias = mIFOtherAlias;
     }
 
+    @XmlTransient
     public Set<MIFOtherAttribute> getmIFOtherAttribute() {
         return mIFOtherAttribute;
     }
@@ -86,6 +89,7 @@ public class MIFEntrySource implements Serializable {
         this.mIFOtherAttribute = mIFOtherAttribute;
     }
 
+    @XmlTransient
     public Set<MIFOtherBibRef> getmIFOtherBibRef() {
         return mIFOtherBibRef;
     }
@@ -94,6 +98,7 @@ public class MIFEntrySource implements Serializable {
         this.mIFOtherBibRef = mIFOtherBibRef;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRef> getmIFOtherXRef() {
         return mIFOtherXRef;
     }

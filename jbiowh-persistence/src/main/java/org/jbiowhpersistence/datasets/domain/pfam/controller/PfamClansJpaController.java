@@ -60,7 +60,7 @@ public class PfamClansJpaController extends AbstractPFamJpaController<PfamClans>
             pfamClans.setPfamArchitectures(createPfamArchitecture(emf, em, pfamClans.getPfamArchitectures()));
 
             if (!pfamClans.getPfamClanDatabaseLinkses().isEmpty()) {
-                Set<PfamClanDatabaseLinks> attachedPfamClanDatabaseLinkses = new HashSet<>();
+                Set<PfamClanDatabaseLinks> attachedPfamClanDatabaseLinkses = new HashSet();
                 for (PfamClanDatabaseLinks pfamClanDatabaseLinksesPfamClanDatabaseLinksToAttach : pfamClans.getPfamClanDatabaseLinkses()) {
                     PfamClanDatabaseLinks pfamClanDatabaseLinksesPfamClanDatabaseLinksToAttachOnDB = em.find(pfamClanDatabaseLinksesPfamClanDatabaseLinksToAttach.getClass(), pfamClanDatabaseLinksesPfamClanDatabaseLinksToAttach.getWid());
                     if (pfamClanDatabaseLinksesPfamClanDatabaseLinksToAttachOnDB != null) {
@@ -74,7 +74,7 @@ public class PfamClansJpaController extends AbstractPFamJpaController<PfamClans>
             
             if (!pfamClans.getPfamClanshasPfamLiteratureReferences().isEmpty()) {
                 PfamLiteratureReferencesJpaController kController = new PfamLiteratureReferencesJpaController(emf);
-                Map<PfamClanshasPfamLiteratureReferencesPK, PfamClanshasPfamLiteratureReferences> attachPfamLiteratureReferences = new HashMap<>();
+                Map<PfamClanshasPfamLiteratureReferencesPK, PfamClanshasPfamLiteratureReferences> attachPfamLiteratureReferences = new HashMap();
                 for (PfamClanshasPfamLiteratureReferences pfamClanshasPfamLiteratureReferencesToAttach : pfamClans.getPfamClanshasPfamLiteratureReferences().values()) {
                     PfamClanshasPfamLiteratureReferences pfamClanshasPfamLiteratureReferencesOnDB = em.find(pfamClanshasPfamLiteratureReferencesToAttach.getClass(), pfamClanshasPfamLiteratureReferencesToAttach.getPfamClanshasPfamLiteratureReferencesPK());
                     if (pfamClanshasPfamLiteratureReferencesOnDB != null) {
@@ -122,21 +122,21 @@ public class PfamClansJpaController extends AbstractPFamJpaController<PfamClans>
             Set<PfamAbioWH> pfamANew = pfamClans.getPfamA();
             Set<PfamArchitecture> pfamArchitecturesOld = persistentPfamClans.getPfamArchitectures();
             Set<PfamArchitecture> pfamArchitecturesNew = pfamClans.getPfamArchitectures();
-            Set<PfamClanDatabaseLinks> attachedPfamClanDatabaseLinksesNew = new HashSet<>();
+            Set<PfamClanDatabaseLinks> attachedPfamClanDatabaseLinksesNew = new HashSet();
             for (PfamClanDatabaseLinks pfamClanDatabaseLinksesNewPfamClanDatabaseLinksToAttach : pfamClanDatabaseLinksesNew) {
                 pfamClanDatabaseLinksesNewPfamClanDatabaseLinksToAttach = em.getReference(pfamClanDatabaseLinksesNewPfamClanDatabaseLinksToAttach.getClass(), pfamClanDatabaseLinksesNewPfamClanDatabaseLinksToAttach.getWid());
                 attachedPfamClanDatabaseLinksesNew.add(pfamClanDatabaseLinksesNewPfamClanDatabaseLinksToAttach);
             }
             pfamClanDatabaseLinksesNew = attachedPfamClanDatabaseLinksesNew;
             pfamClans.setPfamClanDatabaseLinkses(pfamClanDatabaseLinksesNew);
-            Set<PfamAbioWH> attachedPfamANew = new HashSet<>();
+            Set<PfamAbioWH> attachedPfamANew = new HashSet();
             for (PfamAbioWH pfamANewPfamAToAttach : pfamANew) {
                 pfamANewPfamAToAttach = em.getReference(pfamANewPfamAToAttach.getClass(), pfamANewPfamAToAttach.getWid());
                 attachedPfamANew.add(pfamANewPfamAToAttach);
             }
             pfamANew = attachedPfamANew;
             pfamClans.setPfamA(pfamANew);
-            Set<PfamArchitecture> attachedPfamArchitecturesNew = new HashSet<>();
+            Set<PfamArchitecture> attachedPfamArchitecturesNew = new HashSet();
             for (PfamArchitecture pfamArchitecturesNewPfamArchitectureToAttach : pfamArchitecturesNew) {
                 pfamArchitecturesNewPfamArchitectureToAttach = em.getReference(pfamArchitecturesNewPfamArchitectureToAttach.getClass(), pfamArchitecturesNewPfamArchitectureToAttach.getWid());
                 attachedPfamArchitecturesNew.add(pfamArchitecturesNewPfamArchitectureToAttach);

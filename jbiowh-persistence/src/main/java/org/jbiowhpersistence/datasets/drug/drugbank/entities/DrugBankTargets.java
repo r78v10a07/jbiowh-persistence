@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This class is the DrugBankTargets entity
@@ -63,6 +64,7 @@ public class DrugBankTargets implements Serializable {
         this.partner = partner;
     }
 
+    @XmlTransient
     public Set<DrugBankTargetsActions> getDrugBankTargetsActions() {
         return drugBankTargetsActions;
     }
@@ -71,6 +73,7 @@ public class DrugBankTargets implements Serializable {
         this.drugBankTargetsActions = drugBankTargetsActions;
     }
 
+    @XmlTransient
     public Set<DrugBankTargetsRef> getDrugBankTargetsRef() {
         return drugBankTargetsRef;
     }

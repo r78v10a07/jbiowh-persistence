@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
 import org.jbiowhpersistence.datasets.pathway.kegg.KEGGTables;
@@ -148,6 +149,7 @@ public class KEGGPathway implements Serializable {
         this.dataSet = dataSet;
     }
 
+    @XmlTransient
     public Set<GeneInfo> getGeneInfo() {
         return geneInfo;
     }
@@ -156,6 +158,7 @@ public class KEGGPathway implements Serializable {
         this.geneInfo = geneInfos;
     }
 
+    @XmlTransient
     public Set<Protein> getProtein() {
         return protein;
     }
@@ -172,6 +175,7 @@ public class KEGGPathway implements Serializable {
         this.taxonomy = taxonomy;
     }
 
+    @XmlTransient
     public Set<KEGGCompound> getkEGGCompounds() {
         return kEGGCompounds;
     }
@@ -180,6 +184,7 @@ public class KEGGPathway implements Serializable {
         this.kEGGCompounds = kEGGCompounds;
     }
 
+    @XmlTransient
     public Set<KEGGEnzyme> getkEGGEnzymes() {
         return kEGGEnzymes;
     }
@@ -188,6 +193,7 @@ public class KEGGPathway implements Serializable {
         this.kEGGEnzymes = kEGGEnzymes;
     }
 
+    @XmlTransient
     public Set<KEGGGene> getkEGGGenes() {
         return kEGGGenes;
     }
@@ -196,6 +202,7 @@ public class KEGGPathway implements Serializable {
         this.kEGGGenes = kEGGGenes;
     }
 
+    @XmlTransient
     public Set<KEGGReaction> getkEGGReactions() {
         return kEGGReactions;
     }
@@ -204,6 +211,7 @@ public class KEGGPathway implements Serializable {
         this.kEGGReactions = kEGGReactions;
     }
 
+    @XmlTransient
     public Set<KEGGPathwayRelation> getkEGGPathwayRelation() {
         return kEGGPathwayRelation;
     }
@@ -212,6 +220,7 @@ public class KEGGPathway implements Serializable {
         this.kEGGPathwayRelation = kEGGPathwayRelation;
     }
 
+    @XmlTransient
     public Set<KEGGPathwayReaction> getkEGGPathwayReaction() {
         return kEGGPathwayReaction;
     }
@@ -220,6 +229,7 @@ public class KEGGPathway implements Serializable {
         this.kEGGPathwayReaction = kEGGPathwayReaction;
     }
 
+    @XmlTransient
     public Set<KEGGPathwayEntry> getkEGGPathwayEntry() {
         return kEGGPathwayEntry;
     }

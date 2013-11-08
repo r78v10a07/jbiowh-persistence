@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This Class is the MIFOtherXRefPubMed entity
@@ -283,6 +284,7 @@ public class MIFOtherXRefPubMed implements Serializable {
         this.mifInteractorInteractorType = mifInteractorInteractorType;
     }
 
+    @XmlTransient
     public Set<MIFOtherAttribute> getMifOtherAttribute() {
         return mifOtherAttribute;
     }

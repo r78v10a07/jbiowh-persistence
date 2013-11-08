@@ -32,7 +32,7 @@ public class ProteinFromOther {
      * Create a ProteinFromOther object to retrieve proteins
      */
     public ProteinFromOther() {
-        proteins = new ArrayList<>();
+        proteins = new ArrayList();
         sProt = new SearchProtein();
     }
 
@@ -46,7 +46,7 @@ public class ProteinFromOther {
     }
 
     public List<String> getProteinFromId(List<String> ids) {
-        List<String> missIds = new ArrayList<>();
+        List<String> missIds = new ArrayList();
         for (String id : ids) {
             List prots = getProteinFromId(id);
             if (!prots.isEmpty()) {
@@ -66,7 +66,7 @@ public class ProteinFromOther {
             VerbLogger.getInstance().log(this.getClass(), ex.getMessage());
             System.exit(1);
         }
-        return new ArrayList<>();
+        return new ArrayList();
     }
 
     /**
@@ -78,8 +78,8 @@ public class ProteinFromOther {
      */
     public List<String> getProteinFromTaxonomy(String taxonomyName) {
         SearchTaxonomy sTax = new SearchTaxonomy();
-        proteins = new ArrayList<>();
-        List<String> taxNoProtein = new ArrayList<>();
+        proteins = new ArrayList();
+        List<String> taxNoProtein = new ArrayList();
         try {
             List<Taxonomy> taxs = sTax.search(taxonomyName, null);
             return getProteinFromTaxonomy(taxs);
@@ -98,7 +98,7 @@ public class ProteinFromOther {
      * @return a list with the taxonomies that does not have proteins on JBioWH
      */
     public List<String> getProteinFromTaxonomy(List<Taxonomy> taxonomies) {
-        List<String> taxNoProtein = new ArrayList<>();
+        List<String> taxNoProtein = new ArrayList();
         if (taxonomies != null && !taxonomies.isEmpty()) {
             for (Taxonomy tax : taxonomies) {
                 List<Protein> prots = getProteinFromTaxonomy(tax);
@@ -133,6 +133,6 @@ public class ProteinFromOther {
                 System.exit(1);
             }
         }
-        return new ArrayList<>();
+        return new ArrayList();
     }
 }

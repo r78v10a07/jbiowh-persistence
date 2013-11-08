@@ -82,35 +82,35 @@ public class KEGGReactionJpaController extends AbstractKEGGJpaController<KEGGRea
             Set<KEGGCompound> kEGGCompoundAsProductNew = keggReaction.getkEGGCompoundAsProduct();
             Set<KEGGCompound> kEGGCompoundAsSubstrateOld = persistentKEGGReaction.getkEGGCompoundAsSubstrate();
             Set<KEGGCompound> kEGGCompoundAsSubstrateNew = keggReaction.getkEGGCompoundAsSubstrate();
-            Set<KEGGEnzyme> attachedkEGGEnzymeNew = new HashSet<>();
+            Set<KEGGEnzyme> attachedkEGGEnzymeNew = new HashSet();
             for (KEGGEnzyme kEGGEnzymeNewKEGGEnzymeToAttach : kEGGEnzymeNew) {
                 kEGGEnzymeNewKEGGEnzymeToAttach = em.getReference(kEGGEnzymeNewKEGGEnzymeToAttach.getClass(), kEGGEnzymeNewKEGGEnzymeToAttach.getWid());
                 attachedkEGGEnzymeNew.add(kEGGEnzymeNewKEGGEnzymeToAttach);
             }
             kEGGEnzymeNew = attachedkEGGEnzymeNew;
             keggReaction.setkEGGEnzyme(kEGGEnzymeNew);
-            Set<KEGGGlycan> attachedkEGGGlycanAsProductNew = new HashSet<>();
+            Set<KEGGGlycan> attachedkEGGGlycanAsProductNew = new HashSet();
             for (KEGGGlycan kEGGGlycanAsProductNewKEGGGlycanToAttach : kEGGGlycanAsProductNew) {
                 kEGGGlycanAsProductNewKEGGGlycanToAttach = em.getReference(kEGGGlycanAsProductNewKEGGGlycanToAttach.getClass(), kEGGGlycanAsProductNewKEGGGlycanToAttach.getWid());
                 attachedkEGGGlycanAsProductNew.add(kEGGGlycanAsProductNewKEGGGlycanToAttach);
             }
             kEGGGlycanAsProductNew = attachedkEGGGlycanAsProductNew;
             keggReaction.setkEGGGlycanAsProduct(kEGGGlycanAsProductNew);
-            Set<KEGGGlycan> attachedkEGGGlycanAsSubstrateNew = new HashSet<>();
+            Set<KEGGGlycan> attachedkEGGGlycanAsSubstrateNew = new HashSet();
             for (KEGGGlycan kEGGGlycanAsSubstrateNewKEGGGlycanToAttach : kEGGGlycanAsSubstrateNew) {
                 kEGGGlycanAsSubstrateNewKEGGGlycanToAttach = em.getReference(kEGGGlycanAsSubstrateNewKEGGGlycanToAttach.getClass(), kEGGGlycanAsSubstrateNewKEGGGlycanToAttach.getWid());
                 attachedkEGGGlycanAsSubstrateNew.add(kEGGGlycanAsSubstrateNewKEGGGlycanToAttach);
             }
             kEGGGlycanAsSubstrateNew = attachedkEGGGlycanAsSubstrateNew;
             keggReaction.setkEGGGlycanAsSubstrate(kEGGGlycanAsSubstrateNew);
-            Set<KEGGCompound> attachedkEGGCompoundAsProductNew = new HashSet<>();
+            Set<KEGGCompound> attachedkEGGCompoundAsProductNew = new HashSet();
             for (KEGGCompound kEGGCompoundAsProductNewKEGGCompoundToAttach : kEGGCompoundAsProductNew) {
                 kEGGCompoundAsProductNewKEGGCompoundToAttach = em.getReference(kEGGCompoundAsProductNewKEGGCompoundToAttach.getClass(), kEGGCompoundAsProductNewKEGGCompoundToAttach.getWid());
                 attachedkEGGCompoundAsProductNew.add(kEGGCompoundAsProductNewKEGGCompoundToAttach);
             }
             kEGGCompoundAsProductNew = attachedkEGGCompoundAsProductNew;
             keggReaction.setkEGGCompoundAsProduct(kEGGCompoundAsProductNew);
-            Set<KEGGCompound> attachedkEGGCompoundAsSubstrateNew = new HashSet<>();
+            Set<KEGGCompound> attachedkEGGCompoundAsSubstrateNew = new HashSet();
             for (KEGGCompound kEGGCompoundAsSubstrateNewKEGGCompoundToAttach : kEGGCompoundAsSubstrateNew) {
                 kEGGCompoundAsSubstrateNewKEGGCompoundToAttach = em.getReference(kEGGCompoundAsSubstrateNewKEGGCompoundToAttach.getClass(), kEGGCompoundAsSubstrateNewKEGGCompoundToAttach.getWid());
                 attachedkEGGCompoundAsSubstrateNew.add(kEGGCompoundAsSubstrateNewKEGGCompoundToAttach);

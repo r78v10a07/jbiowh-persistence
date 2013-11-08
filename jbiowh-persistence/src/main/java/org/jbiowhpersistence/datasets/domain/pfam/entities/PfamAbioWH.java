@@ -23,6 +23,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 import org.jbiowhpersistence.datasets.domain.pfam.PFamTables;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
@@ -307,6 +308,7 @@ public class PfamAbioWH implements Serializable {
         return dataSet;
     }
 
+    @XmlTransient
     public Set<Protein> getProteinInsignificant() {
         return proteinInsignificant;
     }
@@ -315,6 +317,7 @@ public class PfamAbioWH implements Serializable {
         this.proteinInsignificant = proteinInsignificant;
     }
 
+    @XmlTransient
     public Set<Protein> getProteinSignificant() {
         return proteinSignificant;
     }
@@ -323,6 +326,7 @@ public class PfamAbioWH implements Serializable {
         this.proteinSignificant = proteinSignificant;
     }
 
+    @XmlTransient
     public Set<PfamARegFullSignificant> getPfamARegFullSignificants() {
         return pfamARegFullSignificants;
     }
@@ -331,6 +335,7 @@ public class PfamAbioWH implements Serializable {
         this.pfamARegFullSignificants = pfamARegFullSignificants;
     }
 
+    @XmlTransient
     public Set<PfamARegFullInsignificant> getPfamARegFullInsignificants() {
         return pfamARegFullInsignificants;
     }
@@ -343,6 +348,7 @@ public class PfamAbioWH implements Serializable {
         this.dataSet = dataSet;
     }
 
+    @XmlTransient
     public Map<PfamARegSeedPK, PfamARegSeed> getPfamARegSeed() {
         return pfamARegSeed;
     }
@@ -351,6 +357,7 @@ public class PfamAbioWH implements Serializable {
         this.pfamARegSeed = pfamARegSeed;
     }
 
+    @XmlTransient
     public Set<PfamArchitecture> getPfamArchitectures() {
         return pfamArchitectures;
     }
@@ -359,6 +366,7 @@ public class PfamAbioWH implements Serializable {
         this.pfamArchitectures = pfamArchitectures;
     }
 
+    @XmlTransient
     public Set<PfamClans> getPfamClanses() {
         return pfamClanses;
     }
@@ -367,6 +375,7 @@ public class PfamAbioWH implements Serializable {
         this.pfamClanses = pfamClanses;
     }
 
+    @XmlTransient
     public Map<PfamAhasPfamLiteratureReferencesPK, PfamAhasPfamLiteratureReferences> getPfamAhasPfamLiteratureReferences() {
         return pfamAhasPfamLiteratureReferences;
     }
@@ -375,6 +384,7 @@ public class PfamAbioWH implements Serializable {
         this.pfamAhasPfamLiteratureReferences = pfamAhasPfamLiteratureReferences;
     }
 
+    @XmlTransient
     public Map<PfamProteomeRegionsPK, PfamProteomeRegions> getPfamProteomeRegions() {
         return pfamProteomeRegions;
     }
@@ -383,6 +393,7 @@ public class PfamAbioWH implements Serializable {
         this.pfamProteomeRegions = pfamProteomeRegions;
     }
 
+    @XmlTransient
     public Set<PfamContextRegions> getPfamContextRegions() {
         return pfamContextRegions;
     }
@@ -391,6 +402,7 @@ public class PfamAbioWH implements Serializable {
         this.pfamContextRegions = pfamContextRegions;
     }
 
+    @XmlTransient
     public Set<PfamInterpro> getPfamInterpros() {
         return pfamInterpros;
     }
@@ -399,6 +411,7 @@ public class PfamAbioWH implements Serializable {
         this.pfamInterpros = pfamInterpros;
     }
 
+    @XmlTransient
     public Set<PfamNestedLocations> getPfamNestedLocationses() {
         return pfamNestedLocationses;
     }
@@ -407,6 +420,7 @@ public class PfamAbioWH implements Serializable {
         this.pfamNestedLocationses = pfamNestedLocationses;
     }
 
+    @XmlTransient
     public Set<PfamANCBIReg> getPfamANCBIRegs() {
         return pfamANCBIRegs;
     }
@@ -415,6 +429,7 @@ public class PfamAbioWH implements Serializable {
         this.pfamANCBIRegs = pfamANCBIRegs;
     }
 
+    @XmlTransient
     public Set<PfamADatabaseLinks> getPfamADatabaseLinkses() {
         return pfamADatabaseLinkses;
     }

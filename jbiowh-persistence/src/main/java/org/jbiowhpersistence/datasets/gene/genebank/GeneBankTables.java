@@ -44,7 +44,7 @@ public class GeneBankTables {
      */
     public List<String> getTables() {
         if (tables == null) {
-            tables = new ArrayList<>();
+            tables = new ArrayList();
             tables.add(GENEBANK);
             tables.add(GENEBANKACCESSION);
             tables.add(GENEBANKCDS);

@@ -137,7 +137,7 @@ public class DataSetPersistence {
      * @return a Boolean
      */
     public boolean isDataSetInserted() {
-        HashMap<String, Object> parameters = new HashMap<>();
+        HashMap<String, Object> parameters = new HashMap();
         DataSetJpaController instance = new DataSetJpaController(JBioWHPersistence.getInstance().getWHEntityManager());
 
         if (instance.getDataSetCount() == 0) {
@@ -427,7 +427,7 @@ public class DataSetPersistence {
      * @return a Object[][] object with the all DataSets data
      */
     public List<List<Object>> loadDataSet(EntityManagerFactory emf) {
-        ArrayList<List<Object>> arrayList = new ArrayList<>();
+        ArrayList<List<Object>> arrayList = new ArrayList();
 
         if (emf != null) {
             DataSetJpaController instance = new DataSetJpaController(emf);
@@ -435,7 +435,7 @@ public class DataSetPersistence {
 
             if (!result.isEmpty()) {
                 for (DataSet dataset : result) {
-                    ArrayList<Object> list = new ArrayList<>();
+                    ArrayList<Object> list = new ArrayList();
                     list.add(dataset.getName());
                     list.add(DateFormat.getDateInstance().format(dataset.getReleaseDate()));
                     list.add(DateFormat.getDateInstance().format(dataset.getLoadDate()));

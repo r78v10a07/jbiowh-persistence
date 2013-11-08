@@ -28,7 +28,7 @@ public class SearchKEGGGlycan extends SearchFactory {
     public final String REMARK = "Remark";
 
     public SearchKEGGGlycan() {
-        HashMap<String, Class> fields = new HashMap<>();
+        HashMap<String, Class> fields = new HashMap();
         fields.put(ENTRY, String.class);
         fields.put(NAME, String.class);
         fields.put(COMMENT, String.class);
@@ -71,24 +71,19 @@ public class SearchKEGGGlycan extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldBeforeWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         HashMap<String, String> fieldOnEntity = getFieldOnEntity();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case NAME:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " n ");
-                    break;
-                case CLASS:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " c ");
-                    break;
-                case DBLINKID:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " dId ");
-                    break;
-                case DBLINKDB:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " dDb ");
-                    break;
-                default:
-                    data.put(field, "");
+            if (field.equals(NAME)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " n ");
+            } else if (field.equals(CLASS)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " c ");
+            } else if (field.equals(DBLINKID)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " dId ");
+            } else if (field.equals(DBLINKDB)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " dDb ");
+            } else {
+                data.put(field, "");
             }
         }
         return data;
@@ -96,30 +91,22 @@ public class SearchKEGGGlycan extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldAfterWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case ENTRY:
-                    data.put(field, "g.entry");
-                    break;
-                case NAME:
-                    data.put(field, "n.name");
-                    break;
-                case COMMENT:
-                    data.put(field, "g.comment");
-                    break;
-                case CLASS:
-                    data.put(field, "c.class1");
-                    break;
-                case DBLINKID:
-                    data.put(field, "dId.kEGGEnzymeDBLinkPK.id");
-                    break;
-                case DBLINKDB:
-                    data.put(field, "dDb.kEGGEnzymeDBLinkPK.db");
-                    break;
-                case REMARK:
-                    data.put(field, "g.remark");
-                    break;
+            if (field.equals(ENTRY)) {
+                data.put(field, "g.entry");
+            } else if (field.equals(NAME)) {
+                data.put(field, "n.name");
+            } else if (field.equals(COMMENT)) {
+                data.put(field, "g.comment");
+            } else if (field.equals(CLASS)) {
+                data.put(field, "c.class1");
+            } else if (field.equals(DBLINKID)) {
+                data.put(field, "dId.kEGGEnzymeDBLinkPK.id");
+            } else if (field.equals(DBLINKDB)) {
+                data.put(field, "dDb.kEGGEnzymeDBLinkPK.db");
+            } else if (field.equals(REMARK)) {
+                data.put(field, "g.remark");
             }
         }
         return data;
@@ -127,24 +114,18 @@ public class SearchKEGGGlycan extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldOnEntity() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case NAME:
-                    data.put(field, "g.kEGGGlycanName");
-                    break;
-                case CLASS:
-                    data.put(field, "g.kEGGGlycanClass");
-                    break;
-                case DBLINKID:
-                    data.put(field, "g.kEGGGlycanDBLink");
-                    break;
-                case DBLINKDB:
-                    data.put(field, "g.kEGGGlycanDBLink");
-                    break;
-                default:
-                    data.put(field, "");
-                    break;
+            if (field.equals(NAME)) {
+                data.put(field, "g.kEGGGlycanName");
+            } else if (field.equals(CLASS)) {
+                data.put(field, "g.kEGGGlycanClass");
+            } else if (field.equals(DBLINKID)) {
+                data.put(field, "g.kEGGGlycanDBLink");
+            } else if (field.equals(DBLINKDB)) {
+                data.put(field, "g.kEGGGlycanDBLink");
+            } else {
+                data.put(field, "");
             }
         }
         return data;
@@ -152,7 +133,7 @@ public class SearchKEGGGlycan extends SearchFactory {
 
     @Override
     protected HashMap<Class, List> getConstrainFieldOnEntity() {
-        HashMap<Class, List> data = new HashMap<>();
+        HashMap<Class, List> data = new HashMap();
         return data;
     }
 

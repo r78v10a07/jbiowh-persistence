@@ -45,7 +45,7 @@ public class PfamBbioWHJpaController extends AbstractPFamJpaController<PfamBbioW
             em = getEntityManager();
             em.getTransaction().begin();
             if (!pfamB.getPfamBRegs().isEmpty()) {
-                Set<PfamBReg> attachedPfamBRegs = new HashSet<>();
+                Set<PfamBReg> attachedPfamBRegs = new HashSet();
                 for (PfamBReg pfamBRegsPfamBRegToAttach : pfamB.getPfamBRegs()) {
                     PfamBReg pfamBRegsPfamBRegToAttachOnDB = em.find(pfamBRegsPfamBRegToAttach.getClass(), pfamBRegsPfamBRegToAttach.getWid());
                     if (pfamBRegsPfamBRegToAttachOnDB != null) {
@@ -74,7 +74,7 @@ public class PfamBbioWHJpaController extends AbstractPFamJpaController<PfamBbioW
             PfamBbioWH persistentPfamB = em.find(PfamBbioWH.class, pfamB.getWid());
             Set<PfamBReg> pfamBRegsOld = persistentPfamB.getPfamBRegs();
             Set<PfamBReg> pfamBRegsNew = pfamB.getPfamBRegs();
-            Set<PfamBReg> attachedPfamBRegsNew = new HashSet<>();
+            Set<PfamBReg> attachedPfamBRegsNew = new HashSet();
             for (PfamBReg pfamBRegsNewPfamBRegToAttach : pfamBRegsNew) {
                 pfamBRegsNewPfamBRegToAttach = em.getReference(pfamBRegsNewPfamBRegToAttach.getClass(), pfamBRegsNewPfamBRegToAttach.getWid());
                 attachedPfamBRegsNew.add(pfamBRegsNewPfamBRegToAttach);

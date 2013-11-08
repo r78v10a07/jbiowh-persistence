@@ -47,7 +47,7 @@ public class GeneBankJpaController extends AbstractJpaController<GeneBank> imple
             em.getTransaction().begin();
             if (!geneBank.getGeneBankCDSs().isEmpty()) {
                 GeneBankCDSJpaController cController = new GeneBankCDSJpaController(emf);
-                Set<GeneBankCDS> attachedGeneBankCDSs = new HashSet<>();
+                Set<GeneBankCDS> attachedGeneBankCDSs = new HashSet();
                 for (GeneBankCDS geneBankCDSsGeneBankCDSToAttach : geneBank.getGeneBankCDSs()) {
                     GeneBankCDS geneBankCDSsGeneBankCDSToAttachToDB = em.find(geneBankCDSsGeneBankCDSToAttach.getClass(), geneBankCDSsGeneBankCDSToAttach.getWid());
                     if (geneBankCDSsGeneBankCDSToAttachToDB == null) {
@@ -78,7 +78,7 @@ public class GeneBankJpaController extends AbstractJpaController<GeneBank> imple
             GeneBank persistentGeneBank = em.find(GeneBank.class, geneBank.getWid());
             Set<GeneBankCDS> geneBankCDSsOld = persistentGeneBank.getGeneBankCDSs();
             Set<GeneBankCDS> geneBankCDSsNew = geneBank.getGeneBankCDSs();
-            Set<GeneBankCDS> attachedGeneBankCDSsNew = new HashSet<>();
+            Set<GeneBankCDS> attachedGeneBankCDSsNew = new HashSet();
             for (GeneBankCDS geneBankCDSsNewGeneBankCDSToAttach : geneBankCDSsNew) {
                 geneBankCDSsNewGeneBankCDSToAttach = em.getReference(geneBankCDSsNewGeneBankCDSToAttach.getClass(), geneBankCDSsNewGeneBankCDSToAttach.getWid());
                 attachedGeneBankCDSsNew.add(geneBankCDSsNewGeneBankCDSToAttach);

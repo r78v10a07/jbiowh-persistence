@@ -46,7 +46,7 @@ public class GenePTTTables {
      */
     public List<String> getTables() {
         if (tables == null) {
-            tables = new ArrayList<>();
+            tables = new ArrayList();
             tables.add(GENEPTT);
             tables.add(GENEPTT_HAS_TAXONOMY);
             tables.add(GENEPTTTAXONOMY);

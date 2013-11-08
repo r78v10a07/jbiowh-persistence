@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 import org.jbiowhpersistence.datasets.gene.gene.GeneTables;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
@@ -101,6 +102,7 @@ public class OMIM implements Serializable {
         this.dataSet = dataSet;
     }
 
+    @XmlTransient
     public Set<OMIMAV> getOmimAVs() {
         return omimAVs;
     }
@@ -109,6 +111,7 @@ public class OMIM implements Serializable {
         this.omimAVs = omimAVs;
     }
 
+    @XmlTransient
     public Map<OMIMCDPK, OMIMCD> getOmimCDs() {
         return omimCDs;
     }
@@ -117,6 +120,7 @@ public class OMIM implements Serializable {
         this.omimCDs = omimCDs;
     }
 
+    @XmlTransient
     public Map<OMIMCNPK, OMIMCN> getOmimCNs() {
         return omimCNs;
     }
@@ -125,6 +129,7 @@ public class OMIM implements Serializable {
         this.omimCNs = omimCNs;
     }
 
+    @XmlTransient
     public Set<OMIMCS> getOmimCSs() {
         return omimCSs;
     }
@@ -133,6 +138,7 @@ public class OMIM implements Serializable {
         this.omimCSs = omimCSs;
     }
 
+    @XmlTransient
     public Map<OMIMEDPK, OMIMED> getOmimEDs() {
         return omimEDs;
     }
@@ -141,6 +147,7 @@ public class OMIM implements Serializable {
         this.omimEDs = omimEDs;
     }
 
+    @XmlTransient
     public Set<OMIMRF> getOmimRFs() {
         return omimRFs;
     }
@@ -149,6 +156,7 @@ public class OMIM implements Serializable {
         this.omimRFs = omimRFs;
     }
 
+    @XmlTransient
     public Set<OMIMSA> getOmimSAs() {
         return omimSAs;
     }
@@ -157,6 +165,7 @@ public class OMIM implements Serializable {
         this.omimSAs = omimSAs;
     }
 
+    @XmlTransient
     public Map<OMIMTIPK, OMIMTI> getOmimTIs() {
         return omimTIs;
     }
@@ -165,6 +174,7 @@ public class OMIM implements Serializable {
         this.omimTIs = omimTIs;
     }
 
+    @XmlTransient
     public Map<OMIMTXPK, OMIMTX> getOmimTXs() {
         return omimTXs;
     }
@@ -173,6 +183,7 @@ public class OMIM implements Serializable {
         this.omimTXs = omimTXs;
     }
 
+    @XmlTransient
     public Set<GeneInfo> getGeneInfos() {
         return geneInfos;
     }

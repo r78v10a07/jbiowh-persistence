@@ -80,7 +80,7 @@ public class PFamTables {
      */
     public List<String> getTables() {
         if (tables == null) {
-            tables = new ArrayList<>();
+            tables = new ArrayList();
             tables.add(PFAMABIOWH);
             tables.add(PFAMA_ORIG);
             tables.add(PFAMADATABASELINKS);

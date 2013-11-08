@@ -161,7 +161,7 @@ public class JpaRelationship {
      */
     public Map<String, Class> getJpaExternalRelationship(Class target, EntityManager em)
             throws ClassNotFoundException, NoSuchFieldException {
-        Map<String, Class> classes = new HashMap<>();
+        Map<String, Class> classes = new HashMap();
         Metamodel metamodel = em.getMetamodel();
         ManagedType<?> targetType = metamodel.managedType(target);
         Set attributes = targetType.getDeclaredAttributes();
@@ -187,7 +187,7 @@ public class JpaRelationship {
      */
     public Map<String, Class> genericType(Class target, String name)
             throws ClassNotFoundException, NoSuchFieldException {
-        Map<String, Class> classes = new HashMap<>();
+        Map<String, Class> classes = new HashMap();
         Type type = target.getDeclaredField(name).getGenericType();
 
         if (type instanceof ParameterizedType) {

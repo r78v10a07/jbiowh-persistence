@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This class is the KEGG Pathway Relation entity
@@ -63,6 +64,7 @@ public class KEGGPathwayRelation implements Serializable {
         this.id2 = id2;
     }
 
+    @XmlTransient
     public Map<KEGGPathwayRelationSubTypePK, KEGGPathwayRelationSubType> getkEGGPathwayRelationSubType() {
         return kEGGPathwayRelationSubType;
     }

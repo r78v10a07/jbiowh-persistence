@@ -29,7 +29,7 @@ public class SearchKEGGCompound extends SearchFactory {
     public final String DBLINKDB = "DBLinkDB";
 
     public SearchKEGGCompound() {
-        HashMap<String, Class> fields = new HashMap<>();
+        HashMap<String, Class> fields = new HashMap();
         fields.put(ENTRY, String.class);
         fields.put(NAME, String.class);
         fields.put(REMARK, String.class);
@@ -67,21 +67,17 @@ public class SearchKEGGCompound extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldBeforeWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         HashMap<String, String> fieldOnEntity = getFieldOnEntity();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case NAME:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " n ");
-                    break;
-                case DBLINKID:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " dId ");
-                    break;
-                case DBLINKDB:
-                    data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " dDb ");
-                    break;
-                default:
-                    data.put(field, "");
+            if (field.equals(NAME)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " n ");
+            } else if (field.equals(DBLINKID)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " dId ");
+            } else if (field.equals(DBLINKDB)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " dDb ");
+            } else {
+                data.put(field, "");
             }
         }
         return data;
@@ -89,27 +85,20 @@ public class SearchKEGGCompound extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldAfterWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case ENTRY:
-                    data.put(field, "g.entry");
-                    break;
-                case NAME:
-                    data.put(field, "n.name");
-                    break;
-                case REMARK:
-                    data.put(field, "g.remark");
-                    break;
-                case FORMULA:
-                    data.put(field, "g.formula");
-                    break;
-                case DBLINKID:
-                    data.put(field, "dId.keggcompounddblinkPK.id");
-                    break;
-                case DBLINKDB:
-                    data.put(field, "dDb.keggcompounddblinkPK.db");
-                    break;
+            if (field.equals(ENTRY)) {
+                data.put(field, "g.entry");
+            } else if (field.equals(NAME)) {
+                data.put(field, "n.name");
+            } else if (field.equals(REMARK)) {
+                data.put(field, "g.remark");
+            } else if (field.equals(FORMULA)) {
+                data.put(field, "g.formula");
+            } else if (field.equals(DBLINKID)) {
+                data.put(field, "dId.keggcompounddblinkPK.id");
+            } else if (field.equals(DBLINKDB)) {
+                data.put(field, "dDb.keggcompounddblinkPK.db");
             }
         }
         return data;
@@ -117,21 +106,16 @@ public class SearchKEGGCompound extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldOnEntity() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case NAME:
-                    data.put(field, "g.kEGGCompoundName");
-                    break;
-                case DBLINKID:
-                    data.put(field, "g.kEGGCompoundDBLink");
-                    break;
-                case DBLINKDB:
-                    data.put(field, "g.kEGGCompoundDBLink");
-                    break;
-                default:
-                    data.put(field, "");
-                    break;
+            if (field.equals(NAME)) {
+                data.put(field, "g.kEGGCompoundName");
+            } else if (field.equals(DBLINKID)) {
+                data.put(field, "g.kEGGCompoundDBLink");
+            } else if (field.equals(DBLINKDB)) {
+                data.put(field, "g.kEGGCompoundDBLink");
+            } else {
+                data.put(field, "");
             }
         }
         return data;
@@ -139,7 +123,7 @@ public class SearchKEGGCompound extends SearchFactory {
 
     @Override
     protected HashMap<Class, List> getConstrainFieldOnEntity() {
-        HashMap<Class, List> data = new HashMap<>();
+        HashMap<Class, List> data = new HashMap();
 
         List listP = new ArrayList();
         listP.add("g.kEGGPathways");

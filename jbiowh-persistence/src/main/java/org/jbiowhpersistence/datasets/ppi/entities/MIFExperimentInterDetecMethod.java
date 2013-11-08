@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This Class is the MIFExperimentInterDetecMethod entity
@@ -81,6 +82,7 @@ public class MIFExperimentInterDetecMethod implements Serializable {
         this.mifEntryExperiment = mifEntryExperiment;
     }
 
+    @XmlTransient
     public Set<MIFOtherAlias> getMifOtherAlias() {
         return mifOtherAlias;
     }
@@ -89,6 +91,7 @@ public class MIFExperimentInterDetecMethod implements Serializable {
         this.mifOtherAlias = mifOtherAlias;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRef> getMifOtherXRef() {
         return mifOtherXRef;
     }
@@ -97,6 +100,7 @@ public class MIFExperimentInterDetecMethod implements Serializable {
         this.mifOtherXRef = mifOtherXRef;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRefGO> getMifOtherXRefGO() {
         return mifOtherXRefGO;
     }
@@ -105,6 +109,7 @@ public class MIFExperimentInterDetecMethod implements Serializable {
         this.mifOtherXRefGO = mifOtherXRefGO;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRefPubMed> getMifOtherXRefPubMed() {
         return mifOtherXRefPubMed;
     }
@@ -113,6 +118,7 @@ public class MIFExperimentInterDetecMethod implements Serializable {
         this.mifOtherXRefPubMed = mifOtherXRefPubMed;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRefRefSeq> getMifOtherXRefRefSeq() {
         return mifOtherXRefRefSeq;
     }
@@ -121,6 +127,7 @@ public class MIFExperimentInterDetecMethod implements Serializable {
         this.mifOtherXRefRefSeq = mifOtherXRefRefSeq;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRefUniprot> getMifOtherXRefUniprot() {
         return mifOtherXRefUniprot;
     }

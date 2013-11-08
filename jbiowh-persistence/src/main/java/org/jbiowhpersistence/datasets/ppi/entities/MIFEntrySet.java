@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 
 /**
@@ -67,6 +68,7 @@ public class MIFEntrySet implements Serializable {
         this.dataSet = dataSet;
     }
 
+    @XmlTransient
     public Set<MIFEntrySetEntry> getmIFEntrySetEntry() {
         return mIFEntrySetEntry;
     }

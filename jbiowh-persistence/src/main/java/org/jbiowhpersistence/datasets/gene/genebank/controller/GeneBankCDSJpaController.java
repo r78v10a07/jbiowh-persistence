@@ -110,7 +110,7 @@ public class GeneBankCDSJpaController extends AbstractJpaController<GeneBankCDS>
                 genePTTNew = em.getReference(genePTTNew.getClass(), genePTTNew.getProteinGi());
                 geneBankCDS.setGenePTT(genePTTNew);
             }
-            Set<GeneInfo> attachedGeneInfoNew = new HashSet<>();
+            Set<GeneInfo> attachedGeneInfoNew = new HashSet();
             for (GeneInfo geneInfoNewGeneInfoToAttach : geneInfoNew) {
                 geneInfoNewGeneInfoToAttach = em.getReference(geneInfoNewGeneInfoToAttach.getClass(), geneInfoNewGeneInfoToAttach.getWid());
                 attachedGeneInfoNew.add(geneInfoNewGeneInfoToAttach);

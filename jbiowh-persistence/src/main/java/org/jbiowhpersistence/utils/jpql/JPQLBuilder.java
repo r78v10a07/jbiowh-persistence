@@ -144,7 +144,7 @@ public class JPQLBuilder {
             throws SQLException {
 
         if (constrains != null) {
-            HashMap<String, Object> parameters = new HashMap<>();
+            HashMap<String, Object> parameters = new HashMap();
             StringBuilder compareSyntax = new StringBuilder();
             StringBuilder innerJoinSyntax = new StringBuilder();
 

@@ -32,7 +32,7 @@ public class MSBioMLParser extends MSData implements MSFactory {
     @Override
     public void parseXML(File xmlFile, EntityManagerFactory factory) throws IllegalAccessException, JAXBException {
         try {
-            HashMap<String, List<Protein>> map = new HashMap<>();
+            HashMap<String, List<Protein>> map = new HashMap();
             HashMap parm = new HashMap();
             ProteinJpaController pCont = new ProteinJpaController(factory);
             JAXBContext jc = JAXBContext.newInstance("org.jbiowhcore.utility.fileformats.bioml.xml");
@@ -79,7 +79,7 @@ public class MSBioMLParser extends MSData implements MSFactory {
                         }
                         VerbLogger.getInstance().log(this.getClass(), "MS XML Parser. Adding Id: " + g.getLabel());
                         if (!proteinSet.isEmpty()) {                            
-                            map.put(g.getLabel(), new ArrayList<>(proteinSet));
+                            map.put(g.getLabel(), new ArrayList(proteinSet));
                             getProteinList().add((Map.Entry<String, List<Protein>>) map.entrySet().iterator().next());
                         } else {
                             getNotFound().add(g.getLabel());

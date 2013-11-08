@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.drug.drugbank.DrugBankTables;
 
 /**
@@ -64,6 +65,7 @@ public class DrugBankPatents implements Serializable {
         this.number = number;
     }
 
+    @XmlTransient
     public Set<DrugBank> getDrugBank() {
         return drugBank;
     }

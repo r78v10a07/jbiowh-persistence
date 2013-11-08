@@ -71,7 +71,7 @@ public class TaxonomyJpaController extends AbstractJpaController<Taxonomy> imple
                 }
             }
             if (!taxonomy.getSynonym().isEmpty()) {
-                Map<TaxonomySynonymPK, TaxonomySynonym> synonyms = new HashMap<>();
+                Map<TaxonomySynonymPK, TaxonomySynonym> synonyms = new HashMap();
                 for (TaxonomySynonym syn : taxonomy.getSynonym().values()) {
                     TaxonomySynonym synOnDB = em.find(TaxonomySynonym.class, syn.getTaxonomySynonymPK());
                     if (synOnDB != null) {
@@ -87,7 +87,7 @@ public class TaxonomyJpaController extends AbstractJpaController<Taxonomy> imple
                 taxonomy.setSynonym(synonyms);
             }
             if (!taxonomy.getUnparse().isEmpty()) {
-                Set<TaxonomyUnParseCitation> unParse = new HashSet<>();
+                Set<TaxonomyUnParseCitation> unParse = new HashSet();
                 for (TaxonomyUnParseCitation unp : taxonomy.getUnparse()) {
                     TaxonomyUnParseCitation u = em.find(TaxonomyUnParseCitation.class, unp.getWid());
                     if (u != null) {

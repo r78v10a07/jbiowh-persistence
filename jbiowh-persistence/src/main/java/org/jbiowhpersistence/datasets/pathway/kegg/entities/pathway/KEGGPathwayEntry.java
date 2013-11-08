@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This class is the KEGG Pathway Entry entity
@@ -80,6 +81,7 @@ public class KEGGPathwayEntry implements Serializable {
         this.kEGGPathway = kEGGPathway;
     }
 
+    @XmlTransient
     public Set<KEGGPathwayEntryGraphic> getkEGGPathwayEntryGraphic() {
         return kEGGPathwayEntryGraphic;
     }

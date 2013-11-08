@@ -80,7 +80,7 @@ public class MIF25Tables {
      */
     public List<String> getTables() {
         if (tables == null) {
-            tables = new ArrayList<>();
+            tables = new ArrayList();
 
             tables.add(MIFBIOSOURCETYPECELLTYPE);
             tables.add(MIFBIOSOURCETYPECOMPARTMENT);

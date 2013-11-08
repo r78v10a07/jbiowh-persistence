@@ -16,6 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
 
 /**
@@ -113,6 +114,7 @@ public class PfamCompleteProteomes implements Serializable {
         setPfamProteomeRegions(null);
     }
 
+    @XmlTransient
     public Map<PfamProteomeRegionsPK, PfamProteomeRegions> getPfamProteomeRegions() {
         return pfamProteomeRegions;
     }

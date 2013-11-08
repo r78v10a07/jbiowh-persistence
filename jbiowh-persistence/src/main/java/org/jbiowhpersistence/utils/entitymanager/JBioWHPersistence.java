@@ -28,8 +28,8 @@ public class JBioWHPersistence {
     private static JBioWHPersistence singleton;
 
     private JBioWHPersistence() {
-        schemas = new TreeMap<>();
-        entityManagers = new TreeMap<>();
+        schemas = new TreeMap();
+        entityManagers = new TreeMap();
     }
 
     /**
@@ -273,7 +273,7 @@ public class JBioWHPersistence {
         if (factory != null) {
             EntityManagerFactory entityManager = entityManagers.get(factory.getUrl());
             if (entityManager == null) {
-                HashMap<String, String> properties = new HashMap<>();
+                HashMap<String, String> properties = new HashMap();
                 properties.put(PersistenceUnitProperties.JDBC_URL, factory.getUrl().trim() + "?autoReconnect=true");
                 properties.put(PersistenceUnitProperties.JDBC_PASSWORD, factory.getPasswd());
                 properties.put(PersistenceUnitProperties.JDBC_DRIVER, factory.getDriver());

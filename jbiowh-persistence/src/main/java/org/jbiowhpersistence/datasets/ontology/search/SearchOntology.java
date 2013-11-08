@@ -30,7 +30,7 @@ public class SearchOntology extends SearchFactory {
      * This Class perform the search over the Ontology module
      */
     public SearchOntology() {
-        HashMap<String, Class> fields = new HashMap<>();
+        HashMap<String, Class> fields = new HashMap();
         fields.put(ID, String.class);
         fields.put(NAME, String.class);
         fields.put(DEFINITION, String.class);
@@ -97,17 +97,14 @@ public class SearchOntology extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldBeforeWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case SYNONYM:
-                    data.put(field, " INNER JOIN " + getFieldOnEntity().get(field) + " n ");
-                    break;
-                case ALTID:
-                    data.put(field, " INNER JOIN " + getFieldOnEntity().get(field) + " a ");
-                    break;
-                default:
-                    data.put(field, "");
+            if (field.equals(SYNONYM)) {
+                data.put(field, " INNER JOIN " + getFieldOnEntity().get(field) + " n ");
+            } else if (field.equals(ALTID)) {
+                data.put(field, " INNER JOIN " + getFieldOnEntity().get(field) + " a ");
+            } else {
+                data.put(field, "");
             }
         }
         return data;
@@ -115,27 +112,20 @@ public class SearchOntology extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldAfterWhere() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case ID:
-                    data.put(field, "g.id");
-                    break;
-                case NAME:
-                    data.put(field, "g.name");
-                    break;
-                case COMMENT:
-                    data.put(field, "g.comment");
-                    break;
-                case DEFINITION:
-                    data.put(field, "g.def");
-                    break;
-                case SYNONYM:
-                    data.put(field, "n.synonym");
-                    break;
-                case ALTID:
-                    data.put(field, "a.ontologyAlternativeIdPK.altId");
-                    break;
+            if (field.equals(ID)) {
+                data.put(field, "g.id");
+            } else if (field.equals(NAME)) {
+                data.put(field, "g.name");
+            } else if (field.equals(COMMENT)) {
+                data.put(field, "g.comment");
+            } else if (field.equals(DEFINITION)) {
+                data.put(field, "g.def");
+            } else if (field.equals(SYNONYM)) {
+                data.put(field, "n.synonym");
+            } else if (field.equals(ALTID)) {
+                data.put(field, "a.ontologyAlternativeIdPK.altId");
             }
         }
         return data;
@@ -143,18 +133,14 @@ public class SearchOntology extends SearchFactory {
 
     @Override
     protected HashMap<String, String> getFieldOnEntity() {
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
-            switch (field) {
-                case SYNONYM:
-                    data.put(field, "g.ontologySynonym");
-                    break;
-                case ALTID:
-                    data.put(field, "g.ontologyAlternativeId");
-                    break;
-                default:
-                    data.put(field, "");
-                    break;
+            if (field.equals(SYNONYM)) {
+                data.put(field, "g.ontologySynonym");
+            } else if (field.equals(ALTID)) {
+                data.put(field, "g.ontologyAlternativeId");
+            } else {
+                data.put(field, "");
             }
         }
         return data;
@@ -162,7 +148,7 @@ public class SearchOntology extends SearchFactory {
 
     @Override
     protected HashMap<Class, List> getConstrainFieldOnEntity() {
-        HashMap<Class, List> data = new HashMap<>();
+        HashMap<Class, List> data = new HashMap();
 
         return data;
     }

@@ -47,7 +47,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
     protected Set<MIFOtherAlias> createMIFOtherAlias(EntityManagerFactory emf, EntityManager em, Set<MIFOtherAlias> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             printMsg(new Exception().getStackTrace()[0].getMethodName(), objectList);
-            Set<MIFOtherAlias> attachObjSet = new HashSet<>();
+            Set<MIFOtherAlias> attachObjSet = new HashSet();
             for (MIFOtherAlias object : objectList) {
                 MIFOtherAlias objectOnDB = em.find(MIFOtherAlias.class, object.getWid());
                 if (objectOnDB != null) {
@@ -59,7 +59,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -75,7 +75,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
     protected Set<MIFOtherAttribute> createMIFOtherAttribute(EntityManagerFactory emf, EntityManager em, Set<MIFOtherAttribute> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             printMsg(new Exception().getStackTrace()[0].getMethodName(), objectList);
-            Set<MIFOtherAttribute> attachObjSet = new HashSet<>();
+            Set<MIFOtherAttribute> attachObjSet = new HashSet();
             for (MIFOtherAttribute object : objectList) {
                 MIFOtherAttribute objectOnDB = em.find(MIFOtherAttribute.class, object.getWid());
                 if (objectOnDB != null) {
@@ -87,7 +87,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -104,7 +104,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
         if (objectList != null && !objectList.isEmpty()) {
             printMsg(new Exception().getStackTrace()[0].getMethodName(), objectList);
             MIFOtherBioSourceTypeJpaController controller = new MIFOtherBioSourceTypeJpaController(emf);
-            Set<MIFOtherBioSourceType> attachObjSet = new HashSet<>();
+            Set<MIFOtherBioSourceType> attachObjSet = new HashSet();
             for (MIFOtherBioSourceType object : objectList) {
                 MIFOtherBioSourceType objectOnDB = em.find(MIFOtherBioSourceType.class, object.getWid());
                 if (objectOnDB != null) {
@@ -117,7 +117,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -134,7 +134,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
         if (objectList != null && !objectList.isEmpty()) {
             printMsg(new Exception().getStackTrace()[0].getMethodName(), objectList);
             MIFInteractionParticipantJpaController controller = new MIFInteractionParticipantJpaController(emf);
-            Set<MIFInteractionParticipant> attachObjSet = new HashSet<>();
+            Set<MIFInteractionParticipant> attachObjSet = new HashSet();
             for (MIFInteractionParticipant object : objectList) {
                 MIFInteractionParticipant objectOnDB = em.find(MIFInteractionParticipant.class, object.getWid());
                 if (objectOnDB != null) {
@@ -147,7 +147,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -190,7 +190,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
     protected Set<MIFOtherConfidence> createMIFOtherConfidence(EntityManagerFactory emf, EntityManager em, Set<MIFOtherConfidence> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             printMsg(new Exception().getStackTrace()[0].getMethodName(), objectList);
-            Set<MIFOtherConfidence> attachObjSet = new HashSet<>();
+            Set<MIFOtherConfidence> attachObjSet = new HashSet();
             for (MIFOtherConfidence object : objectList) {
                 MIFOtherConfidence objectOnDB = em.find(MIFOtherConfidence.class, object.getWid());
                 if (objectOnDB != null) {
@@ -202,7 +202,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -218,7 +218,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
     protected Set<MIFOtherXRef> createMIFOtherXRef(EntityManagerFactory emf, EntityManager em, Set<MIFOtherXRef> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             printMsg(new Exception().getStackTrace()[0].getMethodName(), objectList);
-            Set<MIFOtherXRef> attachObjSet = new HashSet<>();
+            Set<MIFOtherXRef> attachObjSet = new HashSet();
             for (MIFOtherXRef object : objectList) {
                 MIFOtherXRef objectOnDB = em.find(MIFOtherXRef.class, object.getWid());
                 if (objectOnDB != null) {
@@ -230,7 +230,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -246,7 +246,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
     protected Set<MIFOtherXRefGO> createMIFOtherXRefGO(EntityManagerFactory emf, EntityManager em, Set<MIFOtherXRefGO> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             printMsg(new Exception().getStackTrace()[0].getMethodName(), objectList);
-            Set<MIFOtherXRefGO> attachObjSet = new HashSet<>();
+            Set<MIFOtherXRefGO> attachObjSet = new HashSet();
             for (MIFOtherXRefGO object : objectList) {
                 MIFOtherXRefGO objectOnDB = em.find(MIFOtherXRefGO.class, object.getWid());
                 if (objectOnDB != null) {
@@ -258,7 +258,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -274,7 +274,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
     protected Set<MIFOtherXRefPubMed> createMIFOtherXRefPubMed(EntityManagerFactory emf, EntityManager em, Set<MIFOtherXRefPubMed> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             printMsg(new Exception().getStackTrace()[0].getMethodName(), objectList);
-            Set<MIFOtherXRefPubMed> attachObjSet = new HashSet<>();
+            Set<MIFOtherXRefPubMed> attachObjSet = new HashSet();
             for (MIFOtherXRefPubMed object : objectList) {
                 MIFOtherXRefPubMed objectOnDB = em.find(MIFOtherXRefPubMed.class, object.getWid());
                 if (objectOnDB != null) {
@@ -286,7 +286,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -302,7 +302,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
     protected Set<MIFOtherXRefRefSeq> createMIFOtherXRefRefSeq(EntityManagerFactory emf, EntityManager em, Set<MIFOtherXRefRefSeq> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             printMsg(new Exception().getStackTrace()[0].getMethodName(), objectList);
-            Set<MIFOtherXRefRefSeq> attachObjSet = new HashSet<>();
+            Set<MIFOtherXRefRefSeq> attachObjSet = new HashSet();
             for (MIFOtherXRefRefSeq object : objectList) {
                 MIFOtherXRefRefSeq objectOnDB = em.find(MIFOtherXRefRefSeq.class, object.getWid());
                 if (objectOnDB != null) {
@@ -314,7 +314,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -330,7 +330,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
     protected Set<MIFOtherXRefUniprot> createMIFOtherXRefUniprot(EntityManagerFactory emf, EntityManager em, Set<MIFOtherXRefUniprot> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             printMsg(new Exception().getStackTrace()[0].getMethodName(), objectList);
-            Set<MIFOtherXRefUniprot> attachObjSet = new HashSet<>();
+            Set<MIFOtherXRefUniprot> attachObjSet = new HashSet();
             for (MIFOtherXRefUniprot object : objectList) {
                 MIFOtherXRefUniprot objectOnDB = em.find(MIFOtherXRefUniprot.class, object.getWid());
                 if (objectOnDB != null) {
@@ -342,7 +342,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -388,7 +388,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
         if (objectList != null && !objectList.isEmpty()) {
             printMsg(new Exception().getStackTrace()[0].getMethodName(), objectList);
             MIFEntrySetEntryJpaController controller = new MIFEntrySetEntryJpaController(emf);
-            Set<MIFEntrySetEntry> attachObjSet = new HashSet<>();
+            Set<MIFEntrySetEntry> attachObjSet = new HashSet();
             for (MIFEntrySetEntry object : objectList) {
                 MIFEntrySetEntry objectOnDB = em.find(MIFEntrySetEntry.class, object.getWid());
                 if (objectOnDB != null) {
@@ -404,7 +404,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -448,7 +448,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
         if (objectList != null && !objectList.isEmpty()) {
             printMsg(new Exception().getStackTrace()[0].getMethodName(), objectList);
             MIFEntryExperimentJpaController controller = new MIFEntryExperimentJpaController(emf);
-            Set<MIFEntryExperiment> attachObjSet = new HashSet<>();
+            Set<MIFEntryExperiment> attachObjSet = new HashSet();
             for (MIFEntryExperiment object : objectList) {
                 MIFEntryExperiment objectOnDB = em.find(MIFEntryExperiment.class, object.getWid());
                 if (objectOnDB != null) {
@@ -461,7 +461,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -505,7 +505,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
         if (objectList != null && !objectList.isEmpty()) {
             printMsg(new Exception().getStackTrace()[0].getMethodName(), objectList);
             MIFEntrySourceJpaController controller = new MIFEntrySourceJpaController(emf);
-            Set<MIFEntrySource> attachObjSet = new HashSet<>();
+            Set<MIFEntrySource> attachObjSet = new HashSet();
             for (MIFEntrySource object : objectList) {
                 MIFEntrySource objectOnDB = em.find(MIFEntrySource.class, object.getWid());
                 if (objectOnDB != null) {
@@ -518,7 +518,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -535,7 +535,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
         if (objectList != null && !objectList.isEmpty()) {
             printMsg(new Exception().getStackTrace()[0].getMethodName(), objectList);
             MIFEntryInteractorJpaController controller = new MIFEntryInteractorJpaController(emf);
-            Set<MIFEntryInteractor> attachObjSet = new HashSet<>();
+            Set<MIFEntryInteractor> attachObjSet = new HashSet();
             for (MIFEntryInteractor object : objectList) {
                 MIFEntryInteractor objectOnDB = em.find(MIFEntryInteractor.class, object.getWid());
                 if (objectOnDB != null) {
@@ -548,7 +548,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     /**
@@ -590,7 +590,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
     protected Set<MIFOtherBibRef> createMIFOtherBibRef(EntityManagerFactory emf, EntityManager em, Set<MIFOtherBibRef> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             printMsg(new Exception().getStackTrace()[0].getMethodName(), objectList);
-            Set<MIFOtherBibRef> attachObjSet = new HashSet<>();
+            Set<MIFOtherBibRef> attachObjSet = new HashSet();
             for (MIFOtherBibRef object : objectList) {
                 MIFOtherBibRef objectOnDB = em.find(MIFOtherBibRef.class, object.getWid());
                 if (objectOnDB != null) {
@@ -602,7 +602,7 @@ public abstract class AbstractMIFJpaController<T> extends AbstractJpaController<
             }
             return attachObjSet;
         }
-        return new HashSet<>();
+        return new HashSet();
     }
 
     private void printMsg(String methodName) {

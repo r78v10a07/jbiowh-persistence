@@ -85,7 +85,7 @@ public class DrugBankTables {
      */
     public List<String> getTables() {
         if (tables == null) {
-            tables = new ArrayList<>();
+            tables = new ArrayList();
 
             tables.add(DRUGBANK);
             tables.add(DRUGBANK_HAS_DRUGBANKCATEGORIES);

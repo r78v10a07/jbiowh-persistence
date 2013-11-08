@@ -50,7 +50,7 @@ public class OntologySynonymJpaController extends AbstractJpaController<Ontology
             em.getTransaction().begin();
             if (!ontologySynonym.getOntologyhasOntologySynonym().isEmpty()) {
                 OntologyJpaController oController = new OntologyJpaController(emf);
-                Map<OntologyhasOntologySynonymPK, OntologyhasOntologySynonym> hasSynMap = new HashMap<>();
+                Map<OntologyhasOntologySynonymPK, OntologyhasOntologySynonym> hasSynMap = new HashMap();
                 for (OntologyhasOntologySynonym hasSyn : ontologySynonym.getOntologyhasOntologySynonym().values()) {
                     OntologyhasOntologySynonym hasSynOnDB = em.find(OntologyhasOntologySynonym.class, hasSyn.getOntologyhasOntologySynonymPK());
                     if (hasSynOnDB != null) {

@@ -15,6 +15,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This class is the PfamBbioWH entity
@@ -65,6 +66,7 @@ public class PfamBbioWH implements Serializable {
         this.wid = wid;
     }
 
+    @XmlTransient
     public Set<PfamBReg> getPfamBRegs() {
         return pfamBRegs;
     }

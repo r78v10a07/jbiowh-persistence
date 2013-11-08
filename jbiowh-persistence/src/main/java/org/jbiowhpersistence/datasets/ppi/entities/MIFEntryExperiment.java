@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This Class is the MIFEntryExperiment entity
@@ -108,6 +109,7 @@ public class MIFEntryExperiment implements Serializable {
         this.mifEntrySetEntry = mifEntrySetEntry;
     }
 
+    @XmlTransient
     public Set<MIFExperimentFeatDetecMethod> getMifExperimentFeatDetecMethod() {
         return mifExperimentFeatDetecMethod;
     }
@@ -116,6 +118,7 @@ public class MIFEntryExperiment implements Serializable {
         this.mifExperimentFeatDetecMethod = mifExperimentFeatDetecMethod;
     }
 
+    @XmlTransient
     public Set<MIFExperimentInterDetecMethod> getMifExperimentInterDetecMethod() {
         return mifExperimentInterDetecMethod;
     }
@@ -124,6 +127,7 @@ public class MIFEntryExperiment implements Serializable {
         this.mifExperimentInterDetecMethod = mifExperimentInterDetecMethod;
     }
 
+    @XmlTransient
     public Set<MIFExperimentPartIdentMethod> getMifExperimentPartIdentMethod() {
         return mifExperimentPartIdentMethod;
     }
@@ -132,6 +136,7 @@ public class MIFEntryExperiment implements Serializable {
         this.mifExperimentPartIdentMethod = mifExperimentPartIdentMethod;
     }
 
+    @XmlTransient
     public Set<MIFOtherAlias> getMifOtherAlias() {
         return mifOtherAlias;
     }
@@ -140,6 +145,7 @@ public class MIFEntryExperiment implements Serializable {
         this.mifOtherAlias = mifOtherAlias;
     }
 
+    @XmlTransient
     public Set<MIFOtherAttribute> getMifOtherAttribute() {
         return mifOtherAttribute;
     }
@@ -148,6 +154,7 @@ public class MIFEntryExperiment implements Serializable {
         this.mifOtherAttribute = mifOtherAttribute;
     }
 
+    @XmlTransient
     public Set<MIFOtherBibRef> getMifOtherBibRef() {
         return mifOtherBibRef;
     }
@@ -156,6 +163,7 @@ public class MIFEntryExperiment implements Serializable {
         this.mifOtherBibRef = mifOtherBibRef;
     }
 
+    @XmlTransient
     public Set<MIFOtherBioSourceType> getMifOtherBioSourceType() {
         return mifOtherBioSourceType;
     }
@@ -164,6 +172,7 @@ public class MIFEntryExperiment implements Serializable {
         this.mifOtherBioSourceType = mifOtherBioSourceType;
     }
 
+    @XmlTransient
     public Set<MIFOtherConfidence> getMifOtherConfidence() {
         return mifOtherConfidence;
     }
@@ -172,6 +181,7 @@ public class MIFEntryExperiment implements Serializable {
         this.mifOtherConfidence = mifOtherConfidence;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRef> getMifOtherXRef() {
         return mifOtherXRef;
     }
@@ -180,6 +190,7 @@ public class MIFEntryExperiment implements Serializable {
         this.mifOtherXRef = mifOtherXRef;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRefGO> getMifOtherXRefGO() {
         return mifOtherXRefGO;
     }
@@ -188,6 +199,7 @@ public class MIFEntryExperiment implements Serializable {
         this.mifOtherXRefGO = mifOtherXRefGO;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRefPubMed> getMifOtherXRefPubMed() {
         return mifOtherXRefPubMed;
     }
@@ -196,6 +208,7 @@ public class MIFEntryExperiment implements Serializable {
         this.mifOtherXRefPubMed = mifOtherXRefPubMed;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRefRefSeq> getMifOtherXRefRefSeq() {
         return mifOtherXRefRefSeq;
     }
@@ -204,6 +217,7 @@ public class MIFEntryExperiment implements Serializable {
         this.mifOtherXRefRefSeq = mifOtherXRefRefSeq;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRefUniprot> getMifOtherXRefUniprot() {
         return mifOtherXRefUniprot;
     }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.*;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 import org.jbiowhpersistence.datasets.domain.pfam.PFamTables;
 import org.jbiowhpersistence.datasets.domain.pfam.entities.PfamAbioWH;
@@ -334,6 +335,7 @@ public class Protein implements Serializable {
         this.genePTT = genePTT;
     }
     
+    @XmlTransient
     public Set<PfamAbioWH> getPfamAInsignificant() {
         return pfamAInsignificant;
     }
@@ -342,6 +344,7 @@ public class Protein implements Serializable {
         this.pfamAInsignificant = pfamAInsignificant;
     }
 
+    @XmlTransient
     public Set<PfamAbioWH> getPfamASignificant() {
         return pfamASignificant;
     }
@@ -358,6 +361,7 @@ public class Protein implements Serializable {
         this.dataSet = dataSet;
     }
 
+    @XmlTransient
     public Set<GeneInfo> getGeneInfo() {
         return geneInfo;
     }
@@ -366,6 +370,7 @@ public class Protein implements Serializable {
         this.geneInfo = geneInfo;
     }
 
+    @XmlTransient
     public Set<KEGGPathway> getkEGGPathways() {
         return kEGGPathways;
     }
@@ -374,6 +379,7 @@ public class Protein implements Serializable {
         this.kEGGPathways = kEGGPathways;
     }
 
+    @XmlTransient
     public Set<KEGGEnzyme> getkEGGEnzymes() {
         return kEGGEnzymes;
     }
@@ -382,6 +388,7 @@ public class Protein implements Serializable {
         this.kEGGEnzymes = kEGGEnzymes;
     }
 
+    @XmlTransient
     public Set<UniRefEntry> getUniRefEntry() {
         return uniRefEntry;
     }
@@ -390,6 +397,7 @@ public class Protein implements Serializable {
         this.uniRefEntry = uniRefEntry;
     }
 
+    @XmlTransient
     public Set<DrugBank> getDrugBankAsCarriers() {
         return drugBankAsCarriers;
     }
@@ -398,6 +406,7 @@ public class Protein implements Serializable {
         this.drugBankAsCarriers = drugBankAsCarriers;
     }
 
+    @XmlTransient
     public Set<DrugBank> getDrugBankAsTransporters() {
         return drugBankAsTransporters;
     }
@@ -406,6 +415,7 @@ public class Protein implements Serializable {
         this.drugBankAsTransporters = drugBankAsTransporters;
     }
 
+    @XmlTransient
     public Set<DrugBank> getDrugBankAsEnzyme() {
         return drugBankAsEnzyme;
     }
@@ -414,6 +424,7 @@ public class Protein implements Serializable {
         this.drugBankAsEnzyme = drugBankAsEnzyme;
     }
 
+    @XmlTransient
     public Set<DrugBank> getDrugBank() {
         return drugBank;
     }
@@ -422,6 +433,7 @@ public class Protein implements Serializable {
         this.drugBank = drugBank;
     }
 
+    @XmlTransient
     public Set<UniRefMember> getUniRefMember() {
         return uniRefMember;
     }
@@ -430,6 +442,7 @@ public class Protein implements Serializable {
         this.uniRefMember = uniRefMember;
     }
 
+    @XmlTransient
     public Set<MIFEntryInteraction> getmIFEntryInteraction() {
         return mIFEntryInteraction;
     }
@@ -438,6 +451,7 @@ public class Protein implements Serializable {
         this.mIFEntryInteraction = mIFEntryInteraction;
     }
 
+    @XmlTransient
     public Set<ProteinComment> getProteinComment() {
         return proteinComment;
     }
@@ -446,6 +460,7 @@ public class Protein implements Serializable {
         this.proteinComment = proteinComment;
     }
 
+    @XmlTransient
     public Set<ProteinFeature> getProteinFeature() {
         return proteinFeature;
     }
@@ -454,6 +469,7 @@ public class Protein implements Serializable {
         this.proteinFeature = ProteinFeature;
     }
 
+    @XmlTransient
     public Map<ProteinPFAMPK, ProteinPFAM> getProteinPFAM() {
         return proteinPFAM;
     }
@@ -462,6 +478,7 @@ public class Protein implements Serializable {
         this.proteinPFAM = proteinPFAM;
     }
 
+    @XmlTransient
     public Map<ProteinDrugBankPK, ProteinDrugBank> getProteinDrugBank() {
         return proteinDrugBank;
     }
@@ -470,6 +487,7 @@ public class Protein implements Serializable {
         this.proteinDrugBank = proteinDrugBank;
     }
 
+    @XmlTransient
     public Map<ProteinMINTPK, ProteinMINT> getProteinMINT() {
         return proteinMINT;
     }
@@ -478,6 +496,7 @@ public class Protein implements Serializable {
         this.proteinMINT = proteinMINT;
     }
 
+    @XmlTransient
     public Map<ProteinDIPPK, ProteinDIP> getProteinDIP() {
         return proteinDIP;
     }
@@ -486,6 +505,7 @@ public class Protein implements Serializable {
         this.proteinDIP = proteinDIP;
     }
 
+    @XmlTransient
     public Map<ProteinIntActPK, ProteinIntAct> getProteinIntAct() {
         return proteinIntAct;
     }
@@ -494,6 +514,7 @@ public class Protein implements Serializable {
         this.proteinIntAct = proteinIntAct;
     }
 
+    @XmlTransient
     public Map<ProteinPDBPK, ProteinPDB> getProteinPDB() {
         return proteinPDB;
     }
@@ -502,6 +523,7 @@ public class Protein implements Serializable {
         this.proteinPDB = proteinPDB;
     }
 
+    @XmlTransient
     public Map<ProteinBioCycPK, ProteinBioCyc> getProteinBioCyc() {
         return proteinBioCyc;
     }
@@ -510,6 +532,7 @@ public class Protein implements Serializable {
         this.proteinBioCyc = proteinBioCyc;
     }
 
+    @XmlTransient
     public Map<ProteinKEGGPK, ProteinKEGG> getProteinKEGG() {
         return proteinKEGG;
     }
@@ -518,6 +541,7 @@ public class Protein implements Serializable {
         this.proteinKEGG = proteinKEGG;
     }
 
+    @XmlTransient
     public Map<ProteinECPK, ProteinEC> getProteinEC() {
         return proteinEC;
     }
@@ -526,6 +550,7 @@ public class Protein implements Serializable {
         this.proteinEC = proteinEC;
     }
 
+    @XmlTransient
     public Map<ProteinPMIDPK, ProteinPMID> getProteinPMID() {
         return proteinPMID;
     }
@@ -534,6 +559,7 @@ public class Protein implements Serializable {
         this.proteinPMID = proteinPMID;
     }
 
+    @XmlTransient
     public Set<ProteinDBReference> getProteinDBReference() {
         return proteinDBReference;
     }
@@ -542,6 +568,7 @@ public class Protein implements Serializable {
         this.proteinDBReference = proteinWIDDBReference;
     }
 
+    @XmlTransient
     public Set<ProteinLongName> getProteinLongName() {
         return proteinLongName;
     }
@@ -550,6 +577,7 @@ public class Protein implements Serializable {
         this.proteinLongName = proteinLongName;
     }
 
+    @XmlTransient
     public Map<ProteinAccessionNumberPK, ProteinAccessionNumber> getProteinAccessionNumber() {
         return proteinAccessionNumber;
     }
@@ -558,6 +586,7 @@ public class Protein implements Serializable {
         this.proteinAccessionNumber = proteinAccessionNumber;
     }
 
+    @XmlTransient
     public Map<ProteinNamePK, ProteinName> getProteinName() {
         return proteinName;
     }
@@ -566,6 +595,7 @@ public class Protein implements Serializable {
         this.proteinName = proteinName;
     }
 
+    @XmlTransient
     public Map<ProteinhasProteinKeywordPK, ProteinhasProteinKeyword> getProteinhasProteinKeyword() {
         return proteinhasProteinKeyword;
     }
@@ -574,6 +604,7 @@ public class Protein implements Serializable {
         this.proteinhasProteinKeyword = proteinhasProteinKeyword;
     }
     
+    @XmlTransient
     public Set<Ontology> getOntology() {
         return ontology;
     }
@@ -582,6 +613,7 @@ public class Protein implements Serializable {
         this.ontology = ontology;
     }
 
+    @XmlTransient
     public Set<Taxonomy> getTaxonomyHost() {
         return taxonomyHost;
     }

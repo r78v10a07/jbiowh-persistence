@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 import org.jbiowhpersistence.datasets.pathway.kegg.KEGGTables;
 import org.jbiowhpersistence.datasets.pathway.kegg.entities.reaction.KEGGReaction;
@@ -106,6 +107,7 @@ public class KEGGGlycan implements Serializable {
         this.dataSet = dataSet;
     }
 
+    @XmlTransient
     public Set<KEGGGlycanName> getkEGGGlycanName() {
         return kEGGGlycanName;
     }
@@ -114,6 +116,7 @@ public class KEGGGlycan implements Serializable {
         this.kEGGGlycanName = kEGGGlycanName;
     }
 
+    @XmlTransient
     public Set<KEGGReaction> getkEGGReactionAsProduct() {
         return kEGGReactionAsProduct;
     }
@@ -122,6 +125,7 @@ public class KEGGGlycan implements Serializable {
         this.kEGGReactionAsProduct = kEGGReactionAsProduct;
     }
 
+    @XmlTransient
     public Set<KEGGReaction> getkEGGReactionAsSubstrate() {
         return kEGGReactionAsSubstrate;
     }
@@ -130,6 +134,7 @@ public class KEGGGlycan implements Serializable {
         this.kEGGReactionAsSubstrate = kEGGReactionAsSubstrate;
     }
 
+    @XmlTransient
     public Map<KEGGGlycanDBLinkPK, KEGGGlycanDBLink> getkEGGGlycanDBLink() {
         return kEGGGlycanDBLink;
     }
@@ -138,6 +143,7 @@ public class KEGGGlycan implements Serializable {
         this.kEGGGlycanDBLink = kEGGGlycanDBLink;
     }
 
+    @XmlTransient
     public Set<KEGGGlycanClass> getkEGGGlycanClass() {
         return kEGGGlycanClass;
     }

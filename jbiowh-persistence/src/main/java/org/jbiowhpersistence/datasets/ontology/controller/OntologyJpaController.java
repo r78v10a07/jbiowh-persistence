@@ -73,7 +73,7 @@ public class OntologyJpaController extends AbstractJpaController<Ontology> imple
             em = getEntityManager();
             em.getTransaction().begin();
             if (!ontology.getOntologyIsA().isEmpty()) {
-                Map<OntologyIsAPK, OntologyIsA> isAMap = new HashMap<>();
+                Map<OntologyIsAPK, OntologyIsA> isAMap = new HashMap();
                 for (OntologyIsA isA : ontology.getOntologyIsA().values()) {
                     OntologyIsA isAOnDB = em.find(OntologyIsA.class, isA.getOntologyIsAPK());
                     if (isAOnDB != null) {
@@ -94,7 +94,7 @@ public class OntologyJpaController extends AbstractJpaController<Ontology> imple
                 ontology.setOntologyIsA(isAMap);
             }
             if (!ontology.getOntologyRelation().isEmpty()) {
-                Map<OntologyRelationPK, OntologyRelation> relMap = new HashMap<>();
+                Map<OntologyRelationPK, OntologyRelation> relMap = new HashMap();
                 for (OntologyRelation rel : ontology.getOntologyRelation().values()) {
                     OntologyRelation relOnDB = em.find(OntologyRelation.class, rel.getOntologyRelationPK());
                     if (relOnDB != null) {
@@ -115,7 +115,7 @@ public class OntologyJpaController extends AbstractJpaController<Ontology> imple
                 ontology.setOntologyRelation(relMap);
             }
             if (!ontology.getOntologySubset().isEmpty()) {
-                Set<OntologySubset> subSet = new HashSet<>();
+                Set<OntologySubset> subSet = new HashSet();
                 for (OntologySubset sub : ontology.getOntologySubset()) {
                     OntologySubset subOnDB = em.find(OntologySubset.class, sub.getWid());
                     if (subOnDB != null) {
@@ -127,7 +127,7 @@ public class OntologyJpaController extends AbstractJpaController<Ontology> imple
                 ontology.setOntologySubset(subSet);
             }
             if (!ontology.getOntologyToConsider().isEmpty()) {
-                Map<OntologyToConsiderPK, OntologyToConsider> toMap = new HashMap<>();
+                Map<OntologyToConsiderPK, OntologyToConsider> toMap = new HashMap();
                 for (OntologyToConsider to : ontology.getOntologyToConsider().values()) {
                     OntologyToConsider toOnDB = em.find(OntologyToConsider.class, to.getOntologyToConsiderPK());
                     if (toOnDB != null) {
@@ -148,7 +148,7 @@ public class OntologyJpaController extends AbstractJpaController<Ontology> imple
                 ontology.setOntologyToConsider(toMap);
             }
             if (!ontology.getOntologyXRef().isEmpty()) {
-                Set<OntologyXRef> xrefSet = new HashSet<>();
+                Set<OntologyXRef> xrefSet = new HashSet();
                 for (OntologyXRef xref : ontology.getOntologyXRef()) {
                     OntologyXRef xrefOnDB = em.find(OntologyXRef.class, xref.getWid());
                     if (xrefOnDB != null) {
@@ -161,7 +161,7 @@ public class OntologyJpaController extends AbstractJpaController<Ontology> imple
             }
             if (!ontology.getOntologyhasOntologySynonym().isEmpty()) {
                 OntologySynonymJpaController sController = new OntologySynonymJpaController(emf);
-                Map<OntologyhasOntologySynonymPK, OntologyhasOntologySynonym> hasSynMap = new HashMap<>();
+                Map<OntologyhasOntologySynonymPK, OntologyhasOntologySynonym> hasSynMap = new HashMap();
                 for (OntologyhasOntologySynonym hasSyn : ontology.getOntologyhasOntologySynonym().values()) {
                     OntologyhasOntologySynonym hasSynOnDB = em.find(OntologyhasOntologySynonym.class, hasSyn.getOntologyhasOntologySynonymPK());
                     if (hasSynOnDB != null) {
@@ -217,14 +217,14 @@ public class OntologyJpaController extends AbstractJpaController<Ontology> imple
             Set<GeneInfo> geneInfoNew = ontology.getGeneInfo();
             Set<Protein> proteinOld = persistentOntology.getProtein();
             Set<Protein> proteinNew = ontology.getProtein();
-            Set<GeneInfo> attachedGeneInfoNew = new HashSet<>();
+            Set<GeneInfo> attachedGeneInfoNew = new HashSet();
             for (GeneInfo geneInfoNewGeneInfoToAttach : geneInfoNew) {
                 geneInfoNewGeneInfoToAttach = em.getReference(geneInfoNewGeneInfoToAttach.getClass(), geneInfoNewGeneInfoToAttach.getWid());
                 attachedGeneInfoNew.add(geneInfoNewGeneInfoToAttach);
             }
             geneInfoNew = attachedGeneInfoNew;
             ontology.setGeneInfo(geneInfoNew);
-            Set<Protein> attachedProteinNew = new HashSet<>();
+            Set<Protein> attachedProteinNew = new HashSet();
             for (Protein proteinNewProteinToAttach : proteinNew) {
                 proteinNewProteinToAttach = em.getReference(proteinNewProteinToAttach.getClass(), proteinNewProteinToAttach.getWid());
                 attachedProteinNew.add(proteinNewProteinToAttach);

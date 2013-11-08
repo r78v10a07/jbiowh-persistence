@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 import org.jbiowhpersistence.datasets.pathway.kegg.KEGGTables;
 
@@ -84,6 +85,7 @@ public class KEGGRPair implements Serializable {
         this.dataSet = dataSet;
     }
 
+    @XmlTransient
     public Set<KEGGCompound> getkEGGCompound() {
         return kEGGCompound;
     }

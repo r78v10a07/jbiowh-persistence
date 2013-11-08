@@ -70,14 +70,14 @@ public class KEGGGlycanJpaController extends AbstractKEGGJpaController<KEGGGlyca
             Set<KEGGReaction> kEGGReactionAsProductNew = keggGlycan.getkEGGReactionAsProduct();
             Set<KEGGReaction> kEGGReactionAsSubstrateOld = persistentKEGGGlycan.getkEGGReactionAsSubstrate();
             Set<KEGGReaction> kEGGReactionAsSubstrateNew = keggGlycan.getkEGGReactionAsSubstrate();
-            Set<KEGGReaction> attachedkEGGReactionAsProductNew = new HashSet<>();
+            Set<KEGGReaction> attachedkEGGReactionAsProductNew = new HashSet();
             for (KEGGReaction kEGGReactionAsProductNewKEGGReactionToAttach : kEGGReactionAsProductNew) {
                 kEGGReactionAsProductNewKEGGReactionToAttach = em.getReference(kEGGReactionAsProductNewKEGGReactionToAttach.getClass(), kEGGReactionAsProductNewKEGGReactionToAttach.getWid());
                 attachedkEGGReactionAsProductNew.add(kEGGReactionAsProductNewKEGGReactionToAttach);
             }
             kEGGReactionAsProductNew = attachedkEGGReactionAsProductNew;
             keggGlycan.setkEGGReactionAsProduct(kEGGReactionAsProductNew);
-            Set<KEGGReaction> attachedkEGGReactionAsSubstrateNew = new HashSet<>();
+            Set<KEGGReaction> attachedkEGGReactionAsSubstrateNew = new HashSet();
             for (KEGGReaction kEGGReactionAsSubstrateNewKEGGReactionToAttach : kEGGReactionAsSubstrateNew) {
                 kEGGReactionAsSubstrateNewKEGGReactionToAttach = em.getReference(kEGGReactionAsSubstrateNewKEGGReactionToAttach.getClass(), kEGGReactionAsSubstrateNewKEGGReactionToAttach.getWid());
                 attachedkEGGReactionAsSubstrateNew.add(kEGGReactionAsSubstrateNewKEGGReactionToAttach);

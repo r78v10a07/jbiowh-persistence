@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This Class is the MIFOtherBibRef entity
@@ -64,6 +65,7 @@ public class MIFOtherBibRef implements Serializable {
         mifEntryExperiment = null;
     }
 
+    @XmlTransient
     public Set<MIFOtherAttribute> getMifOtherAttribute() {
         return mifOtherAttribute;
     }
@@ -72,6 +74,7 @@ public class MIFOtherBibRef implements Serializable {
         this.mifOtherAttribute = mifOtherAttribute;
     }
 
+    @XmlTransient
     public Set<MIFOtherXRefPubMed> getMifOtherXRefPubMed() {
         return mifOtherXRefPubMed;
     }

@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
@@ -14,9 +15,9 @@ import org.jbiowhpersistence.datasets.protein.entities.Protein;
 /**
  * This Class is the Ontology Entity
  *
- * $Author: r78v10a07@gmail.com $ 
- * $LastChangedDate: 2013-05-29 11:24:54 +0200 (Wed, 29 May 2013) $ 
- * $LastChangedRevision: 591 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2013-05-29 11:24:54 +0200
+ * (Wed, 29 May 2013) $ $LastChangedRevision: 591 $
+ *
  * @since Jun 28, 2011
  */
 @Entity
@@ -75,10 +76,10 @@ public class Ontology implements Serializable {
     private Map<OntologyRelationPK, OntologyRelation> ontologyRelation;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "Ontology_has_OntologySubset",
-    joinColumns =
-    @JoinColumn(name = "Ontology_WID", referencedColumnName = "WID"),
-    inverseJoinColumns =
-    @JoinColumn(name = "OntologySubset_WID", referencedColumnName = "WID"))
+            joinColumns
+            = @JoinColumn(name = "Ontology_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "OntologySubset_WID", referencedColumnName = "WID"))
     private Set<OntologySubset> ontologySubset;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ontology")
     @MapKey(name = "ontologyhasOntologySynonymPK")
@@ -88,10 +89,10 @@ public class Ontology implements Serializable {
     private Map<OntologyToConsiderPK, OntologyToConsider> ontologyToConsider;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "Ontology_has_OntologyXRef",
-    joinColumns =
-    @JoinColumn(name = "Ontology_WID", referencedColumnName = "WID"),
-    inverseJoinColumns =
-    @JoinColumn(name = "OntologyXRef_WID", referencedColumnName = "WID"))
+            joinColumns
+            = @JoinColumn(name = "Ontology_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "OntologyXRef_WID", referencedColumnName = "WID"))
     private Set<OntologyXRef> ontologyXRef;
     // External Gene Relationship
     @ManyToOne(cascade = CascadeType.ALL)
@@ -117,7 +118,7 @@ public class Ontology implements Serializable {
         this.isObsolete = isObsolete;
         this.dataSetWID = dataSetWID;
     }
-    
+
     public void setRelationsToNull() {
         setProtein(null);
         setGeneInfo(null);
@@ -155,6 +156,7 @@ public class Ontology implements Serializable {
         this.def = def;
     }
 
+    @XmlTransient
     public Set<GeneInfo> getGeneInfo() {
         return geneInfo;
     }
@@ -195,6 +197,7 @@ public class Ontology implements Serializable {
         this.nameSpace = nameSpace;
     }
 
+    @XmlTransient
     public Map<OntologyAlternativeIdPK, OntologyAlternativeId> getOntologyAlternativeId() {
         return ontologyAlternativeId;
     }
@@ -203,6 +206,7 @@ public class Ontology implements Serializable {
         this.ontologyAlternativeId = ontologyAlternativeId;
     }
 
+    @XmlTransient
     public Map<OntologyIsAPK, OntologyIsA> getOntologyIsA() {
         return ontologyIsA;
     }
@@ -211,6 +215,7 @@ public class Ontology implements Serializable {
         this.ontologyIsA = ontologyIsA;
     }
 
+    @XmlTransient
     public Map<OntologyPMIDPK, OntologyPMID> getOntologyPMID() {
         return ontologyPMID;
     }
@@ -219,6 +224,7 @@ public class Ontology implements Serializable {
         this.ontologyPMID = ontologyPMID;
     }
 
+    @XmlTransient
     public Map<OntologyRelationPK, OntologyRelation> getOntologyRelation() {
         return ontologyRelation;
     }
@@ -227,6 +233,7 @@ public class Ontology implements Serializable {
         this.ontologyRelation = ontologyRelation;
     }
 
+    @XmlTransient
     public Set<OntologySubset> getOntologySubset() {
         return ontologySubset;
     }
@@ -235,6 +242,7 @@ public class Ontology implements Serializable {
         this.ontologySubset = ontologySubset;
     }
 
+    @XmlTransient
     public Map<OntologyToConsiderPK, OntologyToConsider> getOntologyToConsider() {
         return ontologyToConsider;
     }
@@ -243,6 +251,7 @@ public class Ontology implements Serializable {
         this.ontologyToConsider = ontologyToConsider;
     }
 
+    @XmlTransient
     public Set<OntologyXRef> getOntologyXRef() {
         return ontologyXRef;
     }
@@ -251,6 +260,7 @@ public class Ontology implements Serializable {
         this.ontologyXRef = ontologyXRef;
     }
 
+    @XmlTransient
     public Map<OntologyhasOntologySynonymPK, OntologyhasOntologySynonym> getOntologyhasOntologySynonym() {
         return ontologyhasOntologySynonym;
     }
@@ -259,6 +269,7 @@ public class Ontology implements Serializable {
         this.ontologyhasOntologySynonym = ontologyhasOntologySynonym;
     }
 
+    @XmlTransient
     public Set<Protein> getProtein() {
         return protein;
     }
@@ -344,7 +355,7 @@ public class Ontology implements Serializable {
         hash += (wid != null ? wid.hashCode() : 0);
         return hash;
     }
-    
+
     @Override
     public String toString() {
         Iterator it;

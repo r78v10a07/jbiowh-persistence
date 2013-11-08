@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This Class is the MIFInteractionInferredInteraction entity
@@ -69,6 +70,7 @@ public class MIFInteractionInferredInteraction implements Serializable {
         this.mifEntryInteraction = mifEntryInteraction;
     }
 
+    @XmlTransient
     public Map<MIFInferredInteractionParticipantPK, MIFInferredInteractionParticipant> getMifInferredInteractionParticipant() {
         return mifInferredInteractionParticipant;
     }
@@ -77,6 +79,7 @@ public class MIFInteractionInferredInteraction implements Serializable {
         this.mifInferredInteractionParticipant = mifInferredInteractionParticipant;
     }
 
+    @XmlTransient
     public Map<MIFOtherExperimentRefPK, MIFOtherExperimentRef> getMifOtherExperimentRef() {
         return mifOtherExperimentRef;
     }

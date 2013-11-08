@@ -3,6 +3,7 @@ package org.jbiowhpersistence.datasets.dataset.entities;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * This Class is the DataSet entity
@@ -17,7 +18,8 @@ import javax.persistence.*;
 @NamedQueries({
     @NamedQuery(name = "DataSet.findAll", query = "SELECT d FROM DataSet d"),
     @NamedQuery(name = "DataSet.findByWid", query = "SELECT d FROM DataSet d WHERE d.wid = :wid"),
-    @NamedQuery(name = "DataSet.findByName", query = "SELECT d FROM DataSet d WHERE d.name = :name"),
+    @NamedQuery(name = "DataSet.findByName", query = "SELECT d FROM DataSet d WHERE UPPER(d.name) like UPPER(:name)"),
+    @NamedQuery(name = "DataSet.findByNoName", query = "SELECT d FROM DataSet d WHERE UPPER(d.name) not like UPPER(:name)"),
     @NamedQuery(name = "DataSet.findByVersion", query = "SELECT d FROM DataSet d WHERE d.version = :version"),
     @NamedQuery(name = "DataSet.findByReleaseDate", query = "SELECT d FROM DataSet d WHERE d.releaseDate = :releaseDate"),
     @NamedQuery(name = "DataSet.findByLoadDate", query = "SELECT d FROM DataSet d WHERE d.loadDate = :loadDate"),
@@ -26,8 +28,10 @@ import javax.persistence.*;
     @NamedQuery(name = "DataSet.findByLoadedBy", query = "SELECT d FROM DataSet d WHERE d.loadedBy = :loadedBy"),
     @NamedQuery(name = "DataSet.findByApplication", query = "SELECT d FROM DataSet d WHERE d.application = :application"),
     @NamedQuery(name = "DataSet.findByApplicationVersion", query = "SELECT d FROM DataSet d WHERE d.applicationVersion = :applicationVersion"),
-    @NamedQuery(name = "DataSet.findByStatus", query = "SELECT d FROM DataSet d WHERE d.status = :status"),
+    @NamedQuery(name = "DataSet.findByStatus", query = "SELECT d FROM DataSet d WHERE UPPER(d.status) like UPPER(:status)"),
+    @NamedQuery(name = "DataSet.findByNoStatus", query = "SELECT d FROM DataSet d WHERE UPPER(d.status) not like UPPER(:status)"),
     @NamedQuery(name = "DataSet.findMaxWID", query = "SELECT MAX(d.wid) FROM DataSet d")})
+@XmlRootElement
 public class DataSet implements Serializable {
 
     private static final long serialVersionUID = 1L;

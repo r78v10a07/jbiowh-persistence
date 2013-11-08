@@ -23,7 +23,7 @@ public class Lineage extends AbstractController {
     private static Lineage singleton;
 
     private Lineage() {
-        lineage = new LinkedList<>();
+        lineage = new LinkedList();
     }
 
     /**

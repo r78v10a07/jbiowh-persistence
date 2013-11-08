@@ -64,7 +64,7 @@ public class MIFOtherBioSourceTypeJpaController extends AbstractMIFJpaController
             mifOtherBioSourceType.setMifOtherAlias(createMIFOtherAlias(emf, em, mifOtherBioSourceType.getMifOtherAlias()));
 
             if (!mifOtherBioSourceType.getMifBioSourceTypeCellType().isEmpty()) {
-                Set<MIFBioSourceTypeCellType> attachedMifBioSourceTypeCellType = new HashSet<>();
+                Set<MIFBioSourceTypeCellType> attachedMifBioSourceTypeCellType = new HashSet();
                 for (MIFBioSourceTypeCellType mifBioSourceTypeCellTypeMIFBioSourceTypeCellTypeToAttach : mifOtherBioSourceType.getMifBioSourceTypeCellType()) {
                     MIFBioSourceTypeCellType mifBioSourceTypeCell = em.find(mifBioSourceTypeCellTypeMIFBioSourceTypeCellTypeToAttach.getClass(), mifBioSourceTypeCellTypeMIFBioSourceTypeCellTypeToAttach.getWid());
                     if (mifBioSourceTypeCell != null) {
@@ -76,7 +76,7 @@ public class MIFOtherBioSourceTypeJpaController extends AbstractMIFJpaController
                 mifOtherBioSourceType.setMifBioSourceTypeCellType(attachedMifBioSourceTypeCellType);
             }
             if (!mifOtherBioSourceType.getMifBioSourceTypeCompartment().isEmpty()) {
-                Set<MIFBioSourceTypeCompartment> attachedMifBioSourceTypeCompartment = new HashSet<>();
+                Set<MIFBioSourceTypeCompartment> attachedMifBioSourceTypeCompartment = new HashSet();
                 for (MIFBioSourceTypeCompartment mifBioSourceTypeCompartmentMIFBioSourceTypeCompartmentToAttach : mifOtherBioSourceType.getMifBioSourceTypeCompartment()) {
                     MIFBioSourceTypeCompartment mifBioSourceTypeCompartment = em.find(mifBioSourceTypeCompartmentMIFBioSourceTypeCompartmentToAttach.getClass(), mifBioSourceTypeCompartmentMIFBioSourceTypeCompartmentToAttach.getWid());
                     if (mifBioSourceTypeCompartment != null) {
@@ -88,7 +88,7 @@ public class MIFOtherBioSourceTypeJpaController extends AbstractMIFJpaController
                 mifOtherBioSourceType.setMifBioSourceTypeCompartment(attachedMifBioSourceTypeCompartment);
             }
             if (!mifOtherBioSourceType.getMifBioSourceTypeTissueD().isEmpty()) {
-                Set<MIFBioSourceTypeTissue> attachedMifBioSourceTypeTissueD = new HashSet<>();
+                Set<MIFBioSourceTypeTissue> attachedMifBioSourceTypeTissueD = new HashSet();
                 for (MIFBioSourceTypeTissue mifBioSourceTypeTissueDMIFBioSourceTypeTissueToAttach : mifOtherBioSourceType.getMifBioSourceTypeTissueD()) {
                     MIFBioSourceTypeTissue mifBioSourceTypeTissue = em.find(mifBioSourceTypeTissueDMIFBioSourceTypeTissueToAttach.getClass(), mifBioSourceTypeTissueDMIFBioSourceTypeTissueToAttach.getWid());
                     if (mifBioSourceTypeTissue != null) {
@@ -146,28 +146,28 @@ public class MIFOtherBioSourceTypeJpaController extends AbstractMIFJpaController
                 mifInteractionParticipantNew = em.getReference(mifInteractionParticipantNew.getClass(), mifInteractionParticipantNew.getWid());
                 mifOtherBioSourceType.setMifInteractionParticipant(mifInteractionParticipantNew);
             }
-            Set<MIFBioSourceTypeCellType> attachedMifBioSourceTypeCellTypeNew = new HashSet<>();
+            Set<MIFBioSourceTypeCellType> attachedMifBioSourceTypeCellTypeNew = new HashSet();
             for (MIFBioSourceTypeCellType mifBioSourceTypeCellTypeNewMIFBioSourceTypeCellTypeToAttach : mifBioSourceTypeCellTypeNew) {
                 mifBioSourceTypeCellTypeNewMIFBioSourceTypeCellTypeToAttach = em.getReference(mifBioSourceTypeCellTypeNewMIFBioSourceTypeCellTypeToAttach.getClass(), mifBioSourceTypeCellTypeNewMIFBioSourceTypeCellTypeToAttach.getWid());
                 attachedMifBioSourceTypeCellTypeNew.add(mifBioSourceTypeCellTypeNewMIFBioSourceTypeCellTypeToAttach);
             }
             mifBioSourceTypeCellTypeNew = attachedMifBioSourceTypeCellTypeNew;
             mifOtherBioSourceType.setMifBioSourceTypeCellType(mifBioSourceTypeCellTypeNew);
-            Set<MIFBioSourceTypeCompartment> attachedMifBioSourceTypeCompartmentNew = new HashSet<>();
+            Set<MIFBioSourceTypeCompartment> attachedMifBioSourceTypeCompartmentNew = new HashSet();
             for (MIFBioSourceTypeCompartment mifBioSourceTypeCompartmentNewMIFBioSourceTypeCompartmentToAttach : mifBioSourceTypeCompartmentNew) {
                 mifBioSourceTypeCompartmentNewMIFBioSourceTypeCompartmentToAttach = em.getReference(mifBioSourceTypeCompartmentNewMIFBioSourceTypeCompartmentToAttach.getClass(), mifBioSourceTypeCompartmentNewMIFBioSourceTypeCompartmentToAttach.getWid());
                 attachedMifBioSourceTypeCompartmentNew.add(mifBioSourceTypeCompartmentNewMIFBioSourceTypeCompartmentToAttach);
             }
             mifBioSourceTypeCompartmentNew = attachedMifBioSourceTypeCompartmentNew;
             mifOtherBioSourceType.setMifBioSourceTypeCompartment(mifBioSourceTypeCompartmentNew);
-            Set<MIFBioSourceTypeTissue> attachedMifBioSourceTypeTissueDNew = new HashSet<>();
+            Set<MIFBioSourceTypeTissue> attachedMifBioSourceTypeTissueDNew = new HashSet();
             for (MIFBioSourceTypeTissue mifBioSourceTypeTissueDNewMIFBioSourceTypeTissueToAttach : mifBioSourceTypeTissueDNew) {
                 mifBioSourceTypeTissueDNewMIFBioSourceTypeTissueToAttach = em.getReference(mifBioSourceTypeTissueDNewMIFBioSourceTypeTissueToAttach.getClass(), mifBioSourceTypeTissueDNewMIFBioSourceTypeTissueToAttach.getWid());
                 attachedMifBioSourceTypeTissueDNew.add(mifBioSourceTypeTissueDNewMIFBioSourceTypeTissueToAttach);
             }
             mifBioSourceTypeTissueDNew = attachedMifBioSourceTypeTissueDNew;
             mifOtherBioSourceType.setMifBioSourceTypeTissueD(mifBioSourceTypeTissueDNew);
-            Set<MIFOtherAlias> attachedMifOtherAliasNew = new HashSet<>();
+            Set<MIFOtherAlias> attachedMifOtherAliasNew = new HashSet();
             for (MIFOtherAlias mifOtherAliasNewMIFOtherAliasToAttach : mifOtherAliasNew) {
                 mifOtherAliasNewMIFOtherAliasToAttach = em.getReference(mifOtherAliasNewMIFOtherAliasToAttach.getClass(), mifOtherAliasNewMIFOtherAliasToAttach.getWid());
                 attachedMifOtherAliasNew.add(mifOtherAliasNewMIFOtherAliasToAttach);

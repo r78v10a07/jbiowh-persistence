@@ -44,7 +44,7 @@ public class DataSetsTables {
      */
     public List<String> getTables() {
         if (tables == null) {
-            tables = new ArrayList<>();
+            tables = new ArrayList();
 
             tables.addAll(DrugBankTables.getInstance().getTables());
             tables.addAll(GeneTables.getInstance().getTables());

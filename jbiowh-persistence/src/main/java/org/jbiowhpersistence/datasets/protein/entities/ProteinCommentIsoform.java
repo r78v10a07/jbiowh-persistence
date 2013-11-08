@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This Class is the Protein Comment Isoform entity
@@ -67,6 +68,7 @@ public class ProteinCommentIsoform implements Serializable {
         this.proteinCommentWID = proteinCommentWID;
     }
 
+    @XmlTransient
     public Map<ProteinIsoformNamePK, ProteinIsoformName> getProteinIsoformName() {
         return proteinIsoformName;
     }
@@ -75,6 +77,7 @@ public class ProteinCommentIsoform implements Serializable {
         this.proteinIsoformName = proteinIsoformName;
     }
 
+    @XmlTransient
     public Map<ProteinIsoformIdPK, ProteinIsoformId> getProteinIsoformId() {
         return proteinIsoformId;
     }
