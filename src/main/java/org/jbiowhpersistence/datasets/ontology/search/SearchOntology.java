@@ -7,6 +7,7 @@ import java.util.List;
 import org.jbiowhcore.utility.constrains.JPLConstrains;
 import org.jbiowhcore.utility.utils.BioWHPattern;
 import org.jbiowhpersistence.datasets.ontology.entities.Ontology;
+import org.jbiowhpersistence.utils.search.JBioWHSearch;
 import org.jbiowhpersistence.utils.search.SearchFactory;
 
 /**
@@ -17,14 +18,14 @@ import org.jbiowhpersistence.utils.search.SearchFactory;
  *
  * @since Jun 29, 2011
  */
-public class SearchOntology extends SearchFactory {
+public class SearchOntology extends SearchFactory implements JBioWHSearch {
 
     public final String ID = "Id";
     public final String NAME = "Name";
     public final String DEFINITION = "Definition";
     public final String COMMENT = "Comment";
     public final String SYNONYM = "Synonym";
-    public final String ALTID = "Alternative Id";
+    public final String ALTID = "AlternativeId";
 
     /**
      * This Class perform the search over the Ontology module
@@ -56,7 +57,19 @@ public class SearchOntology extends SearchFactory {
             searchRow.add("like");
             searchRow.add(search);
             searchList.add(searchRow);
-            return search(searchList, constrains);
+            List result = search(searchList, constrains);
+            if (result != null && !result.isEmpty()) {
+                return result;
+            } else {
+                searchRow.clear();
+                searchRow.add("");
+                searchRow.add(ALTID);
+                searchRow.add("like");
+                searchRow.add(search);
+                searchList.clear();
+                searchList.add(searchRow);
+                return search(searchList, constrains);
+            }
         } else {
             searchRow.add(NAME);
             searchRow.add("like");

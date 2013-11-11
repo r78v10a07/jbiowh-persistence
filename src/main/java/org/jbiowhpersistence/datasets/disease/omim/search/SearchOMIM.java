@@ -8,6 +8,7 @@ import org.jbiowhcore.utility.constrains.JPLConstrains;
 import org.jbiowhcore.utility.utils.BioWHPattern;
 import org.jbiowhpersistence.datasets.disease.omim.entities.OMIM;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
+import org.jbiowhpersistence.utils.search.JBioWHSearch;
 import org.jbiowhpersistence.utils.search.SearchFactory;
 
 /**
@@ -18,7 +19,7 @@ import org.jbiowhpersistence.utils.search.SearchFactory;
  *
  * @since Jul 25, 2012
  */
-public class SearchOMIM extends SearchFactory {
+public class SearchOMIM extends SearchFactory implements JBioWHSearch {
 
     public final String OMIM_ID = "OMIM_ID";
     public final String TITLE = "Title";

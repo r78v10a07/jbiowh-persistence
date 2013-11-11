@@ -14,6 +14,7 @@ import org.jbiowhpersistence.datasets.pathway.kegg.entities.gene.KEGGGene;
 import org.jbiowhpersistence.datasets.pathway.kegg.entities.pathway.KEGGPathway;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
+import org.jbiowhpersistence.utils.search.JBioWHSearch;
 import org.jbiowhpersistence.utils.search.SearchFactory;
 
 /**
@@ -24,7 +25,7 @@ import org.jbiowhpersistence.utils.search.SearchFactory;
  *
  * @since Jul 27, 2011
  */
-public class SearchGeneInfo extends SearchFactory {
+public class SearchGeneInfo extends SearchFactory implements JBioWHSearch {
 
     public final String GENEID = "GeneId";
     public final String PROTEINGI = "ProteinGi";

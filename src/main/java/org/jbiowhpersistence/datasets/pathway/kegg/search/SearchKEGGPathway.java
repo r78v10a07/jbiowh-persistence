@@ -14,6 +14,7 @@ import org.jbiowhpersistence.datasets.pathway.kegg.entities.pathway.KEGGPathway;
 import org.jbiowhpersistence.datasets.pathway.kegg.entities.reaction.KEGGReaction;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
+import org.jbiowhpersistence.utils.search.JBioWHSearch;
 import org.jbiowhpersistence.utils.search.SearchFactory;
 
 /**
@@ -24,7 +25,7 @@ import org.jbiowhpersistence.utils.search.SearchFactory;
  *
  * @since Dec 16, 2011
  */
-public class SearchKEGGPathway extends SearchFactory {
+public class SearchKEGGPathway extends SearchFactory implements JBioWHSearch {
 
     public final String ID = "Id";
     public final String NUMBER = "Number";
