@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import org.jbiowhcore.utility.constrains.JPLConstrains;
 import org.jbiowhpersistence.datasets.pathway.kegg.entities.reaction.KEGGReaction;
+import org.jbiowhpersistence.utils.search.JBioWHSearch;
 import org.jbiowhpersistence.utils.search.SearchFactory;
 
 /**
@@ -16,7 +17,7 @@ import org.jbiowhpersistence.utils.search.SearchFactory;
  *
  * @since Jul 26, 2012
  */
-public class SearchKEGGReaction extends SearchFactory {
+public class SearchKEGGReaction extends SearchFactory implements JBioWHSearch {
 
     public final String ENTRY = "Entry";
 

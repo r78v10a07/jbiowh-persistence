@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import org.jbiowhcore.utility.constrains.JPLConstrains;
 import org.jbiowhpersistence.datasets.protclust.entities.UniRefEntry;
+import org.jbiowhpersistence.utils.search.JBioWHSearch;
 import org.jbiowhpersistence.utils.search.SearchFactory;
 
 /**
@@ -16,7 +17,7 @@ import org.jbiowhpersistence.utils.search.SearchFactory;
  *
  * @since Sep 1, 2011
  */
-public class SearchUniRef extends SearchFactory {
+public class SearchUniRef extends SearchFactory implements JBioWHSearch {
 
     public final String ID = "Id";
     public final String NAME = "Name";

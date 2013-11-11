@@ -7,6 +7,7 @@ import java.util.List;
 import org.jbiowhcore.utility.constrains.JPLConstrains;
 import org.jbiowhpersistence.datasets.domain.pfam.entities.PfamAbioWH;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
+import org.jbiowhpersistence.utils.search.JBioWHSearch;
 import org.jbiowhpersistence.utils.search.SearchFactory;
 
 /**
@@ -17,7 +18,7 @@ import org.jbiowhpersistence.utils.search.SearchFactory;
  * $LastChangedRevision: 377 $
  * @since Nov 27, 2012
  */
-public class SearchPFam extends SearchFactory {
+public class SearchPFam extends SearchFactory implements JBioWHSearch {
 
     public final String ACC = "Acc";
     public final String NAME = "Id";

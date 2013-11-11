@@ -16,6 +16,7 @@ import org.jbiowhpersistence.datasets.pathway.kegg.entities.pathway.KEGGPathway;
 import org.jbiowhpersistence.datasets.protclust.entities.UniRefEntry;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
+import org.jbiowhpersistence.utils.search.JBioWHSearch;
 import org.jbiowhpersistence.utils.search.SearchFactory;
 
 /**
@@ -26,7 +27,7 @@ import org.jbiowhpersistence.utils.search.SearchFactory;
  *
  * @since Aug 12, 2011
  */
-public class SearchProtein extends SearchFactory {
+public class SearchProtein extends SearchFactory implements JBioWHSearch {
 
     public final String ACC = "AccNumber";
     public final String NAME = "Name";

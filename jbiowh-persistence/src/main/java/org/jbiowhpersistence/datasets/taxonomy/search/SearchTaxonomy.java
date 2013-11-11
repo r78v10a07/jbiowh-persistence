@@ -7,6 +7,7 @@ import java.util.List;
 import org.jbiowhcore.utility.constrains.JPLConstrains;
 import org.jbiowhcore.utility.utils.BioWHPattern;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
+import org.jbiowhpersistence.utils.search.JBioWHSearch;
 import org.jbiowhpersistence.utils.search.SearchFactory;
 
 /**
@@ -17,7 +18,7 @@ import org.jbiowhpersistence.utils.search.SearchFactory;
  *
  * @since Jun 23, 2011
  */
-public class SearchTaxonomy extends SearchFactory {
+public class SearchTaxonomy extends SearchFactory implements JBioWHSearch {
 
     public final String TAXID = "TaxId";
     public final String SYNONYM = "Synonym";

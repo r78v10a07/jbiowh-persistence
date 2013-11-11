@@ -9,6 +9,7 @@ import org.jbiowhcore.utility.utils.BioWHPattern;
 import org.jbiowhpersistence.datasets.pathway.kegg.entities.enzyme.KEGGEnzyme;
 import org.jbiowhpersistence.datasets.pathway.kegg.entities.pathway.KEGGPathway;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
+import org.jbiowhpersistence.utils.search.JBioWHSearch;
 import org.jbiowhpersistence.utils.search.SearchFactory;
 
 /**
@@ -19,7 +20,7 @@ import org.jbiowhpersistence.utils.search.SearchFactory;
  *
  * @since May 14, 2012
  */
-public class SearchKEGGEnzyme extends SearchFactory {
+public class SearchKEGGEnzyme extends SearchFactory implements JBioWHSearch {
 
     public final String ENTRY = "Entry";
     public final String NAME = "Name";

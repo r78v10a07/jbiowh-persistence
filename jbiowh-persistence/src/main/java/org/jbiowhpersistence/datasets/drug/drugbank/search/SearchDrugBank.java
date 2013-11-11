@@ -8,6 +8,7 @@ import org.jbiowhcore.utility.constrains.JPLConstrains;
 import org.jbiowhcore.utility.utils.BioWHPattern;
 import org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBank;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
+import org.jbiowhpersistence.utils.search.JBioWHSearch;
 import org.jbiowhpersistence.utils.search.SearchFactory;
 
 /**
@@ -18,7 +19,7 @@ import org.jbiowhpersistence.utils.search.SearchFactory;
  *
  * @since Oct 8, 2011
  */
-public class SearchDrugBank extends SearchFactory {
+public class SearchDrugBank extends SearchFactory implements JBioWHSearch {
 
     public final String ID = "id";
     public final String NAME = "name";
