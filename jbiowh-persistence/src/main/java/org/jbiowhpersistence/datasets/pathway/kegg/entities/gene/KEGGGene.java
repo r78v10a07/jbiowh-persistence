@@ -1,6 +1,7 @@
 package org.jbiowhpersistence.datasets.pathway.kegg.entities.gene;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -80,7 +81,7 @@ public class KEGGGene implements Serializable {
     @JoinColumn(name = "KEGGGene_WID", referencedColumnName = "WID"),
     inverseJoinColumns =
     @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"))
-    private Set<GeneInfo> geneInfos;
+    private Collection<GeneInfo> geneInfos;
 
     public KEGGGene() {
     }
@@ -109,11 +110,11 @@ public class KEGGGene implements Serializable {
     }
 
     @XmlTransient
-    public Set<GeneInfo> getGeneInfos() {
+    public Collection<GeneInfo> getGeneInfos() {
         return geneInfos;
     }
 
-    public void setGeneInfos(Set<GeneInfo> geneInfos) {
+    public void setGeneInfos(Collection<GeneInfo> geneInfos) {
         this.geneInfos = geneInfos;
     }
 

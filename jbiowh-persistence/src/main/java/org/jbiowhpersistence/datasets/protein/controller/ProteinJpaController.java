@@ -270,8 +270,8 @@ public class ProteinJpaController extends AbstractJpaController<Protein> impleme
             Protein persistentProtein = em.find(Protein.class, protein.getWid());
             GenePTT genePTTOld = persistentProtein.getGenePTT();
             GenePTT genePTTNew = protein.getGenePTT();
-            Set<GeneInfo> geneInfoOld = persistentProtein.getGeneInfo();
-            Set<GeneInfo> geneInfoNew = protein.getGeneInfo();
+            Collection<GeneInfo> geneInfoOld = persistentProtein.getGeneInfo();
+            Collection<GeneInfo> geneInfoNew = protein.getGeneInfo();
             Set<KEGGPathway> kEGGPathwaysOld = persistentProtein.getkEGGPathways();
             Set<KEGGPathway> kEGGPathwaysNew = protein.getkEGGPathways();
             Set<KEGGEnzyme> kEGGEnzymesOld = persistentProtein.getkEGGEnzymes();
@@ -658,7 +658,7 @@ public class ProteinJpaController extends AbstractJpaController<Protein> impleme
                 genePTT.setProtein(null);
                 em.merge(genePTT);
             }
-            Set<GeneInfo> geneInfo = protein.getGeneInfo();
+            Collection<GeneInfo> geneInfo = protein.getGeneInfo();
             for (GeneInfo geneInfoGeneInfo : geneInfo) {
                 geneInfoGeneInfo.getProtein().remove(protein);
                 geneInfoGeneInfo = em.merge(geneInfoGeneInfo);

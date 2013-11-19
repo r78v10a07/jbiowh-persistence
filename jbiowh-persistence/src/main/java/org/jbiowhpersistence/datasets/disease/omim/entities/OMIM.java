@@ -1,6 +1,7 @@
 package org.jbiowhpersistence.datasets.disease.omim.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -72,7 +73,7 @@ public class OMIM implements Serializable {
     @JoinColumn(name = "OMIM_WID", referencedColumnName = "WID"),
     inverseJoinColumns =
     @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"))
-    private Set<GeneInfo> geneInfos;
+    private Collection<GeneInfo> geneInfos;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "DataSet_WID", referencedColumnName = "WID", insertable = false, unique = false, nullable = false, updatable = false)
     private DataSet dataSet;
@@ -184,11 +185,11 @@ public class OMIM implements Serializable {
     }
 
     @XmlTransient
-    public Set<GeneInfo> getGeneInfos() {
+    public Collection<GeneInfo> getGeneInfos() {
         return geneInfos;
     }
 
-    public void setGeneInfos(Set<GeneInfo> geneInfos) {
+    public void setGeneInfos(Collection<GeneInfo> geneInfos) {
         this.geneInfos = geneInfos;
     }
 

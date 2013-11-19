@@ -11,22 +11,17 @@ import javax.persistence.criteria.Root;
 import org.jbiowhcore.logger.VerbLogger;
 import org.jbiowhpersistence.datasets.disease.omim.controller.OMIMJpaController;
 import org.jbiowhpersistence.datasets.disease.omim.entities.OMIM;
-import org.jbiowhpersistence.datasets.gene.gene.entities.Gene2Accession;
-import org.jbiowhpersistence.datasets.gene.gene.entities.Gene2AccessionPK;
 import org.jbiowhpersistence.datasets.gene.gene.entities.Gene2Ensembl;
+import org.jbiowhpersistence.datasets.gene.gene.entities.Gene2GenomicNucleotide;
 import org.jbiowhpersistence.datasets.gene.gene.entities.Gene2PMID;
-import org.jbiowhpersistence.datasets.gene.gene.entities.Gene2PMIDPK;
+import org.jbiowhpersistence.datasets.gene.gene.entities.Gene2ProteinAccession;
+import org.jbiowhpersistence.datasets.gene.gene.entities.Gene2RNANucleotide;
 import org.jbiowhpersistence.datasets.gene.gene.entities.Gene2STS;
-import org.jbiowhpersistence.datasets.gene.gene.entities.Gene2STSPK;
 import org.jbiowhpersistence.datasets.gene.gene.entities.Gene2UniGene;
-import org.jbiowhpersistence.datasets.gene.gene.entities.Gene2UniGenePK;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneGroup;
-import org.jbiowhpersistence.datasets.gene.gene.entities.GeneGroupPK;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfoDBXrefs;
-import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfoDBXrefsPK;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfoSynonyms;
-import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfoSynonymsPK;
 import org.jbiowhpersistence.datasets.gene.genome.controller.GenePTTJpaController;
 import org.jbiowhpersistence.datasets.gene.genome.entities.GenePTT;
 import org.jbiowhpersistence.datasets.ontology.entities.Ontology;
@@ -61,28 +56,34 @@ public class GeneInfoJpaController extends AbstractJpaController<GeneInfo> imple
     public void create(GeneInfo geneInfo) throws PreexistingEntityException, Exception {
         VerbLogger.getInstance().log(this.getClass(), "Creating " + this.getClass().getSimpleName() + ": " + geneInfo.getWid());
         if (geneInfo.getGeneInfoSynonyms() == null) {
-            geneInfo.setGeneInfoSynonyms(new HashMap<GeneInfoSynonymsPK, GeneInfoSynonyms>());
+            geneInfo.setGeneInfoSynonyms(new ArrayList<GeneInfoSynonyms>());
         }
         if (geneInfo.getGeneInfoDBXrefs() == null) {
-            geneInfo.setGeneInfoDBXrefs(new HashMap<GeneInfoDBXrefsPK, GeneInfoDBXrefs>());
+            geneInfo.setGeneInfoDBXrefs(new ArrayList<GeneInfoDBXrefs>());
         }
         if (geneInfo.getGeneGroup() == null) {
-            geneInfo.setGeneGroup(new HashMap<GeneGroupPK, GeneGroup>());
-        }
-        if (geneInfo.getGene2Accession() == null) {
-            geneInfo.setGene2Accession(new HashMap<Gene2AccessionPK, Gene2Accession>());
+            geneInfo.setGeneGroup(new ArrayList<GeneGroup>());
         }
         if (geneInfo.getGene2Ensembl() == null) {
             geneInfo.setGene2Ensembl(new HashSet<Gene2Ensembl>());
         }
         if (geneInfo.getGene2PMID() == null) {
-            geneInfo.setGene2PMID(new HashMap<Gene2PMIDPK, Gene2PMID>());
+            geneInfo.setGene2PMID(new ArrayList<Gene2PMID>());
         }
         if (geneInfo.getGene2STS() == null) {
-            geneInfo.setGene2STS(new HashMap<Gene2STSPK, Gene2STS>());
+            geneInfo.setGene2STS(new ArrayList<Gene2STS>());
         }
         if (geneInfo.getGene2UniGene() == null) {
-            geneInfo.setGene2UniGene(new HashMap<Gene2UniGenePK, Gene2UniGene>());
+            geneInfo.setGene2UniGene(new ArrayList<Gene2UniGene>());
+        }
+        if (geneInfo.getGene2GenomicNucleotides()== null) {
+            geneInfo.setGene2GenomicNucleotides(new ArrayList<Gene2GenomicNucleotide>());
+        }
+        if (geneInfo.getGene2ProteinAccessions()== null) {
+            geneInfo.setGene2ProteinAccessions(new ArrayList<Gene2ProteinAccession>());
+        }
+        if (geneInfo.getGene2RNANucleotides()== null) {
+            geneInfo.setGene2RNANucleotides(new ArrayList<Gene2RNANucleotide>());
         }
         if (geneInfo.getOmim() == null) {
             geneInfo.setOmim(new HashSet<OMIM>());
@@ -301,7 +302,7 @@ public class GeneInfoJpaController extends AbstractJpaController<GeneInfo> imple
                 throw new NonexistentEntityException("The geneInfo with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            Set<Gene2Ensembl> gene2EnsemblOrphanCheck = geneInfo.getGene2Ensembl();
+            Collection<Gene2Ensembl> gene2EnsemblOrphanCheck = geneInfo.getGene2Ensembl();
             for (Gene2Ensembl gene2EnsemblOrphanCheckGene2Ensembl : gene2EnsemblOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList();

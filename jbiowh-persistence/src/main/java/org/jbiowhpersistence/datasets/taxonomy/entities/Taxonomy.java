@@ -34,8 +34,8 @@ import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
     @NamedQuery(name = "Taxonomy.findByTaxonomyMCGenCodeWID", query = "SELECT t FROM Taxonomy t WHERE t.taxonomyMCGenCodeWID = :taxonomyMCGenCodeWID"),
     @NamedQuery(name = "Taxonomy.findByInheritedMCGencode", query = "SELECT t FROM Taxonomy t WHERE t.inheritedMCGencode = :inheritedMCGencode"),
     @NamedQuery(name = "Taxonomy.findByDataSetWID", query = "SELECT t FROM Taxonomy t WHERE t.dataSetWID = :dataSetWID"),
-    @NamedQuery(name = "Taxonomy.findTaxonomyWIDBySynonym", query = "SELECT t.wid FROM Taxonomy t INNER JOIN t.synonym s WHERE UPPER(s.taxonomySynonymPK.synonym) like :synonym group by t.wid"),
-    @NamedQuery(name = "Taxonomy.findTaxonomyWIDByNameClass", query = "SELECT t.wid FROM Taxonomy t INNER JOIN t.synonym s WHERE UPPER(s.taxonomySynonymPK.synonym) like :synonym and s.nameClass.nameClass like :nameClass group by t.wid")})
+    @NamedQuery(name = "Taxonomy.findTaxonomyWIDBySynonym", query = "SELECT t.wid FROM Taxonomy t INNER JOIN t.synonym s WHERE s.taxonomySynonymPK.synonym like :synonym group by t.wid"),
+    @NamedQuery(name = "Taxonomy.findTaxonomyWIDByNameClass", query = "SELECT t.wid FROM Taxonomy t INNER JOIN t.synonym s WHERE s.taxonomySynonymPK.synonym like :synonym and s.nameClass.nameClass like :nameClass group by t.wid")})
 public class Taxonomy implements Serializable {
 
     private static final long serialVersionUID = 1L;

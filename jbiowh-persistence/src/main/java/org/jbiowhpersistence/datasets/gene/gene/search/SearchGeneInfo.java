@@ -29,10 +29,15 @@ public class SearchGeneInfo extends SearchFactory implements JBioWHSearch {
 
     public final String GENEID = "GeneId";
     public final String PROTEINGI = "ProteinGi";
+    public final String RNANUCLEOTIDEGI = "RNANucleotideGi";
+    public final String GENOMICNUCLEOTIDEGI = "GenomicNucleotideGi";
     public final String SYMBOL = "Symbol";
     public final String LOCUSTAG = "LocusTag";
     public final String DESCRIPTION = "Description";
     public final String SYNONYM = "Synonym";
+    public final String GENOMICNUCLEOTIDEACCESSION = "GenomicNucleotideAccession";
+    public final String PROTEINACCESSION = "ProteinAccession";
+    public final String RNANUCLEOTIDEACCESSION = "RNANucleotideAccession";
 
     /**
      * Create the Gene search object
@@ -41,6 +46,11 @@ public class SearchGeneInfo extends SearchFactory implements JBioWHSearch {
         HashMap<String, Class> fields = new HashMap();
         fields.put(GENEID, Long.class);
         fields.put(PROTEINGI, Long.class);
+        fields.put(GENOMICNUCLEOTIDEACCESSION, String.class);
+        fields.put(RNANUCLEOTIDEGI, Long.class);
+        fields.put(PROTEINACCESSION, String.class);
+        fields.put(GENOMICNUCLEOTIDEGI, Long.class);
+        fields.put(RNANUCLEOTIDEACCESSION, String.class);
         fields.put(SYMBOL, String.class);
         fields.put(LOCUSTAG, String.class);
         fields.put(DESCRIPTION, String.class);
@@ -64,6 +74,42 @@ public class SearchGeneInfo extends SearchFactory implements JBioWHSearch {
             searchRow.add("=");
             searchRow.add(search);
             searchList.add(searchRow);
+            List result = search(searchList, constrains);
+            if (!result.isEmpty()) {
+                return result;
+            }
+            
+            searchRow.clear();
+            searchRow.add("");
+            searchRow.add(PROTEINGI);
+            searchRow.add("=");
+            searchRow.add(search);
+            searchList.clear();
+            searchList.add(searchRow);
+            result = search(searchList, constrains);
+            if (!result.isEmpty()) {
+                return result;
+            }
+
+            searchRow.clear();
+            searchRow.add("");
+            searchRow.add(RNANUCLEOTIDEGI);
+            searchRow.add("=");
+            searchRow.add(search);
+            searchList.clear();
+            searchList.add(searchRow);
+            result = search(searchList, constrains);
+            if (!result.isEmpty()) {
+                return result;
+            }
+
+            searchRow.clear();
+            searchRow.add("");
+            searchRow.add(GENOMICNUCLEOTIDEGI);
+            searchRow.add("=");
+            searchRow.add(search);
+            searchList.clear();
+            searchList.add(searchRow);
             return search(searchList, constrains);
         } else {
             searchRow.add(SYMBOL);
@@ -78,6 +124,42 @@ public class SearchGeneInfo extends SearchFactory implements JBioWHSearch {
             searchRow.clear();
             searchRow.add("");
             searchRow.add(LOCUSTAG);
+            searchRow.add("like");
+            searchRow.add(search);
+            searchList.clear();
+            searchList.add(searchRow);
+            result = search(searchList, constrains);
+            if (!result.isEmpty()) {
+                return result;
+            }
+            
+            searchRow.clear();
+            searchRow.add("");
+            searchRow.add(PROTEINACCESSION);
+            searchRow.add("like");
+            searchRow.add(search);
+            searchList.clear();
+            searchList.add(searchRow);
+            result = search(searchList, constrains);
+            if (!result.isEmpty()) {
+                return result;
+            }
+            
+            searchRow.clear();
+            searchRow.add("");
+            searchRow.add(GENOMICNUCLEOTIDEACCESSION);
+            searchRow.add("like");
+            searchRow.add(search);
+            searchList.clear();
+            searchList.add(searchRow);
+            result = search(searchList, constrains);
+            if (!result.isEmpty()) {
+                return result;
+            }
+            
+            searchRow.clear();
+            searchRow.add("");
+            searchRow.add(RNANUCLEOTIDEACCESSION);
             searchRow.add("like");
             searchRow.add(search);
             searchList.clear();
@@ -99,7 +181,17 @@ public class SearchGeneInfo extends SearchFactory implements JBioWHSearch {
             if (field.equals(SYNONYM)) {
                 data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " s ");
             } else if (field.equals(PROTEINGI)) {
-                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " p ");
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " pg ");
+            } else if (field.equals(RNANUCLEOTIDEGI)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " rg ");
+            } else if (field.equals(GENOMICNUCLEOTIDEGI)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " gg ");
+            } else if (field.equals(GENOMICNUCLEOTIDEACCESSION)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " ga ");
+            } else if (field.equals(PROTEINACCESSION)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " pa ");
+            } else if (field.equals(RNANUCLEOTIDEACCESSION)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " ra ");
             } else {
                 data.put(field, "");
             }
@@ -120,9 +212,19 @@ public class SearchGeneInfo extends SearchFactory implements JBioWHSearch {
             } else if (field.equals(DESCRIPTION)) {
                 data.put(field, "g.description");
             } else if (field.equals(SYNONYM)) {
-                data.put(field, "s.geneInfoSynonymsPK.synonyms");
+                data.put(field, "s.synonyms");
             } else if (field.equals(PROTEINGI)) {
-                data.put(field, "p.proteinGi");
+                data.put(field, "pg.proteinGi");
+            } else if (field.equals(PROTEINACCESSION)) {
+                data.put(field, "pa.proteinAccession");
+            } else if (field.equals(RNANUCLEOTIDEGI)) {
+                data.put(field, "rg.rNANucleotideGi");
+            } else if (field.equals(RNANUCLEOTIDEACCESSION)) {
+                data.put(field, "ra.rNANucleotideAccession");
+            } else if (field.equals(GENOMICNUCLEOTIDEGI)) {
+                data.put(field, "gg.genomicNucleotideGi");
+            } else if (field.equals(GENOMICNUCLEOTIDEACCESSION)) {
+                data.put(field, "ga.genomicNucleotideAccession");
             }
         }
         return data;
@@ -134,8 +236,12 @@ public class SearchGeneInfo extends SearchFactory implements JBioWHSearch {
         for (String field : getFieldsSet()) {
             if (field.equals(SYNONYM)) {
                 data.put(field, "g.geneInfoSynonyms");
-            } else if (field.equals(PROTEINGI)) {
-                data.put(field, "g.gene2Accession");
+            } else if (field.equals(PROTEINGI) || field.equals(PROTEINACCESSION)) {
+                data.put(field, "g.gene2ProteinAccessions");
+            } else if (field.equals(RNANUCLEOTIDEGI) || field.equals(RNANUCLEOTIDEACCESSION)) {
+                data.put(field, "g.gene2RNANucleotides");
+            } else if (field.equals(GENOMICNUCLEOTIDEGI) || field.equals(GENOMICNUCLEOTIDEACCESSION)) {
+                data.put(field, "g.gene2GenomicNucleotides");
             } else {
                 data.put(field, "");
             }

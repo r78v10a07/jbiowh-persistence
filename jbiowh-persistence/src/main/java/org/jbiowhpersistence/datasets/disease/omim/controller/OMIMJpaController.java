@@ -1,6 +1,7 @@
 package org.jbiowhpersistence.datasets.disease.omim.controller;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -141,8 +142,8 @@ public class OMIMJpaController extends AbstractJpaController<OMIM> implements Se
             Set<OMIMRF> omimRFsNew = omim.getOmimRFs();
             Set<OMIMSA> omimSAsOld = persistentOMIM.getOmimSAs();
             Set<OMIMSA> omimSAsNew = omim.getOmimSAs();
-            Set<GeneInfo> geneInfosOld = persistentOMIM.getGeneInfos();
-            Set<GeneInfo> geneInfosNew = omim.getGeneInfos();
+            Collection<GeneInfo> geneInfosOld = persistentOMIM.getGeneInfos();
+            Collection<GeneInfo> geneInfosNew = omim.getGeneInfos();
             Set<OMIMAV> attachedOmimAVsNew = new HashSet();
             for (OMIMAV omimAVsNewOMIMAVToAttach : omimAVsNew) {
                 omimAVsNewOMIMAVToAttach = em.getReference(omimAVsNewOMIMAVToAttach.getClass(), omimAVsNewOMIMAVToAttach.getWid());
@@ -308,7 +309,7 @@ public class OMIMJpaController extends AbstractJpaController<OMIM> implements Se
                 omimSAsOMIMSA.setOmim(null);
                 omimSAsOMIMSA = em.merge(omimSAsOMIMSA);
             }
-            Set<GeneInfo> geneInfos = OMIM.getGeneInfos();
+            Collection<GeneInfo> geneInfos = OMIM.getGeneInfos();
             for (GeneInfo geneInfosGeneInfo : geneInfos) {
                 geneInfosGeneInfo.getOmim().remove(OMIM);
                 geneInfosGeneInfo = em.merge(geneInfosGeneInfo);

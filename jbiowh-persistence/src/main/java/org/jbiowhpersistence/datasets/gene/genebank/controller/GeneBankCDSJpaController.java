@@ -1,6 +1,7 @@
 package org.jbiowhpersistence.datasets.gene.genebank.controller;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
@@ -100,8 +101,8 @@ public class GeneBankCDSJpaController extends AbstractJpaController<GeneBankCDS>
             GeneBank geneBankNew = geneBankCDS.getGeneBank();
             GenePTT genePTTOld = persistentGeneBankCDS.getGenePTT();
             GenePTT genePTTNew = geneBankCDS.getGenePTT();
-            Set<GeneInfo> geneInfoOld = persistentGeneBankCDS.getGeneInfo();
-            Set<GeneInfo> geneInfoNew = geneBankCDS.getGeneInfo();
+            Collection<GeneInfo> geneInfoOld = persistentGeneBankCDS.getGeneInfo();
+            Collection<GeneInfo> geneInfoNew = geneBankCDS.getGeneInfo();
             if (geneBankNew != null) {
                 geneBankNew = em.getReference(geneBankNew.getClass(), geneBankNew.getWid());
                 geneBankCDS.setGeneBank(geneBankNew);

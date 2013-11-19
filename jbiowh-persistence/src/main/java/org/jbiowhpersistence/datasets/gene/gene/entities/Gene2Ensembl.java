@@ -1,7 +1,6 @@
 package org.jbiowhpersistence.datasets.gene.gene.entities;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -13,26 +12,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * $LastChangedRevision: 591 $
  * @since Jul 27, 2011
  */
-@Entity
+@Embeddable
 @Table(name = "Gene2Ensembl")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Gene2Ensembl.findAll", query = "SELECT g FROM Gene2Ensembl g"),
-    @NamedQuery(name = "Gene2Ensembl.findByWid", query = "SELECT g FROM Gene2Ensembl g WHERE g.wid = :wid"),
-    @NamedQuery(name = "Gene2Ensembl.findByGeneInfoWID", query = "SELECT g FROM Gene2Ensembl g WHERE g.geneInfoWID = :geneInfoWID"),
-    @NamedQuery(name = "Gene2Ensembl.findByEnsemblGeneIdentifier", query = "SELECT g FROM Gene2Ensembl g WHERE g.ensemblGeneIdentifier = :ensemblGeneIdentifier"),
-    @NamedQuery(name = "Gene2Ensembl.findByRNANucleotideAccession", query = "SELECT g FROM Gene2Ensembl g WHERE g.rNANucleotideAccession = :rNANucleotideAccession"),
-    @NamedQuery(name = "Gene2Ensembl.findByEnsemblRNAIdentifier", query = "SELECT g FROM Gene2Ensembl g WHERE g.ensemblRNAIdentifier = :ensemblRNAIdentifier"),
-    @NamedQuery(name = "Gene2Ensembl.findByProteinAccession", query = "SELECT g FROM Gene2Ensembl g WHERE g.proteinAccession = :proteinAccession"),
-    @NamedQuery(name = "Gene2Ensembl.findByEnsemblProteinIdentifier", query = "SELECT g FROM Gene2Ensembl g WHERE g.ensemblProteinIdentifier = :ensemblProteinIdentifier")})
 public class Gene2Ensembl implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "WID")
-    private Long wid;
     @Basic(optional = false)
     @Column(name = "GeneInfo_WID")
     private long geneInfoWID;
@@ -46,28 +29,8 @@ public class Gene2Ensembl implements Serializable {
     private String proteinAccession;
     @Column(name = "EnsemblProteinIdentifier")
     private String ensemblProteinIdentifier;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "GeneInfo_WID", insertable = false, unique = false, nullable = true, updatable = false)
-    private GeneInfo geneInfo;
 
     public Gene2Ensembl() {
-    }
-
-    public Gene2Ensembl(Long wid) {
-        this.wid = wid;
-    }
-
-    public Gene2Ensembl(Long wid, long geneInfoWID) {
-        this.wid = wid;
-        this.geneInfoWID = geneInfoWID;
-    }
-
-    public GeneInfo getGeneInfo() {
-        return geneInfo;
-    }
-
-    public void setGeneInfo(GeneInfo geneInfo) {
-        this.geneInfo = geneInfo;
     }
     
     public String getrNANucleotideAccession() {
@@ -76,14 +39,6 @@ public class Gene2Ensembl implements Serializable {
 
     public void setrNANucleotideAccession(String rNANucleotideAccession) {
         this.rNANucleotideAccession = rNANucleotideAccession;
-    }
-
-    public Long getWid() {
-        return wid;
-    }
-
-    public void setWid(Long wid) {
-        this.wid = wid;
     }
 
     public long getGeneInfoWID() {
@@ -135,6 +90,14 @@ public class Gene2Ensembl implements Serializable {
     }
 
     @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 89 * hash + (this.ensemblGeneIdentifier != null ? this.ensemblGeneIdentifier.hashCode() : 0);
+        hash = 89 * hash + (this.rNANucleotideAccession != null ? this.rNANucleotideAccession.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -143,41 +106,27 @@ public class Gene2Ensembl implements Serializable {
             return false;
         }
         final Gene2Ensembl other = (Gene2Ensembl) obj;
-        if (!Objects.equals(this.wid, other.wid)) {
-            return false;
-        }
         if (this.geneInfoWID != other.geneInfoWID) {
             return false;
         }
-        if (!Objects.equals(this.ensemblGeneIdentifier, other.ensemblGeneIdentifier)) {
+        if ((this.ensemblGeneIdentifier == null) ? (other.ensemblGeneIdentifier != null) : !this.ensemblGeneIdentifier.equals(other.ensemblGeneIdentifier)) {
             return false;
         }
-        if (!Objects.equals(this.rNANucleotideAccession, other.rNANucleotideAccession)) {
+        if ((this.rNANucleotideAccession == null) ? (other.rNANucleotideAccession != null) : !this.rNANucleotideAccession.equals(other.rNANucleotideAccession)) {
             return false;
         }
-        if (!Objects.equals(this.ensemblRNAIdentifier, other.ensemblRNAIdentifier)) {
+        if ((this.ensemblRNAIdentifier == null) ? (other.ensemblRNAIdentifier != null) : !this.ensemblRNAIdentifier.equals(other.ensemblRNAIdentifier)) {
             return false;
         }
-        if (!Objects.equals(this.proteinAccession, other.proteinAccession)) {
+        if ((this.proteinAccession == null) ? (other.proteinAccession != null) : !this.proteinAccession.equals(other.proteinAccession)) {
             return false;
         }
-        if (!Objects.equals(this.ensemblProteinIdentifier, other.ensemblProteinIdentifier)) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (wid != null ? wid.hashCode() : 0);
-        return hash;
+        return !((this.ensemblProteinIdentifier == null) ? (other.ensemblProteinIdentifier != null) : !this.ensemblProteinIdentifier.equals(other.ensemblProteinIdentifier));
     }
 
     @Override
     public String toString() {
         return "Gene2Ensembl{"
-                + " wid=" + wid
                 + " geneWID=" + geneInfoWID
                 + " ensemblGeneIdentifier=" + ensemblGeneIdentifier
                 + " rNANucleotideAccession=" + rNANucleotideAccession

@@ -4,7 +4,7 @@
 
     <groupId>org</groupId>
     <artifactId>jbiowh-persistence</artifactId>
-    <version>5.0.4</version>
+    <version>6.0.0</version>
     <packaging>jar</packaging>
 
     <name>jbiowh-persistence</name>
@@ -20,6 +20,130 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <resource>
+                        <filtering>true</filtering>
+                        <directory>src/main/resources</directory>
+                        <includes>
+                            <include>**/*</include>
+                        </includes>
+                    </resource>
+                    <resource>
+                        <filtering>true</filtering>
+                        <directory>src/main/java</directory>
+                        <includes>
+                            <include>**/*.properties</include>
+                        </includes>
+                    </resource>
+                    <archive>
+                        <index>true</index>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass></mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources-taxonomy</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/classes/org/jbiowhpersistence/datasets/taxonomy/entities/</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/src/main/resources/</directory>
+                                    <includes>
+                                        <include>jaxb.properties</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-resources-ontology</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/classes/org/jbiowhpersistence/datasets/ontology/entities/</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/src/main/resources/</directory>
+                                    <includes>
+                                        <include>jaxb.properties</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-resources-gene</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/classes/org/jbiowhpersistence/datasets/gene/gene/entities/</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/src/main/resources/</directory>
+                                    <includes>
+                                        <include>jaxb.properties</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-resources-genome</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/classes/org/jbiowhpersistence/datasets/gene/genome/entities/</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/src/main/resources/</directory>
+                                    <includes>
+                                        <include>jaxb.properties</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-resources-genbank</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/classes/org/jbiowhpersistence/datasets/gene/genebank/entities/</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/src/main/resources/</directory>
+                                    <includes>
+                                        <include>jaxb.properties</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin> 
         </plugins>
     </build>
     <repositories>
@@ -50,7 +174,7 @@
         <dependency>
             <groupId>org</groupId>
             <artifactId>jbiowh-core</artifactId>
-            <version>5.0.4</version>
+            <version>6.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
@@ -65,6 +189,11 @@
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
+            <version>2.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.moxy</artifactId>
             <version>2.5.1</version>
         </dependency>
     </dependencies>

@@ -113,7 +113,7 @@ public class GeneBank implements Serializable {
     private Collection<GeneBankAccession> geneBankAccessions;
     // Internal relationship
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "geneBank")
-    private Set<GeneBankCDS> geneBankCDSs;
+    private Collection<GeneBankCDS> geneBankCDSs;
     // External relationship
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "DataSet_WID", referencedColumnName = "WID", insertable = false, unique = false, nullable = false, updatable = false)
@@ -199,11 +199,11 @@ public class GeneBank implements Serializable {
     }
 
     @XmlTransient
-    public Set<GeneBankCDS> getGeneBankCDSs() {
+    public Collection<GeneBankCDS> getGeneBankCDSs() {
         return geneBankCDSs;
     }
 
-    public void setGeneBankCDSs(Set<GeneBankCDS> geneBankCDSs) {
+    public void setGeneBankCDSs(Collection<GeneBankCDS> geneBankCDSs) {
         this.geneBankCDSs = geneBankCDSs;
     }
 

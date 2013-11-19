@@ -1,5 +1,6 @@
 package org.jbiowhpersistence.utils.controller;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -141,7 +142,7 @@ public abstract class AbstractJpaController<T> {
      * @return the GeneInfo list the be persisted
      * @throws Exception
      */
-    protected Set<GeneInfo> createGeneInfo(EntityManagerFactory emf, EntityManager em, Set<GeneInfo> objectList) throws Exception {
+    protected Collection<GeneInfo> createGeneInfo(EntityManagerFactory emf, EntityManager em, Collection<GeneInfo> objectList) throws Exception {
         if (objectList != null && !objectList.isEmpty()) {
             GeneInfoJpaController instance = new GeneInfoJpaController(emf);
             Set<GeneInfo> attachObjSet = new HashSet();

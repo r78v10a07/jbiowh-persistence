@@ -216,6 +216,12 @@
     <class>org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomySynonym</class>
     <class>org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomySynonymNameClass</class>
     <class>org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomyUnParseCitation</class>
+    <class>org.jbiowhpersistence.datasets.gene.gene.entities.Table2</class>
+    <class>org.jbiowhpersistence.datasets.gene.gene.entities.Table1</class>
+    <class>org.jbiowhpersistence.datasets.gene.gene.entities.Table3</class>
+    <class>org.jbiowhpersistence.datasets.gene.gene.entities.Gene2RNANucleotide</class>
+    <class>org.jbiowhpersistence.datasets.gene.gene.entities.Gene2ProteinAccession</class>
+    <class>org.jbiowhpersistence.datasets.gene.gene.entities.Gene2GenomicNucleotide</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.logging.level" value="OFF"/>

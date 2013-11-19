@@ -88,10 +88,7 @@ public class OntologySynonym implements Serializable {
         if (!Objects.equals(this.synonym, other.synonym)) {
             return false;
         }
-        if (!Objects.equals(this.ontologyhasOntologySynonym, other.ontologyhasOntologySynonym)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.ontologyhasOntologySynonym, other.ontologyhasOntologySynonym);
     }
 
     @Override
