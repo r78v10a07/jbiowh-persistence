@@ -7,78 +7,67 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * This Class is the Gene2UniGene entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2013-05-29 11:24:54 +0200 (Wed, 29 May 2013) $
- * $LastChangedRevision: 591 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2013-05-29 11:24:54 +0200
+ * (Wed, 29 May 2013) $ $LastChangedRevision: 591 $
+ *
  * @since Jul 27, 2011
  */
-@Entity
+@Embeddable
 @Table(name = "Gene2UniGene")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Gene2UniGene.findAll", query = "SELECT g FROM Gene2UniGene g"),
-    @NamedQuery(name = "Gene2UniGene.findByGeneInfoWID", query = "SELECT g FROM Gene2UniGene g WHERE g.gene2UniGenePK.geneInfoWID = :geneInfoWID"),
-    @NamedQuery(name = "Gene2UniGene.findByUniGene", query = "SELECT g FROM Gene2UniGene g WHERE g.gene2UniGenePK.uniGene = :uniGene")})
 public class Gene2UniGene implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected Gene2UniGenePK gene2UniGenePK;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "GeneInfo_WID", insertable = false, unique = false, nullable = false, updatable = false)
-    private GeneInfo geneInfo;
+    @Basic(optional = false)
+    @Column(name = "GeneInfo_WID")
+    private long geneInfoWID;
+    @Basic(optional = false)
+    @Column(name = "UniGene")
+    private String uniGene;
 
     public Gene2UniGene() {
     }
 
-    public Gene2UniGene(Gene2UniGenePK gene2UniGenePK) {
-        this.gene2UniGenePK = gene2UniGenePK;
+    public long getGeneInfoWID() {
+        return geneInfoWID;
     }
 
-    public Gene2UniGene(long geneInfoWID, String uniGene) {
-        this.gene2UniGenePK = new Gene2UniGenePK(geneInfoWID, uniGene);
+    public void setGeneInfoWID(long geneInfoWID) {
+        this.geneInfoWID = geneInfoWID;
     }
 
-    public GeneInfo getGeneInfo() {
-        return geneInfo;
+    public String getUniGene() {
+        return uniGene;
     }
 
-    public void setGeneInfo(GeneInfo geneInfo) {
-        this.geneInfo = geneInfo;
-    }
-
-    public Gene2UniGenePK getGene2UniGenePK() {
-        return gene2UniGenePK;
-    }
-
-    public void setGene2UniGenePK(Gene2UniGenePK gene2UniGenePK) {
-        this.gene2UniGenePK = gene2UniGenePK;
+    public void setUniGene(String uniGene) {
+        this.uniGene = uniGene;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (gene2UniGenePK != null ? gene2UniGenePK.hashCode() : 0);
+        int hash = 5;
+        hash = 37 * hash + (int) (this.geneInfoWID ^ (this.geneInfoWID >>> 32));
+        hash = 37 * hash + (this.uniGene != null ? this.uniGene.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof Gene2UniGene)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Gene2UniGene other = (Gene2UniGene) object;
-        if ((this.gene2UniGenePK == null && other.gene2UniGenePK != null) || (this.gene2UniGenePK != null && !this.gene2UniGenePK.equals(other.gene2UniGenePK))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final Gene2UniGene other = (Gene2UniGene) obj;
+        if (this.geneInfoWID != other.geneInfoWID) {
+            return false;
+        }
+        return !((this.uniGene == null) ? (other.uniGene != null) : !this.uniGene.equals(other.uniGene));
     }
 
     @Override
     public String toString() {
-        return "Gene2UniGene{"
-                + " GeneWID=" + gene2UniGenePK.getGeneInfoWID()
-                + " UniGene=" + gene2UniGenePK.getUniGene()
-                + '}';
+        return "Gene2UniGene{" + "geneInfoWID=" + geneInfoWID + ", uniGene=" + uniGene + '}';
     }
 }

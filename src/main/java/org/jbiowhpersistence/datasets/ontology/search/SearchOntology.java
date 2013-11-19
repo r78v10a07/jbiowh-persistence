@@ -136,7 +136,7 @@ public class SearchOntology extends SearchFactory implements JBioWHSearch {
             } else if (field.equals(DEFINITION)) {
                 data.put(field, "g.def");
             } else if (field.equals(SYNONYM)) {
-                data.put(field, "n.synonym");
+                data.put(field, "n.ontologySynonym.synonym");
             } else if (field.equals(ALTID)) {
                 data.put(field, "a.ontologyAlternativeIdPK.altId");
             }
@@ -149,7 +149,7 @@ public class SearchOntology extends SearchFactory implements JBioWHSearch {
         HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
             if (field.equals(SYNONYM)) {
-                data.put(field, "g.ontologySynonym");
+                data.put(field, "g.ontologyhasOntologySynonym");
             } else if (field.equals(ALTID)) {
                 data.put(field, "g.ontologyAlternativeId");
             } else {

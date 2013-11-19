@@ -6,9 +6,9 @@ import java.util.List;
 /**
  * This Class is the Gene Table list
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2013-05-29 11:24:54 +0200 (Wed, 29 May 2013) $
- * $LastChangedRevision: 591 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2013-05-29 11:24:54 +0200
+ * (Wed, 29 May 2013) $ $LastChangedRevision: 591 $
+ *
  * @since Jul 5, 2011
  */
 public class GeneTables {
@@ -16,9 +16,10 @@ public class GeneTables {
      * List of tables names for the Taxonomy module
      */
 
-    public static final String GENE2ACCESSION = "Gene2Accession";
-    public static final String GENE2ACCESSION_HAS_PROTEIN = "Gene2Accession_has_Protein";
     public final String GENE2ACCESSIONTEMP = "gene2accessiontemp";
+    public final String GENE2GENOMICNUCLEOTIDE = "Gene2GenomicNucleotide";
+    public final String GENE2PROTEINACCESSION = "Gene2ProteinAccession";
+    public final String GENE2RNANUCLEOTIDE = "Gene2RNANucleotide";
     public final String GENE2ENSEMBL = "Gene2Ensembl";
     public final String GENE2ENSEMBLTEMP = "gene2ensembltemp";
     public final String GENE2GO = "Gene2GO";
@@ -79,8 +80,9 @@ public class GeneTables {
     public List<String> getTables() {
         if (tables == null) {
             tables = new ArrayList();
-            tables.add(GENE2ACCESSION);
-            tables.add(GENE2ACCESSION_HAS_PROTEIN);
+            tables.add(GENE2GENOMICNUCLEOTIDE);
+            tables.add(GENE2PROTEINACCESSION);
+            tables.add(GENE2RNANUCLEOTIDE);
             tables.add(GENE2ACCESSIONTEMP);
             tables.add(GENE2ENSEMBL);
             tables.add(GENE2ENSEMBLTEMP);
@@ -110,7 +112,7 @@ public class GeneTables {
             tables.add(GENEREFSEQUNIPROT);
             tables.add(MIM2GENE);
         }
-        
+
         return tables;
     }
 }

@@ -1,6 +1,7 @@
 package org.jbiowhpersistence.datasets.pathway.kegg.controller;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -67,8 +68,8 @@ public class KEGGGeneJpaController extends AbstractKEGGJpaController<KEGGGene> i
             em = getEntityManager();
             em.getTransaction().begin();
             KEGGGene persistentKEGGGene = em.find(KEGGGene.class, keggGene.getWid());
-            Set<GeneInfo> geneInfosOld = persistentKEGGGene.getGeneInfos();
-            Set<GeneInfo> geneInfosNew = keggGene.getGeneInfos();
+            Collection<GeneInfo> geneInfosOld = persistentKEGGGene.getGeneInfos();
+            Collection<GeneInfo> geneInfosNew = keggGene.getGeneInfos();
             Set<KEGGPathway> kEGGPathwaysOld = persistentKEGGGene.getkEGGPathways();
             Set<KEGGPathway> kEGGPathwaysNew = keggGene.getkEGGPathways();
             Set<GeneInfo> attachedGeneInfosNew = new HashSet();
@@ -139,7 +140,7 @@ public class KEGGGeneJpaController extends AbstractKEGGJpaController<KEGGGene> i
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The KEGGGene with id " + id + " no longer exists.", enfe);
             }
-            Set<GeneInfo> geneInfos = KEGGGene.getGeneInfos();
+            Collection<GeneInfo> geneInfos = KEGGGene.getGeneInfos();
             for (GeneInfo geneInfosGeneInfo : geneInfos) {
                 geneInfosGeneInfo.getkEGGGenes().remove(KEGGGene);
                 geneInfosGeneInfo = em.merge(geneInfosGeneInfo);

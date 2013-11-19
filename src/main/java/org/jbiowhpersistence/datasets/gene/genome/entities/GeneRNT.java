@@ -100,7 +100,7 @@ public class GeneRNT implements Serializable {
             joinColumns =
             @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"),
             inverseJoinColumns =
-            @JoinColumn(name = "GeneRNT_WID", referencedColumnName = "WID"))
+            @JoinColumn(name = "GeneRNT_WID", referencedColumnName = "WID"))    
     private GeneInfo geneInfo;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinTable(name = GenePTTTables.GENERNT_HAS_TAXONOMY,

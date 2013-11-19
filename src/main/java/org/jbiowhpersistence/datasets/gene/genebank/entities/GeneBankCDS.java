@@ -17,8 +17,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
 import org.jbiowhpersistence.datasets.gene.genebank.GeneBankTables;
 import org.jbiowhpersistence.datasets.gene.genome.entities.GenePTT;
@@ -66,6 +68,9 @@ public class GeneBankCDS implements Serializable {
     @Column(name = "Locus_Tag")
     private String locusTag;
     @Basic(optional = false)
+    @Column(name = "Translation")
+    private Boolean translation;
+    @Basic(optional = false)
     @Column(name = "GeneBank_WID")
     private long geneBankWID;
     @ElementCollection
@@ -77,6 +82,8 @@ public class GeneBankCDS implements Serializable {
     // Internal relationship
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "GeneBank_WID", insertable = false, unique = false, nullable = true, updatable = false)
+    @XmlElement
+    @XmlInverseReference(mappedBy="geneBankCDSs")
     private GeneBank geneBank;
     // External relationship
     @ManyToMany(cascade = CascadeType.ALL)
@@ -85,7 +92,7 @@ public class GeneBankCDS implements Serializable {
             = @JoinColumn(name = "GeneBankCDS_WID", referencedColumnName = "WID"),
             inverseJoinColumns
             = @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"))
-    private Set<GeneInfo> geneInfo;
+    private Collection<GeneInfo> geneInfo;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ProteinGi", insertable = false, unique = false, nullable = true, updatable = false)
     private GenePTT genePTT;
@@ -108,6 +115,14 @@ public class GeneBankCDS implements Serializable {
         setGeneInfo(null);
         setGenePTT(null);
         setGeneBank(null);
+    }
+
+    public Boolean isTranslation() {
+        return translation;
+    }
+
+    public void setTranslation(Boolean translation) {
+        this.translation = translation;
     }
 
     public String getGene() {
@@ -143,11 +158,11 @@ public class GeneBankCDS implements Serializable {
     }
 
     @XmlTransient
-    public Set<GeneInfo> getGeneInfo() {
+    public Collection<GeneInfo> getGeneInfo() {
         return geneInfo;
     }
 
-    public void setGeneInfo(Set<GeneInfo> geneInfo) {
+    public void setGeneInfo(Collection<GeneInfo> geneInfo) {
         this.geneInfo = geneInfo;
     }
 
@@ -220,10 +235,7 @@ public class GeneBankCDS implements Serializable {
             return false;
         }
         GeneBankCDS other = (GeneBankCDS) object;
-        if ((this.wid == null && other.wid != null) || (this.wid != null && !this.wid.equals(other.wid))) {
-            return false;
-        }
-        return true;
+        return (this.wid != null || other.wid == null) && (this.wid == null || this.wid.equals(other.wid));
     }
 
     @Override
@@ -243,6 +255,7 @@ public class GeneBankCDS implements Serializable {
                 + ", proteinId=" + proteinId
                 + ", gene=" + gene
                 + ", locus_tag=" + locusTag
+                + ", translation=" + translation
                 + ", geneBankWID=" + geneBankWID + "}"
                 + buider.toString();
     }

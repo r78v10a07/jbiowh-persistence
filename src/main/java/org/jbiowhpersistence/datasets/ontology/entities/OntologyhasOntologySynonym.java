@@ -80,10 +80,7 @@ public class OntologyhasOntologySynonym implements Serializable {
             return false;
         }
         OntologyhasOntologySynonym other = (OntologyhasOntologySynonym) object;
-        if ((this.ontologyhasOntologySynonymPK == null && other.ontologyhasOntologySynonymPK != null) || (this.ontologyhasOntologySynonymPK != null && !this.ontologyhasOntologySynonymPK.equals(other.ontologyhasOntologySynonymPK))) {
-            return false;
-        }
-        return true;
+        return (this.ontologyhasOntologySynonymPK != null || other.ontologyhasOntologySynonymPK == null) && (this.ontologyhasOntologySynonymPK == null || this.ontologyhasOntologySynonymPK.equals(other.ontologyhasOntologySynonymPK));
     }
 
     @Override

@@ -213,8 +213,8 @@ public class OntologyJpaController extends AbstractJpaController<Ontology> imple
             em = getEntityManager();
             em.getTransaction().begin();
             Ontology persistentOntology = em.find(Ontology.class, ontology.getWid());
-            Set<GeneInfo> geneInfoOld = persistentOntology.getGeneInfo();
-            Set<GeneInfo> geneInfoNew = ontology.getGeneInfo();
+            Collection<GeneInfo> geneInfoOld = persistentOntology.getGeneInfo();
+            Collection<GeneInfo> geneInfoNew = ontology.getGeneInfo();
             Set<Protein> proteinOld = persistentOntology.getProtein();
             Set<Protein> proteinNew = ontology.getProtein();
             Set<GeneInfo> attachedGeneInfoNew = new HashSet();
@@ -285,7 +285,7 @@ public class OntologyJpaController extends AbstractJpaController<Ontology> imple
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The ontology with id " + id + " no longer exists.", enfe);
             }
-            Set<GeneInfo> geneInfo = ontology.getGeneInfo();
+            Collection<GeneInfo> geneInfo = ontology.getGeneInfo();
             for (GeneInfo geneInfoGeneInfo : geneInfo) {
                 geneInfoGeneInfo.getOntology().remove(ontology);
                 geneInfoGeneInfo = em.merge(geneInfoGeneInfo);

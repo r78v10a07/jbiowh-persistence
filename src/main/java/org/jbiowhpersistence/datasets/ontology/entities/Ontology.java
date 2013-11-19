@@ -1,6 +1,7 @@
 package org.jbiowhpersistence.datasets.ontology.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -26,11 +27,11 @@ import org.jbiowhpersistence.datasets.protein.entities.Protein;
 @NamedQueries({
     @NamedQuery(name = "Ontology.findAll", query = "SELECT o FROM Ontology o"),
     @NamedQuery(name = "Ontology.findByWid", query = "SELECT o FROM Ontology o WHERE o.wid = :wid"),
-    @NamedQuery(name = "Ontology.findById", query = "SELECT o FROM Ontology o WHERE UPPER(o.id) like :id"),
-    @NamedQuery(name = "Ontology.findByName", query = "SELECT o FROM Ontology o WHERE UPPER(o.name) like :name"),
+    @NamedQuery(name = "Ontology.findById", query = "SELECT o FROM Ontology o WHERE o.id like :id"),
+    @NamedQuery(name = "Ontology.findByName", query = "SELECT o FROM Ontology o WHERE o.name like :name"),
     @NamedQuery(name = "Ontology.findByNameSpace", query = "SELECT o FROM Ontology o WHERE o.nameSpace = :nameSpace"),
-    @NamedQuery(name = "Ontology.findByDef", query = "SELECT o FROM Ontology o WHERE UPPER(o.def) like :def"),
-    @NamedQuery(name = "Ontology.findByComment", query = "SELECT o FROM Ontology o WHERE UPPER(o.comment) like :comment"),
+    @NamedQuery(name = "Ontology.findByDef", query = "SELECT o FROM Ontology o WHERE o.def like :def"),
+    @NamedQuery(name = "Ontology.findByComment", query = "SELECT o FROM Ontology o WHERE o.comment like :comment"),
     @NamedQuery(name = "Ontology.findByIsObsolete", query = "SELECT o FROM Ontology o WHERE o.isObsolete = :isObsolete"),
     @NamedQuery(name = "Ontology.findByDataSetWID", query = "SELECT o FROM Ontology o WHERE o.dataSetWID = :dataSetWID")})
 public class Ontology implements Serializable {
@@ -101,7 +102,7 @@ public class Ontology implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "ontology")
     private Set<Protein> protein;
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "ontology")
-    private Set<GeneInfo> geneInfo;
+    private Collection<GeneInfo> geneInfo;
 
     public Ontology() {
     }
@@ -157,11 +158,11 @@ public class Ontology implements Serializable {
     }
 
     @XmlTransient
-    public Set<GeneInfo> getGeneInfo() {
+    public Collection<GeneInfo> getGeneInfo() {
         return geneInfo;
     }
 
-    public void setGeneInfo(Set<GeneInfo> geneInfo) {
+    public void setGeneInfo(Collection<GeneInfo> geneInfo) {
         this.geneInfo = geneInfo;
     }
 
@@ -343,10 +344,7 @@ public class Ontology implements Serializable {
         if (!Objects.equals(this.ontologyXRef, other.ontologyXRef)) {
             return false;
         }
-        if (!Objects.equals(this.dataSet, other.dataSet)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.dataSet, other.dataSet);
     }
 
     @Override

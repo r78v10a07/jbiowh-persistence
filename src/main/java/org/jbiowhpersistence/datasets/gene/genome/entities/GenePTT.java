@@ -3,9 +3,15 @@ package org.jbiowhpersistence.datasets.gene.genome.entities;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
+import org.jbiowhpersistence.datasets.gene.gene.GeneTables;
 import org.jbiowhpersistence.datasets.gene.genome.GenePTTTables;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
@@ -20,10 +26,12 @@ import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
 @Entity
 @Table(name = "GenePTT")
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 @NamedQueries({
     @NamedQuery(name = "GenePTT.findAll", query = "SELECT g FROM GenePTT g"),
     @NamedQuery(name = "GenePTT.findByPFrom", query = "SELECT g FROM GenePTT g WHERE g.pFrom = :pFrom"),
     @NamedQuery(name = "GenePTT.findByPTo", query = "SELECT g FROM GenePTT g WHERE g.pTo = :pTo"),
+    @NamedQuery(name = "GenePTT.findByPFromPToPTTFile", query = "SELECT g FROM GenePTT g WHERE (g.pFrom >= :pFrom AND g.pTo <= :pTo) AND g.pTTFile = :pTTFile"),
     @NamedQuery(name = "GenePTT.findByLocation", query = "SELECT g FROM GenePTT g WHERE g.location = :location"),
     @NamedQuery(name = "GenePTT.findByStrand", query = "SELECT g FROM GenePTT g WHERE g.strand = :strand"),
     @NamedQuery(name = "GenePTT.findByPLength", query = "SELECT g FROM GenePTT g WHERE g.pLength = :pLength"),
@@ -84,10 +92,19 @@ public class GenePTT implements Serializable {
     // External Gene Relationship
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dataSetWID", referencedColumnName = "WID", insertable = false, unique = false, nullable = false, updatable = false)
-    private DataSet dataSet;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "genePTT")
+    private DataSet dataSet;    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinTable(name = GeneTables.GENEINFO_HAS_GENEPTT,
+            joinColumns
+            = @JoinColumn(name = "GenePTT_ProteinGi", referencedColumnName = "ProteinGi"),
+            inverseJoinColumns
+            = @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"))
+    @XmlElement
+    @XmlInverseReference(mappedBy="genePTT")
     private GeneInfo geneInfo;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "genePTT")
+    @XmlElement
+    @XmlInverseReference(mappedBy="genePTT")
     private Protein protein;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinTable(name = GenePTTTables.GENEPTT_HAS_TAXONOMY,
@@ -120,6 +137,7 @@ public class GenePTT implements Serializable {
         this.dataSetWID = dataSetWID;
     }
 
+    @XmlTransient
     public Taxonomy getTaxonomy() {
         return taxonomy;
     }
@@ -128,6 +146,7 @@ public class GenePTT implements Serializable {
         this.taxonomy = taxonomy;
     }
 
+    @XmlTransient
     public Protein getProtein() {
         return protein;
     }
@@ -148,6 +167,7 @@ public class GenePTT implements Serializable {
         return pFrom;
     }
 
+    @XmlTransient
     public GeneInfo getGeneInfo() {
         return geneInfo;
     }
@@ -301,10 +321,7 @@ public class GenePTT implements Serializable {
         if (!Objects.equals(this.pTTFile, other.pTTFile)) {
             return false;
         }
-        if (this.dataSetWID != other.dataSetWID) {
-            return false;
-        }
-        return true;
+        return this.dataSetWID == other.dataSetWID;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package org.jbiowhpersistence.datasets.pathway.kegg.entities.pathway;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
@@ -120,7 +121,7 @@ public class KEGGPathway implements Serializable {
     @JoinColumn(name = "KEGGPathway_WID", referencedColumnName = "WID"),
     inverseJoinColumns =
     @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"))
-    private Set<GeneInfo> geneInfo;
+    private Collection<GeneInfo> geneInfo;
 
     public KEGGPathway() {
     }
@@ -150,11 +151,11 @@ public class KEGGPathway implements Serializable {
     }
 
     @XmlTransient
-    public Set<GeneInfo> getGeneInfo() {
+    public Collection<GeneInfo> getGeneInfo() {
         return geneInfo;
     }
 
-    public void setGeneInfo(Set<GeneInfo> geneInfos) {
+    public void setGeneInfo(Collection<GeneInfo> geneInfos) {
         this.geneInfo = geneInfos;
     }
 
@@ -339,10 +340,7 @@ public class KEGGPathway implements Serializable {
         if (!Objects.equals(this.link, other.link)) {
             return false;
         }
-        if (this.dataSetWID != other.dataSetWID) {
-            return false;
-        }
-        return true;
+        return this.dataSetWID == other.dataSetWID;
     }
 
     @Override

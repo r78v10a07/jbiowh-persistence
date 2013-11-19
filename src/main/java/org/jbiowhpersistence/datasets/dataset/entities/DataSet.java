@@ -3,6 +3,7 @@ package org.jbiowhpersistence.datasets.dataset.entities;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -37,7 +38,7 @@ public class DataSet implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "WID")
+    @Column(name = "WID")        
     private Long wid;
     @Basic(optional = false)
     @Column(name = "Name")

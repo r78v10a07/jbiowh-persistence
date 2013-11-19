@@ -7,80 +7,82 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * This Class is the GeneGroup entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2013-05-29 11:24:54 +0200 (Wed, 29 May 2013) $
- * $LastChangedRevision: 591 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2013-05-29 11:24:54 +0200
+ * (Wed, 29 May 2013) $ $LastChangedRevision: 591 $
+ *
  * @since Jul 27, 2011
  */
-@Entity
+@Embeddable
 @Table(name = "GeneGroup")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "GeneGroup.findAll", query = "SELECT g FROM GeneGroup g"),
-    @NamedQuery(name = "GeneGroup.findByGeneInfoWID", query = "SELECT g FROM GeneGroup g WHERE g.geneGroupPK.geneInfoWID = :geneInfoWID"),
-    @NamedQuery(name = "GeneGroup.findByRelationship", query = "SELECT g FROM GeneGroup g WHERE g.geneGroupPK.relationship = :relationship"),
-    @NamedQuery(name = "GeneGroup.findByOtherGeneInfoWID", query = "SELECT g FROM GeneGroup g WHERE g.geneGroupPK.otherGeneInfoWID = :otherGeneInfoWID")})
 public class GeneGroup implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected GeneGroupPK geneGroupPK;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "GeneInfo_WID", insertable = false, unique = false, nullable = false, updatable = false)
-    private GeneInfo geneInfo;
+    @Basic(optional = false)
+    @Column(name = "GeneInfo_WID")
+    private long geneInfoWID;
+    @Basic(optional = false)
+    @Column(name = "Relationship")
+    private String relationship;
+    @Basic(optional = false)
+    @Column(name = "OtherGeneInfo_WID")
+    private long otherGeneInfoWID;
 
     public GeneGroup() {
     }
 
-    public GeneGroup(GeneGroupPK geneGroupPK) {
-        this.geneGroupPK = geneGroupPK;
+    public long getGeneInfoWID() {
+        return geneInfoWID;
     }
 
-    public GeneGroup(long geneInfoWID, String relationship, long otherGeneInfoWID) {
-        this.geneGroupPK = new GeneGroupPK(geneInfoWID, relationship, otherGeneInfoWID);
+    public void setGeneInfoWID(long geneInfoWID) {
+        this.geneInfoWID = geneInfoWID;
     }
 
-    public GeneInfo getGeneInfo() {
-        return geneInfo;
+    public String getRelationship() {
+        return relationship;
     }
 
-    public void setGeneInfo(GeneInfo geneInfo) {
-        this.geneInfo = geneInfo;
+    public void setRelationship(String relationship) {
+        this.relationship = relationship;
     }
 
-    public GeneGroupPK getGeneGroupPK() {
-        return geneGroupPK;
+    public long getOtherGeneInfoWID() {
+        return otherGeneInfoWID;
     }
 
-    public void setGeneGroupPK(GeneGroupPK geneGroupPK) {
-        this.geneGroupPK = geneGroupPK;
+    public void setOtherGeneInfoWID(long otherGeneInfoWID) {
+        this.otherGeneInfoWID = otherGeneInfoWID;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (geneGroupPK != null ? geneGroupPK.hashCode() : 0);
+        int hash = 7;
+        hash = 79 * hash + (int) (this.geneInfoWID ^ (this.geneInfoWID >>> 32));
+        hash = 79 * hash + (this.relationship != null ? this.relationship.hashCode() : 0);
+        hash = 79 * hash + (int) (this.otherGeneInfoWID ^ (this.otherGeneInfoWID >>> 32));
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof GeneGroup)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        GeneGroup other = (GeneGroup) object;
-        if ((this.geneGroupPK == null && other.geneGroupPK != null) || (this.geneGroupPK != null && !this.geneGroupPK.equals(other.geneGroupPK))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final GeneGroup other = (GeneGroup) obj;
+        if (this.geneInfoWID != other.geneInfoWID) {
+            return false;
+        }
+        if ((this.relationship == null) ? (other.relationship != null) : !this.relationship.equals(other.relationship)) {
+            return false;
+        }
+        return this.otherGeneInfoWID == other.otherGeneInfoWID;
     }
 
     @Override
     public String toString() {
-        return "GeneGroup{"
-                + " GeneWID=" + geneGroupPK.getGeneInfoWID()
-                + " relationship=" + geneGroupPK.getRelationship()
-                + " OtherGeneWID=" + geneGroupPK.getOtherGeneInfoWID()
-                + '}';
+        return "GeneGroup{" + "geneInfoWID=" + geneInfoWID + ", relationship=" + relationship + ", otherGeneInfoWID=" + otherGeneInfoWID + '}';
     }
 }

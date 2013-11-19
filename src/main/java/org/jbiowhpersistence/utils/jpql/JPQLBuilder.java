@@ -95,19 +95,10 @@ public class JPQLBuilder {
                                     }
                                     if (beforeWhere.indexOf(fieldBeforeWhere.get(key)) == -1) {
                                         beforeWhere.append(fieldBeforeWhere.get(key));
-                                    }
-                                    String sqlFunctionBefore = " ";
-                                    String sqlFunctionAfter = " ";
-                                    if (parm.get(key + i) instanceof String) {
-                                        sqlFunctionBefore = " UPPER(";
-                                        sqlFunctionAfter = ") ";
-                                    }
-                                    jpqlAfterWhere.append(sqlFunctionBefore).
-                                            append(fieldAfterWhere.get(key)).
-                                            append(sqlFunctionAfter).
-                                            append(oper).
-                                            append(sqlFunctionBefore).
-                                            append(":").append(key).append(i).append(sqlFunctionAfter);
+                                    }                                                                 
+                                    jpqlAfterWhere.append(fieldAfterWhere.get(key)).append(" ").
+                                            append(oper).append(" ").
+                                            append(":").append(key).append(i);
                                 } else {
                                     jpqlAfterWhere.append(fieldOnEntity.get(key)).append(" ").append(oper).append(" ");
                                 }

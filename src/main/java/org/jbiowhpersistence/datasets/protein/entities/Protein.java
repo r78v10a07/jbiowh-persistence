@@ -179,7 +179,7 @@ public class Protein implements Serializable {
     @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
     inverseJoinColumns =
     @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"))
-    private Set<GeneInfo> geneInfo;
+    private Collection<GeneInfo> geneInfo;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_GENEPTT,
     joinColumns =
@@ -362,11 +362,11 @@ public class Protein implements Serializable {
     }
 
     @XmlTransient
-    public Set<GeneInfo> getGeneInfo() {
+    public Collection<GeneInfo> getGeneInfo() {
         return geneInfo;
     }
 
-    public void setGeneInfo(Set<GeneInfo> geneInfo) {
+    public void setGeneInfo(Collection<GeneInfo> geneInfo) {
         this.geneInfo = geneInfo;
     }
 

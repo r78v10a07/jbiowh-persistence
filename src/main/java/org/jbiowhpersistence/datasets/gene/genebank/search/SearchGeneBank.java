@@ -8,6 +8,7 @@ import org.jbiowhcore.utility.constrains.JPLConstrains;
 import org.jbiowhcore.utility.utils.BioWHPattern;
 import org.jbiowhpersistence.datasets.gene.genebank.entities.GeneBank;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
+import org.jbiowhpersistence.utils.search.JBioWHSearch;
 import org.jbiowhpersistence.utils.search.SearchFactory;
 
 /**
@@ -18,7 +19,7 @@ import org.jbiowhpersistence.utils.search.SearchFactory;
  *
  * @since May 9, 2013
  */
-public class SearchGeneBank extends SearchFactory {
+public class SearchGeneBank extends SearchFactory implements JBioWHSearch {
 
     public final String GI = "Gi";
     public final String PROTEINGI = "ProteinGi";

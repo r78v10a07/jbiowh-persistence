@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.jbiowhcore.utility.constrains.JPLConstrains;
+import org.jbiowhcore.utility.utils.BioWHPattern;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
 import org.jbiowhpersistence.datasets.gene.genome.entities.GenePTT;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
+import org.jbiowhpersistence.utils.search.JBioWHSearch;
 import org.jbiowhpersistence.utils.search.SearchFactory;
 
 /**
@@ -18,7 +20,7 @@ import org.jbiowhpersistence.utils.search.SearchFactory;
  *
  * @since Jul 23, 2012
  */
-public class SearchGenePTT extends SearchFactory {
+public class SearchGenePTT extends SearchFactory implements JBioWHSearch {
 
     public final String PTO = "pTo";
     public final String PFROM = "pFrom";
@@ -65,12 +67,46 @@ public class SearchGenePTT extends SearchFactory {
             return search(searchList, constrains);
         }
 
-        searchRow.add("");
-        searchRow.add(GENESYMBOL);
-        searchRow.add("like");
-        searchRow.add(search);
-        searchList.add(searchRow);
-        return search(searchList, constrains);
+        if (BioWHPattern.getInstance().isLong(search)) {
+            searchRow.add("");
+            searchRow.add(PROTEINGI);
+            searchRow.add("=");
+            searchRow.add(search);
+            searchList.add(searchRow);
+            return search(searchList, constrains);
+        } else {
+            searchRow.add("");
+            searchRow.add(PTTFILE);
+            searchRow.add("like");
+            searchRow.add(search);
+            searchList.add(searchRow);
+            List result = search(searchList, constrains);
+            
+            if (!result.isEmpty()) {
+                return result;
+            }
+            
+            searchRow.clear();
+            searchRow.add("");
+            searchRow.add(GENESYMBOL);
+            searchRow.add("like");
+            searchRow.add(search);
+            searchList.clear();
+            searchList.add(searchRow);
+            result = search(searchList, constrains);
+            if (!result.isEmpty()) {
+                return result;
+            }
+            
+            searchRow.clear();
+            searchRow.add("");
+            searchRow.add(GENELOCUSTAG);
+            searchRow.add("like");
+            searchRow.add(search);
+            searchList.clear();
+            searchList.add(searchRow);
+            return search(searchList, constrains);
+        }
     }
 
     @Override

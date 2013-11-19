@@ -3,8 +3,11 @@ package org.jbiowhpersistence.datasets.gene.gene.entities;
 import java.io.Serializable;
 import java.util.*;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 import org.jbiowhpersistence.datasets.disease.omim.entities.OMIM;
 import org.jbiowhpersistence.datasets.gene.gene.GeneTables;
@@ -24,18 +27,20 @@ import org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomySynonym;
  *
  * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2013-03-19 09:38:47 +0100
  * (Tue, 19 Mar 2013) $ $LastChangedRevision: 664 $
+ *
  * @since Jul 27, 2011
  */
 @Entity
 @Table(name = "GeneInfo")
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 @NamedQueries({
     @NamedQuery(name = "GeneInfo.findAll", query = "SELECT g FROM GeneInfo g"),
     @NamedQuery(name = "GeneInfo.findByWid", query = "SELECT g FROM GeneInfo g WHERE g.wid = :wid"),
     @NamedQuery(name = "GeneInfo.findByGeneID", query = "SELECT g FROM GeneInfo g WHERE g.geneID = :geneID"),
     @NamedQuery(name = "GeneInfo.findByTaxID", query = "SELECT g FROM GeneInfo g WHERE g.taxID = :taxID"),
-    @NamedQuery(name = "GeneInfo.findBySymbol", query = "SELECT g FROM GeneInfo g WHERE UPPER(g.symbol) LIKE :symbol"),
-    @NamedQuery(name = "GeneInfo.findByLocusTag", query = "SELECT g FROM GeneInfo g WHERE UPPER(g.locusTag) LIKE :locusTag"),
+    @NamedQuery(name = "GeneInfo.findBySymbol", query = "SELECT g FROM GeneInfo g WHERE g.symbol LIKE :symbol"),
+    @NamedQuery(name = "GeneInfo.findByLocusTag", query = "SELECT g FROM GeneInfo g WHERE g.locusTag LIKE :locusTag"),
     @NamedQuery(name = "GeneInfo.findByChromosome", query = "SELECT g FROM GeneInfo g WHERE g.chromosome = :chromosome"),
     @NamedQuery(name = "GeneInfo.findByMapLocation", query = "SELECT g FROM GeneInfo g WHERE g.mapLocation = :mapLocation"),
     @NamedQuery(name = "GeneInfo.findByDescription", query = "SELECT g FROM GeneInfo g WHERE g.description = :description"),
@@ -45,10 +50,10 @@ import org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomySynonym;
     @NamedQuery(name = "GeneInfo.findByNomenclatureStatus", query = "SELECT g FROM GeneInfo g WHERE g.nomenclatureStatus = :nomenclatureStatus"),
     @NamedQuery(name = "GeneInfo.findByOtherDesignations", query = "SELECT g FROM GeneInfo g WHERE g.otherDesignations = :otherDesignations"),
     @NamedQuery(name = "GeneInfo.findByModificationDate", query = "SELECT g FROM GeneInfo g WHERE g.modificationDate = :modificationDate"),
-    @NamedQuery(name = "GeneInfo.findByProteinGi", query = "SELECT g FROM GeneInfo g INNER JOIN g.gene2Accession a WHERE a.proteinGi = :proteinGi group by g"),
-    @NamedQuery(name = "GeneInfo.findByProteinAccession", query = "SELECT g FROM GeneInfo g INNER JOIN g.gene2Accession a WHERE a.proteinAccession = :proteinAccession group by g"),
-    @NamedQuery(name = "GeneInfo.findByEnsemblProteinIdentifier", query = "SELECT g FROM GeneInfo g INNER JOIN g.gene2Ensembl e WHERE e.ensemblProteinIdentifier = :ensemblProteinIdentifier group by g"),
-    @NamedQuery(name = "GeneInfo.findByDataSetWID", query = "SELECT g FROM GeneInfo g WHERE g.dataSetWID = :dataSetWID")})
+    @NamedQuery(name = "GeneInfo.findByDataSetWID", query = "SELECT g FROM GeneInfo g WHERE g.dataSetWID = :dataSetWID"),
+    @NamedQuery(name = "GeneInfo.findByProteinGi", query = "SELECT g FROM GeneInfo g INNER JOIN g.gene2ProteinAccessions p WHERE p.proteinGi = :proteinGi"),
+    @NamedQuery(name = "GeneInfo.findBySynonym", query = "SELECT g FROM GeneInfo g INNER JOIN g.geneInfoSynonyms p WHERE p.synonyms like :synonyms"),
+    @NamedQuery(name = "GeneInfo.findByDBXRef", query = "SELECT g FROM GeneInfo g INNER JOIN g.geneInfoDBXrefs p WHERE p.id like :id")})
 public class GeneInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -94,76 +99,112 @@ public class GeneInfo implements Serializable {
     private DataSet dataSet;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "taxID", referencedColumnName = "TaxId", insertable = false, unique = false, nullable = false, updatable = false)
-    private Taxonomy taxonomy;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinTable(name = GeneTables.GENEINFO_HAS_GENEPTT,
-            joinColumns =
-            @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"),
-            inverseJoinColumns =
-            @JoinColumn(name = "GenePTT_ProteinGi", referencedColumnName = "ProteinGi"))
+    private Taxonomy taxonomy;    
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "geneInfo")
+    @XmlElement
+    @XmlInverseReference(mappedBy="geneInfo")
     private GenePTT genePTT;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "geneInfo")
+    @XmlElement
+    @XmlInverseReference(mappedBy="geneInfo")
     private Set<GeneRNT> geneRNT;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = GeneTables.GENEINFO_HAS_ONTOLOGY,
-            joinColumns =
-            @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"),
-            inverseJoinColumns =
-            @JoinColumn(name = "Ontology_WID", referencedColumnName = "WID"))
+            joinColumns
+            = @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "Ontology_WID", referencedColumnName = "WID"))
     private Set<Ontology> ontology;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_GENEINFO,
-            joinColumns =
-            @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"),
-            inverseJoinColumns =
-            @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"))
+            joinColumns
+            = @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"))
     private Set<Protein> protein;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = GeneTables.GENEINFO_HAS_KEGGGENE,
-            joinColumns =
-            @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"),
-            inverseJoinColumns =
-            @JoinColumn(name = "KEGGGene_WID", referencedColumnName = "WID"))
+            joinColumns
+            = @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "KEGGGene_WID", referencedColumnName = "WID"))
     private Set<KEGGGene> kEGGGenes;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = KEGGTables.KEGGPATHWAY_HAS_GENEINFO,
-            joinColumns =
-            @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"),
-            inverseJoinColumns =
-            @JoinColumn(name = "KEGGPathway_WID", referencedColumnName = "WID"))
+            joinColumns
+            = @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "KEGGPathway_WID", referencedColumnName = "WID"))
     private Set<KEGGPathway> kEGGPathways;
     @ManyToMany
     @JoinTable(name = GeneTables.GENEINFO_HAS_OMIM,
-            joinColumns =
-            @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"),
-            inverseJoinColumns =
-            @JoinColumn(name = "OMIM_WID", referencedColumnName = "WID"))
+            joinColumns
+            = @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "OMIM_WID", referencedColumnName = "WID"))
     private Set<OMIM> omim;
     // Internal Gene relationship        
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "geneInfo")
-    @MapKey(name = "geneInfoSynonymsPK")
-    private Map<GeneInfoSynonymsPK, GeneInfoSynonyms> geneInfoSynonyms;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "geneInfo")
-    @MapKey(name = "geneInfoDBXrefsPK")
-    private Map<GeneInfoDBXrefsPK, GeneInfoDBXrefs> geneInfoDBXrefs;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "geneInfo")
-    @MapKey(name = "geneGroupPK")
-    private Map<GeneGroupPK, GeneGroup> geneGroup;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "geneInfo")
-    @MapKey(name = "gene2AccessionPK")
-    private Map<Gene2AccessionPK, Gene2Accession> gene2Accession;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "geneInfo")
-    @JoinColumn(name = "GeneInfo_WID")
-    private Set<Gene2Ensembl> gene2Ensembl;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "geneInfo")
-    @MapKey(name = "gene2PMIDPK")
-    private Map<Gene2PMIDPK, Gene2PMID> gene2PMID;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "geneInfo")
-    @MapKey(name = "gene2STSPK")
-    private Map<Gene2STSPK, Gene2STS> gene2STS;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "geneInfo")
-    @MapKey(name = "gene2UniGenePK")
-    private Map<Gene2UniGenePK, Gene2UniGene> gene2UniGene;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "Gene2Ensembl",
+            joinColumns
+            = @JoinColumn(name = "GeneInfo_WID"))
+    private Collection<Gene2Ensembl> gene2Ensembl;
+    @ElementCollection
+    @CollectionTable(
+            name = "GeneInfoSynonyms",
+            joinColumns
+            = @JoinColumn(name = "GeneInfo_WID"))
+    private Collection<GeneInfoSynonyms> geneInfoSynonyms;
+    @ElementCollection
+    @CollectionTable(
+            name = "GeneInfoDBXrefs",
+            joinColumns
+            = @JoinColumn(name = "GeneInfo_WID"))
+    private Collection<GeneInfoDBXrefs> geneInfoDBXrefs;
+    @ElementCollection
+    @CollectionTable(
+            name = "Gene2PMID",
+            joinColumns
+            = @JoinColumn(name = "GeneInfo_WID"))
+    private Collection<Gene2PMID> gene2PMID;
+    @ElementCollection
+    @CollectionTable(
+            name = "Gene2STS",
+            joinColumns
+            = @JoinColumn(name = "GeneInfo_WID"))
+    private Collection<Gene2STS> gene2STS;
+    @ElementCollection
+    @CollectionTable(
+            name = "Gene2UniGene",
+            joinColumns
+            = @JoinColumn(name = "GeneInfo_WID"))
+    private Collection<Gene2UniGene> gene2UniGene;
+    @ElementCollection
+    @CollectionTable(
+            name = "GeneGroup",
+            joinColumns
+            = @JoinColumn(name = "GeneInfo_WID"))
+    private Collection<GeneGroup> geneGroup;
+    @ElementCollection
+    @CollectionTable(
+            name = "Gene2ProteinAccession",
+            joinColumns
+            = @JoinColumn(name = "GeneInfo_WID"))
+    private Collection<Gene2ProteinAccession> gene2ProteinAccessions;
+    @ElementCollection
+    @CollectionTable(
+            name = "Gene2GenomicNucleotide",
+            joinColumns
+            = @JoinColumn(name = "GeneInfo_WID"))
+    private Collection<Gene2GenomicNucleotide> gene2GenomicNucleotides;
+    @ElementCollection
+    @CollectionTable(
+            name = "Gene2RNANucleotide",
+            joinColumns
+            = @JoinColumn(name = "GeneInfo_WID"))
+    private Collection<Gene2RNANucleotide> gene2RNANucleotides;
 
     public GeneInfo() {
     }
@@ -186,161 +227,12 @@ public class GeneInfo implements Serializable {
         setOmim(null);
     }
 
-    @XmlTransient
-    public Set<GeneRNT> getGeneRNT() {
-        return geneRNT;
+    public Long getWid() {
+        return wid;
     }
 
-    public void setGeneRNT(Set<GeneRNT> geneRNT) {
-        this.geneRNT = geneRNT;
-    }
-
-    public DataSet getDataSet() {
-        return dataSet;
-    }
-
-    public void setDataSet(DataSet dataSet) {
-        this.dataSet = dataSet;
-    }
-
-    @XmlTransient
-    public Set<Ontology> getOntology() {
-        return ontology;
-    }
-
-    public void setOntology(Set<Ontology> ontology) {
-        this.ontology = ontology;
-    }
-
-    public GenePTT getGenePTT() {
-        return genePTT;
-    }
-
-    public void setGenePTT(GenePTT genePTT) {
-        this.genePTT = genePTT;
-    }
-
-    @XmlTransient
-    public Set<OMIM> getOmim() {
-        return omim;
-    }
-
-    public void setOmim(Set<OMIM> omim) {
-        this.omim = omim;
-    }
-
-    @XmlTransient
-    public Set<KEGGPathway> getkEGGPathways() {
-        return kEGGPathways;
-    }
-
-    public void setkEGGPathways(Set<KEGGPathway> kEGGPathways) {
-        this.kEGGPathways = kEGGPathways;
-    }
-
-    @XmlTransient
-    public Set<KEGGGene> getkEGGGenes() {
-        return kEGGGenes;
-    }
-
-    public void setkEGGGenes(Set<KEGGGene> kEGGGenes) {
-        this.kEGGGenes =
-                kEGGGenes;
-    }
-
-    @XmlTransient
-    public Set<Protein> getProtein() {
-        return protein;
-    }
-
-    public void setProtein(Set<Protein> protein) {
-        this.protein = protein;
-    }
-
-    public String getChromosome() {
-        return chromosome;
-    }
-
-    public void setChromosome(String chromosome) {
-        this.chromosome = chromosome;
-    }
-
-    public long getDataSetWID() {
-        return dataSetWID;
-    }
-
-    public void setDataSetWID(long dataSetWID) {
-        this.dataSetWID = dataSetWID;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getFullNameFromNomenclatureAuthority() {
-        return fullNameFromNomenclatureAuthority;
-    }
-
-    public void setFullNameFromNomenclatureAuthority(String fullNameFromNomenclatureAuthority) {
-        this.fullNameFromNomenclatureAuthority = fullNameFromNomenclatureAuthority;
-    }
-
-    @XmlTransient
-    public Map<Gene2AccessionPK, Gene2Accession> getGene2Accession() {
-        return gene2Accession;
-    }
-
-    public void setGene2Accession(Map<Gene2AccessionPK, Gene2Accession> gene2Accession) {
-        this.gene2Accession = gene2Accession;
-    }
-
-    @XmlTransient
-    public Set<Gene2Ensembl> getGene2Ensembl() {
-        return gene2Ensembl;
-    }
-
-    public void setGene2Ensembl(Set<Gene2Ensembl> gene2Ensembl) {
-        this.gene2Ensembl = gene2Ensembl;
-    }
-
-    @XmlTransient
-    public Map<Gene2PMIDPK, Gene2PMID> getGene2PMID() {
-        return gene2PMID;
-    }
-
-    public void setGene2PMID(Map<Gene2PMIDPK, Gene2PMID> gene2PMID) {
-        this.gene2PMID = gene2PMID;
-    }
-
-    @XmlTransient
-    public Map<Gene2STSPK, Gene2STS> getGene2STS() {
-        return gene2STS;
-    }
-
-    public void setGene2STS(Map<Gene2STSPK, Gene2STS> gene2STS) {
-        this.gene2STS = gene2STS;
-    }
-
-    @XmlTransient
-    public Map<Gene2UniGenePK, Gene2UniGene> getGene2UniGene() {
-        return gene2UniGene;
-    }
-
-    public void setGene2UniGene(Map<Gene2UniGenePK, Gene2UniGene> gene2UniGene) {
-        this.gene2UniGene = gene2UniGene;
-    }
-
-    @XmlTransient
-    public Map<GeneGroupPK, GeneGroup> getGeneGroup() {
-        return geneGroup;
-    }
-
-    public void setGeneGroup(Map<GeneGroupPK, GeneGroup> geneGroup) {
-        this.geneGroup = geneGroup;
+    public void setWid(Long wid) {
+        this.wid = wid;
     }
 
     public long getGeneID() {
@@ -351,22 +243,20 @@ public class GeneInfo implements Serializable {
         this.geneID = geneID;
     }
 
-    @XmlTransient
-    public Map<GeneInfoDBXrefsPK, GeneInfoDBXrefs> getGeneInfoDBXrefs() {
-        return geneInfoDBXrefs;
+    public long getTaxID() {
+        return taxID;
     }
 
-    public void setGeneInfoDBXrefs(Map<GeneInfoDBXrefsPK, GeneInfoDBXrefs> geneInfoDBXrefs) {
-        this.geneInfoDBXrefs = geneInfoDBXrefs;
+    public void setTaxID(long taxID) {
+        this.taxID = taxID;
     }
 
-    @XmlTransient
-    public Map<GeneInfoSynonymsPK, GeneInfoSynonyms> getGeneInfoSynonyms() {
-        return geneInfoSynonyms;
+    public String getSymbol() {
+        return symbol;
     }
 
-    public void setGeneInfoSynonyms(Map<GeneInfoSynonymsPK, GeneInfoSynonyms> geneInfoSynonyms) {
-        this.geneInfoSynonyms = geneInfoSynonyms;
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public String getLocusTag() {
@@ -377,6 +267,14 @@ public class GeneInfo implements Serializable {
         this.locusTag = locusTag;
     }
 
+    public String getChromosome() {
+        return chromosome;
+    }
+
+    public void setChromosome(String chromosome) {
+        this.chromosome = chromosome;
+    }
+
     public String getMapLocation() {
         return mapLocation;
     }
@@ -385,12 +283,36 @@ public class GeneInfo implements Serializable {
         this.mapLocation = mapLocation;
     }
 
-    public Date getModificationDate() {
-        return modificationDate;
+    public String getDescription() {
+        return description;
     }
 
-    public void setModificationDate(Date modificationDate) {
-        this.modificationDate = modificationDate;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getTypeOfGene() {
+        return typeOfGene;
+    }
+
+    public void setTypeOfGene(String typeOfGene) {
+        this.typeOfGene = typeOfGene;
+    }
+
+    public String getSymbolFromNomenclature() {
+        return symbolFromNomenclature;
+    }
+
+    public void setSymbolFromNomenclature(String symbolFromNomenclature) {
+        this.symbolFromNomenclature = symbolFromNomenclature;
+    }
+
+    public String getFullNameFromNomenclatureAuthority() {
+        return fullNameFromNomenclatureAuthority;
+    }
+
+    public void setFullNameFromNomenclatureAuthority(String fullNameFromNomenclatureAuthority) {
+        this.fullNameFromNomenclatureAuthority = fullNameFromNomenclatureAuthority;
     }
 
     public String getNomenclatureStatus() {
@@ -409,28 +331,28 @@ public class GeneInfo implements Serializable {
         this.otherDesignations = otherDesignations;
     }
 
-    public String getSymbol() {
-        return symbol;
+    public Date getModificationDate() {
+        return modificationDate;
     }
 
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
+    public void setModificationDate(Date modificationDate) {
+        this.modificationDate = modificationDate;
     }
 
-    public String getSymbolFromNomenclature() {
-        return symbolFromNomenclature;
+    public long getDataSetWID() {
+        return dataSetWID;
     }
 
-    public void setSymbolFromNomenclature(String symbolFromNomenclature) {
-        this.symbolFromNomenclature = symbolFromNomenclature;
+    public void setDataSetWID(long dataSetWID) {
+        this.dataSetWID = dataSetWID;
     }
 
-    public long getTaxID() {
-        return taxID;
+    public DataSet getDataSet() {
+        return dataSet;
     }
 
-    public void setTaxID(long taxID) {
-        this.taxID = taxID;
+    public void setDataSet(DataSet dataSet) {
+        this.dataSet = dataSet;
     }
 
     public Taxonomy getTaxonomy() {
@@ -441,20 +363,148 @@ public class GeneInfo implements Serializable {
         this.taxonomy = taxonomy;
     }
 
-    public String getTypeOfGene() {
-        return typeOfGene;
+    public GenePTT getGenePTT() {
+        return genePTT;
     }
 
-    public void setTypeOfGene(String typeOfGene) {
-        this.typeOfGene = typeOfGene;
+    public void setGenePTT(GenePTT genePTT) {
+        this.genePTT = genePTT;
     }
 
-    public Long getWid() {
-        return wid;
+    public Set<GeneRNT> getGeneRNT() {
+        return geneRNT;
     }
 
-    public void setWid(Long wid) {
-        this.wid = wid;
+    public void setGeneRNT(Set<GeneRNT> geneRNT) {
+        this.geneRNT = geneRNT;
+    }
+
+    public Set<Ontology> getOntology() {
+        return ontology;
+    }
+
+    public void setOntology(Set<Ontology> ontology) {
+        this.ontology = ontology;
+    }
+
+    public Set<Protein> getProtein() {
+        return protein;
+    }
+
+    public void setProtein(Set<Protein> protein) {
+        this.protein = protein;
+    }
+
+    public Set<KEGGGene> getkEGGGenes() {
+        return kEGGGenes;
+    }
+
+    public void setkEGGGenes(Set<KEGGGene> kEGGGenes) {
+        this.kEGGGenes = kEGGGenes;
+    }
+
+    public Set<KEGGPathway> getkEGGPathways() {
+        return kEGGPathways;
+    }
+
+    public void setkEGGPathways(Set<KEGGPathway> kEGGPathways) {
+        this.kEGGPathways = kEGGPathways;
+    }
+
+    public Set<OMIM> getOmim() {
+        return omim;
+    }
+
+    public void setOmim(Set<OMIM> omim) {
+        this.omim = omim;
+    }
+
+    public Collection<Gene2Ensembl> getGene2Ensembl() {
+        return gene2Ensembl;
+    }
+
+    public void setGene2Ensembl(Collection<Gene2Ensembl> gene2Ensembl) {
+        this.gene2Ensembl = gene2Ensembl;
+    }
+
+    public Collection<GeneInfoSynonyms> getGeneInfoSynonyms() {
+        return geneInfoSynonyms;
+    }
+
+    public void setGeneInfoSynonyms(Collection<GeneInfoSynonyms> geneInfoSynonyms) {
+        this.geneInfoSynonyms = geneInfoSynonyms;
+    }
+
+    public Collection<GeneInfoDBXrefs> getGeneInfoDBXrefs() {
+        return geneInfoDBXrefs;
+    }
+
+    public void setGeneInfoDBXrefs(Collection<GeneInfoDBXrefs> geneInfoDBXrefs) {
+        this.geneInfoDBXrefs = geneInfoDBXrefs;
+    }
+
+    public Collection<Gene2PMID> getGene2PMID() {
+        return gene2PMID;
+    }
+
+    public void setGene2PMID(Collection<Gene2PMID> gene2PMID) {
+        this.gene2PMID = gene2PMID;
+    }
+
+    public Collection<Gene2STS> getGene2STS() {
+        return gene2STS;
+    }
+
+    public void setGene2STS(Collection<Gene2STS> gene2STS) {
+        this.gene2STS = gene2STS;
+    }
+
+    public Collection<Gene2UniGene> getGene2UniGene() {
+        return gene2UniGene;
+    }
+
+    public void setGene2UniGene(Collection<Gene2UniGene> gene2UniGene) {
+        this.gene2UniGene = gene2UniGene;
+    }
+
+    public Collection<GeneGroup> getGeneGroup() {
+        return geneGroup;
+    }
+
+    public void setGeneGroup(Collection<GeneGroup> geneGroup) {
+        this.geneGroup = geneGroup;
+    }
+
+    public Collection<Gene2ProteinAccession> getGene2ProteinAccessions() {
+        return gene2ProteinAccessions;
+    }
+
+    public void setGene2ProteinAccessions(Collection<Gene2ProteinAccession> gene2ProteinAccessions) {
+        this.gene2ProteinAccessions = gene2ProteinAccessions;
+    }
+
+    public Collection<Gene2GenomicNucleotide> getGene2GenomicNucleotides() {
+        return gene2GenomicNucleotides;
+    }
+
+    public void setGene2GenomicNucleotides(Collection<Gene2GenomicNucleotide> gene2GenomicNucleotides) {
+        this.gene2GenomicNucleotides = gene2GenomicNucleotides;
+    }
+
+    public Collection<Gene2RNANucleotide> getGene2RNANucleotides() {
+        return gene2RNANucleotides;
+    }
+
+    public void setGene2RNANucleotides(Collection<Gene2RNANucleotide> gene2RNANucleotides) {
+        this.gene2RNANucleotides = gene2RNANucleotides;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + (this.wid != null ? this.wid.hashCode() : 0);
+        hash = 79 * hash + (int) (this.geneID ^ (this.geneID >>> 32));
+        return hash;
     }
 
     @Override
@@ -466,7 +516,7 @@ public class GeneInfo implements Serializable {
             return false;
         }
         final GeneInfo other = (GeneInfo) obj;
-        if (!Objects.equals(this.wid, other.wid)) {
+        if (this.wid != other.wid && (this.wid == null || !this.wid.equals(other.wid))) {
             return false;
         }
         if (this.geneID != other.geneID) {
@@ -475,135 +525,135 @@ public class GeneInfo implements Serializable {
         if (this.taxID != other.taxID) {
             return false;
         }
-        if (!Objects.equals(this.symbol, other.symbol)) {
+        if ((this.symbol == null) ? (other.symbol != null) : !this.symbol.equals(other.symbol)) {
             return false;
         }
-        if (!Objects.equals(this.locusTag, other.locusTag)) {
+        if ((this.locusTag == null) ? (other.locusTag != null) : !this.locusTag.equals(other.locusTag)) {
             return false;
         }
-        if (!Objects.equals(this.chromosome, other.chromosome)) {
+        if ((this.chromosome == null) ? (other.chromosome != null) : !this.chromosome.equals(other.chromosome)) {
             return false;
         }
-        if (!Objects.equals(this.mapLocation, other.mapLocation)) {
+        if ((this.mapLocation == null) ? (other.mapLocation != null) : !this.mapLocation.equals(other.mapLocation)) {
             return false;
         }
-        if (!Objects.equals(this.description, other.description)) {
+        if ((this.description == null) ? (other.description != null) : !this.description.equals(other.description)) {
             return false;
         }
-        if (!Objects.equals(this.typeOfGene, other.typeOfGene)) {
+        if ((this.typeOfGene == null) ? (other.typeOfGene != null) : !this.typeOfGene.equals(other.typeOfGene)) {
             return false;
         }
-        if (!Objects.equals(this.symbolFromNomenclature, other.symbolFromNomenclature)) {
+        if ((this.symbolFromNomenclature == null) ? (other.symbolFromNomenclature != null) : !this.symbolFromNomenclature.equals(other.symbolFromNomenclature)) {
             return false;
         }
-        if (!Objects.equals(this.fullNameFromNomenclatureAuthority, other.fullNameFromNomenclatureAuthority)) {
+        if ((this.fullNameFromNomenclatureAuthority == null) ? (other.fullNameFromNomenclatureAuthority != null) : !this.fullNameFromNomenclatureAuthority.equals(other.fullNameFromNomenclatureAuthority)) {
             return false;
         }
-        if (!Objects.equals(this.nomenclatureStatus, other.nomenclatureStatus)) {
+        if ((this.nomenclatureStatus == null) ? (other.nomenclatureStatus != null) : !this.nomenclatureStatus.equals(other.nomenclatureStatus)) {
             return false;
         }
-        if (!Objects.equals(this.otherDesignations, other.otherDesignations)) {
+        if ((this.otherDesignations == null) ? (other.otherDesignations != null) : !this.otherDesignations.equals(other.otherDesignations)) {
             return false;
         }
-        if (!Objects.equals(this.modificationDate, other.modificationDate)) {
+        if (this.modificationDate != other.modificationDate && (this.modificationDate == null || !this.modificationDate.equals(other.modificationDate))) {
             return false;
         }
         if (this.dataSetWID != other.dataSetWID) {
             return false;
         }
-        if (!Objects.equals(this.geneInfoSynonyms, other.geneInfoSynonyms)) {
+        if (this.gene2Ensembl != other.gene2Ensembl && (this.gene2Ensembl == null || !this.gene2Ensembl.equals(other.gene2Ensembl))) {
             return false;
         }
-        if (!Objects.equals(this.geneInfoDBXrefs, other.geneInfoDBXrefs)) {
+        if (this.geneInfoSynonyms != other.geneInfoSynonyms && (this.geneInfoSynonyms == null || !this.geneInfoSynonyms.equals(other.geneInfoSynonyms))) {
             return false;
         }
-        if (!Objects.equals(this.geneGroup, other.geneGroup)) {
+        if (this.geneInfoDBXrefs != other.geneInfoDBXrefs && (this.geneInfoDBXrefs == null || !this.geneInfoDBXrefs.equals(other.geneInfoDBXrefs))) {
             return false;
         }
-        if (!Objects.equals(this.gene2Accession, other.gene2Accession)) {
+        if (this.gene2PMID != other.gene2PMID && (this.gene2PMID == null || !this.gene2PMID.equals(other.gene2PMID))) {
             return false;
         }
-        if (!Objects.equals(this.gene2Ensembl, other.gene2Ensembl)) {
+        if (this.gene2STS != other.gene2STS && (this.gene2STS == null || !this.gene2STS.equals(other.gene2STS))) {
             return false;
         }
-        if (!Objects.equals(this.gene2PMID, other.gene2PMID)) {
+        if (this.gene2UniGene != other.gene2UniGene && (this.gene2UniGene == null || !this.gene2UniGene.equals(other.gene2UniGene))) {
             return false;
         }
-        if (!Objects.equals(this.gene2STS, other.gene2STS)) {
+        if (this.geneGroup != other.geneGroup && (this.geneGroup == null || !this.geneGroup.equals(other.geneGroup))) {
             return false;
         }
-        if (!Objects.equals(this.gene2UniGene, other.gene2UniGene)) {
+        if (this.gene2ProteinAccessions != other.gene2ProteinAccessions && (this.gene2ProteinAccessions == null || !this.gene2ProteinAccessions.equals(other.gene2ProteinAccessions))) {
+            return false;
+        }
+        if (this.gene2GenomicNucleotides != other.gene2GenomicNucleotides && (this.gene2GenomicNucleotides == null || !this.gene2GenomicNucleotides.equals(other.gene2GenomicNucleotides))) {
+            return false;
+        }
+        if (this.gene2RNANucleotides != other.gene2RNANucleotides && (this.gene2RNANucleotides == null || !this.gene2RNANucleotides.equals(other.gene2RNANucleotides))) {
             return false;
         }
         return true;
     }
 
     @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (wid != null ? wid.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
     public String toString() {
         String tSynonym = null;
-        StringBuilder ontologies = new StringBuilder();
-        StringBuilder gSynonym = new StringBuilder();
-        StringBuilder gXref = new StringBuilder();
-        StringBuilder gGroup = new StringBuilder();
-        StringBuilder gAccession = new StringBuilder();
-        StringBuilder gEnsembl = new StringBuilder();
-        StringBuilder g2Mim = new StringBuilder();
-        StringBuilder g2PMID = new StringBuilder();
-        StringBuilder g2STS = new StringBuilder();
-        StringBuilder g2UniGene = new StringBuilder();
+        StringBuilder toAdd = new StringBuilder();
 
-        if (taxonomy.getSynonym() != null) {
+        if (taxonomy != null && taxonomy.getSynonym() != null) {
             for (TaxonomySynonym taxonomyWIDSynonym : taxonomy.getSynonym().values()) {
                 if (taxonomyWIDSynonym.getNameClass().getNameClass().equals("scientific name")) {
                     tSynonym = taxonomyWIDSynonym.getTaxonomySynonymPK().getSynonym();
                 }
             }
         }
-        if (!getGeneInfoSynonyms().isEmpty()) {
-            for (GeneInfoSynonyms geneSynonyms : getGeneInfoSynonyms().values()) {
-                gSynonym.append("\t").append(geneSynonyms).append("\n");
+        if (getGeneInfoSynonyms() != null && !getGeneInfoSynonyms().isEmpty()) {
+            for (GeneInfoSynonyms geneSynonyms : getGeneInfoSynonyms()) {
+                toAdd.append("\t").append(geneSynonyms).append("\n");
             }
         }
-        if (!getGeneInfoDBXrefs().isEmpty()) {
-            for (GeneInfoDBXrefs geneDBXrefs : getGeneInfoDBXrefs().values()) {
-                gXref.append("\t").append(geneDBXrefs).append("\n");
+        if (getGeneInfoDBXrefs() != null && !getGeneInfoDBXrefs().isEmpty()) {
+            for (GeneInfoDBXrefs geneDBXrefs : getGeneInfoDBXrefs()) {
+                toAdd.append("\t").append(geneDBXrefs).append("\n");
             }
         }
-        if (!getGeneGroup().isEmpty()) {
-            for (GeneGroup geGroup : getGeneGroup().values()) {
-                gGroup.append("\t").append(geGroup).append("\n");
+        if (getGeneGroup() != null && !getGeneGroup().isEmpty()) {
+            for (GeneGroup geGroup : getGeneGroup()) {
+                toAdd.append("\t").append(geGroup).append("\n");
             }
         }
-        if (!getGene2Accession().isEmpty()) {
-            for (Gene2Accession ge2Accession : getGene2Accession().values()) {
-                gAccession.append("\t").append(ge2Accession).append("\n");
-            }
-        }
-        if (!getGene2Ensembl().isEmpty()) {
+        if (getGene2Ensembl() != null && !getGene2Ensembl().isEmpty()) {
             for (Gene2Ensembl ge2Ensembl : getGene2Ensembl()) {
-                gEnsembl.append("\t").append(ge2Ensembl).append("\n");
+                toAdd.append("\t").append(ge2Ensembl).append("\n");
             }
         }
-        if (!getGene2PMID().isEmpty()) {
-            for (Gene2PMID genePMID : getGene2PMID().values()) {
-                g2PMID.append("\t").append(genePMID).append("\n");
+        if (getGene2PMID() != null && !getGene2PMID().isEmpty()) {
+            for (Gene2PMID genePMID : getGene2PMID()) {
+                toAdd.append("\t").append(genePMID).append("\n");
             }
         }
-        if (!getGene2STS().isEmpty()) {
-            for (Gene2STS geneSTS : getGene2STS().values()) {
-                g2STS.append("\t").append(geneSTS).append("\n");
+        if (getGene2STS() != null && !getGene2STS().isEmpty()) {
+            for (Gene2STS geneSTS : getGene2STS()) {
+                toAdd.append("\t").append(geneSTS).append("\n");
             }
         }
-        if (!getGene2UniGene().isEmpty()) {
-            for (Gene2UniGene geneUniGene : getGene2UniGene().values()) {
-                g2UniGene.append("\t").append(geneUniGene).append("\n");
+        if (getGene2UniGene() != null && !getGene2UniGene().isEmpty()) {
+            for (Gene2UniGene geneUniGene : getGene2UniGene()) {
+                toAdd.append("\t").append(geneUniGene).append("\n");
+            }
+        }
+        if (gene2GenomicNucleotides != null && !gene2GenomicNucleotides.isEmpty()) {
+            for (Gene2GenomicNucleotide g : gene2GenomicNucleotides) {
+                toAdd.append("\t").append(g).append("\n");
+            }
+        }
+        if (gene2ProteinAccessions != null && !gene2ProteinAccessions.isEmpty()) {
+            for (Gene2ProteinAccession g : gene2ProteinAccessions) {
+                toAdd.append("\t").append(g).append("\n");
+            }
+        }
+        if (gene2RNANucleotides != null && !gene2RNANucleotides.isEmpty()) {
+            for (Gene2RNANucleotide g : gene2RNANucleotides) {
+                toAdd.append("\t").append(g).append("\n");
             }
         }
 
@@ -625,15 +675,6 @@ public class GeneInfo implements Serializable {
                 + " modificationDate=" + modificationDate
                 + " dataSetWID=" + dataSetWID
                 + "}\n"
-                + ontologies
-                + gSynonym
-                + gXref
-                + gGroup
-                + gAccession
-                + gEnsembl
-                + g2Mim
-                + g2PMID
-                + g2STS
-                + g2UniGene;
+                + toAdd;
     }
 }
