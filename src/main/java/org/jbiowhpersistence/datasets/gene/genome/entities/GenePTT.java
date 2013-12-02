@@ -103,8 +103,6 @@ public class GenePTT implements Serializable {
     @XmlInverseReference(mappedBy="genePTT")
     private GeneInfo geneInfo;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "genePTT")
-    @XmlElement
-    @XmlInverseReference(mappedBy="genePTT")
     private Protein protein;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinTable(name = GenePTTTables.GENEPTT_HAS_TAXONOMY,
@@ -137,7 +135,6 @@ public class GenePTT implements Serializable {
         this.dataSetWID = dataSetWID;
     }
 
-    @XmlTransient
     public Taxonomy getTaxonomy() {
         return taxonomy;
     }
@@ -167,7 +164,6 @@ public class GenePTT implements Serializable {
         return pFrom;
     }
 
-    @XmlTransient
     public GeneInfo getGeneInfo() {
         return geneInfo;
     }

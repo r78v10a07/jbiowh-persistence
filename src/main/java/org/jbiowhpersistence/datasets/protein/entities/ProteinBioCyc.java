@@ -7,79 +7,73 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * This Class is the Protein BioCyc entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Aug 11, 2011
  */
-@Entity
+@Embeddable
 @Table(name = "ProteinBioCyc")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "ProteinBioCyc.findAll", query = "SELECT p FROM ProteinBioCyc p"),
-    @NamedQuery(name = "ProteinBioCyc.findByProteinWID", query = "SELECT p FROM ProteinBioCyc p WHERE p.proteinBioCycPK.proteinWID = :proteinWID"),
-    @NamedQuery(name = "ProteinBioCyc.findById", query = "SELECT p FROM ProteinBioCyc p WHERE p.proteinBioCycPK.id = :id")})
 public class ProteinBioCyc implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ProteinBioCycPK proteinBioCycPK;
-    // Internla relationship
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Protein_WID", insertable = false, unique = false, nullable = true, updatable = false)
-    private Protein protein;
+    @Basic(optional = false)
+    @Column(name = "Protein_WID")
+    private long proteinWID;
+    @Basic(optional = false)
+    @Column(name = "Id")
+    private String id;
 
     public ProteinBioCyc() {
     }
 
-    public ProteinBioCyc(ProteinBioCycPK proteinBioCycPK) {
-        this.proteinBioCycPK = proteinBioCycPK;
-    }
-
     public ProteinBioCyc(long proteinWID, String id) {
-        this.proteinBioCycPK = new ProteinBioCycPK(proteinWID, id);
+        this.proteinWID = proteinWID;
+        this.id = id;
     }
 
-    public Protein getProtein() {
-        return protein;
+    public long getProteinWID() {
+        return proteinWID;
     }
 
-    public void setProtein(Protein protein) {
-        this.protein = protein;
+    public void setProteinWID(long proteinWID) {
+        this.proteinWID = proteinWID;
     }
 
-    public ProteinBioCycPK getProteinBioCycPK() {
-        return proteinBioCycPK;
+    public String getId() {
+        return id;
     }
 
-    public void setProteinBioCycPK(ProteinBioCycPK proteinBioCycPK) {
-        this.proteinBioCycPK = proteinBioCycPK;
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (proteinBioCycPK != null ? proteinBioCycPK.hashCode() : 0);
+        int hash = 5;
+        hash = 53 * hash + (int) (this.proteinWID ^ (this.proteinWID >>> 32));
+        hash = 53 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof ProteinBioCyc)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        ProteinBioCyc other = (ProteinBioCyc) object;
-        if ((this.proteinBioCycPK == null && other.proteinBioCycPK != null) || (this.proteinBioCycPK != null && !this.proteinBioCycPK.equals(other.proteinBioCycPK))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final ProteinBioCyc other = (ProteinBioCyc) obj;
+        if (this.proteinWID != other.proteinWID) {
+            return false;
+        }
+        return !((this.id == null) ? (other.id != null) : !this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
-        return "ProteinBioCyc{"
-                + " ProteinWID=" + proteinBioCycPK.getProteinWID()
-                + " Id=" + proteinBioCycPK.getId()
-                + '}';
+        return "ProteinBioCyc{" + "proteinWID=" + proteinWID + ", id=" + id + '}';
     }
+
 }

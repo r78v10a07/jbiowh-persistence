@@ -7,79 +7,72 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * This Class is the Protein DrugBank entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Aug 11, 2011
  */
-@Entity
+@Embeddable
 @Table(name = "ProteinDrugBank")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "ProteinDrugBank.findAll", query = "SELECT p FROM ProteinDrugBank p"),
-    @NamedQuery(name = "ProteinDrugBank.findByProteinWID", query = "SELECT p FROM ProteinDrugBank p WHERE p.proteinDrugBankPK.proteinWID = :proteinWID"),
-    @NamedQuery(name = "ProteinDrugBank.findById", query = "SELECT p FROM ProteinDrugBank p WHERE p.proteinDrugBankPK.id = :id")})
 public class ProteinDrugBank implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ProteinDrugBankPK proteinDrugBankPK;
-    // Internla relationship
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Protein_WID", insertable = false, unique = false, nullable = true, updatable = false)
-    private Protein protein;
+    @Basic(optional = false)
+    @Column(name = "Protein_WID")
+    private long proteinWID;
+    @Basic(optional = false)
+    @Column(name = "Id")
+    private String id;
 
     public ProteinDrugBank() {
     }
 
-    public ProteinDrugBank(ProteinDrugBankPK proteinDrugBankPK) {
-        this.proteinDrugBankPK = proteinDrugBankPK;
-    }
-
     public ProteinDrugBank(long proteinWID, String id) {
-        this.proteinDrugBankPK = new ProteinDrugBankPK(proteinWID, id);
+        this.proteinWID = proteinWID;
+        this.id = id;
     }
 
-    public Protein getProtein() {
-        return protein;
+    public long getProteinWID() {
+        return proteinWID;
     }
 
-    public void setProtein(Protein protein) {
-        this.protein = protein;
+    public void setProteinWID(long proteinWID) {
+        this.proteinWID = proteinWID;
     }
 
-    public ProteinDrugBankPK getProteinDrugBankPK() {
-        return proteinDrugBankPK;
+    public String getId() {
+        return id;
     }
 
-    public void setProteinDrugBankPK(ProteinDrugBankPK proteinDrugBankPK) {
-        this.proteinDrugBankPK = proteinDrugBankPK;
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (proteinDrugBankPK != null ? proteinDrugBankPK.hashCode() : 0);
+        int hash = 5;
+        hash = 29 * hash + (int) (this.proteinWID ^ (this.proteinWID >>> 32));
+        hash = 29 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof ProteinDrugBank)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        ProteinDrugBank other = (ProteinDrugBank) object;
-        if ((this.proteinDrugBankPK == null && other.proteinDrugBankPK != null) || (this.proteinDrugBankPK != null && !this.proteinDrugBankPK.equals(other.proteinDrugBankPK))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final ProteinDrugBank other = (ProteinDrugBank) obj;
+        if (this.proteinWID != other.proteinWID) {
+            return false;
+        }
+        return !((this.id == null) ? (other.id != null) : !this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
-        return "ProteinDrugBank{"
-                + " ProteinWID=" + proteinDrugBankPK.getProteinWID()
-                + " Id=" + proteinDrugBankPK.getId()
-                + '}';
+        return "ProteinDrugBank{" + "proteinWID=" + proteinWID + ", id=" + id + '}';
     }
 }

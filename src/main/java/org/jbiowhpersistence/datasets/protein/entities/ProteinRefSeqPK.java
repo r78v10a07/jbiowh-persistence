@@ -64,10 +64,7 @@ public class ProteinRefSeqPK implements Serializable {
         if (this.proteinWID != other.proteinWID) {
             return false;
         }
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override

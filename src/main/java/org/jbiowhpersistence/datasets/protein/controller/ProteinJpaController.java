@@ -21,36 +21,22 @@ import org.jbiowhpersistence.datasets.protclust.entities.UniRefEntry;
 import org.jbiowhpersistence.datasets.protclust.entities.UniRefMember;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
 import org.jbiowhpersistence.datasets.protein.entities.ProteinAccessionNumber;
-import org.jbiowhpersistence.datasets.protein.entities.ProteinAccessionNumberPK;
 import org.jbiowhpersistence.datasets.protein.entities.ProteinBioCyc;
-import org.jbiowhpersistence.datasets.protein.entities.ProteinBioCycPK;
 import org.jbiowhpersistence.datasets.protein.entities.ProteinComment;
 import org.jbiowhpersistence.datasets.protein.entities.ProteinDBReference;
 import org.jbiowhpersistence.datasets.protein.entities.ProteinDIP;
-import org.jbiowhpersistence.datasets.protein.entities.ProteinDIPPK;
 import org.jbiowhpersistence.datasets.protein.entities.ProteinDrugBank;
-import org.jbiowhpersistence.datasets.protein.entities.ProteinDrugBankPK;
 import org.jbiowhpersistence.datasets.protein.entities.ProteinEC;
-import org.jbiowhpersistence.datasets.protein.entities.ProteinECPK;
 import org.jbiowhpersistence.datasets.protein.entities.ProteinFeature;
 import org.jbiowhpersistence.datasets.protein.entities.ProteinIntAct;
-import org.jbiowhpersistence.datasets.protein.entities.ProteinIntActPK;
 import org.jbiowhpersistence.datasets.protein.entities.ProteinKEGG;
-import org.jbiowhpersistence.datasets.protein.entities.ProteinKEGGPK;
 import org.jbiowhpersistence.datasets.protein.entities.ProteinKeyword;
 import org.jbiowhpersistence.datasets.protein.entities.ProteinLongName;
 import org.jbiowhpersistence.datasets.protein.entities.ProteinMINT;
-import org.jbiowhpersistence.datasets.protein.entities.ProteinMINTPK;
 import org.jbiowhpersistence.datasets.protein.entities.ProteinName;
-import org.jbiowhpersistence.datasets.protein.entities.ProteinNamePK;
 import org.jbiowhpersistence.datasets.protein.entities.ProteinPDB;
-import org.jbiowhpersistence.datasets.protein.entities.ProteinPDBPK;
 import org.jbiowhpersistence.datasets.protein.entities.ProteinPFAM;
-import org.jbiowhpersistence.datasets.protein.entities.ProteinPFAMPK;
 import org.jbiowhpersistence.datasets.protein.entities.ProteinPMID;
-import org.jbiowhpersistence.datasets.protein.entities.ProteinPMIDPK;
-import org.jbiowhpersistence.datasets.protein.entities.ProteinhasProteinKeyword;
-import org.jbiowhpersistence.datasets.protein.entities.ProteinhasProteinKeywordPK;
 import org.jbiowhpersistence.datasets.taxonomy.controller.TaxonomyJpaController;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
 import org.jbiowhpersistence.utils.controller.AbstractJpaController;
@@ -60,7 +46,8 @@ import org.jbiowhpersistence.utils.controller.exceptions.PreexistingEntityExcept
 /**
  * This class is the Protein Jpa Controller
  *
- * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2013-05-29 11:24:54 +0200 (Wed, 29 May 2013) $ $LastChangedRevision: 591 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2013-05-29 11:24:54 +0200
+ * (Wed, 29 May 2013) $ $LastChangedRevision: 591 $
  *
  * @since Sep 4, 2012
  */
@@ -90,44 +77,44 @@ public class ProteinJpaController extends AbstractJpaController<Protein> impleme
         if (protein.getProteinLongName() == null) {
             protein.setProteinLongName(new HashSet<ProteinLongName>());
         }
-        if (protein.getProteinhasProteinKeyword() == null) {
-            protein.setProteinhasProteinKeyword(new HashMap<ProteinhasProteinKeywordPK, ProteinhasProteinKeyword>());
+        if (protein.getProteinKeyword() == null) {
+            protein.setProteinKeyword(new HashSet<ProteinKeyword>());
         }
         if (protein.getProteinName() == null) {
-            protein.setProteinName(new HashMap<ProteinNamePK, ProteinName>());
+            protein.setProteinName(new HashSet<ProteinName>());
         }
         if (protein.getProteinAccessionNumber() == null) {
-            protein.setProteinAccessionNumber(new HashMap<ProteinAccessionNumberPK, ProteinAccessionNumber>());
+            protein.setProteinAccessionNumber(new HashSet<ProteinAccessionNumber>());
         }
         if (protein.getProteinPMID() == null) {
-            protein.setProteinPMID(new HashMap<ProteinPMIDPK, ProteinPMID>());
+            protein.setProteinPMID(new HashSet<ProteinPMID>());
         }
         if (protein.getProteinEC() == null) {
-            protein.setProteinEC(new HashMap<ProteinECPK, ProteinEC>());
+            protein.setProteinEC(new HashSet<ProteinEC>());
         }
         if (protein.getProteinKEGG() == null) {
-            protein.setProteinKEGG(new HashMap<ProteinKEGGPK, ProteinKEGG>());
+            protein.setProteinKEGG(new HashSet<ProteinKEGG>());
         }
         if (protein.getProteinBioCyc() == null) {
-            protein.setProteinBioCyc(new HashMap<ProteinBioCycPK, ProteinBioCyc>());
+            protein.setProteinBioCyc(new HashSet<ProteinBioCyc>());
         }
         if (protein.getProteinPDB() == null) {
-            protein.setProteinPDB(new HashMap<ProteinPDBPK, ProteinPDB>());
+            protein.setProteinPDB(new HashSet<ProteinPDB>());
         }
         if (protein.getProteinIntAct() == null) {
-            protein.setProteinIntAct(new HashMap<ProteinIntActPK, ProteinIntAct>());
+            protein.setProteinIntAct(new HashSet<ProteinIntAct>());
         }
         if (protein.getProteinDIP() == null) {
-            protein.setProteinDIP(new HashMap<ProteinDIPPK, ProteinDIP>());
+            protein.setProteinDIP(new HashSet<ProteinDIP>());
         }
         if (protein.getProteinMINT() == null) {
-            protein.setProteinMINT(new HashMap<ProteinMINTPK, ProteinMINT>());
+            protein.setProteinMINT(new HashSet<ProteinMINT>());
         }
         if (protein.getProteinDrugBank() == null) {
-            protein.setProteinDrugBank(new HashMap<ProteinDrugBankPK, ProteinDrugBank>());
+            protein.setProteinDrugBank(new HashSet<ProteinDrugBank>());
         }
         if (protein.getProteinPFAM() == null) {
-            protein.setProteinPFAM(new HashMap<ProteinPFAMPK, ProteinPFAM>());
+            protein.setProteinPFAM(new HashSet<ProteinPFAM>());
         }
         EntityManager em = null;
         try {
@@ -157,18 +144,6 @@ public class ProteinJpaController extends AbstractJpaController<Protein> impleme
                 }
                 protein.setProteinDBReference(attachedProteinDBReference);
             }
-            if (!protein.getProteinLongName().isEmpty()) {
-                Set<ProteinLongName> attachedProteinLongName = new HashSet();
-                for (ProteinLongName proteinLongNameProteinLongNameToAttach : protein.getProteinLongName()) {
-                    ProteinLongName proteinLongNameProteinLongName = em.find(proteinLongNameProteinLongNameToAttach.getClass(), proteinLongNameProteinLongNameToAttach.getWid());
-                    if (proteinLongNameProteinLongName != null) {
-                        attachedProteinLongName.add(proteinLongNameProteinLongName);
-                    } else {
-                        attachedProteinLongName.add(proteinLongNameProteinLongNameToAttach);
-                    }
-                }
-                protein.setProteinLongName(attachedProteinLongName);
-            }
             if (!protein.getProteinComment().isEmpty()) {
                 Set<ProteinComment> attachedProteinComment = new HashSet();
                 for (ProteinComment proteinCommentProteinCommentToAttach : protein.getProteinComment()) {
@@ -181,27 +156,18 @@ public class ProteinJpaController extends AbstractJpaController<Protein> impleme
                 }
                 protein.setProteinComment(attachedProteinComment);
             }
-            if (!protein.getProteinhasProteinKeyword().isEmpty()) {
-                ProteinKeywordJpaController kController = new ProteinKeywordJpaController(emf);
-                Map<ProteinhasProteinKeywordPK, ProteinhasProteinKeyword> attachProteinhasProteinKeyword = new HashMap();
-                for (ProteinhasProteinKeyword proteinhasProteinKeywordToAttach : protein.getProteinhasProteinKeyword().values()) {
-                    ProteinhasProteinKeyword proteinhasProteinKeyword = em.find(proteinhasProteinKeywordToAttach.getClass(), proteinhasProteinKeywordToAttach.getProteinhasProteinKeywordPK());
-                    if (proteinhasProteinKeyword != null) {
-                        attachProteinhasProteinKeyword.put(proteinhasProteinKeyword.getProteinhasProteinKeywordPK(), proteinhasProteinKeyword);
+            
+            if (!protein.getProteinKeyword().isEmpty()) {
+                Set<ProteinKeyword> attachedProteinKeyword = new HashSet();
+                for (ProteinKeyword proteinKeywordProteinKeywordToAttach : protein.getProteinKeyword()) {
+                    ProteinKeyword proteinKeywordProteinKeyword = em.find(proteinKeywordProteinKeywordToAttach.getClass(), proteinKeywordProteinKeywordToAttach.getWid());
+                    if (proteinKeywordProteinKeyword != null) {
+                        attachedProteinKeyword.add(proteinKeywordProteinKeyword);
                     } else {
-                        ProteinKeyword proteinKeyword = em.find(ProteinKeyword.class, proteinhasProteinKeywordToAttach.getProteinKeyword().getWid());
-                        if (proteinKeyword != null) {
-                            proteinhasProteinKeywordToAttach.setProteinKeyword(proteinKeyword);
-                        } else {
-                            proteinKeyword = proteinhasProteinKeywordToAttach.getProteinKeyword();
-                            proteinKeyword.setProteinhasProteinKeyword(null);
-                            kController.create(proteinKeyword);
-                            proteinhasProteinKeywordToAttach.setProteinKeyword(em.find(ProteinKeyword.class, proteinKeyword.getWid()));
-                        }
-                        attachProteinhasProteinKeyword.put(proteinhasProteinKeywordToAttach.getProteinhasProteinKeywordPK(), proteinhasProteinKeywordToAttach);
+                        attachedProteinKeyword.add(proteinKeywordProteinKeywordToAttach);
                     }
                 }
-                protein.setProteinhasProteinKeyword(attachProteinhasProteinKeyword);
+                protein.setProteinKeyword(attachedProteinKeyword);
             }
             protein.setTaxonomy(createTaxonomy(emf, em, protein.getTaxonomy()));
             if (!protein.getTaxonomyHost().isEmpty()) {
@@ -218,7 +184,7 @@ public class ProteinJpaController extends AbstractJpaController<Protein> impleme
                 }
                 protein.setTaxonomyHost(attachTaxonomyHost);
             }
-            GenePTT genePTT = protein.getGenePTT();            
+            GenePTT genePTT = protein.getGenePTT();
             protein.setTaxonomy(createTaxonomy(emf, em, protein.getTaxonomy()));
             if (genePTT != null) {
                 GenePTTJpaController genController = new GenePTTJpaController(emf);
@@ -232,7 +198,7 @@ public class ProteinJpaController extends AbstractJpaController<Protein> impleme
                     genePTT = em.getReference(GenePTT.class, genePTT.getProteinGi());
                     protein.setGenePTT(genePTT);
                 }
-            }   
+            }
             protein.setOntology(createOntology(emf, em, protein.getOntology()));
             protein.setGeneInfo(createGeneInfo(emf, em, protein.getGeneInfo()));
             protein.setDrugBank(createDrugBank(emf, em, protein.getDrugBank()));
@@ -296,8 +262,6 @@ public class ProteinJpaController extends AbstractJpaController<Protein> impleme
             Set<ProteinFeature> proteinFeatureNew = protein.getProteinFeature();
             Set<ProteinDBReference> proteinDBReferenceOld = persistentProtein.getProteinDBReference();
             Set<ProteinDBReference> proteinDBReferenceNew = protein.getProteinDBReference();
-            Set<ProteinLongName> proteinLongNameOld = persistentProtein.getProteinLongName();
-            Set<ProteinLongName> proteinLongNameNew = protein.getProteinLongName();
             Set<Ontology> ontologyOld = persistentProtein.getOntology();
             Set<Ontology> ontologyNew = protein.getOntology();
             Set<GeneInfo> attachedGeneInfoNew = new HashSet();
@@ -395,20 +359,13 @@ public class ProteinJpaController extends AbstractJpaController<Protein> impleme
             }
             proteinDBReferenceNew = attachedProteinDBReferenceNew;
             protein.setProteinDBReference(proteinDBReferenceNew);
-            Set<ProteinLongName> attachedProteinLongNameNew = new HashSet();
-            for (ProteinLongName proteinLongNameNewProteinLongNameToAttach : proteinLongNameNew) {
-                proteinLongNameNewProteinLongNameToAttach = em.getReference(proteinLongNameNewProteinLongNameToAttach.getClass(), proteinLongNameNewProteinLongNameToAttach.getWid());
-                attachedProteinLongNameNew.add(proteinLongNameNewProteinLongNameToAttach);
-            }
-            proteinLongNameNew = attachedProteinLongNameNew;
-            protein.setProteinLongName(proteinLongNameNew);
             Set<Ontology> attachedOntologyNew = new HashSet();
             for (Ontology ontologyNewOntologyToAttach : ontologyNew) {
                 ontologyNewOntologyToAttach = em.getReference(ontologyNewOntologyToAttach.getClass(), ontologyNewOntologyToAttach.getWid());
                 attachedOntologyNew.add(ontologyNewOntologyToAttach);
             }
             ontologyNew = attachedOntologyNew;
-            protein.setOntology(ontologyNew);            
+            protein.setOntology(ontologyNew);
             protein = em.merge(protein);
             if (genePTTNew != null && !genePTTNew.equals(genePTTOld)) {
                 Protein oldProteinOfGenePTT = genePTTNew.getProtein();
@@ -595,23 +552,6 @@ public class ProteinJpaController extends AbstractJpaController<Protein> impleme
                     }
                 }
             }
-            for (ProteinLongName proteinLongNameOldProteinLongName : proteinLongNameOld) {
-                if (!proteinLongNameNew.contains(proteinLongNameOldProteinLongName)) {
-                    proteinLongNameOldProteinLongName.setProtein(null);
-                    proteinLongNameOldProteinLongName = em.merge(proteinLongNameOldProteinLongName);
-                }
-            }
-            for (ProteinLongName proteinLongNameNewProteinLongName : proteinLongNameNew) {
-                if (!proteinLongNameOld.contains(proteinLongNameNewProteinLongName)) {
-                    Protein oldProteinOfProteinLongNameNewProteinLongName = proteinLongNameNewProteinLongName.getProtein();
-                    proteinLongNameNewProteinLongName.setProtein(protein);
-                    proteinLongNameNewProteinLongName = em.merge(proteinLongNameNewProteinLongName);
-                    if (oldProteinOfProteinLongNameNewProteinLongName != null && !oldProteinOfProteinLongNameNewProteinLongName.equals(protein)) {
-                        oldProteinOfProteinLongNameNewProteinLongName.getProteinLongName().remove(proteinLongNameNewProteinLongName);
-                        em.merge(oldProteinOfProteinLongNameNewProteinLongName);
-                    }
-                }
-            }
             for (Ontology ontologyOldOntology : ontologyOld) {
                 if (!ontologyNew.contains(ontologyOldOntology)) {
                     ontologyOldOntology.getProtein().remove(protein);
@@ -722,11 +662,6 @@ public class ProteinJpaController extends AbstractJpaController<Protein> impleme
             for (ProteinDBReference proteinDBReferenceProteinDBReference : proteinDBReference) {
                 proteinDBReferenceProteinDBReference.setProtein(null);
                 proteinDBReferenceProteinDBReference = em.merge(proteinDBReferenceProteinDBReference);
-            }
-            Set<ProteinLongName> proteinLongName = protein.getProteinLongName();
-            for (ProteinLongName proteinLongNameProteinLongName : proteinLongName) {
-                proteinLongNameProteinLongName.setProtein(null);
-                proteinLongNameProteinLongName = em.merge(proteinLongNameProteinLongName);
             }
             Set<Ontology> ontology = protein.getOntology();
             for (Ontology ontologyOntology : ontology) {

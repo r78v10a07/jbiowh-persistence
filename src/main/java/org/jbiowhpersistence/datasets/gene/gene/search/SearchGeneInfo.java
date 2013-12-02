@@ -235,13 +235,13 @@ public class SearchGeneInfo extends SearchFactory implements JBioWHSearch {
         HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
             if (field.equals(SYNONYM)) {
-                data.put(field, "g.geneInfoSynonyms");
+                data.put(field, "g.geneInfoSynonym");
             } else if (field.equals(PROTEINGI) || field.equals(PROTEINACCESSION)) {
-                data.put(field, "g.gene2ProteinAccessions");
+                data.put(field, "g.gene2ProteinAccession");
             } else if (field.equals(RNANUCLEOTIDEGI) || field.equals(RNANUCLEOTIDEACCESSION)) {
-                data.put(field, "g.gene2RNANucleotides");
+                data.put(field, "g.gene2RNANucleotide");
             } else if (field.equals(GENOMICNUCLEOTIDEGI) || field.equals(GENOMICNUCLEOTIDEACCESSION)) {
-                data.put(field, "g.gene2GenomicNucleotides");
+                data.put(field, "g.gene2GenomicNucleotide");
             } else {
                 data.put(field, "");
             }

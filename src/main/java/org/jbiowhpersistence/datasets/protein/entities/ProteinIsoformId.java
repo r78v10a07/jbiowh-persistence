@@ -2,84 +2,75 @@ package org.jbiowhpersistence.datasets.protein.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * This Class is the Protein Isoform Id entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Aug 11, 2011
  */
-@Entity
+@Embeddable
 @Table(name = "ProteinIsoformId")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "ProteinIsoformId.findAll", query = "SELECT p FROM ProteinIsoformId p"),
-    @NamedQuery(name = "ProteinIsoformId.findByProteinCommentIsoformWID", query = "SELECT p FROM ProteinIsoformId p WHERE p.proteinIsoformIdPK.proteinCommentIsoformWID = :proteinCommentIsoformWID"),
-    @NamedQuery(name = "ProteinIsoformId.findById", query = "SELECT p FROM ProteinIsoformId p WHERE p.proteinIsoformIdPK.id = :id")})
 public class ProteinIsoformId implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ProteinIsoformIdPK proteinIsoformIdPK;
-    // Internla relationship
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ProteinCommentIsoform_WID", insertable = false, unique = false, nullable = true, updatable = false)
-    private ProteinCommentIsoform proteinCommentIsoform;
+    @Basic(optional = false)
+    @Column(name = "ProteinCommentIsoform_WID")
+    private long proteinCommentIsoformWID;
+    @Basic(optional = false)
+    @Column(name = "Id")
+    private String id;
 
     public ProteinIsoformId() {
     }
 
-    public ProteinIsoformId(ProteinIsoformIdPK proteinIsoformIdPK) {
-        this.proteinIsoformIdPK = proteinIsoformIdPK;
-    }
-
     public ProteinIsoformId(long proteinCommentIsoformWID, String id) {
-        this.proteinIsoformIdPK = new ProteinIsoformIdPK(proteinCommentIsoformWID, id);
+        this.proteinCommentIsoformWID = proteinCommentIsoformWID;
+        this.id = id;
     }
 
-    public ProteinCommentIsoform getProteinCommentIsoform() {
-        return proteinCommentIsoform;
+    public long getProteinCommentIsoformWID() {
+        return proteinCommentIsoformWID;
     }
 
-    public void setProteinCommentIsoform(ProteinCommentIsoform proteinCommentIsoform) {
-        this.proteinCommentIsoform = proteinCommentIsoform;
+    public void setProteinCommentIsoformWID(long proteinCommentIsoformWID) {
+        this.proteinCommentIsoformWID = proteinCommentIsoformWID;
     }
 
-    public ProteinIsoformIdPK getProteinIsoformIdPK() {
-        return proteinIsoformIdPK;
+    public String getId() {
+        return id;
     }
 
-    public void setProteinIsoformIdPK(ProteinIsoformIdPK proteinIsoformIdPK) {
-        this.proteinIsoformIdPK = proteinIsoformIdPK;
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (proteinIsoformIdPK != null ? proteinIsoformIdPK.hashCode() : 0);
+        int hash = 5;
+        hash = 79 * hash + (int) (this.proteinCommentIsoformWID ^ (this.proteinCommentIsoformWID >>> 32));
+        hash = 79 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof ProteinIsoformId)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        ProteinIsoformId other = (ProteinIsoformId) object;
-        if ((this.proteinIsoformIdPK == null && other.proteinIsoformIdPK != null) || (this.proteinIsoformIdPK != null && !this.proteinIsoformIdPK.equals(other.proteinIsoformIdPK))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final ProteinIsoformId other = (ProteinIsoformId) obj;
+        if (this.proteinCommentIsoformWID != other.proteinCommentIsoformWID) {
+            return false;
+        }
+        return !((this.id == null) ? (other.id != null) : !this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
-        return "ProteinIsoformId{"
-                + " IsoformWID=" + proteinIsoformIdPK.getProteinCommentIsoformWID()
-                + " Id=" + proteinIsoformIdPK.getId()
-                + '}';
+        return "ProteinIsoformId{" + "proteinCommentIsoformWID=" + proteinCommentIsoformWID + ", id=" + id + '}';
     }
 }

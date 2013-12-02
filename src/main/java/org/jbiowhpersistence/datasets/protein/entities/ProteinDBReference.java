@@ -1,19 +1,18 @@
 package org.jbiowhpersistence.datasets.protein.entities;
 
 import java.io.Serializable;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.Collection;
 import java.util.Objects;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This Class is the Protein DB reference entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Aug 11, 2011
  */
 @Entity
@@ -48,9 +47,13 @@ public class ProteinDBReference implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Protein_WID", insertable = false, unique = false, nullable = true, updatable = false)
     private Protein protein;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "proteinDBReference")
-    @MapKey(name = "proteinDBReferencePropertyPK")
-    private Map<ProteinDBReferencePropertyPK, ProteinDBReferenceProperty> proteinDBReferenceProperty;
+    @ElementCollection
+    @CollectionTable(
+            name = "ProteinDBReferenceProperty",
+            joinColumns
+            = @JoinColumn(name = "ProteinDBReference_WID"))
+    @XmlElementWrapper( name="ProteinDBReferencePropertys" )
+    private Collection<ProteinDBReferenceProperty> proteinDBReferenceProperty;
 
     public ProteinDBReference() {
     }
@@ -64,23 +67,6 @@ public class ProteinDBReference implements Serializable {
         this.proteinWID = proteinWID;
         this.type = type;
         this.id = id;
-    }
-
-    @XmlTransient
-    public Map<ProteinDBReferencePropertyPK, ProteinDBReferenceProperty> getProteinDBReferenceProperty() {
-        return proteinDBReferenceProperty;
-    }
-
-    public void setProteinDBReferenceProperty(Map<ProteinDBReferencePropertyPK, ProteinDBReferenceProperty> proteinDBReferenceProperty) {
-        this.proteinDBReferenceProperty = proteinDBReferenceProperty;
-    }
-
-    public Protein getProtein() {
-        return protein;
-    }
-
-    public void setProtein(Protein protein) {
-        this.protein = protein;
     }
 
     public Long getWid() {
@@ -123,6 +109,22 @@ public class ProteinDBReference implements Serializable {
         this.evidence = evidence;
     }
 
+    public Protein getProtein() {
+        return protein;
+    }
+
+    public void setProtein(Protein protein) {
+        this.protein = protein;
+    }
+
+    public Collection<ProteinDBReferenceProperty> getProteinDBReferenceProperty() {
+        return proteinDBReferenceProperty;
+    }
+
+    public void setProteinDBReferenceProperty(Collection<ProteinDBReferenceProperty> proteinDBReferenceProperty) {
+        this.proteinDBReferenceProperty = proteinDBReferenceProperty;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -147,10 +149,7 @@ public class ProteinDBReference implements Serializable {
         if (!Objects.equals(this.evidence, other.evidence)) {
             return false;
         }
-        if (!Objects.equals(this.proteinDBReferenceProperty, other.proteinDBReferenceProperty)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.proteinDBReferenceProperty, other.proteinDBReferenceProperty);
     }
 
     @Override
@@ -162,33 +161,14 @@ public class ProteinDBReference implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder dProperty = null;
+        StringBuilder dProperty = new StringBuilder();
 
-        if (!getProteinDBReferenceProperty().isEmpty()) {
-            dProperty = new StringBuilder();
-            Iterator it = getProteinDBReferenceProperty().values().iterator();
-            while (it.hasNext()) {
-                dProperty.append("\t\t").append(it.next()).append("\n");
+        if (proteinDBReferenceProperty != null && !proteinDBReferenceProperty.isEmpty()) {
+            for (ProteinDBReferenceProperty p : proteinDBReferenceProperty) {
+                dProperty.append("\t\t").append(p).append("\n");
             }
         }
-
-        if (dProperty != null) {
-            return "ProteinDBReference{"
-                    + " wid=" + wid
-                    + " proteinWID=" + proteinWID
-                    + " type=" + type
-                    + " id=" + id
-                    + " evidence=" + evidence
-                    + "\n"
-                    + dProperty;
-        } else {
-            return "ProteinDBReference{"
-                    + " wid=" + wid
-                    + " proteinWID=" + proteinWID
-                    + " type=" + type
-                    + " id=" + id
-                    + " evidence=" + evidence
-                    + "}";
-        }
+        return "ProteinDBReference{" + "wid=" + wid + ", proteinWID=" + proteinWID + ", type=" + type + ", id=" + id + ", evidence=" + evidence + "\n" + dProperty.toString() + '}';
     }
+
 }

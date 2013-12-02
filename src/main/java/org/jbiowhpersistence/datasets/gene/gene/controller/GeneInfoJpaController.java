@@ -55,11 +55,11 @@ public class GeneInfoJpaController extends AbstractJpaController<GeneInfo> imple
 
     public void create(GeneInfo geneInfo) throws PreexistingEntityException, Exception {
         VerbLogger.getInstance().log(this.getClass(), "Creating " + this.getClass().getSimpleName() + ": " + geneInfo.getWid());
-        if (geneInfo.getGeneInfoSynonyms() == null) {
-            geneInfo.setGeneInfoSynonyms(new ArrayList<GeneInfoSynonyms>());
+        if (geneInfo.getGeneInfoSynonym() == null) {
+            geneInfo.setGeneInfoSynonym(new ArrayList<GeneInfoSynonyms>());
         }
-        if (geneInfo.getGeneInfoDBXrefs() == null) {
-            geneInfo.setGeneInfoDBXrefs(new ArrayList<GeneInfoDBXrefs>());
+        if (geneInfo.getGeneInfoDBXref() == null) {
+            geneInfo.setGeneInfoDBXref(new ArrayList<GeneInfoDBXrefs>());
         }
         if (geneInfo.getGeneGroup() == null) {
             geneInfo.setGeneGroup(new ArrayList<GeneGroup>());
@@ -76,14 +76,14 @@ public class GeneInfoJpaController extends AbstractJpaController<GeneInfo> imple
         if (geneInfo.getGene2UniGene() == null) {
             geneInfo.setGene2UniGene(new ArrayList<Gene2UniGene>());
         }
-        if (geneInfo.getGene2GenomicNucleotides()== null) {
-            geneInfo.setGene2GenomicNucleotides(new ArrayList<Gene2GenomicNucleotide>());
+        if (geneInfo.getGene2GenomicNucleotide()== null) {
+            geneInfo.setGene2GenomicNucleotide(new ArrayList<Gene2GenomicNucleotide>());
         }
-        if (geneInfo.getGene2ProteinAccessions()== null) {
-            geneInfo.setGene2ProteinAccessions(new ArrayList<Gene2ProteinAccession>());
+        if (geneInfo.getGene2ProteinAccession()== null) {
+            geneInfo.setGene2ProteinAccession(new ArrayList<Gene2ProteinAccession>());
         }
-        if (geneInfo.getGene2RNANucleotides()== null) {
-            geneInfo.setGene2RNANucleotides(new ArrayList<Gene2RNANucleotide>());
+        if (geneInfo.getGene2RNANucleotide()== null) {
+            geneInfo.setGene2RNANucleotide(new ArrayList<Gene2RNANucleotide>());
         }
         if (geneInfo.getOmim() == null) {
             geneInfo.setOmim(new HashSet<OMIM>());

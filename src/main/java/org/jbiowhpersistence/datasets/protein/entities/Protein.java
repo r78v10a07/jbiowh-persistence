@@ -3,8 +3,11 @@ package org.jbiowhpersistence.datasets.protein.entities;
 import java.io.Serializable;
 import java.util.*;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 import org.jbiowhpersistence.datasets.domain.pfam.PFamTables;
 import org.jbiowhpersistence.datasets.domain.pfam.entities.PfamAbioWH;
@@ -22,14 +25,13 @@ import org.jbiowhpersistence.datasets.protclust.entities.UniRefEntry;
 import org.jbiowhpersistence.datasets.protclust.entities.UniRefMember;
 import org.jbiowhpersistence.datasets.protein.ProteinTables;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
-import org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomySynonym;
 
 /**
  * This Class is the Protein Entity
  *
- * $Author: r78v10a07@gmail.com $ 
- * $LastChangedDate: 2013-09-06 14:21:09 +0200 (Fri, 06 Sep 2013) $ 
- * $LastChangedRevision: 664 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2013-09-06 14:21:09 +0200
+ * (Fri, 06 Sep 2013) $ $LastChangedRevision: 664 $
+ *
  * @since Aug 11, 2011
  */
 @Entity
@@ -51,13 +53,14 @@ import org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomySynonym;
     @NamedQuery(name = "Protein.findByPrecursor", query = "SELECT p FROM Protein p WHERE p.precursor = :precursor"),
     @NamedQuery(name = "Protein.findByFragment", query = "SELECT p FROM Protein p WHERE p.fragment = :fragment"),
     @NamedQuery(name = "Protein.findByDataSetWID", query = "SELECT p FROM Protein p WHERE p.dataSetWID = :dataSetWID"),
-    @NamedQuery(name = "Protein.findProteinWIDByName", query = "SELECT p.wid FROM Protein p INNER JOIN p.proteinName n WHERE UPPER(n.proteinNamePK.name) LIKE :name GROUP BY p.wid"),
-    @NamedQuery(name = "Protein.findProteinWIDByLongName", query = "SELECT p.wid FROM Protein p INNER JOIN p.proteinLongName n WHERE UPPER(n.name) LIKE :name GROUP BY p.wid"),
-    @NamedQuery(name = "Protein.findProteinWIDByAccessionNumber", query = "SELECT p.wid FROM Protein p INNER JOIN p.proteinAccessionNumber n WHERE UPPER(n.proteinAccessionNumberPK.accessionNumber) LIKE :accessionNumber group by p.wid"),
-    @NamedQuery(name = "Protein.findProteinByAccessionNumber", query = "SELECT p FROM Protein p INNER JOIN p.proteinAccessionNumber n WHERE UPPER(n.proteinAccessionNumberPK.accessionNumber) LIKE :accessionNumber group by p"),
-    @NamedQuery(name = "Protein.findProteinWIDByEC", query = "SELECT p.wid FROM Protein p INNER JOIN p.proteinEC n WHERE n.proteinECPK.id LIKE :id GROUP BY p.wid"),
+    @NamedQuery(name = "Protein.findProteinByName", query = "SELECT p FROM Protein p INNER JOIN p.proteinName n WHERE n.name LIKE :name GROUP BY p"),
+    @NamedQuery(name = "Protein.findProteinWIDByLongName", query = "SELECT p.wid FROM Protein p INNER JOIN p.proteinLongName n WHERE n.name LIKE :name GROUP BY p.wid"),
+    @NamedQuery(name = "Protein.findProteinWIDByAccessionNumber", query = "SELECT p FROM Protein p INNER JOIN p.proteinAccessionNumber n WHERE n.accessionNumber LIKE :accessionNumber group by p"),
+    @NamedQuery(name = "Protein.findProteinByAccessionNumber", query = "SELECT p FROM Protein p INNER JOIN p.proteinAccessionNumber n WHERE n.accessionNumber LIKE :accessionNumber group by p"),
+    @NamedQuery(name = "Protein.findProteinWIDByEC", query = "SELECT p.wid FROM Protein p INNER JOIN p.proteinEC n WHERE n.id LIKE :id GROUP BY p.wid"),
     @NamedQuery(name = "Protein.findEnsemblId", query = "SELECT p FROM Protein p INNER JOIN p.proteinDBReference n WHERE n.id LIKE :id AND n.type = 'Ensembl' GROUP BY p"),
-    @NamedQuery(name = "Protein.findIPIId", query = "SELECT p FROM Protein p INNER JOIN p.proteinDBReference n WHERE n.id LIKE :id AND n.type = 'IPI' GROUP BY p")
+    @NamedQuery(name = "Protein.findIPIId", query = "SELECT p FROM Protein p INNER JOIN p.proteinDBReference n WHERE n.id LIKE :id AND n.type = 'IPI' GROUP BY p"),
+    @NamedQuery(name = "Protein.findByTaxId", query = "SELECT p FROM Protein p INNER JOIN p.taxonomy n WHERE n.taxId = :taxId GROUP BY p")
 })
 public class Protein implements Serializable {
 
@@ -101,163 +104,243 @@ public class Protein implements Serializable {
     @Column(name = "DataSetWID")
     private long dataSetWID;
     // Internal Protein relationship
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = ProteinTables.PROTEIN_HAS_PROTEINKEYWORD,
+            joinColumns
+            = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "ProteinKeyword_WID", referencedColumnName = "WID"))
+    @XmlElementWrapper( name="ProteinKeywords" )
+    private Set<ProteinKeyword> proteinKeyword;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
-    @MapKey(name = "proteinhasProteinKeywordPK")
-    private Map<ProteinhasProteinKeywordPK, ProteinhasProteinKeyword> proteinhasProteinKeyword;    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
-    @MapKey(name = "proteinNamePK")
-    private Map<ProteinNamePK, ProteinName> proteinName;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
-    @MapKey(name = "proteinAccessionNumberPK")
-    private Map<ProteinAccessionNumberPK, ProteinAccessionNumber> proteinAccessionNumber;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
-    private Set<ProteinLongName> proteinLongName;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
-    private Set<ProteinDBReference> proteinDBReference;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
-    @MapKey(name = "proteinPMIDPK")
-    private Map<ProteinPMIDPK, ProteinPMID> proteinPMID;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
-    @MapKey(name = "proteinECPK")
-    private Map<ProteinECPK, ProteinEC> proteinEC;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
-    @MapKey(name = "proteinKEGGPK")
-    private Map<ProteinKEGGPK, ProteinKEGG> proteinKEGG;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
-    @MapKey(name = "proteinBioCycPK")
-    private Map<ProteinBioCycPK, ProteinBioCyc> proteinBioCyc;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
-    @MapKey(name = "proteinPDBPK")
-    private Map<ProteinPDBPK, ProteinPDB> proteinPDB;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
-    @MapKey(name = "proteinIntActPK")
-    private Map<ProteinIntActPK, ProteinIntAct> proteinIntAct;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
-    @MapKey(name = "proteinDIPPK")
-    private Map<ProteinDIPPK, ProteinDIP> proteinDIP;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
-    @MapKey(name = "proteinMINTPK")
-    private Map<ProteinMINTPK, ProteinMINT> proteinMINT;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
-    @MapKey(name = "proteinDrugBankPK")
-    private Map<ProteinDrugBankPK, ProteinDrugBank> proteinDrugBank;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
-    @MapKey(name = "proteinPFAMPK")
-    private Map<ProteinPFAMPK, ProteinPFAM> proteinPFAM;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
+    @XmlElement
+    @XmlInverseReference(mappedBy="protein")
+    @XmlElementWrapper( name="ProteinFeatures" )
     private Set<ProteinFeature> proteinFeature;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
+    @XmlElement
+    @XmlInverseReference(mappedBy="protein")
+    @XmlElementWrapper( name="ProteinComments" )
     private Set<ProteinComment> proteinComment;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
+    @XmlElement
+    @XmlInverseReference(mappedBy="protein")
+    @XmlElementWrapper( name="ProteinDBReferences" )
+    private Set<ProteinDBReference> proteinDBReference;
+    @ElementCollection
+    @CollectionTable(
+            name = "ProteinName",
+            joinColumns
+            = @JoinColumn(name = "Protein_WID"))
+    @XmlElementWrapper( name="ProteinNames" )
+    private Collection<ProteinName> proteinName;
+    @ElementCollection
+    @CollectionTable(
+            name = "ProteinAccessionNumber",
+            joinColumns
+            = @JoinColumn(name = "Protein_WID"))
+    @XmlElementWrapper( name="ProteinAccessionNumbers" )
+    private Collection<ProteinAccessionNumber> proteinAccessionNumber;
+    @ElementCollection
+    @CollectionTable(
+            name = "ProteinLongName",
+            joinColumns
+            = @JoinColumn(name = "Protein_WID"))
+    @XmlElementWrapper( name="ProteinLongNames" )
+    private Collection<ProteinLongName> proteinLongName;
+    @ElementCollection
+    @CollectionTable(
+            name = "ProteinPMID",
+            joinColumns
+            = @JoinColumn(name = "Protein_WID"))
+    @XmlElementWrapper( name="ProteinPMIDs" )
+    private Collection<ProteinPMID> proteinPMID;
+    @ElementCollection
+    @CollectionTable(
+            name = "ProteinEC",
+            joinColumns
+            = @JoinColumn(name = "Protein_WID"))
+    @XmlElementWrapper( name="ProteinECs" )
+    private Collection<ProteinEC> proteinEC;
+    @ElementCollection
+    @CollectionTable(
+            name = "ProteinKEGG",
+            joinColumns
+            = @JoinColumn(name = "Protein_WID"))
+    @XmlElementWrapper( name="ProteinKEGGs" )
+    private Collection<ProteinKEGG> proteinKEGG;
+    @ElementCollection
+    @CollectionTable(
+            name = "ProteinBioCyc",
+            joinColumns
+            = @JoinColumn(name = "Protein_WID"))
+    @XmlElementWrapper( name="ProteinBioCycs" )
+    private Collection<ProteinBioCyc> proteinBioCyc;
+    @ElementCollection
+    @CollectionTable(
+            name = "ProteinPDB",
+            joinColumns
+            = @JoinColumn(name = "Protein_WID"))
+    @XmlElementWrapper( name="ProteinPDBs" )
+    private Collection<ProteinPDB> proteinPDB;
+    @ElementCollection
+    @CollectionTable(
+            name = "ProteinIntAct",
+            joinColumns
+            = @JoinColumn(name = "Protein_WID"))
+    @XmlElementWrapper( name="ProteinIntActs" )
+    private Collection<ProteinIntAct> proteinIntAct;
+    @ElementCollection
+    @CollectionTable(
+            name = "ProteinDIP",
+            joinColumns
+            = @JoinColumn(name = "Protein_WID"))
+    @XmlElementWrapper( name="ProteinDIPs" )
+    private Collection<ProteinDIP> proteinDIP;
+    @ElementCollection
+    @CollectionTable(
+            name = "ProteinMINT",
+            joinColumns
+            = @JoinColumn(name = "Protein_WID"))
+    @XmlElementWrapper( name="ProteinMINTs" )
+    private Collection<ProteinMINT> proteinMINT;
+    @ElementCollection
+    @CollectionTable(
+            name = "ProteinDrugBank",
+            joinColumns
+            = @JoinColumn(name = "Protein_WID"))
+    @XmlElementWrapper( name="ProteinDrugBanks" )
+    private Collection<ProteinDrugBank> proteinDrugBank;
+    @ElementCollection
+    @CollectionTable(
+            name = "ProteinPFAM",
+            joinColumns
+            = @JoinColumn(name = "Protein_WID"))
+    @XmlElementWrapper( name="ProteinPFAMs" )
+    private Collection<ProteinPFAM> proteinPFAM;
+
     // External Protein relationship
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "DataSetWID", referencedColumnName = "WID", insertable = false, unique = false, nullable = false, updatable = false)
     private DataSet dataSet;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_TAXONOMY,
-    joinColumns =
-    @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
-    inverseJoinColumns =
-    @JoinColumn(name = "Taxonomy_WID", referencedColumnName = "WID"))
+            joinColumns
+            = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "Taxonomy_WID", referencedColumnName = "WID"))
     private Taxonomy taxonomy;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_TAXONOMYHOST,
-    joinColumns =
-    @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
-    inverseJoinColumns =
-    @JoinColumn(name = "Taxonomy_WID", referencedColumnName = "WID"))
+            joinColumns
+            = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "Taxonomy_WID", referencedColumnName = "WID"))
+    @XmlElementWrapper( name="TaxonomyHosts" )
     private Set<Taxonomy> taxonomyHost;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_ONTOLOGY,
-    joinColumns =
-    @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
-    inverseJoinColumns =
-    @JoinColumn(name = "Ontology_WID", referencedColumnName = "WID"))
+            joinColumns
+            = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "Ontology_WID", referencedColumnName = "WID"))
+    @XmlElementWrapper( name="Ontologies" )
     private Set<Ontology> ontology;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_GENEINFO,
-    joinColumns =
-    @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
-    inverseJoinColumns =
-    @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"))
+            joinColumns
+            = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"))
     private Collection<GeneInfo> geneInfo;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_GENEPTT,
-    joinColumns =
-    @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
-    inverseJoinColumns =
-    @JoinColumn(name = "GenePTT_ProteinGi", referencedColumnName = "ProteinGi"))
+            joinColumns
+            = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "GenePTT_ProteinGi", referencedColumnName = "ProteinGi"))
     private GenePTT genePTT;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = MIF25Tables.MIFINTERACTION_HAS_PROTEIN,
-    joinColumns =
-    @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
-    inverseJoinColumns =
-    @JoinColumn(name = "MIFEntryInteraction_WID", referencedColumnName = "WID"))
+            joinColumns
+            = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "MIFEntryInteraction_WID", referencedColumnName = "WID"))
+    @XmlElementWrapper( name="MIFEntryInteractions" )
     private Set<MIFEntryInteraction> mIFEntryInteraction;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
     private Set<UniRefMember> uniRefMember;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = UniRefTables.UNIREFENTRY_HAS_PROTEIN,
-    joinColumns =
-    @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
-    inverseJoinColumns =
-    @JoinColumn(name = "UniRefEntry_WID", referencedColumnName = "WID"))
+            joinColumns
+            = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "UniRefEntry_WID", referencedColumnName = "WID"))
+    @XmlElementWrapper( name="UniRefEntrys" )
     private Set<UniRefEntry> uniRefEntry;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_DRUGBANK,
-    joinColumns =
-    @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
-    inverseJoinColumns =
-    @JoinColumn(name = "DrugBank_WID", referencedColumnName = "WID"))
+            joinColumns
+            = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "DrugBank_WID", referencedColumnName = "WID"))
+    @XmlElementWrapper( name="DrugBanks" )
     private Set<DrugBank> drugBank;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_DRUGBANKASENZYME,
-    joinColumns =
-    @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
-    inverseJoinColumns =
-    @JoinColumn(name = "DrugBank_WID", referencedColumnName = "WID"))
+            joinColumns
+            = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "DrugBank_WID", referencedColumnName = "WID"))
+    @XmlElementWrapper( name="DrugBankAsEnzymes" )
     private Set<DrugBank> drugBankAsEnzyme;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_DRUGBANKASTRANSPORTERS,
-    joinColumns =
-    @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
-    inverseJoinColumns =
-    @JoinColumn(name = "DrugBank_WID", referencedColumnName = "WID"))
+            joinColumns
+            = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "DrugBank_WID", referencedColumnName = "WID"))
+    @XmlElementWrapper( name="DrugBankAsTransporters" )
     private Set<DrugBank> drugBankAsTransporters;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_DRUGBANKASCARRIERS,
-    joinColumns =
-    @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
-    inverseJoinColumns =
-    @JoinColumn(name = "DrugBank_WID", referencedColumnName = "WID"))
+            joinColumns
+            = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "DrugBank_WID", referencedColumnName = "WID"))
+    @XmlElementWrapper( name="DrugBankAsCarriers" )
     private Set<DrugBank> drugBankAsCarriers;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_KEGGENZYME,
-    joinColumns =
-    @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
-    inverseJoinColumns =
-    @JoinColumn(name = "KEGGEnzyme_WID", referencedColumnName = "WID"))
+            joinColumns
+            = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "KEGGEnzyme_WID", referencedColumnName = "WID"))
+    @XmlElementWrapper( name="KEGGEnzymes" )
     private Set<KEGGEnzyme> kEGGEnzymes;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = KEGGTables.KEGGPATHWAY_HAS_PROTEN,
-    joinColumns =
-    @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
-    inverseJoinColumns =
-    @JoinColumn(name = "KEGGPathway_WID", referencedColumnName = "WID"))
+            joinColumns
+            = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "KEGGPathway_WID", referencedColumnName = "WID"))
+    @XmlElementWrapper( name="KEGGPathways" )
     private Set<KEGGPathway> kEGGPathways;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = PFamTables.PFAMAREGFULLINSIGNIFICANT,
-    joinColumns =
-    @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
-    inverseJoinColumns =
-    @JoinColumn(name = "PfamA_WID", referencedColumnName = "WID"))
+            joinColumns
+            = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "PfamA_WID", referencedColumnName = "WID"))
+    @XmlElementWrapper( name="PfamAInsignificants" )
     private Set<PfamAbioWH> pfamAInsignificant;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = PFamTables.PFAMAREGFULLSIGNIFICANT,
-    joinColumns =
-    @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
-    inverseJoinColumns =
-    @JoinColumn(name = "PfamA_WID", referencedColumnName = "WID"))
+            joinColumns
+            = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "PfamA_WID", referencedColumnName = "WID"))
+    @XmlElementWrapper( name="PfamASignificants" )
     private Set<PfamAbioWH> pfamASignificant;
 
     public Protein() {
@@ -279,6 +362,7 @@ public class Protein implements Serializable {
         setDrugBankAsEnzyme(null);
         setDrugBankAsTransporters(null);
         setGeneInfo(null);
+        setGenePTT(null);
         setkEGGEnzymes(null);
         setkEGGPathways(null);
         setmIFEntryInteraction(null);
@@ -308,14 +392,14 @@ public class Protein implements Serializable {
 
     public String getProteinFirstAccessionNumber() {
         if (!proteinAccessionNumber.isEmpty()) {
-            return proteinAccessionNumber.values().iterator().next().getProteinAccessionNumberPK().getAccessionNumber();
+            return proteinAccessionNumber.iterator().next().getAccessionNumber();
         }
         return null;
     }
 
     public String getProteinNameDirected() {
         if (!proteinName.isEmpty()) {
-            return proteinName.values().iterator().next().proteinNamePK.getName();
+            return proteinName.iterator().next().getName();
         }
         return null;
     }
@@ -325,309 +409,6 @@ public class Protein implements Serializable {
             return proteinLongName.iterator().next().getName();
         }
         return null;
-    }
-
-    public GenePTT getGenePTT() {
-        return genePTT;
-    }
-
-    public void setGenePTT(GenePTT genePTT) {
-        this.genePTT = genePTT;
-    }
-    
-    @XmlTransient
-    public Set<PfamAbioWH> getPfamAInsignificant() {
-        return pfamAInsignificant;
-    }
-
-    public void setPfamAInsignificant(Set<PfamAbioWH> pfamAInsignificant) {
-        this.pfamAInsignificant = pfamAInsignificant;
-    }
-
-    @XmlTransient
-    public Set<PfamAbioWH> getPfamASignificant() {
-        return pfamASignificant;
-    }
-
-    public void setPfamASignificant(Set<PfamAbioWH> pfamASignificant) {
-        this.pfamASignificant = pfamASignificant;
-    }
-
-    public DataSet getDataSet() {
-        return dataSet;
-    }
-
-    public void setDataSet(DataSet dataSet) {
-        this.dataSet = dataSet;
-    }
-
-    @XmlTransient
-    public Collection<GeneInfo> getGeneInfo() {
-        return geneInfo;
-    }
-
-    public void setGeneInfo(Collection<GeneInfo> geneInfo) {
-        this.geneInfo = geneInfo;
-    }
-
-    @XmlTransient
-    public Set<KEGGPathway> getkEGGPathways() {
-        return kEGGPathways;
-    }
-
-    public void setkEGGPathways(Set<KEGGPathway> kEGGPathways) {
-        this.kEGGPathways = kEGGPathways;
-    }
-
-    @XmlTransient
-    public Set<KEGGEnzyme> getkEGGEnzymes() {
-        return kEGGEnzymes;
-    }
-
-    public void setkEGGEnzymes(Set<KEGGEnzyme> kEGGEnzymes) {
-        this.kEGGEnzymes = kEGGEnzymes;
-    }
-
-    @XmlTransient
-    public Set<UniRefEntry> getUniRefEntry() {
-        return uniRefEntry;
-    }
-
-    public void setUniRefEntry(Set<UniRefEntry> uniRefEntry) {
-        this.uniRefEntry = uniRefEntry;
-    }
-
-    @XmlTransient
-    public Set<DrugBank> getDrugBankAsCarriers() {
-        return drugBankAsCarriers;
-    }
-
-    public void setDrugBankAsCarriers(Set<DrugBank> drugBankAsCarriers) {
-        this.drugBankAsCarriers = drugBankAsCarriers;
-    }
-
-    @XmlTransient
-    public Set<DrugBank> getDrugBankAsTransporters() {
-        return drugBankAsTransporters;
-    }
-
-    public void setDrugBankAsTransporters(Set<DrugBank> drugBankAsTransporters) {
-        this.drugBankAsTransporters = drugBankAsTransporters;
-    }
-
-    @XmlTransient
-    public Set<DrugBank> getDrugBankAsEnzyme() {
-        return drugBankAsEnzyme;
-    }
-
-    public void setDrugBankAsEnzyme(Set<DrugBank> drugBankAsEnzyme) {
-        this.drugBankAsEnzyme = drugBankAsEnzyme;
-    }
-
-    @XmlTransient
-    public Set<DrugBank> getDrugBank() {
-        return drugBank;
-    }
-
-    public void setDrugBank(Set<DrugBank> drugBank) {
-        this.drugBank = drugBank;
-    }
-
-    @XmlTransient
-    public Set<UniRefMember> getUniRefMember() {
-        return uniRefMember;
-    }
-
-    public void setUniRefMember(Set<UniRefMember> uniRefMember) {
-        this.uniRefMember = uniRefMember;
-    }
-
-    @XmlTransient
-    public Set<MIFEntryInteraction> getmIFEntryInteraction() {
-        return mIFEntryInteraction;
-    }
-
-    public void setmIFEntryInteraction(Set<MIFEntryInteraction> mIFEntryInteraction) {
-        this.mIFEntryInteraction = mIFEntryInteraction;
-    }
-
-    @XmlTransient
-    public Set<ProteinComment> getProteinComment() {
-        return proteinComment;
-    }
-
-    public void setProteinComment(Set<ProteinComment> proteinComment) {
-        this.proteinComment = proteinComment;
-    }
-
-    @XmlTransient
-    public Set<ProteinFeature> getProteinFeature() {
-        return proteinFeature;
-    }
-
-    public void setProteinFeature(Set<ProteinFeature> ProteinFeature) {
-        this.proteinFeature = ProteinFeature;
-    }
-
-    @XmlTransient
-    public Map<ProteinPFAMPK, ProteinPFAM> getProteinPFAM() {
-        return proteinPFAM;
-    }
-
-    public void setProteinPFAM(Map<ProteinPFAMPK, ProteinPFAM> proteinPFAM) {
-        this.proteinPFAM = proteinPFAM;
-    }
-
-    @XmlTransient
-    public Map<ProteinDrugBankPK, ProteinDrugBank> getProteinDrugBank() {
-        return proteinDrugBank;
-    }
-
-    public void setProteinDrugBank(Map<ProteinDrugBankPK, ProteinDrugBank> proteinDrugBank) {
-        this.proteinDrugBank = proteinDrugBank;
-    }
-
-    @XmlTransient
-    public Map<ProteinMINTPK, ProteinMINT> getProteinMINT() {
-        return proteinMINT;
-    }
-
-    public void setProteinMINT(Map<ProteinMINTPK, ProteinMINT> proteinMINT) {
-        this.proteinMINT = proteinMINT;
-    }
-
-    @XmlTransient
-    public Map<ProteinDIPPK, ProteinDIP> getProteinDIP() {
-        return proteinDIP;
-    }
-
-    public void setProteinDIP(Map<ProteinDIPPK, ProteinDIP> proteinDIP) {
-        this.proteinDIP = proteinDIP;
-    }
-
-    @XmlTransient
-    public Map<ProteinIntActPK, ProteinIntAct> getProteinIntAct() {
-        return proteinIntAct;
-    }
-
-    public void setProteinIntAct(Map<ProteinIntActPK, ProteinIntAct> proteinIntAct) {
-        this.proteinIntAct = proteinIntAct;
-    }
-
-    @XmlTransient
-    public Map<ProteinPDBPK, ProteinPDB> getProteinPDB() {
-        return proteinPDB;
-    }
-
-    public void setProteinPDB(Map<ProteinPDBPK, ProteinPDB> proteinPDB) {
-        this.proteinPDB = proteinPDB;
-    }
-
-    @XmlTransient
-    public Map<ProteinBioCycPK, ProteinBioCyc> getProteinBioCyc() {
-        return proteinBioCyc;
-    }
-
-    public void setProteinBioCyc(Map<ProteinBioCycPK, ProteinBioCyc> proteinBioCyc) {
-        this.proteinBioCyc = proteinBioCyc;
-    }
-
-    @XmlTransient
-    public Map<ProteinKEGGPK, ProteinKEGG> getProteinKEGG() {
-        return proteinKEGG;
-    }
-
-    public void setProteinKEGG(Map<ProteinKEGGPK, ProteinKEGG> proteinKEGG) {
-        this.proteinKEGG = proteinKEGG;
-    }
-
-    @XmlTransient
-    public Map<ProteinECPK, ProteinEC> getProteinEC() {
-        return proteinEC;
-    }
-
-    public void setProteinEC(Map<ProteinECPK, ProteinEC> proteinEC) {
-        this.proteinEC = proteinEC;
-    }
-
-    @XmlTransient
-    public Map<ProteinPMIDPK, ProteinPMID> getProteinPMID() {
-        return proteinPMID;
-    }
-
-    public void setProteinPMID(Map<ProteinPMIDPK, ProteinPMID> proteinPMID) {
-        this.proteinPMID = proteinPMID;
-    }
-
-    @XmlTransient
-    public Set<ProteinDBReference> getProteinDBReference() {
-        return proteinDBReference;
-    }
-
-    public void setProteinDBReference(Set<ProteinDBReference> proteinWIDDBReference) {
-        this.proteinDBReference = proteinWIDDBReference;
-    }
-
-    @XmlTransient
-    public Set<ProteinLongName> getProteinLongName() {
-        return proteinLongName;
-    }
-
-    public void setProteinLongName(Set<ProteinLongName> proteinLongName) {
-        this.proteinLongName = proteinLongName;
-    }
-
-    @XmlTransient
-    public Map<ProteinAccessionNumberPK, ProteinAccessionNumber> getProteinAccessionNumber() {
-        return proteinAccessionNumber;
-    }
-
-    public void setProteinAccessionNumber(Map<ProteinAccessionNumberPK, ProteinAccessionNumber> proteinAccessionNumber) {
-        this.proteinAccessionNumber = proteinAccessionNumber;
-    }
-
-    @XmlTransient
-    public Map<ProteinNamePK, ProteinName> getProteinName() {
-        return proteinName;
-    }
-
-    public void setProteinName(Map<ProteinNamePK, ProteinName> proteinName) {
-        this.proteinName = proteinName;
-    }
-
-    @XmlTransient
-    public Map<ProteinhasProteinKeywordPK, ProteinhasProteinKeyword> getProteinhasProteinKeyword() {
-        return proteinhasProteinKeyword;
-    }
-
-    public void setProteinhasProteinKeyword(Map<ProteinhasProteinKeywordPK, ProteinhasProteinKeyword> proteinhasProteinKeyword) {
-        this.proteinhasProteinKeyword = proteinhasProteinKeyword;
-    }
-    
-    @XmlTransient
-    public Set<Ontology> getOntology() {
-        return ontology;
-    }
-
-    public void setOntology(Set<Ontology> ontology) {
-        this.ontology = ontology;
-    }
-
-    @XmlTransient
-    public Set<Taxonomy> getTaxonomyHost() {
-        return taxonomyHost;
-    }
-
-    public void setTaxonomyHost(Set<Taxonomy> taxonomyHost) {
-        this.taxonomyHost = taxonomyHost;
-    }
-
-    public Taxonomy getTaxonomy() {
-        return taxonomy;
-    }
-
-    public void setTaxonomy(Taxonomy taxonomy) {
-        this.taxonomy = taxonomy;
     }
 
     public Long getWid() {
@@ -750,6 +531,297 @@ public class Protein implements Serializable {
         this.dataSetWID = dataSetWID;
     }
 
+    public Set<ProteinKeyword> getProteinKeyword() {
+        return proteinKeyword;
+    }
+
+    public void setProteinKeyword(Set<ProteinKeyword> proteinKeyword) {
+        this.proteinKeyword = proteinKeyword;
+    }
+
+    public Set<ProteinFeature> getProteinFeature() {
+        return proteinFeature;
+    }
+
+    public void setProteinFeature(Set<ProteinFeature> proteinFeature) {
+        this.proteinFeature = proteinFeature;
+    }
+
+    public Set<ProteinComment> getProteinComment() {
+        return proteinComment;
+    }
+
+    public void setProteinComment(Set<ProteinComment> proteinComment) {
+        this.proteinComment = proteinComment;
+    }
+
+    public Set<ProteinDBReference> getProteinDBReference() {
+        return proteinDBReference;
+    }
+
+    public void setProteinDBReference(Set<ProteinDBReference> proteinDBReference) {
+        this.proteinDBReference = proteinDBReference;
+    }
+
+    public Collection<ProteinName> getProteinName() {
+        return proteinName;
+    }
+
+    public void setProteinName(Collection<ProteinName> proteinName) {
+        this.proteinName = proteinName;
+    }
+
+    public Collection<ProteinAccessionNumber> getProteinAccessionNumber() {
+        return proteinAccessionNumber;
+    }
+
+    public void setProteinAccessionNumber(Collection<ProteinAccessionNumber> proteinAccessionNumber) {
+        this.proteinAccessionNumber = proteinAccessionNumber;
+    }
+
+    public Collection<ProteinLongName> getProteinLongName() {
+        return proteinLongName;
+    }
+
+    public void setProteinLongName(Collection<ProteinLongName> proteinLongName) {
+        this.proteinLongName = proteinLongName;
+    }
+
+    public Collection<ProteinPMID> getProteinPMID() {
+        return proteinPMID;
+    }
+
+    public void setProteinPMID(Collection<ProteinPMID> proteinPMID) {
+        this.proteinPMID = proteinPMID;
+    }
+
+    public Collection<ProteinEC> getProteinEC() {
+        return proteinEC;
+    }
+
+    public void setProteinEC(Collection<ProteinEC> proteinEC) {
+        this.proteinEC = proteinEC;
+    }
+
+    public Collection<ProteinKEGG> getProteinKEGG() {
+        return proteinKEGG;
+    }
+
+    public void setProteinKEGG(Collection<ProteinKEGG> proteinKEGG) {
+        this.proteinKEGG = proteinKEGG;
+    }
+
+    public Collection<ProteinBioCyc> getProteinBioCyc() {
+        return proteinBioCyc;
+    }
+
+    public void setProteinBioCyc(Collection<ProteinBioCyc> proteinBioCyc) {
+        this.proteinBioCyc = proteinBioCyc;
+    }
+
+    public Collection<ProteinPDB> getProteinPDB() {
+        return proteinPDB;
+    }
+
+    public void setProteinPDB(Collection<ProteinPDB> proteinPDB) {
+        this.proteinPDB = proteinPDB;
+    }
+
+    public Collection<ProteinIntAct> getProteinIntAct() {
+        return proteinIntAct;
+    }
+
+    public void setProteinIntAct(Collection<ProteinIntAct> proteinIntAct) {
+        this.proteinIntAct = proteinIntAct;
+    }
+
+    public Collection<ProteinDIP> getProteinDIP() {
+        return proteinDIP;
+    }
+
+    public void setProteinDIP(Collection<ProteinDIP> proteinDIP) {
+        this.proteinDIP = proteinDIP;
+    }
+
+    public Collection<ProteinMINT> getProteinMINT() {
+        return proteinMINT;
+    }
+
+    public void setProteinMINT(Collection<ProteinMINT> proteinMINT) {
+        this.proteinMINT = proteinMINT;
+    }
+
+    public Collection<ProteinDrugBank> getProteinDrugBank() {
+        return proteinDrugBank;
+    }
+
+    public void setProteinDrugBank(Collection<ProteinDrugBank> proteinDrugBank) {
+        this.proteinDrugBank = proteinDrugBank;
+    }
+
+    public Collection<ProteinPFAM> getProteinPFAM() {
+        return proteinPFAM;
+    }
+
+    public void setProteinPFAM(Collection<ProteinPFAM> proteinPFAM) {
+        this.proteinPFAM = proteinPFAM;
+    }
+
+    public DataSet getDataSet() {
+        return dataSet;
+    }
+
+    public void setDataSet(DataSet dataSet) {
+        this.dataSet = dataSet;
+    }
+
+    public Taxonomy getTaxonomy() {
+        return taxonomy;
+    }
+
+    public void setTaxonomy(Taxonomy taxonomy) {
+        this.taxonomy = taxonomy;
+    }
+
+    public Set<Taxonomy> getTaxonomyHost() {
+        return taxonomyHost;
+    }
+
+    public void setTaxonomyHost(Set<Taxonomy> taxonomyHost) {
+        this.taxonomyHost = taxonomyHost;
+    }
+
+    public Set<Ontology> getOntology() {
+        return ontology;
+    }
+
+    public void setOntology(Set<Ontology> ontology) {
+        this.ontology = ontology;
+    }
+
+    @XmlTransient
+    public Collection<GeneInfo> getGeneInfo() {
+        return geneInfo;
+    }
+
+    public void setGeneInfo(Collection<GeneInfo> geneInfo) {
+        this.geneInfo = geneInfo;
+    }
+
+    @XmlTransient
+    public GenePTT getGenePTT() {
+        return genePTT;
+    }
+
+    public void setGenePTT(GenePTT genePTT) {
+        this.genePTT = genePTT;
+    }
+
+    public Set<MIFEntryInteraction> getmIFEntryInteraction() {
+        return mIFEntryInteraction;
+    }
+
+    public void setmIFEntryInteraction(Set<MIFEntryInteraction> mIFEntryInteraction) {
+        this.mIFEntryInteraction = mIFEntryInteraction;
+    }
+
+    @XmlTransient
+    public Set<UniRefMember> getUniRefMember() {
+        return uniRefMember;
+    }
+
+    public void setUniRefMember(Set<UniRefMember> uniRefMember) {
+        this.uniRefMember = uniRefMember;
+    }
+
+    @XmlTransient
+    public Set<UniRefEntry> getUniRefEntry() {
+        return uniRefEntry;
+    }
+
+    public void setUniRefEntry(Set<UniRefEntry> uniRefEntry) {
+        this.uniRefEntry = uniRefEntry;
+    }
+
+    @XmlTransient
+    public Set<DrugBank> getDrugBank() {
+        return drugBank;
+    }
+
+    public void setDrugBank(Set<DrugBank> drugBank) {
+        this.drugBank = drugBank;
+    }
+
+    @XmlTransient
+    public Set<DrugBank> getDrugBankAsEnzyme() {
+        return drugBankAsEnzyme;
+    }
+
+    public void setDrugBankAsEnzyme(Set<DrugBank> drugBankAsEnzyme) {
+        this.drugBankAsEnzyme = drugBankAsEnzyme;
+    }
+
+    @XmlTransient
+    public Set<DrugBank> getDrugBankAsTransporters() {
+        return drugBankAsTransporters;
+    }
+
+    public void setDrugBankAsTransporters(Set<DrugBank> drugBankAsTransporters) {
+        this.drugBankAsTransporters = drugBankAsTransporters;
+    }
+
+    @XmlTransient
+    public Set<DrugBank> getDrugBankAsCarriers() {
+        return drugBankAsCarriers;
+    }
+
+    public void setDrugBankAsCarriers(Set<DrugBank> drugBankAsCarriers) {
+        this.drugBankAsCarriers = drugBankAsCarriers;
+    }
+
+    @XmlTransient
+    public Set<KEGGEnzyme> getkEGGEnzymes() {
+        return kEGGEnzymes;
+    }
+
+    public void setkEGGEnzymes(Set<KEGGEnzyme> kEGGEnzymes) {
+        this.kEGGEnzymes = kEGGEnzymes;
+    }
+
+    @XmlTransient
+    public Set<KEGGPathway> getkEGGPathways() {
+        return kEGGPathways;
+    }
+
+    public void setkEGGPathways(Set<KEGGPathway> kEGGPathways) {
+        this.kEGGPathways = kEGGPathways;
+    }
+
+    @XmlTransient
+    public Set<PfamAbioWH> getPfamAInsignificant() {
+        return pfamAInsignificant;
+    }
+
+    public void setPfamAInsignificant(Set<PfamAbioWH> pfamAInsignificant) {
+        this.pfamAInsignificant = pfamAInsignificant;
+    }
+
+    @XmlTransient
+    public Set<PfamAbioWH> getPfamASignificant() {
+        return pfamASignificant;
+    }
+
+    public void setPfamASignificant(Set<PfamAbioWH> pfamASignificant) {
+        this.pfamASignificant = pfamASignificant;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + (this.wid != null ? this.wid.hashCode() : 0);
+        return hash;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -759,110 +831,46 @@ public class Protein implements Serializable {
             return false;
         }
         final Protein other = (Protein) obj;
-        if (!Objects.equals(this.wid, other.wid)) {
+        if (this.wid != other.wid && (this.wid == null || !this.wid.equals(other.wid))) {
             return false;
         }
-        if (!Objects.equals(this.version, other.version)) {
+        if (this.version != other.version && (this.version == null || !this.version.equals(other.version))) {
             return false;
         }
-        if (!Objects.equals(this.modified, other.modified)) {
+        if (this.modified != other.modified && (this.modified == null || !this.modified.equals(other.modified))) {
             return false;
         }
-        if (!Objects.equals(this.created, other.created)) {
+        if (this.created != other.created && (this.created == null || !this.created.equals(other.created))) {
             return false;
         }
-        if (!Objects.equals(this.dataSetIn, other.dataSetIn)) {
+        if ((this.dataSetIn == null) ? (other.dataSetIn != null) : !this.dataSetIn.equals(other.dataSetIn)) {
             return false;
         }
-        if (!Objects.equals(this.existence, other.existence)) {
+        if ((this.existence == null) ? (other.existence != null) : !this.existence.equals(other.existence)) {
             return false;
         }
-        if (!Objects.equals(this.seqLength, other.seqLength)) {
+        if (this.seqLength != other.seqLength && (this.seqLength == null || !this.seqLength.equals(other.seqLength))) {
             return false;
         }
-        if (!Objects.equals(this.mass, other.mass)) {
+        if (this.mass != other.mass && (this.mass == null || !this.mass.equals(other.mass))) {
             return false;
         }
-        if (!Objects.equals(this.checksum, other.checksum)) {
+        if ((this.checksum == null) ? (other.checksum != null) : !this.checksum.equals(other.checksum)) {
             return false;
         }
-        if (!Objects.equals(this.seqModified, other.seqModified)) {
+        if (this.seqModified != other.seqModified && (this.seqModified == null || !this.seqModified.equals(other.seqModified))) {
             return false;
         }
-        if (!Objects.equals(this.seqVersion, other.seqVersion)) {
+        if (this.seqVersion != other.seqVersion && (this.seqVersion == null || !this.seqVersion.equals(other.seqVersion))) {
             return false;
         }
-        if (!Objects.equals(this.precursor, other.precursor)) {
+        if ((this.precursor == null) ? (other.precursor != null) : !this.precursor.equals(other.precursor)) {
             return false;
         }
-        if (!Objects.equals(this.fragment, other.fragment)) {
+        if ((this.fragment == null) ? (other.fragment != null) : !this.fragment.equals(other.fragment)) {
             return false;
         }
-        if (!Objects.equals(this.seq, other.seq)) {
-            return false;
-        }
-        if (this.dataSetWID != other.dataSetWID) {
-            return false;
-        }
-        if (!Objects.equals(this.proteinhasProteinKeyword, other.proteinhasProteinKeyword)) {
-            return false;
-        }
-        if (!Objects.equals(this.proteinName, other.proteinName)) {
-            return false;
-        }
-        if (!Objects.equals(this.proteinAccessionNumber, other.proteinAccessionNumber)) {
-            return false;
-        }
-        if (!Objects.equals(this.proteinLongName, other.proteinLongName)) {
-            return false;
-        }
-        if (!Objects.equals(this.proteinDBReference, other.proteinDBReference)) {
-            return false;
-        }
-        if (!Objects.equals(this.proteinPMID, other.proteinPMID)) {
-            return false;
-        }
-        if (!Objects.equals(this.proteinEC, other.proteinEC)) {
-            return false;
-        }
-        if (!Objects.equals(this.proteinKEGG, other.proteinKEGG)) {
-            return false;
-        }
-        if (!Objects.equals(this.proteinBioCyc, other.proteinBioCyc)) {
-            return false;
-        }
-        if (!Objects.equals(this.proteinPDB, other.proteinPDB)) {
-            return false;
-        }
-        if (!Objects.equals(this.proteinIntAct, other.proteinIntAct)) {
-            return false;
-        }
-        if (!Objects.equals(this.proteinDIP, other.proteinDIP)) {
-            return false;
-        }
-        if (!Objects.equals(this.proteinMINT, other.proteinMINT)) {
-            return false;
-        }
-        if (!Objects.equals(this.proteinDrugBank, other.proteinDrugBank)) {
-            return false;
-        }
-        if (!Objects.equals(this.proteinPFAM, other.proteinPFAM)) {
-            return false;
-        }
-        if (!Objects.equals(this.proteinFeature, other.proteinFeature)) {
-            return false;
-        }
-        if (!Objects.equals(this.proteinComment, other.proteinComment)) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (wid != null ? wid.hashCode() : 0);
-        return hash;
+        return !((this.seq == null) ? (other.seq != null) : !this.seq.equals(other.seq));
     }
 
     @Override
@@ -871,180 +879,106 @@ public class Protein implements Serializable {
         StringBuilder pData = new StringBuilder();
         String tSynonym = null;
 
-        if (taxonomy.getSynonym() != null) {
-            it = taxonomy.getSynonym().values().iterator();
-            while (it.hasNext()) {
-                TaxonomySynonym taxonomySynonym = (TaxonomySynonym) it.next();
-                if (taxonomySynonym.getNameClass().getNameClass().equals("scientific name")) {
-                    tSynonym = taxonomySynonym.getTaxonomySynonymPK().getSynonym();
-                }
+        if (taxonomy != null && taxonomy.getSynonym() != null) {
+            tSynonym = taxonomy.getTaxonomySynonym();
+        }
+        if (getTaxonomyHost() != null) {
+            for (Taxonomy h : getTaxonomyHost()) {
+                pData.append("\tOrganism Host=").append(h.getTaxonomySynonym()).append("\n");
             }
         }
-
-        it = getTaxonomyHost().iterator();
-        while (it.hasNext()) {
-            Taxonomy hTaxonomy = (Taxonomy) it.next();
-            Iterator it1 = hTaxonomy.getSynonym().values().iterator();
-            while (it1.hasNext()) {
-                TaxonomySynonym taxonomySynonym = (TaxonomySynonym) it1.next();
-                if (taxonomySynonym.getNameClass().getNameClass().equals("scientific name")) {
-                    pData.append("\tOrganism Host=").append(
-                            taxonomySynonym.getTaxonomySynonymPK().getSynonym()).append("\n");
-                }
-            }
-        }
-
         if (getOntology() != null) {
-            it = getOntology().iterator();
-            while (it.hasNext()) {
-                Ontology ont = (Ontology) it.next();
+            for (Ontology ont : getOntology()) {
                 pData.append("\tOntolgy=").append(ont.getId());
                 pData.append(" Name=").append(ont.getName()).append("\n");
             }
         }
         if (getProteinName() != null) {
-            if (!getProteinName().isEmpty()) {
-                it = getProteinName().values().iterator();
-                while (it.hasNext()) {
-                    pData.append("\t").append(it.next()).append("\n");
-                }
+            for (ProteinName p : getProteinName()) {
+                pData.append("\t").append(p).append("\n");
             }
         }
-
         if (getProteinAccessionNumber() != null) {
-            if (!getProteinAccessionNumber().isEmpty()) {
-                it = getProteinAccessionNumber().values().iterator();
-                while (it.hasNext()) {
-                    pData.append("\t").append(it.next()).append("\n");
-                }
+            for (ProteinAccessionNumber p : getProteinAccessionNumber()) {
+                pData.append("\t").append(p).append("\n");
             }
         }
-
         if (getProteinLongName() != null) {
-            it = getProteinLongName().iterator();
-            while (it.hasNext()) {
-                pData.append("\t").append(it.next()).append("\n");
+            for (ProteinLongName p : getProteinLongName()) {
+                pData.append("\t").append(p).append("\n");
             }
         }
-
         if (getProteinDBReference() != null) {
-            it = getProteinDBReference().iterator();
-            while (it.hasNext()) {
-                pData.append("\t").append(it.next()).append("\n");
+            for (ProteinDBReference p : getProteinDBReference()) {
+                pData.append("\t").append(p).append("\n");
             }
         }
-
         if (getProteinPMID() != null) {
-            if (!getProteinPMID().isEmpty()) {
-                it = getProteinPMID().values().iterator();
-                while (it.hasNext()) {
-                    pData.append("\t").append(it.next()).append("\n");
-                }
+            for (ProteinPMID p : getProteinPMID()) {
+                pData.append("\t").append(p).append("\n");
             }
         }
-
         if (getProteinEC() != null) {
-            if (!getProteinEC().isEmpty()) {
-                it = getProteinEC().values().iterator();
-                while (it.hasNext()) {
-                    pData.append("\t").append(it.next()).append("\n");
-                }
+            for (ProteinEC p : getProteinEC()) {
+                pData.append("\t").append(p).append("\n");
             }
         }
-
         if (getProteinKEGG() != null) {
-            if (!getProteinKEGG().isEmpty()) {
-                it = getProteinKEGG().values().iterator();
-                while (it.hasNext()) {
-                    pData.append("\t").append(it.next()).append("\n");
-                }
+            for (ProteinKEGG p : getProteinKEGG()) {
+                pData.append("\t").append(p).append("\n");
             }
         }
-
         if (getProteinBioCyc() != null) {
-            if (!getProteinBioCyc().isEmpty()) {
-                it = getProteinBioCyc().values().iterator();
-                while (it.hasNext()) {
-                    pData.append("\t").append(it.next()).append("\n");
-                }
+            for (ProteinBioCyc p : getProteinBioCyc()) {
+                pData.append("\t").append(p).append("\n");
             }
         }
-
         if (getProteinPDB() != null) {
-            if (!getProteinPDB().isEmpty()) {
-                it = getProteinPDB().values().iterator();
-                while (it.hasNext()) {
-                    pData.append("\t").append(it.next()).append("\n");
-                }
+            for (ProteinPDB p : getProteinPDB()) {
+                pData.append("\t").append(p).append("\n");
             }
         }
-
         if (getProteinIntAct() != null) {
-            if (!getProteinIntAct().isEmpty()) {
-                it = getProteinIntAct().values().iterator();
-                while (it.hasNext()) {
-                    pData.append("\t").append(it.next()).append("\n");
-                }
+            for (ProteinIntAct p : getProteinIntAct()) {
+                pData.append("\t").append(p).append("\n");
             }
         }
-
         if (getProteinDIP() != null) {
-            if (!getProteinDIP().isEmpty()) {
-                it = getProteinDIP().values().iterator();
-                while (it.hasNext()) {
-                    pData.append("\t").append(it.next()).append("\n");
-                }
+            for (ProteinDIP p : getProteinDIP()) {
+                pData.append("\t").append(p).append("\n");
             }
         }
-
         if (getProteinMINT() != null) {
-            if (!getProteinMINT().isEmpty()) {
-                it = getProteinMINT().values().iterator();
-                while (it.hasNext()) {
-                    pData.append("\t").append(it.next()).append("\n");
-                }
+            for (ProteinMINT p : getProteinMINT()) {
+                pData.append("\t").append(p).append("\n");
             }
         }
-
         if (getProteinDrugBank() != null) {
-            if (!getProteinDrugBank().isEmpty()) {
-                it = getProteinDrugBank().values().iterator();
-                while (it.hasNext()) {
-                    pData.append("\t").append(it.next()).append("\n");
-                }
+            for (ProteinDrugBank p : getProteinDrugBank()) {
+                pData.append("\t").append(p).append("\n");
             }
         }
-
         if (getProteinPFAM() != null) {
-            if (!getProteinPFAM().isEmpty()) {
-                it = getProteinPFAM().values().iterator();
-                while (it.hasNext()) {
-                    pData.append("\t").append(it.next()).append("\n");
-                }
+            for (ProteinPFAM p : getProteinPFAM()) {
+                pData.append("\t").append(p).append("\n");
             }
         }
-
         if (getProteinFeature() != null) {
-            it = getProteinFeature().iterator();
-            while (it.hasNext()) {
-                pData.append("\t").append(it.next()).append("\n");
+            for (ProteinFeature p : getProteinFeature()) {
+                pData.append("\t").append(p).append("\n");
             }
         }
-
         if (getProteinComment() != null) {
-            it = getProteinComment().iterator();
-            while (it.hasNext()) {
-                pData.append("\t").append(it.next()).append("\n");
+            for (ProteinComment p : getProteinComment()) {
+                pData.append("\t").append(p).append("\n");
+            }
+        }
+        if (proteinKeyword != null) {
+            for (ProteinKeyword p : proteinKeyword) {
+                pData.append("\t").append(p).append("\n");
             }
         }
 
-        if (getProteinhasProteinKeyword() != null) {
-            it = getProteinhasProteinKeyword().values().iterator();
-            while (it.hasNext()) {
-                pData.append("\t").append(it.next()).append("\n");
-            }
-        }
-        
         return "Protein{"
                 + " wid=" + wid
                 + " version=" + version
@@ -1063,30 +997,5 @@ public class Protein implements Serializable {
                 + " dataSetWID=" + dataSetWID + "}\n"
                 + "\tOrganism=" + tSynonym + "\n"
                 + pData;
-    }
-
-    public String toFasta() {
-        StringBuilder pData = new StringBuilder();
-
-        pData.append(">").append(getProteinName().values().iterator().next().getProteinNamePK().getName());
-        if (!getProteinLongName().isEmpty()) {
-            pData.append(" ").append(((ProteinLongName) getProteinLongName().toArray()[0]).getName());
-        }
-
-        pData.append("\n");
-        int j = 0;
-        for (int i = 0; i < seq.length(); i++) {
-            j++;
-            pData.append(seq.charAt(i));
-            if (j == 60 && i != seq.length() - 1) {
-                pData.append("\n");
-                j = 0;
-            }
-        }
-        if (!seq.endsWith("\n")) {
-            pData.append("\n");
-        }
-
-        return pData.toString();
     }
 }

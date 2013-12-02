@@ -7,78 +7,72 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * This Class is OntologyAlternativeId entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Jun 28, 2011
  */
-@Entity
+@Embeddable
 @Table(name = "OntologyAlternativeId")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "OntologyAlternativeId.findAll", query = "SELECT o FROM OntologyAlternativeId o"),
-    @NamedQuery(name = "OntologyAlternativeId.findByOntologyWID", query = "SELECT o FROM OntologyAlternativeId o WHERE o.ontologyAlternativeIdPK.ontologyWID = :ontologyWID"),
-    @NamedQuery(name = "OntologyAlternativeId.findByAltId", query = "SELECT o FROM OntologyAlternativeId o WHERE o.ontologyAlternativeIdPK.altId = :altId")})
 public class OntologyAlternativeId implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected OntologyAlternativeIdPK ontologyAlternativeIdPK;
-    @ManyToOne
-    @JoinColumn(name = "Ontology_WID", insertable = false, unique = false, nullable = true, updatable = false)
-    private Ontology ontology;
+    @Basic(optional = false)
+    @Column(name = "Ontology_WID")
+    private long ontologyWID;
+    @Basic(optional = false)
+    @Column(name = "AltId")
+    private String altId;
 
     public OntologyAlternativeId() {
     }
 
-    public OntologyAlternativeId(OntologyAlternativeIdPK ontologyAlternativeIdPK) {
-        this.ontologyAlternativeIdPK = ontologyAlternativeIdPK;
-    }
-
     public OntologyAlternativeId(long ontologyWID, String altId) {
-        this.ontologyAlternativeIdPK = new OntologyAlternativeIdPK(ontologyWID, altId);
+        this.ontologyWID = ontologyWID;
+        this.altId = altId;
     }
 
-    public Ontology getOntology() {
-        return ontology;
+    public long getOntologyWID() {
+        return ontologyWID;
     }
 
-    public void setOntology(Ontology ontology) {
-        this.ontology = ontology;
+    public void setOntologyWID(long ontologyWID) {
+        this.ontologyWID = ontologyWID;
     }
 
-    public OntologyAlternativeIdPK getOntologyAlternativeIdPK() {
-        return ontologyAlternativeIdPK;
+    public String getAltId() {
+        return altId;
     }
 
-    public void setOntologyAlternativeIdPK(OntologyAlternativeIdPK ontologyAlternativeIdPK) {
-        this.ontologyAlternativeIdPK = ontologyAlternativeIdPK;
+    public void setAltId(String altId) {
+        this.altId = altId;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (ontologyAlternativeIdPK != null ? ontologyAlternativeIdPK.hashCode() : 0);
+        int hash = 5;
+        hash = 41 * hash + (int) (this.ontologyWID ^ (this.ontologyWID >>> 32));
+        hash = 41 * hash + (this.altId != null ? this.altId.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof OntologyAlternativeId)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        OntologyAlternativeId other = (OntologyAlternativeId) object;
-        if ((this.ontologyAlternativeIdPK == null && other.ontologyAlternativeIdPK != null) || (this.ontologyAlternativeIdPK != null && !this.ontologyAlternativeIdPK.equals(other.ontologyAlternativeIdPK))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final OntologyAlternativeId other = (OntologyAlternativeId) obj;
+        if (this.ontologyWID != other.ontologyWID) {
+            return false;
+        }
+        return !((this.altId == null) ? (other.altId != null) : !this.altId.equals(other.altId));
     }
 
     @Override
     public String toString() {
-        return "OntologyAlternativeId["
-                + " Ontology_WID=" + ontologyAlternativeIdPK.getOntologyWID()
-                + " AltId=" + ontologyAlternativeIdPK.getAltId()
-                + "]";
+        return "OntologyAlternativeId{" + "ontologyWID=" + ontologyWID + ", altId=" + altId + '}';
     }
 }

@@ -12,9 +12,6 @@ import org.jbiowhcore.logger.VerbLogger;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
 import org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomyDivision;
 import org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomyGenCode;
-import org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomySynonym;
-import org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomySynonymNameClass;
-import org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomySynonymPK;
 import org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomyUnParseCitation;
 import org.jbiowhpersistence.utils.controller.AbstractJpaController;
 import org.jbiowhpersistence.utils.controller.exceptions.NonexistentEntityException;
@@ -42,9 +39,6 @@ public class TaxonomyJpaController extends AbstractJpaController<Taxonomy> imple
 
     public void create(Taxonomy taxonomy) throws PreexistingEntityException, Exception {
         VerbLogger.getInstance().log(this.getClass(), "Creating " + this.getClass().getSimpleName() + ": " + taxonomy.getWid());
-        if (taxonomy.getSynonym() == null) {
-            taxonomy.setSynonym(new HashMap<TaxonomySynonymPK, TaxonomySynonym>());
-        }
         if (taxonomy.getUnparse() == null) {
             taxonomy.setUnparse(new HashSet<TaxonomyUnParseCitation>());
         }
@@ -70,22 +64,6 @@ public class TaxonomyJpaController extends AbstractJpaController<Taxonomy> imple
                     taxonomy.setMcgencode(mcGenCode);
                 }
             }
-            if (!taxonomy.getSynonym().isEmpty()) {
-                Map<TaxonomySynonymPK, TaxonomySynonym> synonyms = new HashMap();
-                for (TaxonomySynonym syn : taxonomy.getSynonym().values()) {
-                    TaxonomySynonym synOnDB = em.find(TaxonomySynonym.class, syn.getTaxonomySynonymPK());
-                    if (synOnDB != null) {
-                        synonyms.put(synOnDB.getTaxonomySynonymPK(), synOnDB);
-                    } else {
-                        TaxonomySynonymNameClass nameClass = em.find(TaxonomySynonymNameClass.class, syn.getNameClass().getWid());
-                        if (nameClass != null) {
-                            syn.setNameClass(nameClass);
-                        }
-                        synonyms.put(syn.getTaxonomySynonymPK(), syn);
-                    }
-                }
-                taxonomy.setSynonym(synonyms);
-            }
             if (!taxonomy.getUnparse().isEmpty()) {
                 Set<TaxonomyUnParseCitation> unParse = new HashSet();
                 for (TaxonomyUnParseCitation unp : taxonomy.getUnparse()) {
@@ -100,10 +78,6 @@ public class TaxonomyJpaController extends AbstractJpaController<Taxonomy> imple
             }
             taxonomy.setDataSet(createDataSet(emf, em, taxonomy.getDataSet()));
             em.persist(taxonomy);
-            for (TaxonomySynonym syn : taxonomy.getSynonym().values()) {
-                syn.setTaxonomy(taxonomy);
-                syn = em.merge(syn);
-            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             if (findTaxonomy(taxonomy.getWid()) != null) {

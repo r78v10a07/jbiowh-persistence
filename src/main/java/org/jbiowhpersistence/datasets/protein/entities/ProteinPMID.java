@@ -7,79 +7,72 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * This Class is the Protein PMID entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Aug 11, 2011
  */
-@Entity
+@Embeddable
 @Table(name = "ProteinPMID")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "ProteinPMID.findAll", query = "SELECT p FROM ProteinPMID p"),
-    @NamedQuery(name = "ProteinPMID.findByProteinWID", query = "SELECT p FROM ProteinPMID p WHERE p.proteinPMIDPK.proteinWID = :proteinWID"),
-    @NamedQuery(name = "ProteinPMID.findById", query = "SELECT p FROM ProteinPMID p WHERE p.proteinPMIDPK.id = :id")})
 public class ProteinPMID implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ProteinPMIDPK proteinPMIDPK;
-    // Internla relationship
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Protein_WID", insertable = false, unique = false, nullable = true, updatable = false)
-    private Protein protein;
+    @Basic(optional = false)
+    @Column(name = "Protein_WID")
+    private long proteinWID;
+    @Basic(optional = false)
+    @Column(name = "Id")
+    private String id;
 
     public ProteinPMID() {
     }
 
-    public ProteinPMID(ProteinPMIDPK proteinPMIDPK) {
-        this.proteinPMIDPK = proteinPMIDPK;
-    }
-
     public ProteinPMID(long proteinWID, String id) {
-        this.proteinPMIDPK = new ProteinPMIDPK(proteinWID, id);
+        this.proteinWID = proteinWID;
+        this.id = id;
     }
 
-    public Protein getProtein() {
-        return protein;
+    public long getProteinWID() {
+        return proteinWID;
     }
 
-    public void setProtein(Protein protein) {
-        this.protein = protein;
+    public void setProteinWID(long proteinWID) {
+        this.proteinWID = proteinWID;
     }
 
-    public ProteinPMIDPK getProteinPMIDPK() {
-        return proteinPMIDPK;
+    public String getId() {
+        return id;
     }
 
-    public void setProteinPMIDPK(ProteinPMIDPK proteinPMIDPK) {
-        this.proteinPMIDPK = proteinPMIDPK;
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (proteinPMIDPK != null ? proteinPMIDPK.hashCode() : 0);
+        int hash = 7;
+        hash = 47 * hash + (int) (this.proteinWID ^ (this.proteinWID >>> 32));
+        hash = 47 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof ProteinPMID)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        ProteinPMID other = (ProteinPMID) object;
-        if ((this.proteinPMIDPK == null && other.proteinPMIDPK != null) || (this.proteinPMIDPK != null && !this.proteinPMIDPK.equals(other.proteinPMIDPK))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final ProteinPMID other = (ProteinPMID) obj;
+        if (this.proteinWID != other.proteinWID) {
+            return false;
+        }
+        return !((this.id == null) ? (other.id != null) : !this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
-        return "ProteinPMID{"
-                + " ProteinWID=" + proteinPMIDPK.getProteinWID()
-                + " Id=" + proteinPMIDPK.getId()
-                + '}';
+        return "ProteinPMID{" + "proteinWID=" + proteinWID + ", id=" + id + '}';
     }
 }

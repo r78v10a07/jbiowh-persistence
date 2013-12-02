@@ -1,36 +1,22 @@
 package org.jbiowhpersistence.datasets.protein.entities;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * This Class is
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Aug 11, 2011
  */
-@Entity
+@Embeddable
 @Table(name = "ProteinCommentSubCellularLocation")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "ProteinCommentSubCellularLocation.findAll", query = "SELECT p FROM ProteinCommentSubCellularLocation p"),
-    @NamedQuery(name = "ProteinCommentSubCellularLocation.findByWid", query = "SELECT p FROM ProteinCommentSubCellularLocation p WHERE p.wid = :wid"),
-    @NamedQuery(name = "ProteinCommentSubCellularLocation.findByProteinCommentWID", query = "SELECT p FROM ProteinCommentSubCellularLocation p WHERE p.proteinCommentWID = :proteinCommentWID"),
-    @NamedQuery(name = "ProteinCommentSubCellularLocation.findByData", query = "SELECT p FROM ProteinCommentSubCellularLocation p WHERE p.data = :data"),
-    @NamedQuery(name = "ProteinCommentSubCellularLocation.findByElement", query = "SELECT p FROM ProteinCommentSubCellularLocation p WHERE p.element = :element"),
-    @NamedQuery(name = "ProteinCommentSubCellularLocation.findByEvidence", query = "SELECT p FROM ProteinCommentSubCellularLocation p WHERE p.evidence = :evidence"),
-    @NamedQuery(name = "ProteinCommentSubCellularLocation.findByStatus", query = "SELECT p FROM ProteinCommentSubCellularLocation p WHERE p.status = :status")})
 public class ProteinCommentSubCellularLocation implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "WID")
-    private Long wid;
     @Basic(optional = false)
     @Column(name = "ProteinComment_WID")
     private long proteinCommentWID;
@@ -42,37 +28,16 @@ public class ProteinCommentSubCellularLocation implements Serializable {
     private String evidence;
     @Column(name = "Status")
     private String status;
-    // Internla relationship
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ProteinComment_WID", insertable = false, unique = false, nullable = true, updatable = false)
-    private ProteinComment proteinComment;
 
     public ProteinCommentSubCellularLocation() {
     }
 
-    public ProteinCommentSubCellularLocation(Long wid) {
-        this.wid = wid;
-    }
-
-    public ProteinCommentSubCellularLocation(Long wid, long proteinCommentWID) {
-        this.wid = wid;
+    public ProteinCommentSubCellularLocation(long proteinCommentWID, String data, String element, String evidence, String status) {
         this.proteinCommentWID = proteinCommentWID;
-    }
-
-    public ProteinComment getProteinComment() {
-        return proteinComment;
-    }
-
-    public void setProteinComment(ProteinComment proteinComment) {
-        this.proteinComment = proteinComment;
-    }
-
-    public Long getWid() {
-        return wid;
-    }
-
-    public void setWid(Long wid) {
-        this.wid = wid;
+        this.data = data;
+        this.element = element;
+        this.evidence = evidence;
+        this.status = status;
     }
 
     public long getProteinCommentWID() {
@@ -116,6 +81,17 @@ public class ProteinCommentSubCellularLocation implements Serializable {
     }
 
     @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 53 * hash + (int) (this.proteinCommentWID ^ (this.proteinCommentWID >>> 32));
+        hash = 53 * hash + (this.data != null ? this.data.hashCode() : 0);
+        hash = 53 * hash + (this.element != null ? this.element.hashCode() : 0);
+        hash = 53 * hash + (this.evidence != null ? this.evidence.hashCode() : 0);
+        hash = 53 * hash + (this.status != null ? this.status.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -124,43 +100,23 @@ public class ProteinCommentSubCellularLocation implements Serializable {
             return false;
         }
         final ProteinCommentSubCellularLocation other = (ProteinCommentSubCellularLocation) obj;
-        if (!Objects.equals(this.wid, other.wid)) {
-            return false;
-        }
         if (this.proteinCommentWID != other.proteinCommentWID) {
             return false;
         }
-        if (!Objects.equals(this.data, other.data)) {
+        if ((this.data == null) ? (other.data != null) : !this.data.equals(other.data)) {
             return false;
         }
-        if (!Objects.equals(this.element, other.element)) {
+        if ((this.element == null) ? (other.element != null) : !this.element.equals(other.element)) {
             return false;
         }
-        if (!Objects.equals(this.evidence, other.evidence)) {
+        if ((this.evidence == null) ? (other.evidence != null) : !this.evidence.equals(other.evidence)) {
             return false;
         }
-        if (!Objects.equals(this.status, other.status)) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (wid != null ? wid.hashCode() : 0);
-        return hash;
+        return !((this.status == null) ? (other.status != null) : !this.status.equals(other.status));
     }
 
     @Override
     public String toString() {
-        return "ProteinCommentSubCellularLocation{"
-                + " wid=" + wid
-                + " commentWID=" + proteinCommentWID
-                + " data=" + data
-                + " element=" + element
-                + " evidence=" + evidence
-                + " status=" + status
-                + '}';
+        return "ProteinCommentSubCellularLocation{" + "proteinCommentWID=" + proteinCommentWID + ", data=" + data + ", element=" + element + ", evidence=" + evidence + ", status=" + status + '}';
     }
 }

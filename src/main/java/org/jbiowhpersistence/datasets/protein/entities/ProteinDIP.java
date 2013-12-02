@@ -7,79 +7,72 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * This Class is the Protein DIP entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Aug 11, 2011
  */
-@Entity
+@Embeddable
 @Table(name = "ProteinDIP")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "ProteinDIP.findAll", query = "SELECT p FROM ProteinDIP p"),
-    @NamedQuery(name = "ProteinDIP.findByProteinWID", query = "SELECT p FROM ProteinDIP p WHERE p.proteinDIPPK.proteinWID = :proteinWID"),
-    @NamedQuery(name = "ProteinDIP.findById", query = "SELECT p FROM ProteinDIP p WHERE p.proteinDIPPK.id = :id")})
 public class ProteinDIP implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ProteinDIPPK proteinDIPPK;
-    // Internla relationship
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Protein_WID", insertable = false, unique = false, nullable = true, updatable = false)
-    private Protein protein;
+    @Basic(optional = false)
+    @Column(name = "Protein_WID")
+    private long proteinWID;
+    @Basic(optional = false)
+    @Column(name = "Id")
+    private String id;
 
     public ProteinDIP() {
     }
 
-    public ProteinDIP(ProteinDIPPK proteinDIPPK) {
-        this.proteinDIPPK = proteinDIPPK;
-    }
-
     public ProteinDIP(long proteinWID, String id) {
-        this.proteinDIPPK = new ProteinDIPPK(proteinWID, id);
+        this.proteinWID = proteinWID;
+        this.id = id;
     }
 
-    public Protein getProtein() {
-        return protein;
+    public long getProteinWID() {
+        return proteinWID;
     }
 
-    public void setProtein(Protein protein) {
-        this.protein = protein;
+    public void setProteinWID(long proteinWID) {
+        this.proteinWID = proteinWID;
     }
 
-    public ProteinDIPPK getProteinDIPPK() {
-        return proteinDIPPK;
+    public String getId() {
+        return id;
     }
 
-    public void setProteinDIPPK(ProteinDIPPK proteinDIPPK) {
-        this.proteinDIPPK = proteinDIPPK;
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (proteinDIPPK != null ? proteinDIPPK.hashCode() : 0);
+        int hash = 3;
+        hash = 31 * hash + (int) (this.proteinWID ^ (this.proteinWID >>> 32));
+        hash = 31 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof ProteinDIP)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        ProteinDIP other = (ProteinDIP) object;
-        if ((this.proteinDIPPK == null && other.proteinDIPPK != null) || (this.proteinDIPPK != null && !this.proteinDIPPK.equals(other.proteinDIPPK))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final ProteinDIP other = (ProteinDIP) obj;
+        if (this.proteinWID != other.proteinWID) {
+            return false;
+        }
+        return !((this.id == null) ? (other.id != null) : !this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
-        return "ProteinDIP{"
-                + " ProteinWID=" + proteinDIPPK.getProteinWID()
-                + " Id=" + proteinDIPPK.getId()
-                + '}';
+        return "ProteinDIP{" + "proteinWID=" + proteinWID + ", id=" + id + '}';
     }
 }

@@ -1,8 +1,8 @@
 package org.jbiowhpersistence.datasets.protein.entities;
 
 import java.io.Serializable;
-import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -10,9 +10,9 @@ import javax.xml.bind.annotation.XmlTransient;
 /**
  * This Class is the Protein Keyword entity
  *
- * $Author: r78v10a07@gmail.com $ 
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $ 
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Aug 11, 2011
  */
 @Entity
@@ -34,24 +34,14 @@ public class ProteinKeyword implements Serializable {
     private String id;
     @Column(name = "Keyword")
     private String keyword;
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "proteinKeyword")
-    @MapKey(name = "proteinhasProteinKeywordPK")
-    private Map<ProteinhasProteinKeywordPK, ProteinhasProteinKeyword> proteinhasProteinKeyword;
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "proteinKeyword")
+    private Set<Protein> protein;
 
     public ProteinKeyword() {
     }
 
     public ProteinKeyword(Long wid) {
         this.wid = wid;
-    }
-
-    @XmlTransient
-    public Map<ProteinhasProteinKeywordPK, ProteinhasProteinKeyword> getProteinhasProteinKeyword() {
-        return proteinhasProteinKeyword;
-    }
-
-    public void setProteinhasProteinKeyword(Map<ProteinhasProteinKeywordPK, ProteinhasProteinKeyword> proteinhasProteinKeyword) {
-        this.proteinhasProteinKeyword = proteinhasProteinKeyword;
     }
 
     public Long getWid() {
@@ -78,6 +68,15 @@ public class ProteinKeyword implements Serializable {
         this.keyword = keyword;
     }
 
+    @XmlTransient    
+    public Set<Protein> getProtein() {
+        return protein;
+    }
+
+    public void setProtein(Set<Protein> protein) {
+        this.protein = protein;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -93,10 +92,7 @@ public class ProteinKeyword implements Serializable {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.keyword, other.keyword)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.keyword, other.keyword);
     }
 
     @Override

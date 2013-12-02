@@ -82,28 +82,14 @@
     <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankTransporters</class>
     <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankTransportersActions</class>
     <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankTransportersRef</class>
-    <class>org.jbiowhpersistence.datasets.gene.gene.entities.Gene2Accession</class>
-    <class>org.jbiowhpersistence.datasets.gene.gene.entities.Gene2Ensembl</class>
-    <class>org.jbiowhpersistence.datasets.gene.gene.entities.Gene2PMID</class>
-    <class>org.jbiowhpersistence.datasets.gene.gene.entities.Gene2STS</class>
-    <class>org.jbiowhpersistence.datasets.gene.gene.entities.Gene2UniGene</class>
-    <class>org.jbiowhpersistence.datasets.gene.gene.entities.GeneGroup</class>
     <class>org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo</class>
-    <class>org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfoDBXrefs</class>
-    <class>org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfoSynonyms</class>
-    <class>org.jbiowhpersistence.datasets.gene.gene.entities.GeneRefSeqUniprot</class>
     <class>org.jbiowhpersistence.datasets.gene.genebank.entities.GeneBank</class>
     <class>org.jbiowhpersistence.datasets.gene.genebank.entities.GeneBankCDS</class>
     <class>org.jbiowhpersistence.datasets.gene.genome.entities.GenePTT</class>
     <class>org.jbiowhpersistence.datasets.gene.genome.entities.GeneRNT</class>
     <class>org.jbiowhpersistence.datasets.ontology.entities.Ontology</class>
-    <class>org.jbiowhpersistence.datasets.ontology.entities.OntologyAlternativeId</class>
-    <class>org.jbiowhpersistence.datasets.ontology.entities.OntologyIsA</class>
-    <class>org.jbiowhpersistence.datasets.ontology.entities.OntologyPMID</class>
-    <class>org.jbiowhpersistence.datasets.ontology.entities.OntologyRelation</class>
     <class>org.jbiowhpersistence.datasets.ontology.entities.OntologySubset</class>
     <class>org.jbiowhpersistence.datasets.ontology.entities.OntologySynonym</class>
-    <class>org.jbiowhpersistence.datasets.ontology.entities.OntologyToConsider</class>
     <class>org.jbiowhpersistence.datasets.ontology.entities.OntologyXRef</class>
     <class>org.jbiowhpersistence.datasets.ontology.entities.OntologyhasOntologySynonym</class>
     <class>org.jbiowhpersistence.datasets.pathway.kegg.entities.compound.KEGGCompound</class>
@@ -178,50 +164,20 @@
     <class>org.jbiowhpersistence.datasets.protclust.entities.UniRefMember</class>
     <class>org.jbiowhpersistence.datasets.protclust.entities.UniRefMemberProperty</class>
     <class>org.jbiowhpersistence.datasets.protein.entities.Protein</class>
-    <class>org.jbiowhpersistence.datasets.protein.entities.ProteinAccessionNumber</class>
-    <class>org.jbiowhpersistence.datasets.protein.entities.ProteinBioCyc</class>
     <class>org.jbiowhpersistence.datasets.protein.entities.ProteinComment</class>
-    <class>org.jbiowhpersistence.datasets.protein.entities.ProteinCommentConflict</class>
-    <class>org.jbiowhpersistence.datasets.protein.entities.ProteinCommentEvent</class>
-    <class>org.jbiowhpersistence.datasets.protein.entities.ProteinCommentInteract</class>
     <class>org.jbiowhpersistence.datasets.protein.entities.ProteinCommentIsoform</class>
-    <class>org.jbiowhpersistence.datasets.protein.entities.ProteinCommentLink</class>
-    <class>org.jbiowhpersistence.datasets.protein.entities.ProteinCommentSubCellularLocation</class>
     <class>org.jbiowhpersistence.datasets.protein.entities.ProteinDBReference</class>
-    <class>org.jbiowhpersistence.datasets.protein.entities.ProteinDBReferenceProperty</class>
-    <class>org.jbiowhpersistence.datasets.protein.entities.ProteinDIP</class>
-    <class>org.jbiowhpersistence.datasets.protein.entities.ProteinDrugBank</class>
-    <class>org.jbiowhpersistence.datasets.protein.entities.ProteinEC</class>
     <class>org.jbiowhpersistence.datasets.protein.entities.ProteinFeature</class>
-    <class>org.jbiowhpersistence.datasets.protein.entities.ProteinFeatureVariation</class>
     <class>org.jbiowhpersistence.datasets.protein.entities.ProteinGeneLocation</class>
-    <class>org.jbiowhpersistence.datasets.protein.entities.ProteinIntAct</class>
-    <class>org.jbiowhpersistence.datasets.protein.entities.ProteinIsoformId</class>
-    <class>org.jbiowhpersistence.datasets.protein.entities.ProteinIsoformName</class>
-    <class>org.jbiowhpersistence.datasets.protein.entities.ProteinKEGG</class>
     <class>org.jbiowhpersistence.datasets.protein.entities.ProteinKeyword</class>
-    <class>org.jbiowhpersistence.datasets.protein.entities.ProteinLongName</class>
-    <class>org.jbiowhpersistence.datasets.protein.entities.ProteinMINT</class>
-    <class>org.jbiowhpersistence.datasets.protein.entities.ProteinName</class>
     <class>org.jbiowhpersistence.datasets.protein.entities.ProteinOtherLocation</class>
-    <class>org.jbiowhpersistence.datasets.protein.entities.ProteinPDB</class>
-    <class>org.jbiowhpersistence.datasets.protein.entities.ProteinPFAM</class>
-    <class>org.jbiowhpersistence.datasets.protein.entities.ProteinPMID</class>
     <class>org.jbiowhpersistence.datasets.protein.entities.ProteinRefSeq</class>
     <class>org.jbiowhpersistence.datasets.protein.entities.ProteinhasProteinKeyword</class>
     <class>org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy</class>
     <class>org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomyDivision</class>
     <class>org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomyGenCode</class>
-    <class>org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomyPMID</class>
-    <class>org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomySynonym</class>
     <class>org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomySynonymNameClass</class>
     <class>org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomyUnParseCitation</class>
-    <class>org.jbiowhpersistence.datasets.gene.gene.entities.Table2</class>
-    <class>org.jbiowhpersistence.datasets.gene.gene.entities.Table1</class>
-    <class>org.jbiowhpersistence.datasets.gene.gene.entities.Table3</class>
-    <class>org.jbiowhpersistence.datasets.gene.gene.entities.Gene2RNANucleotide</class>
-    <class>org.jbiowhpersistence.datasets.gene.gene.entities.Gene2ProteinAccession</class>
-    <class>org.jbiowhpersistence.datasets.gene.gene.entities.Gene2GenomicNucleotide</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.logging.level" value="OFF"/>

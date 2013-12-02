@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
@@ -63,37 +64,61 @@ public class Ontology implements Serializable {
     /*
      * Ontology relationships
      */
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ontology")
-    @MapKey(name = "ontologyAlternativeIdPK")
-    private Map<OntologyAlternativeIdPK, OntologyAlternativeId> ontologyAlternativeId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ontology")
-    @MapKey(name = "ontologyIsAPK")
-    private Map<OntologyIsAPK, OntologyIsA> ontologyIsA;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ontology")
-    @MapKey(name = "ontologyPMIDPK")
-    private Map<OntologyPMIDPK, OntologyPMID> ontologyPMID;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ontology")
-    @MapKey(name = "ontologyRelationPK")
-    private Map<OntologyRelationPK, OntologyRelation> ontologyRelation;
+    @ElementCollection
+    @CollectionTable(
+            name = "OntologyAlternativeId",
+            joinColumns
+            = @JoinColumn(name = "Ontology_WID"))
+    @XmlElementWrapper(name = "OntologyAlternativeIds")
+    private Collection<OntologyAlternativeId> ontologyAlternativeId;
+    @ElementCollection
+    @CollectionTable(
+            name = "OntologyIsA",
+            joinColumns
+            = @JoinColumn(name = "Ontology_WID"))
+    @XmlElementWrapper(name = "OntologyIsAs")
+    private Collection<OntologyIsA> ontologyIsA;
+    @ElementCollection
+    @CollectionTable(
+            name = "OntologyPMID",
+            joinColumns
+            = @JoinColumn(name = "Ontology_WID"))
+    @XmlElementWrapper(name = "OntologyPMIDs")
+    private Collection<OntologyPMID> ontologyPMID;
+    @ElementCollection
+    @CollectionTable(
+            name = "OntologyRelation",
+            joinColumns
+            = @JoinColumn(name = "Ontology_WID"))
+    @XmlElementWrapper(name = "OntologyRelations")
+    private Collection<OntologyRelation> ontologyRelation;
+    @ElementCollection
+    @CollectionTable(
+            name = "OntologyToConsider",
+            joinColumns
+            = @JoinColumn(name = "Ontology_WID"))
+    @XmlElementWrapper(name = "OntologyToConsiders")
+    private Collection<OntologyToConsider> ontologyToConsider;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "Ontology_has_OntologySubset",
             joinColumns
             = @JoinColumn(name = "Ontology_WID", referencedColumnName = "WID"),
             inverseJoinColumns
             = @JoinColumn(name = "OntologySubset_WID", referencedColumnName = "WID"))
+    @XmlElementWrapper(name = "OntologySubsets")
     private Set<OntologySubset> ontologySubset;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ontology")
     @MapKey(name = "ontologyhasOntologySynonymPK")
     private Map<OntologyhasOntologySynonymPK, OntologyhasOntologySynonym> ontologyhasOntologySynonym;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ontology")
-    @MapKey(name = "ontologyToConsiderPK")
-    private Map<OntologyToConsiderPK, OntologyToConsider> ontologyToConsider;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "Ontology_has_OntologyXRef",
             joinColumns
             = @JoinColumn(name = "Ontology_WID", referencedColumnName = "WID"),
             inverseJoinColumns
             = @JoinColumn(name = "OntologyXRef_WID", referencedColumnName = "WID"))
+    @XmlElementWrapper(name = "OntologyXRefs")
     private Set<OntologyXRef> ontologyXRef;
     // External Gene Relationship
     @ManyToOne(cascade = CascadeType.ALL)
@@ -125,45 +150,12 @@ public class Ontology implements Serializable {
         setGeneInfo(null);
     }
 
-    public DataSet getDataSet() {
-        return dataSet;
+    public Long getWid() {
+        return wid;
     }
 
-    public void setDataSet(DataSet dataSet) {
-        this.dataSet = dataSet;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public long getDataSetWID() {
-        return dataSetWID;
-    }
-
-    public void setDataSetWID(long dataSetWID) {
-        this.dataSetWID = dataSetWID;
-    }
-
-    public String getDef() {
-        return def;
-    }
-
-    public void setDef(String def) {
-        this.def = def;
-    }
-
-    @XmlTransient
-    public Collection<GeneInfo> getGeneInfo() {
-        return geneInfo;
-    }
-
-    public void setGeneInfo(Collection<GeneInfo> geneInfo) {
-        this.geneInfo = geneInfo;
+    public void setWid(Long wid) {
+        this.wid = wid;
     }
 
     public String getId() {
@@ -172,14 +164,6 @@ public class Ontology implements Serializable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public boolean isIsObsolete() {
-        return isObsolete;
-    }
-
-    public void setIsObsolete(boolean isObsolete) {
-        this.isObsolete = isObsolete;
     }
 
     public String getName() {
@@ -198,67 +182,84 @@ public class Ontology implements Serializable {
         this.nameSpace = nameSpace;
     }
 
-    @XmlTransient
-    public Map<OntologyAlternativeIdPK, OntologyAlternativeId> getOntologyAlternativeId() {
+    public String getDef() {
+        return def;
+    }
+
+    public void setDef(String def) {
+        this.def = def;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public boolean isIsObsolete() {
+        return isObsolete;
+    }
+
+    public void setIsObsolete(boolean isObsolete) {
+        this.isObsolete = isObsolete;
+    }
+
+    public long getDataSetWID() {
+        return dataSetWID;
+    }
+
+    public void setDataSetWID(long dataSetWID) {
+        this.dataSetWID = dataSetWID;
+    }
+
+    public Collection<OntologyAlternativeId> getOntologyAlternativeId() {
         return ontologyAlternativeId;
     }
 
-    public void setOntologyAlternativeId(Map<OntologyAlternativeIdPK, OntologyAlternativeId> ontologyAlternativeId) {
+    public void setOntologyAlternativeId(Collection<OntologyAlternativeId> ontologyAlternativeId) {
         this.ontologyAlternativeId = ontologyAlternativeId;
     }
 
-    @XmlTransient
-    public Map<OntologyIsAPK, OntologyIsA> getOntologyIsA() {
+    public Collection<OntologyIsA> getOntologyIsA() {
         return ontologyIsA;
     }
 
-    public void setOntologyIsA(Map<OntologyIsAPK, OntologyIsA> ontologyIsA) {
+    public void setOntologyIsA(Collection<OntologyIsA> ontologyIsA) {
         this.ontologyIsA = ontologyIsA;
     }
 
-    @XmlTransient
-    public Map<OntologyPMIDPK, OntologyPMID> getOntologyPMID() {
+    public Collection<OntologyPMID> getOntologyPMID() {
         return ontologyPMID;
     }
 
-    public void setOntologyPMID(Map<OntologyPMIDPK, OntologyPMID> ontologyPMID) {
+    public void setOntologyPMID(Collection<OntologyPMID> ontologyPMID) {
         this.ontologyPMID = ontologyPMID;
     }
 
-    @XmlTransient
-    public Map<OntologyRelationPK, OntologyRelation> getOntologyRelation() {
+    public Collection<OntologyRelation> getOntologyRelation() {
         return ontologyRelation;
     }
 
-    public void setOntologyRelation(Map<OntologyRelationPK, OntologyRelation> ontologyRelation) {
+    public void setOntologyRelation(Collection<OntologyRelation> ontologyRelation) {
         this.ontologyRelation = ontologyRelation;
     }
 
-    @XmlTransient
+    public Collection<OntologyToConsider> getOntologyToConsider() {
+        return ontologyToConsider;
+    }
+
+    public void setOntologyToConsider(Collection<OntologyToConsider> ontologyToConsider) {
+        this.ontologyToConsider = ontologyToConsider;
+    }
+
     public Set<OntologySubset> getOntologySubset() {
         return ontologySubset;
     }
 
     public void setOntologySubset(Set<OntologySubset> ontologySubset) {
         this.ontologySubset = ontologySubset;
-    }
-
-    @XmlTransient
-    public Map<OntologyToConsiderPK, OntologyToConsider> getOntologyToConsider() {
-        return ontologyToConsider;
-    }
-
-    public void setOntologyToConsider(Map<OntologyToConsiderPK, OntologyToConsider> ontologyToConsider) {
-        this.ontologyToConsider = ontologyToConsider;
-    }
-
-    @XmlTransient
-    public Set<OntologyXRef> getOntologyXRef() {
-        return ontologyXRef;
-    }
-
-    public void setOntologyXRef(Set<OntologyXRef> ontologyXRef) {
-        this.ontologyXRef = ontologyXRef;
     }
 
     @XmlTransient
@@ -270,6 +271,22 @@ public class Ontology implements Serializable {
         this.ontologyhasOntologySynonym = ontologyhasOntologySynonym;
     }
 
+    public Set<OntologyXRef> getOntologyXRef() {
+        return ontologyXRef;
+    }
+
+    public void setOntologyXRef(Set<OntologyXRef> ontologyXRef) {
+        this.ontologyXRef = ontologyXRef;
+    }
+
+    public DataSet getDataSet() {
+        return dataSet;
+    }
+
+    public void setDataSet(DataSet dataSet) {
+        this.dataSet = dataSet;
+    }
+
     @XmlTransient
     public Set<Protein> getProtein() {
         return protein;
@@ -279,12 +296,13 @@ public class Ontology implements Serializable {
         this.protein = protein;
     }
 
-    public Long getWid() {
-        return wid;
+    @XmlTransient
+    public Collection<GeneInfo> getGeneInfo() {
+        return geneInfo;
     }
 
-    public void setWid(Long wid) {
-        this.wid = wid;
+    public void setGeneInfo(Collection<GeneInfo> geneInfo) {
+        this.geneInfo = geneInfo;
     }
 
     @Override
@@ -367,25 +385,25 @@ public class Ontology implements Serializable {
         StringBuilder xRefString = new StringBuilder();
 
         if (ontologyAlternativeId != null) {
-            it = ontologyAlternativeId.values().iterator();
+            it = ontologyAlternativeId.iterator();
             while (it.hasNext()) {
                 alIdString.append("\n\t\t").append(((OntologyAlternativeId) it.next()).toString());
             }
         }
         if (ontologyIsA != null) {
-            it = ontologyIsA.values().iterator();
+            it = ontologyIsA.iterator();
             while (it.hasNext()) {
                 isAString.append("\n\t\t").append(((OntologyIsA) it.next()).toString());
             }
         }
         if (ontologyPMID != null) {
-            it = ontologyPMID.values().iterator();
+            it = ontologyPMID.iterator();
             while (it.hasNext()) {
                 pmidString.append("\n\t\t").append(((OntologyPMID) it.next()).toString());
             }
         }
         if (ontologyRelation != null) {
-            it = ontologyRelation.values().iterator();
+            it = ontologyRelation.iterator();
             while (it.hasNext()) {
                 relationString.append("\n\t\t").append(((OntologyRelation) it.next()).toString());
             }
@@ -403,7 +421,7 @@ public class Ontology implements Serializable {
             }
         }
         if (ontologyToConsider != null) {
-            it = ontologyToConsider.values().iterator();
+            it = ontologyToConsider.iterator();
             while (it.hasNext()) {
                 toConsiderString.append("\n\t\t").append(((OntologyToConsider) it.next()).toString());
             }

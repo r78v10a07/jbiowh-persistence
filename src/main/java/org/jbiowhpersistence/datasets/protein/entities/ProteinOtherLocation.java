@@ -197,10 +197,7 @@ public class ProteinOtherLocation implements Serializable {
         if (!Objects.equals(this.sequence, other.sequence)) {
             return false;
         }
-        if (this.dataSetWID != other.dataSetWID) {
-            return false;
-        }
-        return true;
+        return this.dataSetWID == other.dataSetWID;
     }
 
     @Override

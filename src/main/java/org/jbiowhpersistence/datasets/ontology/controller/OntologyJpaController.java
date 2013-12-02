@@ -11,14 +11,8 @@ import javax.persistence.criteria.Root;
 import org.jbiowhcore.logger.VerbLogger;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
 import org.jbiowhpersistence.datasets.ontology.entities.Ontology;
-import org.jbiowhpersistence.datasets.ontology.entities.OntologyIsA;
-import org.jbiowhpersistence.datasets.ontology.entities.OntologyIsAPK;
-import org.jbiowhpersistence.datasets.ontology.entities.OntologyRelation;
-import org.jbiowhpersistence.datasets.ontology.entities.OntologyRelationPK;
 import org.jbiowhpersistence.datasets.ontology.entities.OntologySubset;
 import org.jbiowhpersistence.datasets.ontology.entities.OntologySynonym;
-import org.jbiowhpersistence.datasets.ontology.entities.OntologyToConsider;
-import org.jbiowhpersistence.datasets.ontology.entities.OntologyToConsiderPK;
 import org.jbiowhpersistence.datasets.ontology.entities.OntologyXRef;
 import org.jbiowhpersistence.datasets.ontology.entities.OntologyhasOntologySynonym;
 import org.jbiowhpersistence.datasets.ontology.entities.OntologyhasOntologySynonymPK;
@@ -49,17 +43,8 @@ public class OntologyJpaController extends AbstractJpaController<Ontology> imple
 
     public void create(Ontology ontology) throws PreexistingEntityException, Exception {
         VerbLogger.getInstance().log(this.getClass(), "Creating " + this.getClass().getSimpleName() + ": " + ontology.getWid());
-        if (ontology.getOntologyIsA() == null) {
-            ontology.setOntologyIsA(new HashMap<OntologyIsAPK, OntologyIsA>());
-        }
-        if (ontology.getOntologyRelation() == null) {
-            ontology.setOntologyRelation(new HashMap<OntologyRelationPK, OntologyRelation>());
-        }
         if (ontology.getOntologySubset() == null) {
             ontology.setOntologySubset(new HashSet<OntologySubset>());
-        }
-        if (ontology.getOntologyToConsider() == null) {
-            ontology.setOntologyToConsider(new HashMap<OntologyToConsiderPK, OntologyToConsider>());
         }
         if (ontology.getOntologyXRef() == null) {
             ontology.setOntologyXRef(new HashSet<OntologyXRef>());
@@ -72,48 +57,6 @@ public class OntologyJpaController extends AbstractJpaController<Ontology> imple
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            if (!ontology.getOntologyIsA().isEmpty()) {
-                Map<OntologyIsAPK, OntologyIsA> isAMap = new HashMap();
-                for (OntologyIsA isA : ontology.getOntologyIsA().values()) {
-                    OntologyIsA isAOnDB = em.find(OntologyIsA.class, isA.getOntologyIsAPK());
-                    if (isAOnDB != null) {
-                        isAMap.put(isAOnDB.getOntologyIsAPK(), isAOnDB);
-                    } else {
-                        Ontology isAOntology = em.find(Ontology.class, isA.getIsAOntology().getWid());
-                        if (isAOntology == null) {
-                            isAOntology = isA.getIsAOntology();
-                            isAOntology.setRelationsToNull();
-                            controller.create(isAOntology);
-                            isA.setIsAOntology(em.getReference(Ontology.class, isA.getIsAOntology().getWid()));
-                        } else {
-                            isA.setIsAOntology(isAOntology);
-                        }
-                        isAMap.put(isA.getOntologyIsAPK(), isA);
-                    }
-                }
-                ontology.setOntologyIsA(isAMap);
-            }
-            if (!ontology.getOntologyRelation().isEmpty()) {
-                Map<OntologyRelationPK, OntologyRelation> relMap = new HashMap();
-                for (OntologyRelation rel : ontology.getOntologyRelation().values()) {
-                    OntologyRelation relOnDB = em.find(OntologyRelation.class, rel.getOntologyRelationPK());
-                    if (relOnDB != null) {
-                        relMap.put(relOnDB.getOntologyRelationPK(), relOnDB);
-                    } else {
-                        Ontology relOntology = em.find(Ontology.class, rel.getOtherOntology().getWid());
-                        if (relOntology == null) {
-                            relOntology = rel.getOtherOntology();
-                            relOntology.setRelationsToNull();
-                            controller.create(relOntology);
-                            rel.setOtherOntology(em.getReference(Ontology.class, rel.getOtherOntology().getWid()));
-                        } else {
-                            rel.setOtherOntology(relOntology);
-                        }
-                        relMap.put(rel.getOntologyRelationPK(), rel);
-                    }
-                }
-                ontology.setOntologyRelation(relMap);
-            }
             if (!ontology.getOntologySubset().isEmpty()) {
                 Set<OntologySubset> subSet = new HashSet();
                 for (OntologySubset sub : ontology.getOntologySubset()) {
@@ -125,27 +68,6 @@ public class OntologyJpaController extends AbstractJpaController<Ontology> imple
                     }
                 }
                 ontology.setOntologySubset(subSet);
-            }
-            if (!ontology.getOntologyToConsider().isEmpty()) {
-                Map<OntologyToConsiderPK, OntologyToConsider> toMap = new HashMap();
-                for (OntologyToConsider to : ontology.getOntologyToConsider().values()) {
-                    OntologyToConsider toOnDB = em.find(OntologyToConsider.class, to.getOntologyToConsiderPK());
-                    if (toOnDB != null) {
-                        toMap.put(toOnDB.getOntologyToConsiderPK(), toOnDB);
-                    } else {
-                        Ontology toOntology = em.find(Ontology.class, to.getToConsiderOntology().getWid());
-                        if (toOntology == null) {
-                            toOntology = to.getToConsiderOntology();
-                            toOntology.setRelationsToNull();
-                            controller.create(toOntology);
-                            to.setToConsiderOntology(em.getReference(Ontology.class, to.getToConsiderOntology().getWid()));
-                        } else {
-                            to.setToConsiderOntology(toOntology);
-                        }
-                        toMap.put(to.getOntologyToConsiderPK(), to);
-                    }
-                }
-                ontology.setOntologyToConsider(toMap);
             }
             if (!ontology.getOntologyXRef().isEmpty()) {
                 Set<OntologyXRef> xrefSet = new HashSet();

@@ -1,11 +1,13 @@
 package org.jbiowhpersistence.datasets.taxonomy.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
@@ -15,6 +17,7 @@ import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
  *
  * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-09-18 14:59:00 +0200
  * (Tue, 18 Sep 2012) $ $LastChangedRevision: 396 $
+ *
  * @since Jun 21, 2011
  */
 @Entity
@@ -34,8 +37,8 @@ import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
     @NamedQuery(name = "Taxonomy.findByTaxonomyMCGenCodeWID", query = "SELECT t FROM Taxonomy t WHERE t.taxonomyMCGenCodeWID = :taxonomyMCGenCodeWID"),
     @NamedQuery(name = "Taxonomy.findByInheritedMCGencode", query = "SELECT t FROM Taxonomy t WHERE t.inheritedMCGencode = :inheritedMCGencode"),
     @NamedQuery(name = "Taxonomy.findByDataSetWID", query = "SELECT t FROM Taxonomy t WHERE t.dataSetWID = :dataSetWID"),
-    @NamedQuery(name = "Taxonomy.findTaxonomyWIDBySynonym", query = "SELECT t.wid FROM Taxonomy t INNER JOIN t.synonym s WHERE s.taxonomySynonymPK.synonym like :synonym group by t.wid"),
-    @NamedQuery(name = "Taxonomy.findTaxonomyWIDByNameClass", query = "SELECT t.wid FROM Taxonomy t INNER JOIN t.synonym s WHERE s.taxonomySynonymPK.synonym like :synonym and s.nameClass.nameClass like :nameClass group by t.wid")})
+    @NamedQuery(name = "Taxonomy.findTaxonomyWIDBySynonym", query = "SELECT t.wid FROM Taxonomy t INNER JOIN t.synonym s WHERE s.synonym like :synonym group by t.wid"),
+    @NamedQuery(name = "Taxonomy.findTaxonomyWIDByNameClass", query = "SELECT t.wid FROM Taxonomy t INNER JOIN t.synonym s WHERE s.synonym like :synonym and s.nameClass.nameClass like :nameClass group by t.wid")})
 public class Taxonomy implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -86,18 +89,27 @@ public class Taxonomy implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "TaxonomyMCGenCode_WID", insertable = false, unique = false, nullable = true, updatable = false)
     private TaxonomyGenCode mcgencode;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "taxonomy")
-    @MapKey(name = "taxonomyPMIDPK")
-    private Map<TaxonomyPMIDPK, TaxonomyPMID> pmid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "taxonomy")
-    @MapKey(name = "taxonomySynonymPK")
-    private Map<TaxonomySynonymPK, TaxonomySynonym> synonym;
+    @ElementCollection
+    @CollectionTable(
+            name = "TaxonomyPMID",
+            joinColumns
+            = @JoinColumn(name = "Taxonomy_WID"))
+    @XmlElementWrapper(name = "TaxonomyPMIDs")
+    private Collection<TaxonomyPMID> pmid;
+    @ElementCollection
+    @CollectionTable(
+            name = "TaxonomySynonym",
+            joinColumns
+            = @JoinColumn(name = "Taxonomy_WID"))
+    @XmlElementWrapper(name = "TaxonomySynonyms")
+    private Collection<TaxonomySynonym> synonym;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "Taxonomy_has_TaxonomyUnParseCitation",
-            joinColumns =
-            @JoinColumn(name = "Taxonomy_WID", referencedColumnName = "WID"),
-            inverseJoinColumns =
-            @JoinColumn(name = "TaxonomyUnParseCitation_WID", referencedColumnName = "WID"))
+            joinColumns
+            = @JoinColumn(name = "Taxonomy_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "TaxonomyUnParseCitation_WID", referencedColumnName = "WID"))
+    @XmlElementWrapper(name = "TaxonomyUnParseCitations")
     private Set<TaxonomyUnParseCitation> unparse;
 
     public Taxonomy() {
@@ -129,12 +141,30 @@ public class Taxonomy implements Serializable {
 
     @Transient
     public String getTaxonomySynonym(String nameClass) {
-        for (TaxonomySynonym syn : getSynonym().values()) {
-            if (syn.getNameClass().getNameClass().equals(nameClass)) {
-                return syn.getTaxonomySynonymPK().getSynonym();
+        if (getSynonym() != null) {
+            for (TaxonomySynonym syn : getSynonym()) {
+                if (syn.getNameClass().getNameClass().equals(nameClass)) {
+                    return syn.getSynonym();
+                }
             }
         }
         return null;
+    }
+
+    public Collection<TaxonomyPMID> getPmid() {
+        return pmid;
+    }
+
+    public void setPmid(Collection<TaxonomyPMID> pmid) {
+        this.pmid = pmid;
+    }
+
+    public Collection<TaxonomySynonym> getSynonym() {
+        return synonym;
+    }
+
+    public void setSynonym(Collection<TaxonomySynonym> synonym) {
+        this.synonym = synonym;
     }
 
     public DataSet getDataSet() {
@@ -217,30 +247,12 @@ public class Taxonomy implements Serializable {
         this.parentTaxId = parentTaxId;
     }
 
-    @XmlTransient
-    public Map<TaxonomyPMIDPK, TaxonomyPMID> getPmid() {
-        return pmid;
-    }
-
-    public void setPmid(Map<TaxonomyPMIDPK, TaxonomyPMID> pmid) {
-        this.pmid = pmid;
-    }
-
     public String getRank() {
         return rank;
     }
 
     public void setRank(String rank) {
         this.rank = rank;
-    }
-
-    @XmlTransient
-    public Map<TaxonomySynonymPK, TaxonomySynonym> getSynonym() {
-        return synonym;
-    }
-
-    public void setSynonym(Map<TaxonomySynonymPK, TaxonomySynonym> synonym) {
-        this.synonym = synonym;
     }
 
     public long getTaxId() {
@@ -377,13 +389,13 @@ public class Taxonomy implements Serializable {
         StringBuilder unparseString = new StringBuilder();
 
         if (synonym != null) {
-            it = synonym.values().iterator();
+            it = synonym.iterator();
             while (it.hasNext()) {
                 synonymString.append("\n\t\t").append(((TaxonomySynonym) it.next()).toString());
             }
         }
         if (pmid != null) {
-            it = pmid.values().iterator();
+            it = pmid.iterator();
             while (it.hasNext()) {
                 pmidString.append("\n\t\t").append(((TaxonomyPMID) it.next()).toString());
             }

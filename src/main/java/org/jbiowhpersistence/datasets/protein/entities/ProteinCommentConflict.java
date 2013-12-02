@@ -1,69 +1,60 @@
 package org.jbiowhpersistence.datasets.protein.entities;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * This Class is the ProteinCommentConflict entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Aug 11, 2011
  */
-@Entity
+@Embeddable
 @Table(name = "ProteinCommentConflict")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "ProteinCommentConflict.findAll", query = "SELECT p FROM ProteinCommentConflict p"),
-    @NamedQuery(name = "ProteinCommentConflict.findByProteinCommentWID", query = "SELECT p FROM ProteinCommentConflict p WHERE p.proteinCommentConflictPK.proteinCommentWID = :proteinCommentWID"),
-    @NamedQuery(name = "ProteinCommentConflict.findByType", query = "SELECT p FROM ProteinCommentConflict p WHERE p.proteinCommentConflictPK.type = :type"),
-    @NamedQuery(name = "ProteinCommentConflict.findBySeqVersion", query = "SELECT p FROM ProteinCommentConflict p WHERE p.seqVersion = :seqVersion"),
-    @NamedQuery(name = "ProteinCommentConflict.findBySeqResource", query = "SELECT p FROM ProteinCommentConflict p WHERE p.seqResource = :seqResource"),
-    @NamedQuery(name = "ProteinCommentConflict.findBySeqID", query = "SELECT p FROM ProteinCommentConflict p WHERE p.seqID = :seqID")})
 public class ProteinCommentConflict implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ProteinCommentConflictPK proteinCommentConflictPK;
+    @Basic(optional = false)
+    @Column(name = "ProteinComment_WID")
+    private long proteinCommentWID;
+    @Basic(optional = false)
+    @Column(name = "Type")
+    private String type;
     @Column(name = "SeqVersion")
     private Integer seqVersion;
     @Column(name = "SeqResource")
     private String seqResource;
     @Column(name = "SeqID")
     private String seqID;
-    // Internla relationship
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ProteinComment_WID", insertable = false, unique = false, nullable = true, updatable = false)
-    private ProteinComment proteinComment;
 
     public ProteinCommentConflict() {
     }
 
-    public ProteinCommentConflict(ProteinCommentConflictPK proteinCommentConflictPK) {
-        this.proteinCommentConflictPK = proteinCommentConflictPK;
+    public ProteinCommentConflict(long proteinCommentWID, String type, Integer seqVersion, String seqResource, String seqID) {
+        this.proteinCommentWID = proteinCommentWID;
+        this.type = type;
+        this.seqVersion = seqVersion;
+        this.seqResource = seqResource;
+        this.seqID = seqID;
     }
 
-    public ProteinCommentConflict(long proteinCommentWID, String type) {
-        this.proteinCommentConflictPK = new ProteinCommentConflictPK(proteinCommentWID, type);
+    public long getProteinCommentWID() {
+        return proteinCommentWID;
     }
 
-    public ProteinComment getProteinComment() {
-        return proteinComment;
+    public void setProteinCommentWID(long proteinCommentWID) {
+        this.proteinCommentWID = proteinCommentWID;
     }
 
-    public void setProteinComment(ProteinComment proteinComment) {
-        this.proteinComment = proteinComment;
+    public String getType() {
+        return type;
     }
 
-    public ProteinCommentConflictPK getProteinCommentConflictPK() {
-        return proteinCommentConflictPK;
-    }
-
-    public void setProteinCommentConflictPK(ProteinCommentConflictPK proteinCommentConflictPK) {
-        this.proteinCommentConflictPK = proteinCommentConflictPK;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Integer getSeqVersion() {
@@ -91,6 +82,17 @@ public class ProteinCommentConflict implements Serializable {
     }
 
     @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 41 * hash + (int) (this.proteinCommentWID ^ (this.proteinCommentWID >>> 32));
+        hash = 41 * hash + (this.type != null ? this.type.hashCode() : 0);
+        hash = 41 * hash + (this.seqVersion != null ? this.seqVersion.hashCode() : 0);
+        hash = 41 * hash + (this.seqResource != null ? this.seqResource.hashCode() : 0);
+        hash = 41 * hash + (this.seqID != null ? this.seqID.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -99,36 +101,23 @@ public class ProteinCommentConflict implements Serializable {
             return false;
         }
         final ProteinCommentConflict other = (ProteinCommentConflict) obj;
-        if (!Objects.equals(this.proteinCommentConflictPK, other.proteinCommentConflictPK)) {
+        if (this.proteinCommentWID != other.proteinCommentWID) {
             return false;
         }
-        if (!Objects.equals(this.seqVersion, other.seqVersion)) {
+        if ((this.type == null) ? (other.type != null) : !this.type.equals(other.type)) {
             return false;
         }
-        if (!Objects.equals(this.seqResource, other.seqResource)) {
+        if (this.seqVersion != other.seqVersion && (this.seqVersion == null || !this.seqVersion.equals(other.seqVersion))) {
             return false;
         }
-        if (!Objects.equals(this.seqID, other.seqID)) {
+        if ((this.seqResource == null) ? (other.seqResource != null) : !this.seqResource.equals(other.seqResource)) {
             return false;
         }
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (proteinCommentConflictPK != null ? proteinCommentConflictPK.hashCode() : 0);
-        return hash;
+        return !((this.seqID == null) ? (other.seqID != null) : !this.seqID.equals(other.seqID));
     }
 
     @Override
     public String toString() {
-        return "ProteinCommentConflict{"
-                + " CommentWID=" + proteinCommentConflictPK.getProteinCommentWID()
-                + " Type=" + proteinCommentConflictPK.getType()
-                + " seqVersion=" + seqVersion
-                + " seqResource=" + seqResource
-                + " seqID=" + seqID
-                + '}';
+        return "ProteinCommentConflict{" + "proteinCommentWID=" + proteinCommentWID + ", type=" + type + ", seqVersion=" + seqVersion + ", seqResource=" + seqResource + ", seqID=" + seqID + '}';
     }
 }

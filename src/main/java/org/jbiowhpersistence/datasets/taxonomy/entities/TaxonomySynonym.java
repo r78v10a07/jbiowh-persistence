@@ -12,26 +12,20 @@ import javax.xml.bind.annotation.XmlRootElement;
  * $LastChangedRevision: 270 $
  * @since Jun 21, 2011
  */
-@Entity
+@Embeddable
 @Table(name = "TaxonomySynonym")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "TaxonomySynonym.findAll", query = "SELECT t FROM TaxonomySynonym t"),
-    @NamedQuery(name = "TaxonomySynonym.findByTaxonomyWID", query = "SELECT t FROM TaxonomySynonym t WHERE t.taxonomySynonymPK.taxonomyWID = :taxonomyWID"),
-    @NamedQuery(name = "TaxonomySynonym.findBySynonym", query = "SELECT t FROM TaxonomySynonym t WHERE t.taxonomySynonymPK.synonym like :synonym GROUP BY t.taxonomySynonymPK.taxonomyWID"),
-    @NamedQuery(name = "TaxonomySynonym.findTaxonomyBySynonym", query = "SELECT t.taxonomy FROM TaxonomySynonym t WHERE t.taxonomySynonymPK.synonym like :synonym GROUP BY t.taxonomy"),
-    @NamedQuery(name = "TaxonomySynonym.findByTaxonomySynonymNameClassWID", query = "SELECT t FROM TaxonomySynonym t WHERE t.taxonomySynonymPK.taxonomySynonymNameClassWID = :taxonomySynonymNameClassWID"),
-    @NamedQuery(name = "TaxonomySynonym.findBySynonymAndNameClass", query = "SELECT t FROM TaxonomySynonym t WHERE t.taxonomySynonymPK.synonym like :synonym and t.nameClass.nameClass = :nameClass")})
 public class TaxonomySynonym implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected TaxonomySynonymPK taxonomySynonymPK;
-    /*
-     * TaxonomySynonym relationship
-     */
-    @ManyToOne
-    private Taxonomy taxonomy;
+    @Basic(optional = false)
+    @Column(name = "Taxonomy_WID", insertable = false, unique = false, nullable = true, updatable = false)
+    private long taxonomyWID;
+    @Basic(optional = false)
+    @Column(name = "Synonym")
+    private String synonym;
+    @Basic(optional = false)
+    @Column(name = "TaxonomySynonymNameClass_WID")
+    private long taxonomySynonymNameClassWID;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "TaxonomySynonymNameClass_WID", insertable = false, unique = false, nullable = true, updatable = false)
     private TaxonomySynonymNameClass nameClass;
@@ -39,12 +33,28 @@ public class TaxonomySynonym implements Serializable {
     public TaxonomySynonym() {
     }
 
-    public TaxonomySynonym(TaxonomySynonymPK taxonomySynonymPK) {
-        this.taxonomySynonymPK = taxonomySynonymPK;
+    public long getTaxonomyWID() {
+        return taxonomyWID;
     }
 
-    public TaxonomySynonym(long taxonomyWID, String synonym, long taxonomySynonymNameClassWID) {
-        this.taxonomySynonymPK = new TaxonomySynonymPK(taxonomyWID, synonym, taxonomySynonymNameClassWID);
+    public void setTaxonomyWID(long taxonomyWID) {
+        this.taxonomyWID = taxonomyWID;
+    }
+
+    public String getSynonym() {
+        return synonym;
+    }
+
+    public void setSynonym(String synonym) {
+        this.synonym = synonym;
+    }
+
+    public long getTaxonomySynonymNameClassWID() {
+        return taxonomySynonymNameClassWID;
+    }
+
+    public void setTaxonomySynonymNameClassWID(long taxonomySynonymNameClassWID) {
+        this.taxonomySynonymNameClassWID = taxonomySynonymNameClassWID;
     }
 
     public TaxonomySynonymNameClass getNameClass() {
@@ -55,47 +65,35 @@ public class TaxonomySynonym implements Serializable {
         this.nameClass = nameClass;
     }
 
-    public Taxonomy getTaxonomy() {
-        return taxonomy;
-    }
-
-    public void setTaxonomy(Taxonomy taxonomy) {
-        this.taxonomy = taxonomy;
-    }
-
-    public TaxonomySynonymPK getTaxonomySynonymPK() {
-        return taxonomySynonymPK;
-    }
-
-    public void setTaxonomySynonymPK(TaxonomySynonymPK taxonomySynonymPK) {
-        this.taxonomySynonymPK = taxonomySynonymPK;
-    }
-
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (taxonomySynonymPK != null ? taxonomySynonymPK.hashCode() : 0);
+        int hash = 7;
+        hash = 41 * hash + (int) (this.taxonomyWID ^ (this.taxonomyWID >>> 32));
+        hash = 41 * hash + (this.synonym != null ? this.synonym.hashCode() : 0);
+        hash = 41 * hash + (int) (this.taxonomySynonymNameClassWID ^ (this.taxonomySynonymNameClassWID >>> 32));
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof TaxonomySynonym)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        TaxonomySynonym other = (TaxonomySynonym) object;
-        if ((this.taxonomySynonymPK == null && other.taxonomySynonymPK != null) || (this.taxonomySynonymPK != null && !this.taxonomySynonymPK.equals(other.taxonomySynonymPK))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final TaxonomySynonym other = (TaxonomySynonym) obj;
+        if (this.taxonomyWID != other.taxonomyWID) {
+            return false;
+        }
+        if ((this.synonym == null) ? (other.synonym != null) : !this.synonym.equals(other.synonym)) {
+            return false;
+        }
+        return this.taxonomySynonymNameClassWID == other.taxonomySynonymNameClassWID;
     }
 
     @Override
     public String toString() {
-        return "TaxonomyWIDSynonym[ taxonomyWID=" + taxonomySynonymPK.getTaxonomyWID()
-                + ", synonym= " + taxonomySynonymPK.getSynonym()
-                + ", NameClassWID= " + taxonomySynonymPK.getTaxonomySynonymNameClassWID()
-                + ", NameClass= " + nameClass.getNameClass()
-                + "]";
+        return "TaxonomySynonym{" + "taxonomyWID=" + taxonomyWID + ", synonym=" + synonym + ", taxonomySynonymNameClassWID=" + taxonomySynonymNameClassWID + ", nameClass=" + nameClass + '}';
     }
 }

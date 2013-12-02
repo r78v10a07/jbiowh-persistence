@@ -1,33 +1,25 @@
 package org.jbiowhpersistence.datasets.protein.entities;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * This Class is the Protein Comment Interact entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Aug 11, 2011
  */
-@Entity
+@Embeddable
 @Table(name = "ProteinCommentInteract")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "ProteinCommentInteract.findAll", query = "SELECT p FROM ProteinCommentInteract p"),
-    @NamedQuery(name = "ProteinCommentInteract.findByWid", query = "SELECT p FROM ProteinCommentInteract p WHERE p.proteinCommentInteractPK.wid = :wid"),
-    @NamedQuery(name = "ProteinCommentInteract.findByProteinCommentWID", query = "SELECT p FROM ProteinCommentInteract p WHERE p.proteinCommentInteractPK.proteinCommentWID = :proteinCommentWID"),
-    @NamedQuery(name = "ProteinCommentInteract.findByIntactID", query = "SELECT p FROM ProteinCommentInteract p WHERE p.intactID = :intactID"),
-    @NamedQuery(name = "ProteinCommentInteract.findById", query = "SELECT p FROM ProteinCommentInteract p WHERE p.id = :id"),
-    @NamedQuery(name = "ProteinCommentInteract.findByLabel", query = "SELECT p FROM ProteinCommentInteract p WHERE p.label = :label")})
 public class ProteinCommentInteract implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ProteinCommentInteractPK proteinCommentInteractPK;
+    @Basic(optional = false)
+    @Column(name = "ProteinComment_WID")
+    private long proteinCommentWID;
     @Basic(optional = false)
     @Column(name = "IntactID")
     private String intactID;
@@ -35,41 +27,23 @@ public class ProteinCommentInteract implements Serializable {
     private String id;
     @Column(name = "Label")
     private String label;
-    // Internla relationship
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ProteinComment_WID", insertable = false, unique = false, nullable = true, updatable = false)
-    private ProteinComment proteinComment;
 
     public ProteinCommentInteract() {
     }
 
-    public ProteinCommentInteract(ProteinCommentInteractPK proteinCommentInteractPK) {
-        this.proteinCommentInteractPK = proteinCommentInteractPK;
-    }
-
-    public ProteinCommentInteract(ProteinCommentInteractPK proteinCommentInteractPK, String intactID) {
-        this.proteinCommentInteractPK = proteinCommentInteractPK;
+    public ProteinCommentInteract(long proteinCommentWID, String intactID, String id, String label) {
+        this.proteinCommentWID = proteinCommentWID;
         this.intactID = intactID;
+        this.id = id;
+        this.label = label;
     }
 
-    public ProteinCommentInteract(long wid, long proteinCommentWID) {
-        this.proteinCommentInteractPK = new ProteinCommentInteractPK(wid, proteinCommentWID);
+    public long getProteinCommentWID() {
+        return proteinCommentWID;
     }
 
-    public ProteinComment getProteinComment() {
-        return proteinComment;
-    }
-
-    public void setProteinComment(ProteinComment proteinComment) {
-        this.proteinComment = proteinComment;
-    }
-
-    public ProteinCommentInteractPK getProteinCommentInteractPK() {
-        return proteinCommentInteractPK;
-    }
-
-    public void setProteinCommentInteractPK(ProteinCommentInteractPK proteinCommentInteractPK) {
-        this.proteinCommentInteractPK = proteinCommentInteractPK;
+    public void setProteinCommentWID(long proteinCommentWID) {
+        this.proteinCommentWID = proteinCommentWID;
     }
 
     public String getIntactID() {
@@ -97,6 +71,16 @@ public class ProteinCommentInteract implements Serializable {
     }
 
     @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 29 * hash + (int) (this.proteinCommentWID ^ (this.proteinCommentWID >>> 32));
+        hash = 29 * hash + (this.intactID != null ? this.intactID.hashCode() : 0);
+        hash = 29 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 29 * hash + (this.label != null ? this.label.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -105,35 +89,21 @@ public class ProteinCommentInteract implements Serializable {
             return false;
         }
         final ProteinCommentInteract other = (ProteinCommentInteract) obj;
-        if (!Objects.equals(this.proteinCommentInteractPK, other.proteinCommentInteractPK)) {
+        if (this.proteinCommentWID != other.proteinCommentWID) {
             return false;
         }
-        if (!Objects.equals(this.intactID, other.intactID)) {
+        if ((this.intactID == null) ? (other.intactID != null) : !this.intactID.equals(other.intactID)) {
             return false;
         }
-        if (!Objects.equals(this.id, other.id)) {
+        if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
             return false;
         }
-        if (!Objects.equals(this.label, other.label)) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (proteinCommentInteractPK != null ? proteinCommentInteractPK.hashCode() : 0);
-        return hash;
+        return !((this.label == null) ? (other.label != null) : !this.label.equals(other.label));
     }
 
     @Override
     public String toString() {
-        return "ProteinCommentInteract{"
-                + " commentWID=" + proteinCommentInteractPK.getProteinCommentWID()
-                + " intactID=" + intactID
-                + " id=" + id
-                + " label=" + label
-                + '}';
+        return "ProteinCommentInteract{" + "proteinCommentWID=" + proteinCommentWID + ", intactID=" + intactID + ", id=" + id + ", label=" + label + '}';
     }
+
 }
