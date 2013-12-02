@@ -4,34 +4,30 @@ import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This Class is the OntologyRelation entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Jun 28, 2011
  */
-@Entity
+@Embeddable
 @Table(name = "OntologyRelation")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "OntologyRelation.findAll", query = "SELECT o FROM OntologyRelation o"),
-    @NamedQuery(name = "OntologyRelation.findByOntologyWID", query = "SELECT o FROM OntologyRelation o WHERE o.ontologyRelationPK.ontologyWID = :ontologyWID"),
-    @NamedQuery(name = "OntologyRelation.findByOtherOntologyWID", query = "SELECT o FROM OntologyRelation o WHERE o.ontologyRelationPK.otherOntologyWID = :otherOntologyWID"),
-    @NamedQuery(name = "OntologyRelation.findByType", query = "SELECT o FROM OntologyRelation o WHERE o.type = :type")})
 public class OntologyRelation implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected OntologyRelationPK ontologyRelationPK;
+    @Basic(optional = false)
+    @Column(name = "Ontology_WID")
+    private long ontologyWID;
+    @Basic(optional = false)
+    @Column(name = "OtherOntology_WID")
+    private long otherOntologyWID;
     @Basic(optional = false)
     @Column(name = "Type")
     private String type;
-    @ManyToOne
-    @JoinColumn(name = "Ontology_WID", insertable = false, unique = false, nullable = true, updatable = false)
-    private Ontology ontology;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "OtherOntology_WID", insertable = false, unique = false, nullable = true, updatable = false)
     private Ontology otherOntology;
@@ -39,41 +35,26 @@ public class OntologyRelation implements Serializable {
     public OntologyRelation() {
     }
 
-    public OntologyRelation(OntologyRelationPK ontologyRelationPK) {
-        this.ontologyRelationPK = ontologyRelationPK;
-    }
-
-    public OntologyRelation(OntologyRelationPK ontologyRelationPK, String type) {
-        this.ontologyRelationPK = ontologyRelationPK;
+    public OntologyRelation(long ontologyWID, long otherOntologyWID, String type) {
+        this.ontologyWID = ontologyWID;
+        this.otherOntologyWID = otherOntologyWID;
         this.type = type;
     }
 
-    public OntologyRelation(long ontologyWID, long otherOntologyWID) {
-        this.ontologyRelationPK = new OntologyRelationPK(ontologyWID, otherOntologyWID);
+    public long getOntologyWID() {
+        return ontologyWID;
     }
 
-    public Ontology getOtherOntology() {
-        return otherOntology;
+    public void setOntologyWID(long ontologyWID) {
+        this.ontologyWID = ontologyWID;
     }
 
-    public void setOtherOntology(Ontology otherOntology) {
-        this.otherOntology = otherOntology;
+    public long getOtherOntologyWID() {
+        return otherOntologyWID;
     }
 
-    public Ontology getOntology() {
-        return ontology;
-    }
-
-    public void setOntology(Ontology ontology) {
-        this.ontology = ontology;
-    }
-
-    public OntologyRelationPK getOntologyRelationPK() {
-        return ontologyRelationPK;
-    }
-
-    public void setOntologyRelationPK(OntologyRelationPK ontologyRelationPK) {
-        this.ontologyRelationPK = ontologyRelationPK;
+    public void setOtherOntologyWID(long otherOntologyWID) {
+        this.otherOntologyWID = otherOntologyWID;
     }
 
     public String getType() {
@@ -82,6 +63,24 @@ public class OntologyRelation implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @XmlTransient
+    public Ontology getOtherOntology() {
+        return otherOntology;
+    }
+
+    public void setOtherOntology(Ontology otherOntology) {
+        this.otherOntology = otherOntology;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 41 * hash + (int) (this.ontologyWID ^ (this.ontologyWID >>> 32));
+        hash = 41 * hash + (int) (this.otherOntologyWID ^ (this.otherOntologyWID >>> 32));
+        hash = 41 * hash + (this.type != null ? this.type.hashCode() : 0);
+        return hash;
     }
 
     @Override
@@ -93,27 +92,17 @@ public class OntologyRelation implements Serializable {
             return false;
         }
         final OntologyRelation other = (OntologyRelation) obj;
-        if (!Objects.equals(this.ontologyRelationPK, other.ontologyRelationPK)) {
+        if (this.ontologyWID != other.ontologyWID) {
             return false;
         }
-        if (!Objects.equals(this.type, other.type)) {
+        if (this.otherOntologyWID != other.otherOntologyWID) {
             return false;
         }
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 31 * hash + Objects.hashCode(this.ontologyRelationPK);
-        return hash;
+        return !((this.type == null) ? (other.type != null) : !this.type.equals(other.type));
     }
 
     @Override
     public String toString() {
-        return "OntologyRelation["
-                + " Ontology_WID=" + ontologyRelationPK.getOntologyWID()
-                + " OtherOntology_WID=" + ontologyRelationPK.getOtherOntologyWID()
-                + " type=" + type + ']';
+        return "OntologyRelation{" + "ontologyWID=" + ontologyWID + ", otherOntologyWID=" + otherOntologyWID + ", type=" + type + ", otherOntology=" + otherOntology + '}';
     }
 }

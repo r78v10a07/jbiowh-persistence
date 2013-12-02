@@ -138,7 +138,7 @@ public class SearchOntology extends SearchFactory implements JBioWHSearch {
             } else if (field.equals(SYNONYM)) {
                 data.put(field, "n.ontologySynonym.synonym");
             } else if (field.equals(ALTID)) {
-                data.put(field, "a.ontologyAlternativeIdPK.altId");
+                data.put(field, "a.altId");
             }
         }
         return data;

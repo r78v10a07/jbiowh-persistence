@@ -1,19 +1,17 @@
 package org.jbiowhpersistence.datasets.protein.entities;
 
 import java.io.Serializable;
-import java.util.Iterator;
-import java.util.Objects;
-import java.util.Set;
+import java.util.Collection;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This Class is the Protein Feature entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Aug 11, 2011
  */
 @Entity
@@ -58,8 +56,13 @@ public class ProteinFeature implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Protein_WID", insertable = false, unique = false, nullable = true, updatable = false)
     private Protein protein;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "proteinFeature")
-    private Set<ProteinFeatureVariation> proteinFeatureVariation;
+    @ElementCollection
+    @CollectionTable(
+            name = "ProteinFeatureVariation",
+            joinColumns
+            = @JoinColumn(name = "ProteinFeature_WID"))
+    @XmlElementWrapper( name="ProteinFeatureVariations" )
+    private Collection<ProteinFeatureVariation> proteinFeatureVariation;
 
     public ProteinFeature() {
     }
@@ -71,23 +74,6 @@ public class ProteinFeature implements Serializable {
     public ProteinFeature(Long wid, long proteinWID) {
         this.wid = wid;
         this.proteinWID = proteinWID;
-    }
-
-    @XmlTransient
-    public Set<ProteinFeatureVariation> getProteinFeatureVariation() {
-        return proteinFeatureVariation;
-    }
-
-    public void setProteinFeatureVariation(Set<ProteinFeatureVariation> proteinFeatureVariation) {
-        this.proteinFeatureVariation = proteinFeatureVariation;
-    }
-
-    public Protein getProtein() {
-        return protein;
-    }
-
-    public void setProtein(Protein protein) {
-        this.protein = protein;
     }
 
     public Long getWid() {
@@ -162,6 +148,29 @@ public class ProteinFeature implements Serializable {
         this.original = original;
     }
 
+    public Protein getProtein() {
+        return protein;
+    }
+
+    public void setProtein(Protein protein) {
+        this.protein = protein;
+    }
+
+    public Collection<ProteinFeatureVariation> getProteinFeatureVariation() {
+        return proteinFeatureVariation;
+    }
+
+    public void setProteinFeatureVariation(Collection<ProteinFeatureVariation> proteinFeatureVariation) {
+        this.proteinFeatureVariation = proteinFeatureVariation;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 37 * hash + (this.wid != null ? this.wid.hashCode() : 0);
+        return hash;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -171,67 +180,45 @@ public class ProteinFeature implements Serializable {
             return false;
         }
         final ProteinFeature other = (ProteinFeature) obj;
-        if (!Objects.equals(this.wid, other.wid)) {
+        if (this.wid != other.wid && (this.wid == null || !this.wid.equals(other.wid))) {
             return false;
         }
         if (this.proteinWID != other.proteinWID) {
             return false;
         }
-        if (!Objects.equals(this.type, other.type)) {
+        if ((this.type == null) ? (other.type != null) : !this.type.equals(other.type)) {
             return false;
         }
-        if (!Objects.equals(this.status, other.status)) {
+        if ((this.status == null) ? (other.status != null) : !this.status.equals(other.status)) {
             return false;
         }
-        if (!Objects.equals(this.id, other.id)) {
+        if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
             return false;
         }
-        if (!Objects.equals(this.description, other.description)) {
+        if ((this.description == null) ? (other.description != null) : !this.description.equals(other.description)) {
             return false;
         }
-        if (!Objects.equals(this.evidence, other.evidence)) {
+        if ((this.evidence == null) ? (other.evidence != null) : !this.evidence.equals(other.evidence)) {
             return false;
         }
-        if (!Objects.equals(this.ref, other.ref)) {
+        if ((this.ref == null) ? (other.ref != null) : !this.ref.equals(other.ref)) {
             return false;
         }
-        if (!Objects.equals(this.original, other.original)) {
+        if ((this.original == null) ? (other.original != null) : !this.original.equals(other.original)) {
             return false;
         }
-        if (!Objects.equals(this.proteinFeatureVariation, other.proteinFeatureVariation)) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (wid != null ? wid.hashCode() : 0);
-        return hash;
+        return this.proteinFeatureVariation == other.proteinFeatureVariation || (this.proteinFeatureVariation != null && this.proteinFeatureVariation.equals(other.proteinFeatureVariation));
     }
 
     @Override
     public String toString() {
-        Iterator it;
         StringBuilder pData = new StringBuilder();
 
-        it = getProteinFeatureVariation().iterator();
-        while (it.hasNext()) {
-            pData.append("\t\t").append(it.next()).append("\n");
+        if (proteinFeatureVariation != null) {
+            for (ProteinFeatureVariation v : proteinFeatureVariation) {
+                pData.append("\t\t").append(v).append("\n");
+            }
         }
-
-        return "ProteinFeature{"
-                + " wid=" + wid
-                + " proteinWID=" + proteinWID
-                + " type=" + type
-                + " status=" + status
-                + " id=" + id
-                + " description=" + description
-                + " evidence=" + evidence
-                + " ref=" + ref
-                + " original=" + original
-                + "}\n"
-                + pData;
+        return "ProteinFeature{" + "wid=" + wid + ", proteinWID=" + proteinWID + ", type=" + type + ", status=" + status + ", id=" + id + ", description=" + description + ", evidence=" + evidence + ", ref=" + ref + ", original=" + original + "\n" + pData.toString() + '}';
     }
 }

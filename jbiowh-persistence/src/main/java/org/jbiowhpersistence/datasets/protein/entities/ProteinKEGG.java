@@ -1,60 +1,59 @@
 package org.jbiowhpersistence.datasets.protein.entities;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * This Class is the Protein KEGG entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Aug 11, 2011
  */
-@Entity
+@Embeddable
 @Table(name = "ProteinKEGG")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "ProteinKEGG.findAll", query = "SELECT p FROM ProteinKEGG p"),
-    @NamedQuery(name = "ProteinKEGG.findByProteinWID", query = "SELECT p FROM ProteinKEGG p WHERE p.proteinKEGGPK.proteinWID = :proteinWID"),
-    @NamedQuery(name = "ProteinKEGG.findById", query = "SELECT p FROM ProteinKEGG p WHERE p.proteinKEGGPK.id = :id")})
 public class ProteinKEGG implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ProteinKEGGPK proteinKEGGPK;
-    // Internla relationship
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Protein_WID", insertable = false, unique = false, nullable = true, updatable = false)
-    private Protein protein;
+    @Basic(optional = false)
+    @Column(name = "Protein_WID")
+    private long proteinWID;
+    @Basic(optional = false)
+    @Column(name = "Id")
+    private String id;
 
     public ProteinKEGG() {
     }
 
-    public ProteinKEGG(ProteinKEGGPK proteinKEGGPK) {
-        this.proteinKEGGPK = proteinKEGGPK;
-    }
-
     public ProteinKEGG(long proteinWID, String id) {
-        this.proteinKEGGPK = new ProteinKEGGPK(proteinWID, id);
+        this.proteinWID = proteinWID;
+        this.id = id;
     }
 
-    public Protein getProtein() {
-        return protein;
+    public long getProteinWID() {
+        return proteinWID;
     }
 
-    public void setProtein(Protein protein) {
-        this.protein = protein;
+    public void setProteinWID(long proteinWID) {
+        this.proteinWID = proteinWID;
     }
 
-    public ProteinKEGGPK getProteinKEGGPK() {
-        return proteinKEGGPK;
+    public String getId() {
+        return id;
     }
 
-    public void setProteinKEGGPK(ProteinKEGGPK proteinKEGGPK) {
-        this.proteinKEGGPK = proteinKEGGPK;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 37 * hash + (int) (this.proteinWID ^ (this.proteinWID >>> 32));
+        hash = 37 * hash + (this.id != null ? this.id.hashCode() : 0);
+        return hash;
     }
 
     @Override
@@ -66,24 +65,14 @@ public class ProteinKEGG implements Serializable {
             return false;
         }
         final ProteinKEGG other = (ProteinKEGG) obj;
-        if (!Objects.equals(this.proteinKEGGPK, other.proteinKEGGPK)) {
+        if (this.proteinWID != other.proteinWID) {
             return false;
         }
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (proteinKEGGPK != null ? proteinKEGGPK.hashCode() : 0);
-        return hash;
+        return !((this.id == null) ? (other.id != null) : !this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
-        return "ProteinKEGG{"
-                + " ProteinWID=" + proteinKEGGPK.getProteinWID()
-                + " Id=" + proteinKEGGPK.getId()
-                + '}';
+        return "ProteinKEGG{" + "proteinWID=" + proteinWID + ", id=" + id + '}';
     }
 }

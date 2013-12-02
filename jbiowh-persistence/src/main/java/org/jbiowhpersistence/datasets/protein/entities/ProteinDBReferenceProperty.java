@@ -1,63 +1,54 @@
 package org.jbiowhpersistence.datasets.protein.entities;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * This Class is Protein DB Reference Property entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Aug 11, 2011
  */
-@Entity
+@Embeddable
 @Table(name = "ProteinDBReferenceProperty")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "ProteinDBReferenceProperty.findAll", query = "SELECT p FROM ProteinDBReferenceProperty p"),
-    @NamedQuery(name = "ProteinDBReferenceProperty.findByProteinDBReferenceWID", query = "SELECT p FROM ProteinDBReferenceProperty p WHERE p.proteinDBReferencePropertyPK.proteinDBReferenceWID = :proteinDBReferenceWID"),
-    @NamedQuery(name = "ProteinDBReferenceProperty.findByAttribType", query = "SELECT p FROM ProteinDBReferenceProperty p WHERE p.proteinDBReferencePropertyPK.attribType = :attribType"),
-    @NamedQuery(name = "ProteinDBReferenceProperty.findByAttribValue", query = "SELECT p FROM ProteinDBReferenceProperty p WHERE p.attribValue = :attribValue")})
 public class ProteinDBReferenceProperty implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ProteinDBReferencePropertyPK proteinDBReferencePropertyPK;
+    @Basic(optional = false)
+    @Column(name = "ProteinDBReference_WID")
+    private long proteinDBReferenceWID;
+    @Basic(optional = false)
+    @Column(name = "AttribType")
+    private String attribType;
     @Column(name = "AttribValue")
     private String attribValue;
-    // Internla relationship
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ProteinDBReference_WID", insertable = false, unique = false, nullable = true, updatable = false)
-    private ProteinDBReference proteinDBReference;
 
     public ProteinDBReferenceProperty() {
     }
 
-    public ProteinDBReferenceProperty(ProteinDBReferencePropertyPK proteinDBReferencePropertyPK) {
-        this.proteinDBReferencePropertyPK = proteinDBReferencePropertyPK;
+    public ProteinDBReferenceProperty(long proteinDBReferenceWID, String attribType, String attribValue) {
+        this.proteinDBReferenceWID = proteinDBReferenceWID;
+        this.attribType = attribType;
+        this.attribValue = attribValue;
     }
 
-    public ProteinDBReferenceProperty(long proteinDBReferenceWID, String attribType) {
-        this.proteinDBReferencePropertyPK = new ProteinDBReferencePropertyPK(proteinDBReferenceWID, attribType);
+    public long getProteinDBReferenceWID() {
+        return proteinDBReferenceWID;
     }
 
-    public ProteinDBReference getProteinDBReference() {
-        return proteinDBReference;
+    public void setProteinDBReferenceWID(long proteinDBReferenceWID) {
+        this.proteinDBReferenceWID = proteinDBReferenceWID;
     }
 
-    public void setProteinDBReference(ProteinDBReference proteinDBReference) {
-        this.proteinDBReference = proteinDBReference;
+    public String getAttribType() {
+        return attribType;
     }
 
-    public ProteinDBReferencePropertyPK getProteinDBReferencePropertyPK() {
-        return proteinDBReferencePropertyPK;
-    }
-
-    public void setProteinDBReferencePropertyPK(ProteinDBReferencePropertyPK proteinDBReferencePropertyPK) {
-        this.proteinDBReferencePropertyPK = proteinDBReferencePropertyPK;
+    public void setAttribType(String attribType) {
+        this.attribType = attribType;
     }
 
     public String getAttribValue() {
@@ -69,6 +60,15 @@ public class ProteinDBReferenceProperty implements Serializable {
     }
 
     @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + (int) (this.proteinDBReferenceWID ^ (this.proteinDBReferenceWID >>> 32));
+        hash = 53 * hash + (this.attribType != null ? this.attribType.hashCode() : 0);
+        hash = 53 * hash + (this.attribValue != null ? this.attribValue.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -77,28 +77,17 @@ public class ProteinDBReferenceProperty implements Serializable {
             return false;
         }
         final ProteinDBReferenceProperty other = (ProteinDBReferenceProperty) obj;
-        if (!Objects.equals(this.proteinDBReferencePropertyPK, other.proteinDBReferencePropertyPK)) {
+        if (this.proteinDBReferenceWID != other.proteinDBReferenceWID) {
             return false;
         }
-        if (!Objects.equals(this.attribValue, other.attribValue)) {
+        if ((this.attribType == null) ? (other.attribType != null) : !this.attribType.equals(other.attribType)) {
             return false;
         }
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (proteinDBReferencePropertyPK != null ? proteinDBReferencePropertyPK.hashCode() : 0);
-        return hash;
+        return !((this.attribValue == null) ? (other.attribValue != null) : !this.attribValue.equals(other.attribValue));
     }
 
     @Override
     public String toString() {
-        return "ProteinDBReferenceProperty{"
-                + " DBReferenceWID=" + proteinDBReferencePropertyPK.getProteinDBReferenceWID()
-                + " AttribType=" + proteinDBReferencePropertyPK.getAttribType()
-                + " attribValue=" + attribValue
-                + '}';
+        return "ProteinDBReferenceProperty{" + "proteinDBReferenceWID=" + proteinDBReferenceWID + ", attribType=" + attribType + ", attribValue=" + attribValue + '}';
     }
 }

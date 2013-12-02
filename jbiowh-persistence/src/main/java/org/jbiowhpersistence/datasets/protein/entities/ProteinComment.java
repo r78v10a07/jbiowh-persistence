@@ -1,20 +1,20 @@
 package org.jbiowhpersistence.datasets.protein.entities;
 
 import java.io.Serializable;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Objects;
+import java.util.Collection;
 import java.util.Set;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 /**
  * This Class is the Protein Comment entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Aug 11, 2011
  */
 @Entity
@@ -79,22 +79,50 @@ public class ProteinComment implements Serializable {
     @JoinColumn(name = "Protein_WID", insertable = false, unique = false, nullable = true, updatable = false)
     private Protein protein;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "proteinComment")
+    @XmlElement
+    @XmlInverseReference(mappedBy="proteinComment")
+    @XmlElementWrapper( name="ProteinOtherLocations" )
     private Set<ProteinOtherLocation> proteinOtherLocation;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "proteinComment")
-    private Set<ProteinCommentSubCellularLocation> proteinCommentSubCellularLocation;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "proteinComment")
-    @MapKey(name = "proteinCommentConflictPK")
-    private Map<ProteinCommentConflictPK, ProteinCommentConflict> proteinCommentConflict;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "proteinComment")
-    @MapKey(name = "proteinCommentLinkPK")
-    private Map<ProteinCommentLinkPK, ProteinCommentLink> proteinCommentLink;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "proteinComment")
-    @MapKey(name = "proteinCommentEventPK")
-    private Map<ProteinCommentEventPK, ProteinCommentEvent> proteinCommentEvent;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "proteinComment")
+    @XmlElement
+    @XmlInverseReference(mappedBy="proteinComment")
+    @XmlElementWrapper( name="ProteinCommentIsoforms" )
     private Set<ProteinCommentIsoform> proteinCommentIsoform;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "proteinComment")
-    private Set<ProteinCommentInteract> proteinCommentInteract;
+    @ElementCollection
+    @CollectionTable(
+            name = "ProteinCommentSubCellularLocation",
+            joinColumns
+            = @JoinColumn(name = "ProteinComment_WID"))
+    @XmlElementWrapper( name="ProteinCommentSubCellularLocations" )
+    private Collection<ProteinCommentSubCellularLocation> proteinCommentSubCellularLocation;
+    @ElementCollection
+    @CollectionTable(
+            name = "ProteinCommentConflict",
+            joinColumns
+            = @JoinColumn(name = "ProteinComment_WID"))
+    @XmlElementWrapper( name="ProteinCommentConflicts" )
+    private Collection<ProteinCommentConflict> proteinCommentConflict;
+    @ElementCollection
+    @CollectionTable(
+            name = "ProteinCommentLink",
+            joinColumns
+            = @JoinColumn(name = "ProteinComment_WID"))
+    @XmlElementWrapper( name="ProteinCommentLinks" )
+    private Collection<ProteinCommentLink> proteinCommentLink;
+    @ElementCollection
+    @CollectionTable(
+            name = "ProteinCommentEvent",
+            joinColumns
+            = @JoinColumn(name = "ProteinComment_WID"))
+    @XmlElementWrapper( name="ProteinCommentEvents" )
+    private Collection<ProteinCommentEvent> proteinCommentEvent;
+    @ElementCollection
+    @CollectionTable(
+            name = "ProteinCommentInteract",
+            joinColumns
+            = @JoinColumn(name = "ProteinComment_WID"))
+    @XmlElementWrapper( name="ProteinCommentInteracts" )
+    private Collection<ProteinCommentInteract> proteinCommentInteract;
 
     public ProteinComment() {
     }
@@ -106,77 +134,6 @@ public class ProteinComment implements Serializable {
     public ProteinComment(Long wid, long proteinWID) {
         this.wid = wid;
         this.proteinWID = proteinWID;
-    }
-
-    @XmlTransient
-    public Set<ProteinCommentInteract> getProteinCommentInteract() {
-        return proteinCommentInteract;
-    }
-
-    public void setProteinCommentInteract(Set<ProteinCommentInteract> proteinCommentInteract) {
-        this.proteinCommentInteract = proteinCommentInteract;
-    }
-
-    @XmlTransient
-    public Set<ProteinCommentIsoform> getProteinCommentIsoform() {
-        return proteinCommentIsoform;
-    }
-
-    public void setProteinCommentIsoform(Set<ProteinCommentIsoform> proteinCommentIsoform) {
-        this.proteinCommentIsoform = proteinCommentIsoform;
-    }
-
-    @XmlTransient
-    public Map<ProteinCommentEventPK, ProteinCommentEvent> getProteinCommentEvent() {
-        return proteinCommentEvent;
-    }
-
-    public void setProteinCommentEvent(Map<ProteinCommentEventPK, ProteinCommentEvent> proteinCommentEvent) {
-        this.proteinCommentEvent = proteinCommentEvent;
-    }
-
-    @XmlTransient
-    public Map<ProteinCommentLinkPK, ProteinCommentLink> getProteinCommentLink() {
-        return proteinCommentLink;
-    }
-
-    public void setProteinCommentLink(Map<ProteinCommentLinkPK, ProteinCommentLink> proteinCommentLink) {
-        this.proteinCommentLink = proteinCommentLink;
-    }
-
-    @XmlTransient
-    public Map<ProteinCommentConflictPK, ProteinCommentConflict> getProteinCommentConflict() {
-        return proteinCommentConflict;
-    }
-
-    public void setProteinCommentConflict(Map<ProteinCommentConflictPK, ProteinCommentConflict> proteinCommentConflict) {
-        this.proteinCommentConflict = proteinCommentConflict;
-    }
-
-    @XmlTransient
-    public Set<ProteinCommentSubCellularLocation> getProteinCommentSubCellularLocation() {
-        return proteinCommentSubCellularLocation;
-    }
-
-    public void setProteinCommentSubCellularLocation(Set<ProteinCommentSubCellularLocation> proteinCommentSubCellularLocation) {
-        this.proteinCommentSubCellularLocation = proteinCommentSubCellularLocation;
-    }
-
-    @XmlTransient
-    public Set<ProteinOtherLocation> getProteinOtherLocation() {
-        return proteinOtherLocation;
-    }
-
-    public void setProteinOtherLocation(Set<ProteinOtherLocation> proteinOtherLocation) {
-        this.proteinOtherLocation = proteinOtherLocation;
-    }
-
-    public Protein getProtein() {
-        return protein;
-    }
-
-    public void setProtein(Protein protein) {
-        this.protein = protein;
     }
 
     public Long getWid() {
@@ -299,6 +256,91 @@ public class ProteinComment implements Serializable {
         this.experiments = experiments;
     }
 
+    public Protein getProtein() {
+        return protein;
+    }
+
+    public void setProtein(Protein protein) {
+        this.protein = protein;
+    }
+
+    public Set<ProteinOtherLocation> getProteinOtherLocation() {
+        return proteinOtherLocation;
+    }
+
+    public void setProteinOtherLocation(Set<ProteinOtherLocation> proteinOtherLocation) {
+        this.proteinOtherLocation = proteinOtherLocation;
+    }
+
+    public Set<ProteinCommentIsoform> getProteinCommentIsoform() {
+        return proteinCommentIsoform;
+    }
+
+    public void setProteinCommentIsoform(Set<ProteinCommentIsoform> proteinCommentIsoform) {
+        this.proteinCommentIsoform = proteinCommentIsoform;
+    }
+
+    public Collection<ProteinCommentSubCellularLocation> getProteinCommentSubCellularLocation() {
+        return proteinCommentSubCellularLocation;
+    }
+
+    public void setProteinCommentSubCellularLocation(Collection<ProteinCommentSubCellularLocation> proteinCommentSubCellularLocation) {
+        this.proteinCommentSubCellularLocation = proteinCommentSubCellularLocation;
+    }
+
+    public Collection<ProteinCommentConflict> getProteinCommentConflict() {
+        return proteinCommentConflict;
+    }
+
+    public void setProteinCommentConflict(Collection<ProteinCommentConflict> proteinCommentConflict) {
+        this.proteinCommentConflict = proteinCommentConflict;
+    }
+
+    public Collection<ProteinCommentLink> getProteinCommentLink() {
+        return proteinCommentLink;
+    }
+
+    public void setProteinCommentLink(Collection<ProteinCommentLink> proteinCommentLink) {
+        this.proteinCommentLink = proteinCommentLink;
+    }
+
+    public Collection<ProteinCommentEvent> getProteinCommentEvent() {
+        return proteinCommentEvent;
+    }
+
+    public void setProteinCommentEvent(Collection<ProteinCommentEvent> proteinCommentEvent) {
+        this.proteinCommentEvent = proteinCommentEvent;
+    }
+
+    public Collection<ProteinCommentInteract> getProteinCommentInteract() {
+        return proteinCommentInteract;
+    }
+
+    public void setProteinCommentInteract(Collection<ProteinCommentInteract> proteinCommentInteract) {
+        this.proteinCommentInteract = proteinCommentInteract;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 89 * hash + (this.wid != null ? this.wid.hashCode() : 0);
+        hash = 89 * hash + (int) (this.proteinWID ^ (this.proteinWID >>> 32));
+        hash = 89 * hash + (this.name != null ? this.name.hashCode() : 0);
+        hash = 89 * hash + (this.mass != null ? this.mass.hashCode() : 0);
+        hash = 89 * hash + (this.error != null ? this.error.hashCode() : 0);
+        hash = 89 * hash + (this.method != null ? this.method.hashCode() : 0);
+        hash = 89 * hash + (this.type != null ? this.type.hashCode() : 0);
+        hash = 89 * hash + (this.locationType != null ? this.locationType.hashCode() : 0);
+        hash = 89 * hash + (this.evidence != null ? this.evidence.hashCode() : 0);
+        hash = 89 * hash + (this.text != null ? this.text.hashCode() : 0);
+        hash = 89 * hash + (this.textEvidence != null ? this.textEvidence.hashCode() : 0);
+        hash = 89 * hash + (this.textStatus != null ? this.textStatus.hashCode() : 0);
+        hash = 89 * hash + (this.molecule != null ? this.molecule.hashCode() : 0);
+        hash = 89 * hash + (this.organismsDiffer != null ? this.organismsDiffer.hashCode() : 0);
+        hash = 89 * hash + (this.experiments != null ? this.experiments.hashCode() : 0);
+        return hash;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -308,140 +350,96 @@ public class ProteinComment implements Serializable {
             return false;
         }
         final ProteinComment other = (ProteinComment) obj;
-        if (!Objects.equals(this.wid, other.wid)) {
+        if (this.wid != other.wid && (this.wid == null || !this.wid.equals(other.wid))) {
             return false;
         }
         if (this.proteinWID != other.proteinWID) {
             return false;
         }
-        if (!Objects.equals(this.name, other.name)) {
+        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
             return false;
         }
-        if (!Objects.equals(this.mass, other.mass)) {
+        if (this.mass != other.mass && (this.mass == null || !this.mass.equals(other.mass))) {
             return false;
         }
-        if (!Objects.equals(this.error, other.error)) {
+        if ((this.error == null) ? (other.error != null) : !this.error.equals(other.error)) {
             return false;
         }
-        if (!Objects.equals(this.method, other.method)) {
+        if ((this.method == null) ? (other.method != null) : !this.method.equals(other.method)) {
             return false;
         }
-        if (!Objects.equals(this.type, other.type)) {
+        if ((this.type == null) ? (other.type != null) : !this.type.equals(other.type)) {
             return false;
         }
-        if (!Objects.equals(this.locationType, other.locationType)) {
+        if ((this.locationType == null) ? (other.locationType != null) : !this.locationType.equals(other.locationType)) {
             return false;
         }
-        if (!Objects.equals(this.evidence, other.evidence)) {
+        if ((this.evidence == null) ? (other.evidence != null) : !this.evidence.equals(other.evidence)) {
             return false;
         }
-        if (!Objects.equals(this.text, other.text)) {
+        if ((this.text == null) ? (other.text != null) : !this.text.equals(other.text)) {
             return false;
         }
-        if (!Objects.equals(this.textEvidence, other.textEvidence)) {
+        if ((this.textEvidence == null) ? (other.textEvidence != null) : !this.textEvidence.equals(other.textEvidence)) {
             return false;
         }
-        if (!Objects.equals(this.textStatus, other.textStatus)) {
+        if ((this.textStatus == null) ? (other.textStatus != null) : !this.textStatus.equals(other.textStatus)) {
             return false;
         }
-        if (!Objects.equals(this.molecule, other.molecule)) {
+        if ((this.molecule == null) ? (other.molecule != null) : !this.molecule.equals(other.molecule)) {
             return false;
         }
-        if (!Objects.equals(this.organismsDiffer, other.organismsDiffer)) {
+        if ((this.organismsDiffer == null) ? (other.organismsDiffer != null) : !this.organismsDiffer.equals(other.organismsDiffer)) {
             return false;
         }
-        if (!Objects.equals(this.experiments, other.experiments)) {
+        if ((this.experiments == null) ? (other.experiments != null) : !this.experiments.equals(other.experiments)) {
             return false;
         }
-        if (!Objects.equals(this.proteinOtherLocation, other.proteinOtherLocation)) {
+        if (this.proteinOtherLocation != other.proteinOtherLocation && (this.proteinOtherLocation == null || !this.proteinOtherLocation.equals(other.proteinOtherLocation))) {
             return false;
         }
-        if (!Objects.equals(this.proteinCommentSubCellularLocation, other.proteinCommentSubCellularLocation)) {
+        if (this.proteinCommentIsoform != other.proteinCommentIsoform && (this.proteinCommentIsoform == null || !this.proteinCommentIsoform.equals(other.proteinCommentIsoform))) {
             return false;
         }
-        if (!Objects.equals(this.proteinCommentConflict, other.proteinCommentConflict)) {
+        if (this.proteinCommentSubCellularLocation != other.proteinCommentSubCellularLocation && (this.proteinCommentSubCellularLocation == null || !this.proteinCommentSubCellularLocation.equals(other.proteinCommentSubCellularLocation))) {
             return false;
         }
-        if (!Objects.equals(this.proteinCommentLink, other.proteinCommentLink)) {
+        if (this.proteinCommentConflict != other.proteinCommentConflict && (this.proteinCommentConflict == null || !this.proteinCommentConflict.equals(other.proteinCommentConflict))) {
             return false;
         }
-        if (!Objects.equals(this.proteinCommentEvent, other.proteinCommentEvent)) {
+        if (this.proteinCommentLink != other.proteinCommentLink && (this.proteinCommentLink == null || !this.proteinCommentLink.equals(other.proteinCommentLink))) {
             return false;
         }
-        if (!Objects.equals(this.proteinCommentIsoform, other.proteinCommentIsoform)) {
+        if (this.proteinCommentEvent != other.proteinCommentEvent && (this.proteinCommentEvent == null || !this.proteinCommentEvent.equals(other.proteinCommentEvent))) {
             return false;
         }
-        if (!Objects.equals(this.proteinCommentInteract, other.proteinCommentInteract)) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (wid != null ? wid.hashCode() : 0);
-        return hash;
+        return this.proteinCommentInteract == other.proteinCommentInteract || (this.proteinCommentInteract != null && this.proteinCommentInteract.equals(other.proteinCommentInteract));
     }
 
     @Override
     public String toString() {
-        Iterator it;
         StringBuilder cData = new StringBuilder();
 
-        if (getProteinOtherLocation() != null) {
-            it = getProteinOtherLocation().iterator();
-            while (it.hasNext()) {
-                cData.append("\t\t").append(it.next()).append("\n");
-            }
+        for (ProteinOtherLocation p : getProteinOtherLocation()) {
+            cData.append("\t\t").append(p).append("\n");
         }
-
-        if (getProteinCommentSubCellularLocation() != null) {
-            it = getProteinCommentSubCellularLocation().iterator();
-            while (it.hasNext()) {
-                cData.append("\t\t").append(it.next()).append("\n");
-            }
+        for (ProteinCommentSubCellularLocation p : getProteinCommentSubCellularLocation()) {
+            cData.append("\t\t").append(p).append("\n");
         }
-
-        if (getProteinCommentConflict() != null) {
-            if (!getProteinCommentConflict().isEmpty()) {
-                it = getProteinCommentConflict().values().iterator();
-                while (it.hasNext()) {
-                    cData.append("\t\t").append(it.next()).append("\n");
-                }
-            }
+        for (ProteinCommentConflict p : getProteinCommentConflict()) {
+            cData.append("\t\t").append(p).append("\n");
         }
-
-        if (getProteinCommentLink() != null) {
-            if (!getProteinCommentLink().isEmpty()) {
-                it = getProteinCommentLink().values().iterator();
-                while (it.hasNext()) {
-                    cData.append("\t\t").append(it.next()).append("\n");
-                }
-            }
+        for (ProteinCommentLink p : getProteinCommentLink()) {
+            cData.append("\t\t").append(p).append("\n");
         }
-
-        if (getProteinCommentEvent() != null) {
-            if (!getProteinCommentEvent().isEmpty()) {
-                it = getProteinCommentEvent().values().iterator();
-                while (it.hasNext()) {
-                    cData.append("\t\t").append(it.next()).append("\n");
-                }
-            }
+        for (ProteinCommentEvent p : getProteinCommentEvent()) {
+            cData.append("\t\t").append(p).append("\n");
         }
-
-        if (getProteinCommentIsoform() != null) {
-            it = getProteinCommentIsoform().iterator();
-            while (it.hasNext()) {
-                cData.append("\t\t").append(it.next()).append("\n");
-            }
+        for (ProteinCommentIsoform p : getProteinCommentIsoform()) {
+            cData.append("\t\t").append(p).append("\n");
         }
-
-        if (getProteinCommentInteract() != null) {
-            it = getProteinCommentInteract().iterator();
-            while (it.hasNext()) {
-                cData.append("\t\t").append(it.next()).append("\n");
-            }
+        for (ProteinCommentInteract p : getProteinCommentInteract()) {
+            cData.append("\t\t").append(p).append("\n");
         }
 
         return "ProteinWIDComment{"

@@ -7,78 +7,72 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * This Class is the OntologyPMID entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Jun 28, 2011
  */
-@Entity
+@Embeddable
 @Table(name = "OntologyPMID")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "OntologyPMID.findAll", query = "SELECT o FROM OntologyPMID o"),
-    @NamedQuery(name = "OntologyPMID.findByOntologyWID", query = "SELECT o FROM OntologyPMID o WHERE o.ontologyPMIDPK.ontologyWID = :ontologyWID"),
-    @NamedQuery(name = "OntologyPMID.findByPmid", query = "SELECT o FROM OntologyPMID o WHERE o.ontologyPMIDPK.pmid = :pmid")})
 public class OntologyPMID implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected OntologyPMIDPK ontologyPMIDPK;
-    @ManyToOne
-    @JoinColumn(name = "Ontology_WID", insertable = false, unique = false, nullable = true, updatable = false)
-    private Ontology ontology;
+    @Basic(optional = false)
+    @Column(name = "Ontology_WID")
+    private long ontologyWID;
+    @Basic(optional = false)
+    @Column(name = "PMID")
+    private long pmid;
 
     public OntologyPMID() {
     }
 
-    public OntologyPMID(OntologyPMIDPK ontologyPMIDPK) {
-        this.ontologyPMIDPK = ontologyPMIDPK;
-    }
-
     public OntologyPMID(long ontologyWID, long pmid) {
-        this.ontologyPMIDPK = new OntologyPMIDPK(ontologyWID, pmid);
+        this.ontologyWID = ontologyWID;
+        this.pmid = pmid;
     }
 
-    public Ontology getOntology() {
-        return ontology;
+    public long getOntologyWID() {
+        return ontologyWID;
     }
 
-    public void setOntology(Ontology ontology) {
-        this.ontology = ontology;
+    public void setOntologyWID(long ontologyWID) {
+        this.ontologyWID = ontologyWID;
     }
 
-    public OntologyPMIDPK getOntologyPMIDPK() {
-        return ontologyPMIDPK;
+    public long getPmid() {
+        return pmid;
     }
 
-    public void setOntologyPMIDPK(OntologyPMIDPK ontologyPMIDPK) {
-        this.ontologyPMIDPK = ontologyPMIDPK;
+    public void setPmid(long pmid) {
+        this.pmid = pmid;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (ontologyPMIDPK != null ? ontologyPMIDPK.hashCode() : 0);
+        int hash = 3;
+        hash = 23 * hash + (int) (this.ontologyWID ^ (this.ontologyWID >>> 32));
+        hash = 23 * hash + (int) (this.pmid ^ (this.pmid >>> 32));
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof OntologyPMID)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        OntologyPMID other = (OntologyPMID) object;
-        if ((this.ontologyPMIDPK == null && other.ontologyPMIDPK != null) || (this.ontologyPMIDPK != null && !this.ontologyPMIDPK.equals(other.ontologyPMIDPK))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final OntologyPMID other = (OntologyPMID) obj;
+        if (this.ontologyWID != other.ontologyWID) {
+            return false;
+        }
+        return this.pmid == other.pmid;
     }
 
     @Override
     public String toString() {
-        return "OntologyPMID["
-                + " ontology_WID=" + ontologyPMIDPK.getOntologyWID()
-                + " PMID=" + ontologyPMIDPK.getPmid()
-                + ']';
+        return "OntologyPMID{" + "ontologyWID=" + ontologyWID + ", pmid=" + pmid + '}';
     }
 }

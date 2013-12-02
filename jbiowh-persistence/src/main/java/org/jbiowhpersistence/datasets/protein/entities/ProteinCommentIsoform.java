@@ -1,19 +1,17 @@
 package org.jbiowhpersistence.datasets.protein.entities;
 
 import java.io.Serializable;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Objects;
+import java.util.Collection;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This Class is the Protein Comment Isoform entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Aug 11, 2011
  */
 @Entity
@@ -49,12 +47,21 @@ public class ProteinCommentIsoform implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ProteinComment_WID", insertable = false, unique = false, nullable = true, updatable = false)
     private ProteinComment proteinComment;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "proteinCommentIsoform")
-    @MapKey(name = "proteinIsoformIdPK")
-    private Map<ProteinIsoformIdPK, ProteinIsoformId> proteinIsoformId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "proteinCommentIsoform")
-    @MapKey(name = "proteinIsoformNamePK")
-    private Map<ProteinIsoformNamePK, ProteinIsoformName> proteinIsoformName;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "ProteinIsoformId",
+            joinColumns
+            = @JoinColumn(name = "ProteinCommentIsoform_WID"))
+    @XmlElementWrapper( name="ProteinIsoformIds" )
+    private Collection<ProteinIsoformId> proteinIsoformId;
+    @ElementCollection
+    @CollectionTable(
+            name = "ProteinIsoformName",
+            joinColumns
+            = @JoinColumn(name = "ProteinCommentIsoform_WID"))
+    @XmlElementWrapper( name="ProteinIsoformNames" )
+    private Collection<ProteinIsoformName> proteinIsoformName;
 
     public ProteinCommentIsoform() {
     }
@@ -66,32 +73,6 @@ public class ProteinCommentIsoform implements Serializable {
     public ProteinCommentIsoform(Long wid, long proteinCommentWID) {
         this.wid = wid;
         this.proteinCommentWID = proteinCommentWID;
-    }
-
-    @XmlTransient
-    public Map<ProteinIsoformNamePK, ProteinIsoformName> getProteinIsoformName() {
-        return proteinIsoformName;
-    }
-
-    public void setProteinIsoformName(Map<ProteinIsoformNamePK, ProteinIsoformName> proteinIsoformName) {
-        this.proteinIsoformName = proteinIsoformName;
-    }
-
-    @XmlTransient
-    public Map<ProteinIsoformIdPK, ProteinIsoformId> getProteinIsoformId() {
-        return proteinIsoformId;
-    }
-
-    public void setProteinIsoformId(Map<ProteinIsoformIdPK, ProteinIsoformId> proteinIsoformId) {
-        this.proteinIsoformId = proteinIsoformId;
-    }
-
-    public ProteinComment getProteinComment() {
-        return proteinComment;
-    }
-
-    public void setProteinComment(ProteinComment proteinComment) {
-        this.proteinComment = proteinComment;
     }
 
     public Long getWid() {
@@ -142,6 +123,42 @@ public class ProteinCommentIsoform implements Serializable {
         this.noteEvidence = noteEvidence;
     }
 
+    public ProteinComment getProteinComment() {
+        return proteinComment;
+    }
+
+    public void setProteinComment(ProteinComment proteinComment) {
+        this.proteinComment = proteinComment;
+    }
+
+    public Collection<ProteinIsoformId> getProteinIsoformId() {
+        return proteinIsoformId;
+    }
+
+    public void setProteinIsoformId(Collection<ProteinIsoformId> proteinIsoformId) {
+        this.proteinIsoformId = proteinIsoformId;
+    }
+
+    public Collection<ProteinIsoformName> getProteinIsoformName() {
+        return proteinIsoformName;
+    }
+
+    public void setProteinIsoformName(Collection<ProteinIsoformName> proteinIsoformName) {
+        this.proteinIsoformName = proteinIsoformName;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + (this.wid != null ? this.wid.hashCode() : 0);
+        hash = 67 * hash + (int) (this.proteinCommentWID ^ (this.proteinCommentWID >>> 32));
+        hash = 67 * hash + (this.seqType != null ? this.seqType.hashCode() : 0);
+        hash = 67 * hash + (this.seqRef != null ? this.seqRef.hashCode() : 0);
+        hash = 67 * hash + (this.note != null ? this.note.hashCode() : 0);
+        hash = 67 * hash + (this.noteEvidence != null ? this.noteEvidence.hashCode() : 0);
+        return hash;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -151,71 +168,49 @@ public class ProteinCommentIsoform implements Serializable {
             return false;
         }
         final ProteinCommentIsoform other = (ProteinCommentIsoform) obj;
-        if (!Objects.equals(this.wid, other.wid)) {
+        if (this.wid != other.wid && (this.wid == null || !this.wid.equals(other.wid))) {
             return false;
         }
         if (this.proteinCommentWID != other.proteinCommentWID) {
             return false;
         }
-        if (!Objects.equals(this.seqType, other.seqType)) {
+        if ((this.seqType == null) ? (other.seqType != null) : !this.seqType.equals(other.seqType)) {
             return false;
         }
-        if (!Objects.equals(this.seqRef, other.seqRef)) {
+        if ((this.seqRef == null) ? (other.seqRef != null) : !this.seqRef.equals(other.seqRef)) {
             return false;
         }
-        if (!Objects.equals(this.note, other.note)) {
+        if ((this.note == null) ? (other.note != null) : !this.note.equals(other.note)) {
             return false;
         }
-        if (!Objects.equals(this.noteEvidence, other.noteEvidence)) {
+        if ((this.noteEvidence == null) ? (other.noteEvidence != null) : !this.noteEvidence.equals(other.noteEvidence)) {
             return false;
         }
-        if (!Objects.equals(this.proteinIsoformId, other.proteinIsoformId)) {
+        if (this.proteinIsoformId != other.proteinIsoformId && (this.proteinIsoformId == null || !this.proteinIsoformId.equals(other.proteinIsoformId))) {
             return false;
         }
-        if (!Objects.equals(this.proteinIsoformName, other.proteinIsoformName)) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (wid != null ? wid.hashCode() : 0);
-        return hash;
+        return this.proteinIsoformName == other.proteinIsoformName || (this.proteinIsoformName != null && this.proteinIsoformName.equals(other.proteinIsoformName));
     }
 
     @Override
     public String toString() {
-        Iterator it;
-        StringBuilder cData = new StringBuilder();
+        StringBuilder pData = new StringBuilder();
 
-        if (getProteinIsoformId() != null) {
-            if (!getProteinIsoformId().isEmpty()) {
-                it = getProteinIsoformId().values().iterator();
-                while (it.hasNext()) {
-                    cData.append("\t\t\t").append(it.next()).append("\n");
-                }
-            }
+        for (ProteinIsoformId s : proteinIsoformId) {
+            pData.append("\t").append(s).append("\n");
         }
-
-        if (getProteinIsoformName() != null) {
-            if (!getProteinIsoformName().isEmpty()) {
-                it = getProteinIsoformName().values().iterator();
-                while (it.hasNext()) {
-                    cData.append("\t\t\t").append(it.next()).append("\n");
-                }
-            }
+        for (ProteinIsoformName s : proteinIsoformName) {
+            pData.append("\t").append(s).append("\n");
         }
-
         return "ProteinCommentIsoform{"
-                + " wid=" + wid
-                + " commentWID=" + proteinCommentWID
-                + " seqType=" + seqType
-                + " seqRef=" + seqRef
-                + " note=" + note
-                + " noteEvidence=" + noteEvidence
-                + "}\n"
-                + cData;
+                + "wid=" + wid
+                + ", proteinCommentWID=" + proteinCommentWID
+                + ", seqType=" + seqType
+                + ", seqRef=" + seqRef
+                + ", note=" + note
+                + ", noteEvidence=" + noteEvidence
+                + "\n"
+                + pData.toString()
+                + '}';
     }
 }

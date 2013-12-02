@@ -3,30 +3,27 @@ package org.jbiowhpersistence.datasets.ontology.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This Class is OntologyIsA entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Jun 28, 2011
  */
-@Entity
+@Embeddable
 @Table(name = "OntologyIsA")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "OntologyIsA.findAll", query = "SELECT o FROM OntologyIsA o"),
-    @NamedQuery(name = "OntologyIsA.findByOntologyWID", query = "SELECT o FROM OntologyIsA o WHERE o.ontologyIsAPK.ontologyWID = :ontologyWID"),
-    @NamedQuery(name = "OntologyIsA.findByIsAOntologyWID", query = "SELECT o FROM OntologyIsA o WHERE o.ontologyIsAPK.isAOntologyWID = :isAOntologyWID")})
 public class OntologyIsA implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected OntologyIsAPK ontologyIsAPK;
-    @ManyToOne
-    @JoinColumn(name = "Ontology_WID", insertable = false, unique = false, nullable = true, updatable = false)
-    private Ontology ontology;
+    @Basic(optional = false)
+    @Column(name = "Ontology_WID")
+    private long ontologyWID;
+    @Basic(optional = false)
+    @Column(name = "IsAOntology_WID")
+    private long isAOntologyWID;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "IsAOntology_WID", insertable = false, unique = false, nullable = true, updatable = false)
     private Ontology isAOntology;
@@ -34,14 +31,28 @@ public class OntologyIsA implements Serializable {
     public OntologyIsA() {
     }
 
-    public OntologyIsA(OntologyIsAPK ontologyIsAPK) {
-        this.ontologyIsAPK = ontologyIsAPK;
-    }
-
     public OntologyIsA(long ontologyWID, long isAOntologyWID) {
-        this.ontologyIsAPK = new OntologyIsAPK(ontologyWID, isAOntologyWID);
+        this.ontologyWID = ontologyWID;
+        this.isAOntologyWID = isAOntologyWID;
     }
 
+    public long getOntologyWID() {
+        return ontologyWID;
+    }
+
+    public void setOntologyWID(long ontologyWID) {
+        this.ontologyWID = ontologyWID;
+    }
+
+    public long getIsAOntologyWID() {
+        return isAOntologyWID;
+    }
+
+    public void setIsAOntologyWID(long isAOntologyWID) {
+        this.isAOntologyWID = isAOntologyWID;
+    }
+
+    @XmlTransient
     public Ontology getIsAOntology() {
         return isAOntology;
     }
@@ -50,46 +61,32 @@ public class OntologyIsA implements Serializable {
         this.isAOntology = isAOntology;
     }
 
-    public Ontology getOntology() {
-        return ontology;
-    }
-
-    public void setOntology(Ontology ontology) {
-        this.ontology = ontology;
-    }
-
-    public OntologyIsAPK getOntologyIsAPK() {
-        return ontologyIsAPK;
-    }
-
-    public void setOntologyIsAPK(OntologyIsAPK ontologyIsAPK) {
-        this.ontologyIsAPK = ontologyIsAPK;
-    }
-
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (ontologyIsAPK != null ? ontologyIsAPK.hashCode() : 0);
+        int hash = 3;
+        hash = 53 * hash + (int) (this.ontologyWID ^ (this.ontologyWID >>> 32));
+        hash = 53 * hash + (int) (this.isAOntologyWID ^ (this.isAOntologyWID >>> 32));
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof OntologyIsA)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        OntologyIsA other = (OntologyIsA) object;
-        if ((this.ontologyIsAPK == null && other.ontologyIsAPK != null) || (this.ontologyIsAPK != null && !this.ontologyIsAPK.equals(other.ontologyIsAPK))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final OntologyIsA other = (OntologyIsA) obj;
+        if (this.ontologyWID != other.ontologyWID) {
+            return false;
+        }
+        return this.isAOntologyWID == other.isAOntologyWID;
     }
 
     @Override
     public String toString() {
-        return "OntologyIsA["
-                + " ontology_WID=" + ontologyIsAPK.getOntologyWID()
-                + " IsAOntology_WID=" + ontologyIsAPK.getIsAOntologyWID()
-                + ']';
+        return "OntologyIsA{" + "ontologyWID=" + ontologyWID + ", isAOntologyWID=" + isAOntologyWID + ", isAOntology=" + isAOntology + '}';
     }
+
 }

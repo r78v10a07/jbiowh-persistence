@@ -63,10 +63,7 @@ public class ProteinhasProteinKeywordPK implements Serializable {
         if (this.proteinWID != other.proteinWID) {
             return false;
         }
-        if (this.proteinKeywordWID != other.proteinKeywordWID) {
-            return false;
-        }
-        return true;
+        return this.proteinKeywordWID == other.proteinKeywordWID;
     }
 
     @Override

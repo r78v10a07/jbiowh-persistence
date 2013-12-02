@@ -89,10 +89,7 @@ public class ProteinhasProteinKeyword implements Serializable {
         if (!Objects.equals(this.proteinhasProteinKeywordPK, other.proteinhasProteinKeywordPK)) {
             return false;
         }
-        if (!Objects.equals(this.evidence, other.evidence)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.evidence, other.evidence);
     }
 
     @Override

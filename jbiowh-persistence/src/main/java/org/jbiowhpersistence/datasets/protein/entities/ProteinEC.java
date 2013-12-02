@@ -7,79 +7,72 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * This Class is the Protein EC entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Aug 11, 2011
  */
-@Entity
+@Embeddable
 @Table(name = "ProteinEC")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "ProteinEC.findAll", query = "SELECT p FROM ProteinEC p"),
-    @NamedQuery(name = "ProteinEC.findByProteinWID", query = "SELECT p FROM ProteinEC p WHERE p.proteinECPK.proteinWID = :proteinWID"),
-    @NamedQuery(name = "ProteinEC.findById", query = "SELECT p FROM ProteinEC p WHERE p.proteinECPK.id = :id")})
 public class ProteinEC implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ProteinECPK proteinECPK;
-    // Internla relationship
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Protein_WID", insertable = false, unique = false, nullable = true, updatable = false)
-    private Protein protein;
+    @Basic(optional = false)
+    @Column(name = "Protein_WID")
+    private long proteinWID;
+    @Basic(optional = false)
+    @Column(name = "Id")
+    private String id;
 
     public ProteinEC() {
     }
 
-    public ProteinEC(ProteinECPK proteinECPK) {
-        this.proteinECPK = proteinECPK;
-    }
-
     public ProteinEC(long proteinWID, String id) {
-        this.proteinECPK = new ProteinECPK(proteinWID, id);
+        this.proteinWID = proteinWID;
+        this.id = id;
     }
 
-    public Protein getProtein() {
-        return protein;
+    public long getProteinWID() {
+        return proteinWID;
     }
 
-    public void setProtein(Protein protein) {
-        this.protein = protein;
+    public void setProteinWID(long proteinWID) {
+        this.proteinWID = proteinWID;
     }
 
-    public ProteinECPK getProteinECPK() {
-        return proteinECPK;
+    public String getId() {
+        return id;
     }
 
-    public void setProteinECPK(ProteinECPK proteinECPK) {
-        this.proteinECPK = proteinECPK;
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (proteinECPK != null ? proteinECPK.hashCode() : 0);
+        int hash = 7;
+        hash = 59 * hash + (int) (this.proteinWID ^ (this.proteinWID >>> 32));
+        hash = 59 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof ProteinEC)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        ProteinEC other = (ProteinEC) object;
-        if ((this.proteinECPK == null && other.proteinECPK != null) || (this.proteinECPK != null && !this.proteinECPK.equals(other.proteinECPK))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final ProteinEC other = (ProteinEC) obj;
+        if (this.proteinWID != other.proteinWID) {
+            return false;
+        }
+        return !((this.id == null) ? (other.id != null) : !this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
-        return "ProteinEC{"
-                + " ProteinWID=" + proteinECPK.getProteinWID()
-                + " Id=" + proteinECPK.getId()
-                + '}';
+        return "ProteinEC{" + "proteinWID=" + proteinWID + ", id=" + id + '}';
     }
 }

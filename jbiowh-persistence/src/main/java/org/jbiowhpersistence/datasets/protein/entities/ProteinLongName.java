@@ -1,39 +1,22 @@
 package org.jbiowhpersistence.datasets.protein.entities;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * This Class is the Protein Long Name
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Aug 11, 2011
  */
-@Entity
+@Embeddable
 @Table(name = "ProteinLongName")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "ProteinLongName.findAll", query = "SELECT p FROM ProteinLongName p"),
-    @NamedQuery(name = "ProteinLongName.findByWid", query = "SELECT p FROM ProteinLongName p WHERE p.wid = :wid"),
-    @NamedQuery(name = "ProteinLongName.findByProteinWID", query = "SELECT p FROM ProteinLongName p WHERE p.proteinWID = :proteinWID"),
-    @NamedQuery(name = "ProteinLongName.findByProteinNameDef", query = "SELECT p FROM ProteinLongName p WHERE p.proteinNameDef = :proteinNameDef"),
-    @NamedQuery(name = "ProteinLongName.findByType", query = "SELECT p FROM ProteinLongName p WHERE p.type = :type"),
-    @NamedQuery(name = "ProteinLongName.findByComponent", query = "SELECT p FROM ProteinLongName p WHERE p.component = :component"),
-    @NamedQuery(name = "ProteinLongName.findByDomain", query = "SELECT p FROM ProteinLongName p WHERE p.domain = :domain"),
-    @NamedQuery(name = "ProteinLongName.findByName", query = "SELECT p FROM ProteinLongName p WHERE p.name LIKE :name"),
-    @NamedQuery(name = "ProteinLongName.findByEvidence", query = "SELECT p FROM ProteinLongName p WHERE p.evidence = :evidence"),
-    @NamedQuery(name = "ProteinLongName.findByStatus", query = "SELECT p FROM ProteinLongName p WHERE p.status = :status")})
 public class ProteinLongName implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "WID")
-    private Long wid;
     @Basic(optional = false)
     @Column(name = "Protein_WID")
     private long proteinWID;
@@ -53,39 +36,14 @@ public class ProteinLongName implements Serializable {
     private String evidence;
     @Column(name = "Status")
     private String status;
-    // Internla relationship
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Protein_WID", insertable = false, unique = false, nullable = true, updatable = false)
-    private Protein protein;
 
     public ProteinLongName() {
     }
 
-    public ProteinLongName(Long wid) {
-        this.wid = wid;
-    }
-
-    public ProteinLongName(Long wid, long proteinWID, String proteinNameDef, String name) {
-        this.wid = wid;
+    public ProteinLongName(long proteinWID, String proteinNameDef, String name) {
         this.proteinWID = proteinWID;
         this.proteinNameDef = proteinNameDef;
         this.name = name;
-    }
-
-    public Protein getProtein() {
-        return protein;
-    }
-
-    public void setProtein(Protein protein) {
-        this.protein = protein;
-    }
-
-    public Long getWid() {
-        return wid;
-    }
-
-    public void setWid(Long wid) {
-        this.wid = wid;
     }
 
     public long getProteinWID() {
@@ -112,7 +70,7 @@ public class ProteinLongName implements Serializable {
         this.type = type;
     }
 
-    public Boolean getComponent() {
+    public Boolean isComponent() {
         return component;
     }
 
@@ -120,7 +78,7 @@ public class ProteinLongName implements Serializable {
         this.component = component;
     }
 
-    public Boolean getDomain() {
+    public Boolean isDomain() {
         return domain;
     }
 
@@ -153,6 +111,20 @@ public class ProteinLongName implements Serializable {
     }
 
     @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + (int) (this.proteinWID ^ (this.proteinWID >>> 32));
+        hash = 29 * hash + (this.proteinNameDef != null ? this.proteinNameDef.hashCode() : 0);
+        hash = 29 * hash + (this.type != null ? this.type.hashCode() : 0);
+        hash = 29 * hash + (this.component != null ? this.component.hashCode() : 0);
+        hash = 29 * hash + (this.domain != null ? this.domain.hashCode() : 0);
+        hash = 29 * hash + (this.name != null ? this.name.hashCode() : 0);
+        hash = 29 * hash + (this.evidence != null ? this.evidence.hashCode() : 0);
+        hash = 29 * hash + (this.status != null ? this.status.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -161,55 +133,32 @@ public class ProteinLongName implements Serializable {
             return false;
         }
         final ProteinLongName other = (ProteinLongName) obj;
-        if (!Objects.equals(this.wid, other.wid)) {
-            return false;
-        }
         if (this.proteinWID != other.proteinWID) {
             return false;
         }
-        if (!Objects.equals(this.proteinNameDef, other.proteinNameDef)) {
+        if ((this.proteinNameDef == null) ? (other.proteinNameDef != null) : !this.proteinNameDef.equals(other.proteinNameDef)) {
             return false;
         }
-        if (!Objects.equals(this.type, other.type)) {
+        if ((this.type == null) ? (other.type != null) : !this.type.equals(other.type)) {
             return false;
         }
-        if (!Objects.equals(this.component, other.component)) {
+        if (this.component != other.component && (this.component == null || !this.component.equals(other.component))) {
             return false;
         }
-        if (!Objects.equals(this.domain, other.domain)) {
+        if (this.domain != other.domain && (this.domain == null || !this.domain.equals(other.domain))) {
             return false;
         }
-        if (!Objects.equals(this.name, other.name)) {
+        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
             return false;
         }
-        if (!Objects.equals(this.evidence, other.evidence)) {
+        if ((this.evidence == null) ? (other.evidence != null) : !this.evidence.equals(other.evidence)) {
             return false;
         }
-        if (!Objects.equals(this.status, other.status)) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (wid != null ? wid.hashCode() : 0);
-        return hash;
+        return !((this.status == null) ? (other.status != null) : !this.status.equals(other.status));
     }
 
     @Override
     public String toString() {
-        return "ProteinProteinName{"
-                + " wid=" + wid
-                + " proteinWID=" + proteinWID
-                + " proteinNameDef=" + proteinNameDef
-                + " type=" + type
-                + " component=" + component
-                + " domain=" + domain
-                + " name=" + name
-                + " evidence=" + evidence
-                + " status=" + status
-                + '}';
+        return "ProteinLongName{" + "proteinWID=" + proteinWID + ", proteinNameDef=" + proteinNameDef + ", type=" + type + ", component=" + component + ", domain=" + domain + ", name=" + name + ", evidence=" + evidence + ", status=" + status + '}';
     }
 }

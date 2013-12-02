@@ -7,76 +7,72 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * This Class is the TaxonomyPMID entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Jun 21, 2011
  */
-@Entity
+@Embeddable
 @Table(name = "TaxonomyPMID")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "TaxonomyPMID.findAll", query = "SELECT t FROM TaxonomyPMID t"),
-    @NamedQuery(name = "TaxonomyPMID.findByTaxonomyWID", query = "SELECT t FROM TaxonomyPMID t WHERE t.taxonomyPMIDPK.taxonomyWID = :taxonomyWID"),
-    @NamedQuery(name = "TaxonomyPMID.findByPmid", query = "SELECT t FROM TaxonomyPMID t WHERE t.taxonomyPMIDPK.pmid = :pmid")})
 public class TaxonomyPMID implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected TaxonomyPMIDPK taxonomyPMIDPK;
-    /*
-     * TaxonomyPMID relationships
-     */
-    @ManyToOne
-    private Taxonomy taxonomy;
+    @Basic(optional = false)
+    @Column(name = "Taxonomy_WID", insertable = false, unique = false, nullable = true, updatable = false)
+    private long taxonomyWID;
+    @Basic(optional = false)
+    @Column(name = "PMID")
+    private long pmid;
 
     public TaxonomyPMID() {
     }
 
-    public TaxonomyPMID(TaxonomyPMIDPK taxonomyPMIDPK) {
-        this.taxonomyPMIDPK = taxonomyPMIDPK;
-    }
-
     public TaxonomyPMID(long taxonomyWID, long pmid) {
-        this.taxonomyPMIDPK = new TaxonomyPMIDPK(taxonomyWID, pmid);
+        this.taxonomyWID = taxonomyWID;
+        this.pmid = pmid;
     }
 
-    public Taxonomy getTaxonomy() {
-        return taxonomy;
-    }
-    /*
-     * public void setTaxonomy(Taxonomy taxonomy) { this.taxonomy = taxonomy; }
-     */
-
-    public TaxonomyPMIDPK getTaxonomyPMIDPK() {
-        return taxonomyPMIDPK;
+    public long getTaxonomyWID() {
+        return taxonomyWID;
     }
 
-    public void setTaxonomyPMIDPK(TaxonomyPMIDPK taxonomyPMIDPK) {
-        this.taxonomyPMIDPK = taxonomyPMIDPK;
+    public void setTaxonomyWID(long taxonomyWID) {
+        this.taxonomyWID = taxonomyWID;
+    }
+
+    public long getPmid() {
+        return pmid;
+    }
+
+    public void setPmid(long pmid) {
+        this.pmid = pmid;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (taxonomyPMIDPK != null ? taxonomyPMIDPK.hashCode() : 0);
+        int hash = 7;
+        hash = 89 * hash + (int) (this.taxonomyWID ^ (this.taxonomyWID >>> 32));
+        hash = 89 * hash + (int) (this.pmid ^ (this.pmid >>> 32));
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof TaxonomyPMID)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        TaxonomyPMID other = (TaxonomyPMID) object;
-        if ((this.taxonomyPMIDPK == null && other.taxonomyPMIDPK != null) || (this.taxonomyPMIDPK != null && !this.taxonomyPMIDPK.equals(other.taxonomyPMIDPK))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final TaxonomyPMID other = (TaxonomyPMID) obj;
+        if (this.taxonomyWID != other.taxonomyWID) {
+            return false;
+        }
+        return this.pmid == other.pmid;
     }
 
     @Override
     public String toString() {
-        return taxonomyPMIDPK.toString();
+        return "TaxonomyPMID{" + "taxonomyWID=" + taxonomyWID + ", pmid=" + pmid + '}';
     }
 }

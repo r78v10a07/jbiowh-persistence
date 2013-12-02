@@ -82,7 +82,7 @@ public class SearchTaxonomy extends SearchFactory implements JBioWHSearch {
             if (field.equals(TAXID)) {
                 data.put(field, "g.taxId");
             } else if (field.equals(SYNONYM)) {
-                data.put(field, "n.taxonomySynonymPK.synonym");
+                data.put(field, "n.synonym");
             }
         }
         return data;

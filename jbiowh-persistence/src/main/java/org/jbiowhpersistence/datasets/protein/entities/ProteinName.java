@@ -1,69 +1,55 @@
 package org.jbiowhpersistence.datasets.protein.entities;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * This Class is the Protein Name entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Aug 11, 2011
  */
-@Entity
+@Embeddable
 @Table(name = "ProteinName")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "ProteinName.findAll", query = "SELECT p FROM ProteinName p"),
-    @NamedQuery(name = "ProteinName.findByProteinWID", query = "SELECT p FROM ProteinName p WHERE p.proteinNamePK.proteinWID = :proteinWID"),
-    @NamedQuery(name = "ProteinName.findByName", query = "SELECT p FROM ProteinName p WHERE p.proteinNamePK.name = :name"),
-    @NamedQuery(name = "ProteinName.findByOrderNumber", query = "SELECT p FROM ProteinName p WHERE p.orderNumber = :orderNumber")})
 public class ProteinName implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ProteinNamePK proteinNamePK;
+    @Basic(optional = false)
+    @Column(name = "Protein_WID")
+    private long proteinWID;
+    @Basic(optional = false)
+    @Column(name = "Name")
+    private String name;
     @Basic(optional = false)
     @Column(name = "OrderNumber")
     private int orderNumber;
-    // Internla relationship
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Protein_WID", insertable = false, unique = false, nullable = true, updatable = false)
-    private Protein protein;
 
     public ProteinName() {
     }
 
-    public ProteinName(ProteinNamePK proteinNamePK) {
-        this.proteinNamePK = proteinNamePK;
-    }
-
-    public ProteinName(ProteinNamePK proteinNamePK, int orderNumber) {
-        this.proteinNamePK = proteinNamePK;
+    public ProteinName(long proteinWID, String name, int orderNumber) {
+        this.proteinWID = proteinWID;
+        this.name = name;
         this.orderNumber = orderNumber;
     }
 
-    public ProteinName(long proteinWID, String name) {
-        this.proteinNamePK = new ProteinNamePK(proteinWID, name);
+    public long getProteinWID() {
+        return proteinWID;
     }
 
-    public Protein getProtein() {
-        return protein;
+    public void setProteinWID(long proteinWID) {
+        this.proteinWID = proteinWID;
     }
 
-    public void setProtein(Protein protein) {
-        this.protein = protein;
+    public String getName() {
+        return name;
     }
 
-    public ProteinNamePK getProteinNamePK() {
-        return proteinNamePK;
-    }
-
-    public void setProteinNamePK(ProteinNamePK proteinNamePK) {
-        this.proteinNamePK = proteinNamePK;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getOrderNumber() {
@@ -75,6 +61,15 @@ public class ProteinName implements Serializable {
     }
 
     @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 89 * hash + (int) (this.proteinWID ^ (this.proteinWID >>> 32));
+        hash = 89 * hash + (this.name != null ? this.name.hashCode() : 0);
+        hash = 89 * hash + this.orderNumber;
+        return hash;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -83,28 +78,17 @@ public class ProteinName implements Serializable {
             return false;
         }
         final ProteinName other = (ProteinName) obj;
-        if (!Objects.equals(this.proteinNamePK, other.proteinNamePK)) {
+        if (this.proteinWID != other.proteinWID) {
             return false;
         }
-        if (this.orderNumber != other.orderNumber) {
+        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
             return false;
         }
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (proteinNamePK != null ? proteinNamePK.hashCode() : 0);
-        return hash;
+        return this.orderNumber == other.orderNumber;
     }
 
     @Override
     public String toString() {
-        return "ProteinName{"
-                + " ProteinWID=" + proteinNamePK.getProteinWID()
-                + " Name=" + proteinNamePK.getName()
-                + " orderNumber=" + orderNumber
-                + '}';
+        return "ProteinName{" + "proteinWID=" + proteinWID + ", name=" + name + ", orderNumber=" + orderNumber + '}';
     }
 }

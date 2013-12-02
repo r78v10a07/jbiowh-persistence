@@ -1,69 +1,55 @@
 package org.jbiowhpersistence.datasets.protein.entities;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * This Class is the Protein Accession NUmber entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Aug 11, 2011
  */
-@Entity
+@Embeddable
 @Table(name = "ProteinAccessionNumber")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "ProteinAccessionNumber.findAll", query = "SELECT p FROM ProteinAccessionNumber p"),
-    @NamedQuery(name = "ProteinAccessionNumber.findByProteinWID", query = "SELECT p FROM ProteinAccessionNumber p WHERE p.proteinAccessionNumberPK.proteinWID = :proteinWID"),
-    @NamedQuery(name = "ProteinAccessionNumber.findByAccessionNumber", query = "SELECT p FROM ProteinAccessionNumber p WHERE p.proteinAccessionNumberPK.accessionNumber = :accessionNumber"),
-    @NamedQuery(name = "ProteinAccessionNumber.findByOrderNumber", query = "SELECT p FROM ProteinAccessionNumber p WHERE p.orderNumber = :orderNumber")})
 public class ProteinAccessionNumber implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ProteinAccessionNumberPK proteinAccessionNumberPK;
+    @Basic(optional = false)
+    @Column(name = "Protein_WID")
+    private long proteinWID;
+    @Basic(optional = false)
+    @Column(name = "AccessionNumber")
+    private String accessionNumber;
     @Basic(optional = false)
     @Column(name = "OrderNumber")
     private int orderNumber;
-    // Internla relationship
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Protein_WID", insertable = false, unique = false, nullable = true, updatable = false)
-    private Protein protein;
 
     public ProteinAccessionNumber() {
     }
 
-    public ProteinAccessionNumber(ProteinAccessionNumberPK proteinAccessionNumberPK) {
-        this.proteinAccessionNumberPK = proteinAccessionNumberPK;
-    }
-
-    public ProteinAccessionNumber(ProteinAccessionNumberPK proteinAccessionNumberPK, int orderNumber) {
-        this.proteinAccessionNumberPK = proteinAccessionNumberPK;
+    public ProteinAccessionNumber(long proteinWID, String accessionNumber, int orderNumber) {
+        this.proteinWID = proteinWID;
+        this.accessionNumber = accessionNumber;
         this.orderNumber = orderNumber;
     }
 
-    public ProteinAccessionNumber(long proteinWID, String accessionNumber) {
-        this.proteinAccessionNumberPK = new ProteinAccessionNumberPK(proteinWID, accessionNumber);
+    public long getProteinWID() {
+        return proteinWID;
     }
 
-    public Protein getProtein() {
-        return protein;
+    public void setProteinWID(long proteinWID) {
+        this.proteinWID = proteinWID;
     }
 
-    public void setProtein(Protein protein) {
-        this.protein = protein;
+    public String getAccessionNumber() {
+        return accessionNumber;
     }
 
-    public ProteinAccessionNumberPK getProteinAccessionNumberPK() {
-        return proteinAccessionNumberPK;
-    }
-
-    public void setProteinAccessionNumberPK(ProteinAccessionNumberPK proteinAccessionNumberPK) {
-        this.proteinAccessionNumberPK = proteinAccessionNumberPK;
+    public void setAccessionNumber(String accessionNumber) {
+        this.accessionNumber = accessionNumber;
     }
 
     public int getOrderNumber() {
@@ -75,6 +61,15 @@ public class ProteinAccessionNumber implements Serializable {
     }
 
     @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 79 * hash + (int) (this.proteinWID ^ (this.proteinWID >>> 32));
+        hash = 79 * hash + (this.accessionNumber != null ? this.accessionNumber.hashCode() : 0);
+        hash = 79 * hash + this.orderNumber;
+        return hash;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -83,28 +78,17 @@ public class ProteinAccessionNumber implements Serializable {
             return false;
         }
         final ProteinAccessionNumber other = (ProteinAccessionNumber) obj;
-        if (!Objects.equals(this.proteinAccessionNumberPK, other.proteinAccessionNumberPK)) {
+        if (this.proteinWID != other.proteinWID) {
             return false;
         }
-        if (this.orderNumber != other.orderNumber) {
+        if ((this.accessionNumber == null) ? (other.accessionNumber != null) : !this.accessionNumber.equals(other.accessionNumber)) {
             return false;
         }
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (proteinAccessionNumberPK != null ? proteinAccessionNumberPK.hashCode() : 0);
-        return hash;
+        return this.orderNumber == other.orderNumber;
     }
 
     @Override
     public String toString() {
-        return "ProteinAccessionNumber{"
-                + " ProteinWID=" + proteinAccessionNumberPK.getProteinWID()
-                + " AccessionNumber=" + proteinAccessionNumberPK.getAccessionNumber()
-                + " orderNumber=" + orderNumber
-                + '}';
+        return "ProteinAccessionNumber{" + "proteinWID=" + proteinWID + ", accessionNumber=" + accessionNumber + ", orderNumber=" + orderNumber + '}';
     }
 }

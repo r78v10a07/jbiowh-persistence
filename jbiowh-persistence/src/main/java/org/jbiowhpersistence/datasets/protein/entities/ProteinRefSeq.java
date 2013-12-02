@@ -57,10 +57,7 @@ public class ProteinRefSeq implements Serializable {
             return false;
         }
         ProteinRefSeq other = (ProteinRefSeq) object;
-        if ((this.proteinRefSeqPK == null && other.proteinRefSeqPK != null) || (this.proteinRefSeqPK != null && !this.proteinRefSeqPK.equals(other.proteinRefSeqPK))) {
-            return false;
-        }
-        return true;
+        return (this.proteinRefSeqPK != null || other.proteinRefSeqPK == null) && (this.proteinRefSeqPK == null || this.proteinRefSeqPK.equals(other.proteinRefSeqPK));
     }
 
     @Override

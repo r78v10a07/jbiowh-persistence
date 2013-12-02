@@ -119,13 +119,13 @@ public class SearchProtein extends SearchFactory implements JBioWHSearch {
         HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
             if (field.equals(ACC)) {
-                data.put(field, "a.proteinAccessionNumberPK.accessionNumber");
+                data.put(field, "a.accessionNumber");
             } else if (field.equals(NAME)) {
-                data.put(field, "n.proteinNamePK.name");
+                data.put(field, "n.name");
             } else if (field.equals(LONGNAME)) {
                 data.put(field, "l.name");
             } else if (field.equals(EC)) {
-                data.put(field, "e.proteinECPK.id");
+                data.put(field, "e.id");
             }
         }
         return data;
