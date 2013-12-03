@@ -18,9 +18,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ProteinCommentConflict implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "ProteinComment_WID")
-    private long proteinCommentWID;
-    @Basic(optional = false)
     @Column(name = "Type")
     private String type;
     @Column(name = "SeqVersion")
@@ -33,20 +30,11 @@ public class ProteinCommentConflict implements Serializable {
     public ProteinCommentConflict() {
     }
 
-    public ProteinCommentConflict(long proteinCommentWID, String type, Integer seqVersion, String seqResource, String seqID) {
-        this.proteinCommentWID = proteinCommentWID;
+    public ProteinCommentConflict(String type, Integer seqVersion, String seqResource, String seqID) {
         this.type = type;
         this.seqVersion = seqVersion;
         this.seqResource = seqResource;
         this.seqID = seqID;
-    }
-
-    public long getProteinCommentWID() {
-        return proteinCommentWID;
-    }
-
-    public void setProteinCommentWID(long proteinCommentWID) {
-        this.proteinCommentWID = proteinCommentWID;
     }
 
     public String getType() {
@@ -84,7 +72,6 @@ public class ProteinCommentConflict implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 41 * hash + (int) (this.proteinCommentWID ^ (this.proteinCommentWID >>> 32));
         hash = 41 * hash + (this.type != null ? this.type.hashCode() : 0);
         hash = 41 * hash + (this.seqVersion != null ? this.seqVersion.hashCode() : 0);
         hash = 41 * hash + (this.seqResource != null ? this.seqResource.hashCode() : 0);
@@ -101,9 +88,6 @@ public class ProteinCommentConflict implements Serializable {
             return false;
         }
         final ProteinCommentConflict other = (ProteinCommentConflict) obj;
-        if (this.proteinCommentWID != other.proteinCommentWID) {
-            return false;
-        }
         if ((this.type == null) ? (other.type != null) : !this.type.equals(other.type)) {
             return false;
         }
@@ -118,6 +102,6 @@ public class ProteinCommentConflict implements Serializable {
 
     @Override
     public String toString() {
-        return "ProteinCommentConflict{" + "proteinCommentWID=" + proteinCommentWID + ", type=" + type + ", seqVersion=" + seqVersion + ", seqResource=" + seqResource + ", seqID=" + seqID + '}';
+        return "ProteinCommentConflict{type=" + type + ", seqVersion=" + seqVersion + ", seqResource=" + seqResource + ", seqID=" + seqID + '}';
     }
 }

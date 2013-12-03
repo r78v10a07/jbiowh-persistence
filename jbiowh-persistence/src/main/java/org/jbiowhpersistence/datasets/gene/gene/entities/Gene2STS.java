@@ -18,21 +18,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Gene2STS implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "GeneInfo_WID")
-    private long geneInfoWID;
-    @Basic(optional = false)
     @Column(name = "UniSTSID")
     private long uniSTSID;
 
     public Gene2STS() {
     }
 
-    public long getGeneInfoWID() {
-        return geneInfoWID;
-    }
-
-    public void setGeneInfoWID(long geneInfoWID) {
-        this.geneInfoWID = geneInfoWID;
+    public Gene2STS(long uniSTSID) {
+        this.uniSTSID = uniSTSID;
     }
 
     public long getUniSTSID() {
@@ -46,7 +39,6 @@ public class Gene2STS implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 13 * hash + (int) (this.geneInfoWID ^ (this.geneInfoWID >>> 32));
         hash = 13 * hash + (int) (this.uniSTSID ^ (this.uniSTSID >>> 32));
         return hash;
     }
@@ -60,14 +52,11 @@ public class Gene2STS implements Serializable {
             return false;
         }
         final Gene2STS other = (Gene2STS) obj;
-        if (this.geneInfoWID != other.geneInfoWID) {
-            return false;
-        }
         return this.uniSTSID == other.uniSTSID;
     }
 
     @Override
     public String toString() {
-        return "Gene2STS{" + "geneInfoWID=" + geneInfoWID + ", uniSTSID=" + uniSTSID + '}';
+        return "Gene2STS{uniSTSID=" + uniSTSID + '}';
     }
 }

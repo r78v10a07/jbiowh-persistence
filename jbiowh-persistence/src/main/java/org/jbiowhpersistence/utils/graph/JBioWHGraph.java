@@ -299,7 +299,7 @@ public class JBioWHGraph {
      */
     protected void populate(OMIM o, int varDepth) {
         if (!JpaEntitiesSelected.getInstance().getEntities().contains(GeneInfo.class)) {
-            populateCollection(o.getGeneInfos(), o, varDepth);
+            populateCollection(o.getGeneInfo(), o, varDepth);
         }
     }
 

@@ -6,7 +6,6 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.disease.omim.OMIMTables;
 
 /**
@@ -92,7 +91,6 @@ public class OMIMGeneMap implements Serializable {
         this.number = number;
     }
 
-    @XmlTransient
     public Set<OMIMMethod> getoMIMMethods() {
         return oMIMMethods;
     }
@@ -101,7 +99,6 @@ public class OMIMGeneMap implements Serializable {
         this.oMIMMethods = oMIMMethods;
     }
 
-    @XmlTransient
     public Set<OMIMMorbidMap> getoMIMMorbidMaps() {
         return oMIMMorbidMaps;
     }

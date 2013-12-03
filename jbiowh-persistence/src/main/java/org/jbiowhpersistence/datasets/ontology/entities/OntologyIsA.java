@@ -19,9 +19,6 @@ import javax.xml.bind.annotation.XmlTransient;
 public class OntologyIsA implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "Ontology_WID")
-    private long ontologyWID;
-    @Basic(optional = false)
     @Column(name = "IsAOntology_WID")
     private long isAOntologyWID;
     @OneToOne(cascade = CascadeType.ALL)
@@ -31,17 +28,8 @@ public class OntologyIsA implements Serializable {
     public OntologyIsA() {
     }
 
-    public OntologyIsA(long ontologyWID, long isAOntologyWID) {
-        this.ontologyWID = ontologyWID;
+    public OntologyIsA(long isAOntologyWID) {
         this.isAOntologyWID = isAOntologyWID;
-    }
-
-    public long getOntologyWID() {
-        return ontologyWID;
-    }
-
-    public void setOntologyWID(long ontologyWID) {
-        this.ontologyWID = ontologyWID;
     }
 
     public long getIsAOntologyWID() {
@@ -64,7 +52,6 @@ public class OntologyIsA implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 53 * hash + (int) (this.ontologyWID ^ (this.ontologyWID >>> 32));
         hash = 53 * hash + (int) (this.isAOntologyWID ^ (this.isAOntologyWID >>> 32));
         return hash;
     }
@@ -78,15 +65,12 @@ public class OntologyIsA implements Serializable {
             return false;
         }
         final OntologyIsA other = (OntologyIsA) obj;
-        if (this.ontologyWID != other.ontologyWID) {
-            return false;
-        }
         return this.isAOntologyWID == other.isAOntologyWID;
     }
 
     @Override
     public String toString() {
-        return "OntologyIsA{" + "ontologyWID=" + ontologyWID + ", isAOntologyWID=" + isAOntologyWID + ", isAOntology=" + isAOntology + '}';
+        return "OntologyIsA{isAOntologyWID=" + isAOntologyWID + ", isAOntology=" + isAOntology + '}';
     }
 
 }

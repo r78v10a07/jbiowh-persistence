@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 import org.jbiowhpersistence.datasets.disease.omim.OMIMTables;
 
 /**
@@ -40,6 +42,8 @@ public class OMIMMethod implements Serializable {
     @JoinColumn(name = "OMIMMethod_WID", referencedColumnName = "WID"),
     inverseJoinColumns =
     @JoinColumn(name = "OMIMGeneMap_WID", referencedColumnName = "WID"))
+    @XmlElement
+    @XmlInverseReference(mappedBy = "oMIMMethods")
     private Set<OMIMGeneMap> oMIMGeneMaps;
 
     public OMIMMethod() {
@@ -98,10 +102,7 @@ public class OMIMMethod implements Serializable {
         if (!Objects.equals(this.wid, other.wid)) {
             return false;
         }
-        if (!Objects.equals(this.method, other.method)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.method, other.method);
     }
 
     @Override

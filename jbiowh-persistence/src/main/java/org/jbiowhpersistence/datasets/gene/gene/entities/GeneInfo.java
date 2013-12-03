@@ -145,6 +145,7 @@ public class GeneInfo implements Serializable {
             = @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"),
             inverseJoinColumns
             = @JoinColumn(name = "OMIM_WID", referencedColumnName = "WID"))
+    @XmlElementWrapper(name = "OMIMs")
     private Set<OMIM> omim;
     // Internal Gene relationship        
 
@@ -427,7 +428,6 @@ public class GeneInfo implements Serializable {
         this.kEGGPathways = kEGGPathways;
     }
 
-    @XmlTransient
     public Set<OMIM> getOmim() {
         return omim;
     }
@@ -606,10 +606,7 @@ public class GeneInfo implements Serializable {
         if (this.gene2GenomicNucleotide != other.gene2GenomicNucleotide && (this.gene2GenomicNucleotide == null || !this.gene2GenomicNucleotide.equals(other.gene2GenomicNucleotide))) {
             return false;
         }
-        if (this.gene2RNANucleotide != other.gene2RNANucleotide && (this.gene2RNANucleotide == null || !this.gene2RNANucleotide.equals(other.gene2RNANucleotide))) {
-            return false;
-        }
-        return true;
+        return this.gene2RNANucleotide == other.gene2RNANucleotide || (this.gene2RNANucleotide != null && this.gene2RNANucleotide.equals(other.gene2RNANucleotide));
     }
 
     @Override

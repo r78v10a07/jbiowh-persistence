@@ -18,9 +18,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ProteinCommentInteract implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "ProteinComment_WID")
-    private long proteinCommentWID;
-    @Basic(optional = false)
     @Column(name = "IntactID")
     private String intactID;
     @Column(name = "Id")
@@ -31,19 +28,10 @@ public class ProteinCommentInteract implements Serializable {
     public ProteinCommentInteract() {
     }
 
-    public ProteinCommentInteract(long proteinCommentWID, String intactID, String id, String label) {
-        this.proteinCommentWID = proteinCommentWID;
+    public ProteinCommentInteract(String intactID, String id, String label) {
         this.intactID = intactID;
         this.id = id;
         this.label = label;
-    }
-
-    public long getProteinCommentWID() {
-        return proteinCommentWID;
-    }
-
-    public void setProteinCommentWID(long proteinCommentWID) {
-        this.proteinCommentWID = proteinCommentWID;
     }
 
     public String getIntactID() {
@@ -73,7 +61,6 @@ public class ProteinCommentInteract implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 29 * hash + (int) (this.proteinCommentWID ^ (this.proteinCommentWID >>> 32));
         hash = 29 * hash + (this.intactID != null ? this.intactID.hashCode() : 0);
         hash = 29 * hash + (this.id != null ? this.id.hashCode() : 0);
         hash = 29 * hash + (this.label != null ? this.label.hashCode() : 0);
@@ -89,9 +76,6 @@ public class ProteinCommentInteract implements Serializable {
             return false;
         }
         final ProteinCommentInteract other = (ProteinCommentInteract) obj;
-        if (this.proteinCommentWID != other.proteinCommentWID) {
-            return false;
-        }
         if ((this.intactID == null) ? (other.intactID != null) : !this.intactID.equals(other.intactID)) {
             return false;
         }
@@ -103,7 +87,7 @@ public class ProteinCommentInteract implements Serializable {
 
     @Override
     public String toString() {
-        return "ProteinCommentInteract{" + "proteinCommentWID=" + proteinCommentWID + ", intactID=" + intactID + ", id=" + id + ", label=" + label + '}';
+        return "ProteinCommentInteract{intactID=" + intactID + ", id=" + id + ", label=" + label + '}';
     }
 
 }

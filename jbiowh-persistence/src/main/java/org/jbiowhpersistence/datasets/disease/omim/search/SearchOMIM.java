@@ -75,6 +75,8 @@ public class SearchOMIM extends SearchFactory implements JBioWHSearch {
         for (String field : getFieldsSet()) {
             if (field.equals(TITLE)) {
                 data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " s ");
+            } else if (field.equals(TX)) {
+                data.put(field, " INNER JOIN " + fieldOnEntity.get(field) + " t ");
             } else {
                 data.put(field, "");
             }
@@ -89,9 +91,9 @@ public class SearchOMIM extends SearchFactory implements JBioWHSearch {
             if (field.equals(OMIM_ID)) {
                 data.put(field, "g.omimId");
             } else if (field.equals(TITLE)) {
-                data.put(field, "s.oMIMTIPK.ti");
+                data.put(field, "s.ti");
             } else if (field.equals(TX)) {
-                data.put(field, "g.tx");
+                data.put(field, "t.tx");
             }
         }
         return data;
@@ -102,7 +104,9 @@ public class SearchOMIM extends SearchFactory implements JBioWHSearch {
         HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
             if (field.equals(TITLE)) {
-                data.put(field, "g.omimTIs");
+                data.put(field, "g.omimTI");
+            } else if (field.equals(TX)) {
+                data.put(field, "g.omimTX");
             } else {
                 data.put(field, "");
             }

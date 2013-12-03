@@ -18,9 +18,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class GeneInfoDBXrefs implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "GeneInfo_WID")
-    private long geneInfoWID;
-    @Basic(optional = false)
     @Column(name = "DBName")
     private String dBName;
     @Basic(optional = false)
@@ -30,12 +27,9 @@ public class GeneInfoDBXrefs implements Serializable {
     public GeneInfoDBXrefs() {
     }
 
-    public long getGeneInfoWID() {
-        return geneInfoWID;
-    }
-
-    public void setGeneInfoWID(long geneInfoWID) {
-        this.geneInfoWID = geneInfoWID;
+    public GeneInfoDBXrefs(String dBName, String id) {
+        this.dBName = dBName;
+        this.id = id;
     }
 
     public String getdBName() {
@@ -57,7 +51,6 @@ public class GeneInfoDBXrefs implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + (int) (this.geneInfoWID ^ (this.geneInfoWID >>> 32));
         hash = 67 * hash + (this.dBName != null ? this.dBName.hashCode() : 0);
         hash = 67 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
@@ -72,9 +65,6 @@ public class GeneInfoDBXrefs implements Serializable {
             return false;
         }
         final GeneInfoDBXrefs other = (GeneInfoDBXrefs) obj;
-        if (this.geneInfoWID != other.geneInfoWID) {
-            return false;
-        }
         if ((this.dBName == null) ? (other.dBName != null) : !this.dBName.equals(other.dBName)) {
             return false;
         }
@@ -83,7 +73,7 @@ public class GeneInfoDBXrefs implements Serializable {
 
     @Override
     public String toString() {
-        return "GeneInfoDBXrefs{" + "geneInfoWID=" + geneInfoWID + ", dBName=" + dBName + ", id=" + id + '}';
+        return "GeneInfoDBXrefs{dBName=" + dBName + ", id=" + id + '}';
     }
 
 }

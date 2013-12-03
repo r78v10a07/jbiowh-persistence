@@ -1,7 +1,6 @@
 package org.jbiowhpersistence.datasets.ontology.entities;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -20,9 +19,6 @@ import javax.xml.bind.annotation.XmlTransient;
 public class OntologyRelation implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "Ontology_WID")
-    private long ontologyWID;
-    @Basic(optional = false)
     @Column(name = "OtherOntology_WID")
     private long otherOntologyWID;
     @Basic(optional = false)
@@ -35,18 +31,9 @@ public class OntologyRelation implements Serializable {
     public OntologyRelation() {
     }
 
-    public OntologyRelation(long ontologyWID, long otherOntologyWID, String type) {
-        this.ontologyWID = ontologyWID;
+    public OntologyRelation(long otherOntologyWID, String type) {
         this.otherOntologyWID = otherOntologyWID;
         this.type = type;
-    }
-
-    public long getOntologyWID() {
-        return ontologyWID;
-    }
-
-    public void setOntologyWID(long ontologyWID) {
-        this.ontologyWID = ontologyWID;
     }
 
     public long getOtherOntologyWID() {
@@ -77,7 +64,6 @@ public class OntologyRelation implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 41 * hash + (int) (this.ontologyWID ^ (this.ontologyWID >>> 32));
         hash = 41 * hash + (int) (this.otherOntologyWID ^ (this.otherOntologyWID >>> 32));
         hash = 41 * hash + (this.type != null ? this.type.hashCode() : 0);
         return hash;
@@ -92,9 +78,6 @@ public class OntologyRelation implements Serializable {
             return false;
         }
         final OntologyRelation other = (OntologyRelation) obj;
-        if (this.ontologyWID != other.ontologyWID) {
-            return false;
-        }
         if (this.otherOntologyWID != other.otherOntologyWID) {
             return false;
         }
@@ -103,6 +86,6 @@ public class OntologyRelation implements Serializable {
 
     @Override
     public String toString() {
-        return "OntologyRelation{" + "ontologyWID=" + ontologyWID + ", otherOntologyWID=" + otherOntologyWID + ", type=" + type + ", otherOntology=" + otherOntology + '}';
+        return "OntologyRelation{otherOntologyWID=" + otherOntologyWID + ", type=" + type + ", otherOntology=" + otherOntology + '}';
     }
 }

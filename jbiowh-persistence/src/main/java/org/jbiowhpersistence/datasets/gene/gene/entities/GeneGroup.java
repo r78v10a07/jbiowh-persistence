@@ -18,9 +18,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class GeneGroup implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "GeneInfo_WID")
-    private long geneInfoWID;
-    @Basic(optional = false)
     @Column(name = "Relationship")
     private String relationship;
     @Basic(optional = false)
@@ -30,12 +27,9 @@ public class GeneGroup implements Serializable {
     public GeneGroup() {
     }
 
-    public long getGeneInfoWID() {
-        return geneInfoWID;
-    }
-
-    public void setGeneInfoWID(long geneInfoWID) {
-        this.geneInfoWID = geneInfoWID;
+    public GeneGroup(String relationship, long otherGeneInfoWID) {
+        this.relationship = relationship;
+        this.otherGeneInfoWID = otherGeneInfoWID;
     }
 
     public String getRelationship() {
@@ -57,7 +51,6 @@ public class GeneGroup implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 79 * hash + (int) (this.geneInfoWID ^ (this.geneInfoWID >>> 32));
         hash = 79 * hash + (this.relationship != null ? this.relationship.hashCode() : 0);
         hash = 79 * hash + (int) (this.otherGeneInfoWID ^ (this.otherGeneInfoWID >>> 32));
         return hash;
@@ -72,9 +65,6 @@ public class GeneGroup implements Serializable {
             return false;
         }
         final GeneGroup other = (GeneGroup) obj;
-        if (this.geneInfoWID != other.geneInfoWID) {
-            return false;
-        }
         if ((this.relationship == null) ? (other.relationship != null) : !this.relationship.equals(other.relationship)) {
             return false;
         }
@@ -83,6 +73,6 @@ public class GeneGroup implements Serializable {
 
     @Override
     public String toString() {
-        return "GeneGroup{" + "geneInfoWID=" + geneInfoWID + ", relationship=" + relationship + ", otherGeneInfoWID=" + otherGeneInfoWID + '}';
+        return "GeneGroup{relationship=" + relationship + ", otherGeneInfoWID=" + otherGeneInfoWID + '}';
     }
 }

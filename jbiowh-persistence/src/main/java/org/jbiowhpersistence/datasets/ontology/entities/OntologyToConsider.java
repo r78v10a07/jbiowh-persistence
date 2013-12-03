@@ -19,9 +19,6 @@ import javax.xml.bind.annotation.XmlTransient;
 public class OntologyToConsider implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "Ontology_WID")
-    private long ontologyWID;
-    @Basic(optional = false)
     @Column(name = "ToConsiderOntology_WID")
     private long toConsiderOntologyWID;
     @OneToOne(cascade = CascadeType.ALL)
@@ -31,17 +28,8 @@ public class OntologyToConsider implements Serializable {
     public OntologyToConsider() {
     }
 
-    public OntologyToConsider(long ontologyWID, long toConsiderOntologyWID) {
-        this.ontologyWID = ontologyWID;
+    public OntologyToConsider(long toConsiderOntologyWID) {
         this.toConsiderOntologyWID = toConsiderOntologyWID;
-    }
-
-    public long getOntologyWID() {
-        return ontologyWID;
-    }
-
-    public void setOntologyWID(long ontologyWID) {
-        this.ontologyWID = ontologyWID;
     }
 
     public long getToConsiderOntologyWID() {
@@ -64,7 +52,6 @@ public class OntologyToConsider implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 97 * hash + (int) (this.ontologyWID ^ (this.ontologyWID >>> 32));
         hash = 97 * hash + (int) (this.toConsiderOntologyWID ^ (this.toConsiderOntologyWID >>> 32));
         return hash;
     }
@@ -78,14 +65,11 @@ public class OntologyToConsider implements Serializable {
             return false;
         }
         final OntologyToConsider other = (OntologyToConsider) obj;
-        if (this.ontologyWID != other.ontologyWID) {
-            return false;
-        }
         return this.toConsiderOntologyWID == other.toConsiderOntologyWID;
     }
 
     @Override
     public String toString() {
-        return "OntologyToConsider{" + "ontologyWID=" + ontologyWID + ", toConsiderOntologyWID=" + toConsiderOntologyWID + ", toConsiderOntology=" + toConsiderOntology + '}';
+        return "OntologyToConsider{toConsiderOntologyWID=" + toConsiderOntologyWID + ", toConsiderOntology=" + toConsiderOntology + '}';
     }
 }

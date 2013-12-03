@@ -36,11 +36,18 @@ public class Gene2GenomicNucleotide implements Serializable {
     private String orientation;
     @Column(name = "Assembly")
     private String assembly;
-    @Basic(optional = false)
-    @Column(name = "GeneInfo_WID")
-    private long geneInfoWID;
 
     public Gene2GenomicNucleotide() {
+    }
+
+    public Gene2GenomicNucleotide(Long genomicNucleotideGi, String genomicNucleotideAccession, int genomicNucleotideAccessionVersion, String startPositionOnTheGenomicAccession, String endPositionOnTheGenomicAccession, String orientation, String assembly) {
+        this.genomicNucleotideGi = genomicNucleotideGi;
+        this.genomicNucleotideAccession = genomicNucleotideAccession;
+        this.genomicNucleotideAccessionVersion = genomicNucleotideAccessionVersion;
+        this.startPositionOnTheGenomicAccession = startPositionOnTheGenomicAccession;
+        this.endPositionOnTheGenomicAccession = endPositionOnTheGenomicAccession;
+        this.orientation = orientation;
+        this.assembly = assembly;
     }
 
     public Long getGenomicNucleotideGi() {
@@ -99,14 +106,6 @@ public class Gene2GenomicNucleotide implements Serializable {
         this.assembly = assembly;
     }
 
-    public long getGeneInfoWID() {
-        return geneInfoWID;
-    }
-
-    public void setGeneInfoWID(long geneInfoWID) {
-        this.geneInfoWID = geneInfoWID;
-    }
-
     @Override
     public int hashCode() {
         int hash = 5;
@@ -116,7 +115,6 @@ public class Gene2GenomicNucleotide implements Serializable {
         hash = 89 * hash + (this.endPositionOnTheGenomicAccession != null ? this.endPositionOnTheGenomicAccession.hashCode() : 0);
         hash = 89 * hash + (this.orientation != null ? this.orientation.hashCode() : 0);
         hash = 89 * hash + (this.assembly != null ? this.assembly.hashCode() : 0);
-        hash = 89 * hash + (int) (this.geneInfoWID ^ (this.geneInfoWID >>> 32));
         return hash;
     }
 
@@ -147,14 +145,11 @@ public class Gene2GenomicNucleotide implements Serializable {
         if ((this.orientation == null) ? (other.orientation != null) : !this.orientation.equals(other.orientation)) {
             return false;
         }
-        if ((this.assembly == null) ? (other.assembly != null) : !this.assembly.equals(other.assembly)) {
-            return false;
-        }
-        return this.geneInfoWID == other.geneInfoWID;
+        return !((this.assembly == null) ? (other.assembly != null) : !this.assembly.equals(other.assembly));
     }
 
     @Override
     public String toString() {
-        return "Gene2GenomicNucleotide{" + "genomicNucleotideGi=" + genomicNucleotideGi + ", genomicNucleotideAccession=" + genomicNucleotideAccession + ", genomicNucleotideAccessionVersion=" + genomicNucleotideAccessionVersion + ", startPositionOnTheGenomicAccession=" + startPositionOnTheGenomicAccession + ", endPositionOnTheGenomicAccession=" + endPositionOnTheGenomicAccession + ", orientation=" + orientation + ", assembly=" + assembly + ", geneInfoWID=" + geneInfoWID + '}';
+        return "Gene2GenomicNucleotide{" + "genomicNucleotideGi=" + genomicNucleotideGi + ", genomicNucleotideAccession=" + genomicNucleotideAccession + ", genomicNucleotideAccessionVersion=" + genomicNucleotideAccessionVersion + ", startPositionOnTheGenomicAccession=" + startPositionOnTheGenomicAccession + ", endPositionOnTheGenomicAccession=" + endPositionOnTheGenomicAccession + ", orientation=" + orientation + ", assembly=" + assembly + '}';
     }
 }

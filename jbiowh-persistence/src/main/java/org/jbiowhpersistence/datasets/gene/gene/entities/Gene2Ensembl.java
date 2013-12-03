@@ -7,18 +7,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * This Class is the Gene2Ensembl entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2013-05-29 11:24:54 +0200 (Wed, 29 May 2013) $
- * $LastChangedRevision: 591 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2013-05-29 11:24:54 +0200
+ * (Wed, 29 May 2013) $ $LastChangedRevision: 591 $
+ *
  * @since Jul 27, 2011
  */
 @Embeddable
 @Table(name = "Gene2Ensembl")
 @XmlRootElement
 public class Gene2Ensembl implements Serializable {
-    @Basic(optional = false)
-    @Column(name = "GeneInfo_WID")
-    private long geneInfoWID;
+
     @Column(name = "EnsemblGeneIdentifier")
     private String ensemblGeneIdentifier;
     @Column(name = "RNANucleotideAccession")
@@ -31,22 +29,6 @@ public class Gene2Ensembl implements Serializable {
     private String ensemblProteinIdentifier;
 
     public Gene2Ensembl() {
-    }
-    
-    public String getrNANucleotideAccession() {
-        return rNANucleotideAccession;
-    }
-
-    public void setrNANucleotideAccession(String rNANucleotideAccession) {
-        this.rNANucleotideAccession = rNANucleotideAccession;
-    }
-
-    public long getGeneInfoWID() {
-        return geneInfoWID;
-    }
-
-    public void setGeneInfoWID(long geneInfoWID) {
-        this.geneInfoWID = geneInfoWID;
     }
 
     public String getEnsemblGeneIdentifier() {
@@ -106,9 +88,6 @@ public class Gene2Ensembl implements Serializable {
             return false;
         }
         final Gene2Ensembl other = (Gene2Ensembl) obj;
-        if (this.geneInfoWID != other.geneInfoWID) {
-            return false;
-        }
         if ((this.ensemblGeneIdentifier == null) ? (other.ensemblGeneIdentifier != null) : !this.ensemblGeneIdentifier.equals(other.ensemblGeneIdentifier)) {
             return false;
         }
@@ -126,9 +105,7 @@ public class Gene2Ensembl implements Serializable {
 
     @Override
     public String toString() {
-        return "Gene2Ensembl{"
-                + " geneWID=" + geneInfoWID
-                + " ensemblGeneIdentifier=" + ensemblGeneIdentifier
+        return "Gene2Ensembl{ensemblGeneIdentifier=" + ensemblGeneIdentifier
                 + " rNANucleotideAccession=" + rNANucleotideAccession
                 + " ensemblRNAIdentifier=" + ensemblRNAIdentifier
                 + " proteinAccession=" + proteinAccession

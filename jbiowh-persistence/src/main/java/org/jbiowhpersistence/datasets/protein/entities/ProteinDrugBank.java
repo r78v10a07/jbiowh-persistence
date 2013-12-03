@@ -18,26 +18,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ProteinDrugBank implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "Protein_WID")
-    private long proteinWID;
-    @Basic(optional = false)
     @Column(name = "Id")
     private String id;
 
     public ProteinDrugBank() {
     }
 
-    public ProteinDrugBank(long proteinWID, String id) {
-        this.proteinWID = proteinWID;
+    public ProteinDrugBank(String id) {
         this.id = id;
-    }
-
-    public long getProteinWID() {
-        return proteinWID;
-    }
-
-    public void setProteinWID(long proteinWID) {
-        this.proteinWID = proteinWID;
     }
 
     public String getId() {
@@ -51,7 +39,6 @@ public class ProteinDrugBank implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 29 * hash + (int) (this.proteinWID ^ (this.proteinWID >>> 32));
         hash = 29 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
@@ -65,14 +52,11 @@ public class ProteinDrugBank implements Serializable {
             return false;
         }
         final ProteinDrugBank other = (ProteinDrugBank) obj;
-        if (this.proteinWID != other.proteinWID) {
-            return false;
-        }
         return !((this.id == null) ? (other.id != null) : !this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
-        return "ProteinDrugBank{" + "proteinWID=" + proteinWID + ", id=" + id + '}';
+        return "ProteinDrugBank{id=" + id + '}';
     }
 }

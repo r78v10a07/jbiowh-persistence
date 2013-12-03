@@ -17,9 +17,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class ProteinCommentSubCellularLocation implements Serializable {
 
-    @Basic(optional = false)
-    @Column(name = "ProteinComment_WID")
-    private long proteinCommentWID;
     @Column(name = "Data")
     private String data;
     @Column(name = "Element")
@@ -32,20 +29,11 @@ public class ProteinCommentSubCellularLocation implements Serializable {
     public ProteinCommentSubCellularLocation() {
     }
 
-    public ProteinCommentSubCellularLocation(long proteinCommentWID, String data, String element, String evidence, String status) {
-        this.proteinCommentWID = proteinCommentWID;
+    public ProteinCommentSubCellularLocation(String data, String element, String evidence, String status) {
         this.data = data;
         this.element = element;
         this.evidence = evidence;
         this.status = status;
-    }
-
-    public long getProteinCommentWID() {
-        return proteinCommentWID;
-    }
-
-    public void setProteinCommentWID(long proteinCommentWID) {
-        this.proteinCommentWID = proteinCommentWID;
     }
 
     public String getData() {
@@ -83,7 +71,6 @@ public class ProteinCommentSubCellularLocation implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 53 * hash + (int) (this.proteinCommentWID ^ (this.proteinCommentWID >>> 32));
         hash = 53 * hash + (this.data != null ? this.data.hashCode() : 0);
         hash = 53 * hash + (this.element != null ? this.element.hashCode() : 0);
         hash = 53 * hash + (this.evidence != null ? this.evidence.hashCode() : 0);
@@ -100,9 +87,6 @@ public class ProteinCommentSubCellularLocation implements Serializable {
             return false;
         }
         final ProteinCommentSubCellularLocation other = (ProteinCommentSubCellularLocation) obj;
-        if (this.proteinCommentWID != other.proteinCommentWID) {
-            return false;
-        }
         if ((this.data == null) ? (other.data != null) : !this.data.equals(other.data)) {
             return false;
         }
@@ -117,6 +101,6 @@ public class ProteinCommentSubCellularLocation implements Serializable {
 
     @Override
     public String toString() {
-        return "ProteinCommentSubCellularLocation{" + "proteinCommentWID=" + proteinCommentWID + ", data=" + data + ", element=" + element + ", evidence=" + evidence + ", status=" + status + '}';
+        return "ProteinCommentSubCellularLocation{data=" + data + ", element=" + element + ", evidence=" + evidence + ", status=" + status + '}';
     }
 }

@@ -5,8 +5,10 @@ import java.math.BigInteger;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 import org.jbiowhpersistence.datasets.disease.omim.OMIMTables;
 
 /**
@@ -50,6 +52,8 @@ public class OMIMMorbidMap implements Serializable {
     @JoinColumn(name = "OMIMMorbidMap_WID", referencedColumnName = "WID"),
     inverseJoinColumns =
     @JoinColumn(name = "OMIMGeneMap_WID", referencedColumnName = "WID"))
+    @XmlElement
+    @XmlInverseReference(mappedBy = "oMIMMorbidMaps")
     private Set<OMIMGeneMap> oMIMGeneMaps;
 
     public OMIMMorbidMap() {
@@ -141,10 +145,7 @@ public class OMIMMorbidMap implements Serializable {
         if (!Objects.equals(this.mIMNumber, other.mIMNumber)) {
             return false;
         }
-        if (!Objects.equals(this.cytogLog, other.cytogLog)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.cytogLog, other.cytogLog);
     }
 
     @Override

@@ -4,15 +4,16 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This Class is the OMIMCS entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Jul 16, 2012
  */
 @Entity
@@ -39,8 +40,13 @@ public class OMIMCS implements Serializable {
     @ManyToOne
     @JoinColumn(name = "OMIM_WID", insertable = false, unique = false, nullable = true, updatable = false)
     private OMIM omim;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "omimCS")
-    private Set<OMIMCSData> omimCSDatas; 
+    @ElementCollection
+    @CollectionTable(
+            name = "OMIMCSData",
+            joinColumns
+            = @JoinColumn(name = "OMIMCS_WID"))
+    @XmlElementWrapper(name = "OMIMCSDatas")
+    private Set<OMIMCSData> omimCSDatas;
 
     public OMIMCS() {
     }
@@ -121,14 +127,11 @@ public class OMIMCS implements Serializable {
         if (!Objects.equals(this.cs, other.cs)) {
             return false;
         }
-        if (!Objects.equals(this.omimCSDatas, other.omimCSDatas)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.omimCSDatas, other.omimCSDatas);
     }
 
     @Override
     public String toString() {
-        return "OMIMCS{" + "wid=" + wid + ", omimWid=" + omimWid + ", cs=" + cs + ", data=" + omimCSDatas +'}';
+        return "OMIMCS{" + "wid=" + wid + ", omimWid=" + omimWid + ", cs=" + cs + ", data=" + omimCSDatas + '}';
     }
 }

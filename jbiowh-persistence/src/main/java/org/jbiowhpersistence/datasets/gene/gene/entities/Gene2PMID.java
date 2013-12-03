@@ -18,21 +18,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Gene2PMID implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "GeneInfo_WID")
-    private long geneInfoWID;
-    @Basic(optional = false)
     @Column(name = "PMID")
     private long pmid;
 
     public Gene2PMID() {
     }
 
-    public long getGeneInfoWID() {
-        return geneInfoWID;
-    }
-
-    public void setGeneInfoWID(long geneInfoWID) {
-        this.geneInfoWID = geneInfoWID;
+    public Gene2PMID(long pmid) {
+        this.pmid = pmid;
     }
 
     public long getPmid() {
@@ -46,7 +39,6 @@ public class Gene2PMID implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 19 * hash + (int) (this.geneInfoWID ^ (this.geneInfoWID >>> 32));
         hash = 19 * hash + (int) (this.pmid ^ (this.pmid >>> 32));
         return hash;
     }
@@ -60,14 +52,11 @@ public class Gene2PMID implements Serializable {
             return false;
         }
         final Gene2PMID other = (Gene2PMID) obj;
-        if (this.geneInfoWID != other.geneInfoWID) {
-            return false;
-        }
         return this.pmid == other.pmid;
     }
 
     @Override
     public String toString() {
-        return "Gene2PMID{" + "geneInfoWID=" + geneInfoWID + ", pmid=" + pmid + '}';
+        return "Gene2PMID{pmid=" + pmid + '}';
     }
 }
