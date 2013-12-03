@@ -7,61 +7,42 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * This Class is the OMIMTX entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Jul 16, 2012
  */
-@Entity
+@Embeddable
 @Table(name = "OMIMTX")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "OMIMTX.findAll", query = "SELECT o FROM OMIMTX o"),
-    @NamedQuery(name = "OMIMTX.findByOmimWid", query = "SELECT o FROM OMIMTX o WHERE o.oMIMTXPK.omimWid = :omimWid"),
-    @NamedQuery(name = "OMIMTX.findByTag", query = "SELECT o FROM OMIMTX o WHERE o.oMIMTXPK.tag = :tag")})
 public class OMIMTX implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected OMIMTXPK oMIMTXPK;
+    @Basic(optional = false)
+    @Column(name = "Tag")
+    private String tag;
     @Basic(optional = false)
     @Lob
     @Column(name = "TX")
     private String tx;
-    @ManyToOne
-    @JoinColumn(name = "OMIM_WID", insertable = false, unique = false, nullable = true, updatable = false)
-    private OMIM omim;
 
     public OMIMTX() {
     }
 
-    public OMIMTX(OMIMTXPK oMIMTXPK) {
-        this.oMIMTXPK = oMIMTXPK;
+    public OMIMTX(String tag) {
+        this.tag = tag;
     }
 
-    public OMIMTX(OMIMTXPK oMIMTXPK, String tx) {
-        this.oMIMTXPK = oMIMTXPK;
+    public OMIMTX(String tag, String tx) {
+        this.tag = tag;
         this.tx = tx;
     }
 
-    public OMIMTX(long omimWid, String tag) {
-        this.oMIMTXPK = new OMIMTXPK(omimWid, tag);
+    public String getTag() {
+        return tag;
     }
 
-    public OMIM getOmim() {
-        return omim;
-    }
-
-    public void setOmim(OMIM omim) {
-        this.omim = omim;
-    }
-
-    public OMIMTXPK getOMIMTXPK() {
-        return oMIMTXPK;
-    }
-
-    public void setOMIMTXPK(OMIMTXPK oMIMTXPK) {
-        this.oMIMTXPK = oMIMTXPK;
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     public String getTx() {
@@ -74,25 +55,29 @@ public class OMIMTX implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (oMIMTXPK != null ? oMIMTXPK.hashCode() : 0);
+        int hash = 3;
+        hash = 53 * hash + (this.tag != null ? this.tag.hashCode() : 0);
+        hash = 53 * hash + (this.tx != null ? this.tx.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof OMIMTX)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        OMIMTX other = (OMIMTX) object;
-        if ((this.oMIMTXPK == null && other.oMIMTXPK != null) || (this.oMIMTXPK != null && !this.oMIMTXPK.equals(other.oMIMTXPK))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final OMIMTX other = (OMIMTX) obj;
+        if ((this.tag == null) ? (other.tag != null) : !this.tag.equals(other.tag)) {
+            return false;
+        }
+        return !((this.tx == null) ? (other.tx != null) : !this.tx.equals(other.tx));
     }
 
     @Override
     public String toString() {
-        return "OMIMTX{" + "oMIMTXPK=" + oMIMTXPK + ", tx=" + tx + '}';
+        return "OMIMTX{tag=" + tag + ", tx=" + tx + '}';
     }
 }

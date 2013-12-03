@@ -18,26 +18,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ProteinCommentEvent implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "ProteinComment_WID")
-    private long proteinCommentWID;
-    @Basic(optional = false)
     @Column(name = "EventType")
     private String eventType;
 
     public ProteinCommentEvent() {
     }
 
-    public ProteinCommentEvent(long proteinCommentWID, String eventType) {
-        this.proteinCommentWID = proteinCommentWID;
+    public ProteinCommentEvent(String eventType) {
         this.eventType = eventType;
-    }
-
-    public long getProteinCommentWID() {
-        return proteinCommentWID;
-    }
-
-    public void setProteinCommentWID(long proteinCommentWID) {
-        this.proteinCommentWID = proteinCommentWID;
     }
 
     public String getEventType() {
@@ -51,7 +39,6 @@ public class ProteinCommentEvent implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 11 * hash + (int) (this.proteinCommentWID ^ (this.proteinCommentWID >>> 32));
         hash = 11 * hash + (this.eventType != null ? this.eventType.hashCode() : 0);
         return hash;
     }
@@ -65,14 +52,11 @@ public class ProteinCommentEvent implements Serializable {
             return false;
         }
         final ProteinCommentEvent other = (ProteinCommentEvent) obj;
-        if (this.proteinCommentWID != other.proteinCommentWID) {
-            return false;
-        }
         return !((this.eventType == null) ? (other.eventType != null) : !this.eventType.equals(other.eventType));
     }
 
     @Override
     public String toString() {
-        return "ProteinCommentEvent{" + "proteinCommentWID=" + proteinCommentWID + ", eventType=" + eventType + '}';
+        return "ProteinCommentEvent{eventType=" + eventType + '}';
     }
 }

@@ -17,9 +17,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class ProteinFeatureVariation implements Serializable {
 
-    @Basic(optional = false)
-    @Column(name = "ProteinFeature_WID")
-    private long proteinFeatureWID;
     @Lob
     @Column(name = "Variation")
     private String variation;
@@ -27,17 +24,8 @@ public class ProteinFeatureVariation implements Serializable {
     public ProteinFeatureVariation() {
     }
 
-    public ProteinFeatureVariation(long proteinFeatureWID, String variation) {
-        this.proteinFeatureWID = proteinFeatureWID;
+    public ProteinFeatureVariation(String variation) {
         this.variation = variation;
-    }
-
-    public long getProteinFeatureWID() {
-        return proteinFeatureWID;
-    }
-
-    public void setProteinFeatureWID(long proteinFeatureWID) {
-        this.proteinFeatureWID = proteinFeatureWID;
     }
 
     public String getVariation() {
@@ -51,7 +39,6 @@ public class ProteinFeatureVariation implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 43 * hash + (int) (this.proteinFeatureWID ^ (this.proteinFeatureWID >>> 32));
         hash = 43 * hash + (this.variation != null ? this.variation.hashCode() : 0);
         return hash;
     }
@@ -65,14 +52,11 @@ public class ProteinFeatureVariation implements Serializable {
             return false;
         }
         final ProteinFeatureVariation other = (ProteinFeatureVariation) obj;
-        if (this.proteinFeatureWID != other.proteinFeatureWID) {
-            return false;
-        }
         return !((this.variation == null) ? (other.variation != null) : !this.variation.equals(other.variation));
     }
 
     @Override
     public String toString() {
-        return "ProteinFeatureVariation{" + "proteinFeatureWID=" + proteinFeatureWID + ", variation=" + variation + '}';
+        return "ProteinFeatureVariation{variation=" + variation + '}';
     }
 }

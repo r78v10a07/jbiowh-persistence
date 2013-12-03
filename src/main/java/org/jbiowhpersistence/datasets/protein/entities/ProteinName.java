@@ -18,9 +18,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ProteinName implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "Protein_WID")
-    private long proteinWID;
-    @Basic(optional = false)
     @Column(name = "Name")
     private String name;
     @Basic(optional = false)
@@ -30,18 +27,9 @@ public class ProteinName implements Serializable {
     public ProteinName() {
     }
 
-    public ProteinName(long proteinWID, String name, int orderNumber) {
-        this.proteinWID = proteinWID;
+    public ProteinName(String name, int orderNumber) {
         this.name = name;
         this.orderNumber = orderNumber;
-    }
-
-    public long getProteinWID() {
-        return proteinWID;
-    }
-
-    public void setProteinWID(long proteinWID) {
-        this.proteinWID = proteinWID;
     }
 
     public String getName() {
@@ -63,7 +51,6 @@ public class ProteinName implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 89 * hash + (int) (this.proteinWID ^ (this.proteinWID >>> 32));
         hash = 89 * hash + (this.name != null ? this.name.hashCode() : 0);
         hash = 89 * hash + this.orderNumber;
         return hash;
@@ -78,9 +65,6 @@ public class ProteinName implements Serializable {
             return false;
         }
         final ProteinName other = (ProteinName) obj;
-        if (this.proteinWID != other.proteinWID) {
-            return false;
-        }
         if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
             return false;
         }
@@ -89,6 +73,6 @@ public class ProteinName implements Serializable {
 
     @Override
     public String toString() {
-        return "ProteinName{" + "proteinWID=" + proteinWID + ", name=" + name + ", orderNumber=" + orderNumber + '}';
+        return "ProteinName{name=" + name + ", orderNumber=" + orderNumber + '}';
     }
 }

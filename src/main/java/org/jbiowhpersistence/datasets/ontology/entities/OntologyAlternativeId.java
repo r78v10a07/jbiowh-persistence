@@ -18,26 +18,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class OntologyAlternativeId implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "Ontology_WID")
-    private long ontologyWID;
-    @Basic(optional = false)
     @Column(name = "AltId")
     private String altId;
 
     public OntologyAlternativeId() {
     }
 
-    public OntologyAlternativeId(long ontologyWID, String altId) {
-        this.ontologyWID = ontologyWID;
+    public OntologyAlternativeId(String altId) {
         this.altId = altId;
-    }
-
-    public long getOntologyWID() {
-        return ontologyWID;
-    }
-
-    public void setOntologyWID(long ontologyWID) {
-        this.ontologyWID = ontologyWID;
     }
 
     public String getAltId() {
@@ -51,7 +39,6 @@ public class OntologyAlternativeId implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 41 * hash + (int) (this.ontologyWID ^ (this.ontologyWID >>> 32));
         hash = 41 * hash + (this.altId != null ? this.altId.hashCode() : 0);
         return hash;
     }
@@ -65,14 +52,11 @@ public class OntologyAlternativeId implements Serializable {
             return false;
         }
         final OntologyAlternativeId other = (OntologyAlternativeId) obj;
-        if (this.ontologyWID != other.ontologyWID) {
-            return false;
-        }
         return !((this.altId == null) ? (other.altId != null) : !this.altId.equals(other.altId));
     }
 
     @Override
     public String toString() {
-        return "OntologyAlternativeId{" + "ontologyWID=" + ontologyWID + ", altId=" + altId + '}';
+        return "OntologyAlternativeId{altId=" + altId + '}';
     }
 }

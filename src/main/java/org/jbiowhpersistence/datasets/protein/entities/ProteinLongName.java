@@ -18,9 +18,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ProteinLongName implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "Protein_WID")
-    private long proteinWID;
-    @Basic(optional = false)
     @Column(name = "ProteinNameDef")
     private String proteinNameDef;
     @Column(name = "Type")
@@ -40,18 +37,9 @@ public class ProteinLongName implements Serializable {
     public ProteinLongName() {
     }
 
-    public ProteinLongName(long proteinWID, String proteinNameDef, String name) {
-        this.proteinWID = proteinWID;
+    public ProteinLongName(String proteinNameDef, String name) {
         this.proteinNameDef = proteinNameDef;
         this.name = name;
-    }
-
-    public long getProteinWID() {
-        return proteinWID;
-    }
-
-    public void setProteinWID(long proteinWID) {
-        this.proteinWID = proteinWID;
     }
 
     public String getProteinNameDef() {
@@ -113,7 +101,6 @@ public class ProteinLongName implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 29 * hash + (int) (this.proteinWID ^ (this.proteinWID >>> 32));
         hash = 29 * hash + (this.proteinNameDef != null ? this.proteinNameDef.hashCode() : 0);
         hash = 29 * hash + (this.type != null ? this.type.hashCode() : 0);
         hash = 29 * hash + (this.component != null ? this.component.hashCode() : 0);
@@ -133,9 +120,6 @@ public class ProteinLongName implements Serializable {
             return false;
         }
         final ProteinLongName other = (ProteinLongName) obj;
-        if (this.proteinWID != other.proteinWID) {
-            return false;
-        }
         if ((this.proteinNameDef == null) ? (other.proteinNameDef != null) : !this.proteinNameDef.equals(other.proteinNameDef)) {
             return false;
         }
@@ -159,6 +143,6 @@ public class ProteinLongName implements Serializable {
 
     @Override
     public String toString() {
-        return "ProteinLongName{" + "proteinWID=" + proteinWID + ", proteinNameDef=" + proteinNameDef + ", type=" + type + ", component=" + component + ", domain=" + domain + ", name=" + name + ", evidence=" + evidence + ", status=" + status + '}';
+        return "ProteinLongName{proteinNameDef=" + proteinNameDef + ", type=" + type + ", component=" + component + ", domain=" + domain + ", name=" + name + ", evidence=" + evidence + ", status=" + status + '}';
     }
 }

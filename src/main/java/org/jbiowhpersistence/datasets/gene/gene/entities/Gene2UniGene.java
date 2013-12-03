@@ -18,21 +18,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Gene2UniGene implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "GeneInfo_WID")
-    private long geneInfoWID;
-    @Basic(optional = false)
     @Column(name = "UniGene")
     private String uniGene;
 
     public Gene2UniGene() {
-    }
-
-    public long getGeneInfoWID() {
-        return geneInfoWID;
-    }
-
-    public void setGeneInfoWID(long geneInfoWID) {
-        this.geneInfoWID = geneInfoWID;
     }
 
     public String getUniGene() {
@@ -46,7 +35,6 @@ public class Gene2UniGene implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 37 * hash + (int) (this.geneInfoWID ^ (this.geneInfoWID >>> 32));
         hash = 37 * hash + (this.uniGene != null ? this.uniGene.hashCode() : 0);
         return hash;
     }
@@ -60,14 +48,11 @@ public class Gene2UniGene implements Serializable {
             return false;
         }
         final Gene2UniGene other = (Gene2UniGene) obj;
-        if (this.geneInfoWID != other.geneInfoWID) {
-            return false;
-        }
         return !((this.uniGene == null) ? (other.uniGene != null) : !this.uniGene.equals(other.uniGene));
     }
 
     @Override
     public String toString() {
-        return "Gene2UniGene{" + "geneInfoWID=" + geneInfoWID + ", uniGene=" + uniGene + '}';
+        return "Gene2UniGene{uniGene=" + uniGene + '}';
     }
 }

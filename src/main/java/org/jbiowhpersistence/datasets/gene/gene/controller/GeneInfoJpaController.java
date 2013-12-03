@@ -36,9 +36,9 @@ import org.jbiowhpersistence.utils.controller.exceptions.PreexistingEntityExcept
 /**
  * This class is the GeneInfo Jpa Controller
  *
- * $Author: r78v10a07@gmail.com $ 
- * $LastChangedDate: 2013-05-29 11:24:54 +0200 (Wed, 29 May 2013) $ 
- * $LastChangedRevision: 591 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2013-05-29 11:24:54 +0200
+ * (Wed, 29 May 2013) $ $LastChangedRevision: 591 $
+ *
  * @since Aug 30, 2012
  */
 public class GeneInfoJpaController extends AbstractJpaController<GeneInfo> implements Serializable {
@@ -76,13 +76,13 @@ public class GeneInfoJpaController extends AbstractJpaController<GeneInfo> imple
         if (geneInfo.getGene2UniGene() == null) {
             geneInfo.setGene2UniGene(new ArrayList<Gene2UniGene>());
         }
-        if (geneInfo.getGene2GenomicNucleotide()== null) {
+        if (geneInfo.getGene2GenomicNucleotide() == null) {
             geneInfo.setGene2GenomicNucleotide(new ArrayList<Gene2GenomicNucleotide>());
         }
-        if (geneInfo.getGene2ProteinAccession()== null) {
+        if (geneInfo.getGene2ProteinAccession() == null) {
             geneInfo.setGene2ProteinAccession(new ArrayList<Gene2ProteinAccession>());
         }
-        if (geneInfo.getGene2RNANucleotide()== null) {
+        if (geneInfo.getGene2RNANucleotide() == null) {
             geneInfo.setGene2RNANucleotide(new ArrayList<Gene2RNANucleotide>());
         }
         if (geneInfo.getOmim() == null) {
@@ -106,7 +106,7 @@ public class GeneInfoJpaController extends AbstractJpaController<GeneInfo> imple
                     genePTT = em.getReference(GenePTT.class, genePTT.getProteinGi());
                     geneInfo.setGenePTT(genePTT);
                 }
-            }            
+            }
             if (!geneInfo.getOmim().isEmpty()) {
                 OMIMJpaController mController = new OMIMJpaController(emf);
                 Set<OMIM> objSet = new HashSet();
@@ -197,7 +197,7 @@ public class GeneInfoJpaController extends AbstractJpaController<GeneInfo> imple
                 attachedProteinNew.add(proteinNewProteinToAttach);
             }
             proteinNew = attachedProteinNew;
-            geneInfo.setProtein(proteinNew);            
+            geneInfo.setProtein(proteinNew);
             geneInfo = em.merge(geneInfo);
             if (genePTTOld != null && !genePTTOld.equals(genePTTNew)) {
                 genePTTOld.setGeneInfo(null);
@@ -226,13 +226,13 @@ public class GeneInfoJpaController extends AbstractJpaController<GeneInfo> imple
             }
             for (OMIM omimOldOMIM : omimOld) {
                 if (!omimNew.contains(omimOldOMIM)) {
-                    omimOldOMIM.getGeneInfos().remove(geneInfo);
+                    omimOldOMIM.getGeneInfo().remove(geneInfo);
                     omimOldOMIM = em.merge(omimOldOMIM);
                 }
             }
             for (OMIM omimNewOMIM : omimNew) {
                 if (!omimOld.contains(omimNewOMIM)) {
-                    omimNewOMIM.getGeneInfos().add(geneInfo);
+                    omimNewOMIM.getGeneInfo().add(geneInfo);
                     omimNewOMIM = em.merge(omimNewOMIM);
                 }
             }
@@ -324,7 +324,7 @@ public class GeneInfoJpaController extends AbstractJpaController<GeneInfo> imple
             }
             Set<OMIM> omim = geneInfo.getOmim();
             for (OMIM omimOMIM : omim) {
-                omimOMIM.getGeneInfos().remove(geneInfo);
+                omimOMIM.getGeneInfo().remove(geneInfo);
                 omimOMIM = em.merge(omimOMIM);
             }
             Set<KEGGPathway> kEGGPathways = geneInfo.getkEGGPathways();
@@ -378,7 +378,6 @@ public class GeneInfoJpaController extends AbstractJpaController<GeneInfo> imple
 
     public GeneInfo findGeneInfo(Long id) {
         EntityManager em = getEntityManager();
-
 
         try {
             return em.find(GeneInfo.class, id);

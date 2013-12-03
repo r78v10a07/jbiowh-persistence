@@ -28,9 +28,6 @@ public class Gene2RNANucleotide implements Serializable {
     @Basic(optional = false)
     @Column(name = "RNANucleotideAccessionVersion")
     private int rNANucleotideAccessionVersion;
-    @Basic(optional = false)
-    @Column(name = "GeneInfo_WID")
-    private long geneInfoWID;
 
     public Gene2RNANucleotide() {
     }
@@ -39,11 +36,10 @@ public class Gene2RNANucleotide implements Serializable {
         this.rNANucleotideGi = rNANucleotideGi;
     }
 
-    public Gene2RNANucleotide(Long rNANucleotideGi, String rNANucleotideAccession, int rNANucleotideAccessionVersion, long geneInfoWID) {
+    public Gene2RNANucleotide(Long rNANucleotideGi, String rNANucleotideAccession, int rNANucleotideAccessionVersion) {
         this.rNANucleotideGi = rNANucleotideGi;
         this.rNANucleotideAccession = rNANucleotideAccession;
         this.rNANucleotideAccessionVersion = rNANucleotideAccessionVersion;
-        this.geneInfoWID = geneInfoWID;
     }
 
     public Long getRNANucleotideGi() {
@@ -70,14 +66,6 @@ public class Gene2RNANucleotide implements Serializable {
         this.rNANucleotideAccessionVersion = rNANucleotideAccessionVersion;
     }
 
-    public long getGeneInfoWID() {
-        return geneInfoWID;
-    }
-
-    public void setGeneInfoWID(long geneInfoWID) {
-        this.geneInfoWID = geneInfoWID;
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
@@ -102,17 +90,11 @@ public class Gene2RNANucleotide implements Serializable {
         if ((this.rNANucleotideAccession == null) ? (other.rNANucleotideAccession != null) : !this.rNANucleotideAccession.equals(other.rNANucleotideAccession)) {
             return false;
         }
-        if (this.rNANucleotideAccessionVersion != other.rNANucleotideAccessionVersion) {
-            return false;
-        }
-        if (this.geneInfoWID != other.geneInfoWID) {
-            return false;
-        }
-        return true;
+        return this.rNANucleotideAccessionVersion == other.rNANucleotideAccessionVersion;
     }
 
     @Override
     public String toString() {
-        return "Gene2RNANucleotide{" + "rNANucleotideGi=" + rNANucleotideGi + ", rNANucleotideAccession=" + rNANucleotideAccession + ", rNANucleotideAccessionVersion=" + rNANucleotideAccessionVersion + ", geneInfoWID=" + geneInfoWID + '}';
+        return "Gene2RNANucleotide{" + "rNANucleotideGi=" + rNANucleotideGi + ", rNANucleotideAccession=" + rNANucleotideAccession + ", rNANucleotideAccessionVersion=" + rNANucleotideAccessionVersion + '}';
     }
 }

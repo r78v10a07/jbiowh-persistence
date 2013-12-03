@@ -7,75 +7,56 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * This Class is the OMIMCD entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Jul 16, 2012
  */
-@Entity
+@Embeddable
 @Table(name = "OMIMCD")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "OMIMCD.findAll", query = "SELECT o FROM OMIMCD o"),
-    @NamedQuery(name = "OMIMCD.findByOmimWid", query = "SELECT o FROM OMIMCD o WHERE o.oMIMCDPK.omimWid = :omimWid"),
-    @NamedQuery(name = "OMIMCD.findByCd", query = "SELECT o FROM OMIMCD o WHERE o.oMIMCDPK.cd = :cd")})
 public class OMIMCD implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected OMIMCDPK oMIMCDPK;
-    @ManyToOne
-    @JoinColumn(name = "OMIM_WID", insertable = false, unique = false, nullable = true, updatable = false)
-    private OMIM omim;
+    @Basic(optional = false)
+    @Column(name = "CD")
+    private String cd;
 
     public OMIMCD() {
     }
 
-    public OMIMCD(OMIMCDPK oMIMCDPK) {
-        this.oMIMCDPK = oMIMCDPK;
+    public OMIMCD(String cd) {
+        this.cd = cd;
     }
 
-    public OMIMCD(long omimWid, String cd) {
-        this.oMIMCDPK = new OMIMCDPK(omimWid, cd);
+    public String getCd() {
+        return cd;
     }
 
-    public OMIM getOmim() {
-        return omim;
-    }
-
-    public void setOmim(OMIM omim) {
-        this.omim = omim;
-    }
-
-    public OMIMCDPK getOMIMCDPK() {
-        return oMIMCDPK;
-    }
-
-    public void setOMIMCDPK(OMIMCDPK oMIMCDPK) {
-        this.oMIMCDPK = oMIMCDPK;
+    public void setCd(String cd) {
+        this.cd = cd;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (oMIMCDPK != null ? oMIMCDPK.hashCode() : 0);
+        int hash = 3;
+        hash = 37 * hash + (this.cd != null ? this.cd.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof OMIMCD)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        OMIMCD other = (OMIMCD) object;
-        if ((this.oMIMCDPK == null && other.oMIMCDPK != null) || (this.oMIMCDPK != null && !this.oMIMCDPK.equals(other.oMIMCDPK))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final OMIMCD other = (OMIMCD) obj;
+        return !((this.cd == null) ? (other.cd != null) : !this.cd.equals(other.cd));
     }
 
     @Override
     public String toString() {
-        return "OMIMCD{" + "oMIMCDPK=" + oMIMCDPK + '}';
+        return "OMIMCD{cd=" + cd + '}';
     }
 }

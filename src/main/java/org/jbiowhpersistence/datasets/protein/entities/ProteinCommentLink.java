@@ -18,26 +18,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ProteinCommentLink implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "ProteinComment_WID")
-    private long proteinCommentWID;
-    @Basic(optional = false)
     @Column(name = "URI")
     private String uri;
 
     public ProteinCommentLink() {
     }
 
-    public ProteinCommentLink(long proteinCommentWID, String uri) {
-        this.proteinCommentWID = proteinCommentWID;
+    public ProteinCommentLink(String uri) {
         this.uri = uri;
-    }
-
-    public long getProteinCommentWID() {
-        return proteinCommentWID;
-    }
-
-    public void setProteinCommentWID(long proteinCommentWID) {
-        this.proteinCommentWID = proteinCommentWID;
     }
 
     public String getUri() {
@@ -51,7 +39,6 @@ public class ProteinCommentLink implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 17 * hash + (int) (this.proteinCommentWID ^ (this.proteinCommentWID >>> 32));
         hash = 17 * hash + (this.uri != null ? this.uri.hashCode() : 0);
         return hash;
     }
@@ -65,14 +52,11 @@ public class ProteinCommentLink implements Serializable {
             return false;
         }
         final ProteinCommentLink other = (ProteinCommentLink) obj;
-        if (this.proteinCommentWID != other.proteinCommentWID) {
-            return false;
-        }
         return !((this.uri == null) ? (other.uri != null) : !this.uri.equals(other.uri));
     }
 
     @Override
     public String toString() {
-        return "ProteinCommentLink{" + "proteinCommentWID=" + proteinCommentWID + ", uri=" + uri + '}';
+        return "ProteinCommentLink{uri=" + uri + '}';
     }
 }

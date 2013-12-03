@@ -18,21 +18,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class GeneInfoSynonyms implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "GeneInfo_WID")
-    private long geneInfoWID;
-    @Basic(optional = false)
     @Column(name = "Synonyms")
     private String synonyms;
 
     public GeneInfoSynonyms() {
-    }
-
-    public long getGeneInfoWID() {
-        return geneInfoWID;
-    }
-
-    public void setGeneInfoWID(long geneInfoWID) {
-        this.geneInfoWID = geneInfoWID;
     }
 
     public String getSynonyms() {
@@ -46,7 +35,6 @@ public class GeneInfoSynonyms implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + (int) (this.geneInfoWID ^ (this.geneInfoWID >>> 32));
         hash = 97 * hash + (this.synonyms != null ? this.synonyms.hashCode() : 0);
         return hash;
     }
@@ -60,14 +48,11 @@ public class GeneInfoSynonyms implements Serializable {
             return false;
         }
         final GeneInfoSynonyms other = (GeneInfoSynonyms) obj;
-        if (this.geneInfoWID != other.geneInfoWID) {
-            return false;
-        }
         return !((this.synonyms == null) ? (other.synonyms != null) : !this.synonyms.equals(other.synonyms));
     }
 
     @Override
     public String toString() {
-        return "GeneInfoSynonyms{" + "geneInfoWID=" + geneInfoWID + ", synonyms=" + synonyms + '}';
+        return "GeneInfoSynonyms{synonyms=" + synonyms + '}';
     }
 }

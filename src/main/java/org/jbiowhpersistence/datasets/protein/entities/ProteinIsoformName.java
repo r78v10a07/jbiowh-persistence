@@ -18,26 +18,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ProteinIsoformName implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "ProteinCommentIsoform_WID")
-    private long proteinCommentIsoformWID;
-    @Basic(optional = false)
     @Column(name = "Name")
     private String name;
 
     public ProteinIsoformName() {
     }
 
-    public ProteinIsoformName(long proteinCommentIsoformWID, String name) {
-        this.proteinCommentIsoformWID = proteinCommentIsoformWID;
+    public ProteinIsoformName(String name) {
         this.name = name;
-    }
-
-    public long getProteinCommentIsoformWID() {
-        return proteinCommentIsoformWID;
-    }
-
-    public void setProteinCommentIsoformWID(long proteinCommentIsoformWID) {
-        this.proteinCommentIsoformWID = proteinCommentIsoformWID;
     }
 
     public String getName() {
@@ -51,7 +39,6 @@ public class ProteinIsoformName implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 89 * hash + (int) (this.proteinCommentIsoformWID ^ (this.proteinCommentIsoformWID >>> 32));
         hash = 89 * hash + (this.name != null ? this.name.hashCode() : 0);
         return hash;
     }
@@ -65,14 +52,11 @@ public class ProteinIsoformName implements Serializable {
             return false;
         }
         final ProteinIsoformName other = (ProteinIsoformName) obj;
-        if (this.proteinCommentIsoformWID != other.proteinCommentIsoformWID) {
-            return false;
-        }
         return !((this.name == null) ? (other.name != null) : !this.name.equals(other.name));
     }
 
     @Override
     public String toString() {
-        return "ProteinIsoformName{" + "proteinCommentIsoformWID=" + proteinCommentIsoformWID + ", name=" + name + '}';
+        return "ProteinIsoformName{name=" + name + '}';
     }
 }

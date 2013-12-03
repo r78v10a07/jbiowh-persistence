@@ -18,9 +18,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ProteinDBReferenceProperty implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "ProteinDBReference_WID")
-    private long proteinDBReferenceWID;
-    @Basic(optional = false)
     @Column(name = "AttribType")
     private String attribType;
     @Column(name = "AttribValue")
@@ -29,18 +26,9 @@ public class ProteinDBReferenceProperty implements Serializable {
     public ProteinDBReferenceProperty() {
     }
 
-    public ProteinDBReferenceProperty(long proteinDBReferenceWID, String attribType, String attribValue) {
-        this.proteinDBReferenceWID = proteinDBReferenceWID;
+    public ProteinDBReferenceProperty(String attribType, String attribValue) {
         this.attribType = attribType;
         this.attribValue = attribValue;
-    }
-
-    public long getProteinDBReferenceWID() {
-        return proteinDBReferenceWID;
-    }
-
-    public void setProteinDBReferenceWID(long proteinDBReferenceWID) {
-        this.proteinDBReferenceWID = proteinDBReferenceWID;
     }
 
     public String getAttribType() {
@@ -62,7 +50,6 @@ public class ProteinDBReferenceProperty implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 53 * hash + (int) (this.proteinDBReferenceWID ^ (this.proteinDBReferenceWID >>> 32));
         hash = 53 * hash + (this.attribType != null ? this.attribType.hashCode() : 0);
         hash = 53 * hash + (this.attribValue != null ? this.attribValue.hashCode() : 0);
         return hash;
@@ -77,9 +64,6 @@ public class ProteinDBReferenceProperty implements Serializable {
             return false;
         }
         final ProteinDBReferenceProperty other = (ProteinDBReferenceProperty) obj;
-        if (this.proteinDBReferenceWID != other.proteinDBReferenceWID) {
-            return false;
-        }
         if ((this.attribType == null) ? (other.attribType != null) : !this.attribType.equals(other.attribType)) {
             return false;
         }
@@ -88,6 +72,6 @@ public class ProteinDBReferenceProperty implements Serializable {
 
     @Override
     public String toString() {
-        return "ProteinDBReferenceProperty{" + "proteinDBReferenceWID=" + proteinDBReferenceWID + ", attribType=" + attribType + ", attribValue=" + attribValue + '}';
+        return "ProteinDBReferenceProperty{attribType=" + attribType + ", attribValue=" + attribValue + '}';
     }
 }

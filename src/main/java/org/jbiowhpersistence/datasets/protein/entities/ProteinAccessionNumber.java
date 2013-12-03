@@ -18,9 +18,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ProteinAccessionNumber implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "Protein_WID")
-    private long proteinWID;
-    @Basic(optional = false)
     @Column(name = "AccessionNumber")
     private String accessionNumber;
     @Basic(optional = false)
@@ -30,18 +27,9 @@ public class ProteinAccessionNumber implements Serializable {
     public ProteinAccessionNumber() {
     }
 
-    public ProteinAccessionNumber(long proteinWID, String accessionNumber, int orderNumber) {
-        this.proteinWID = proteinWID;
+    public ProteinAccessionNumber(String accessionNumber, int orderNumber) {
         this.accessionNumber = accessionNumber;
         this.orderNumber = orderNumber;
-    }
-
-    public long getProteinWID() {
-        return proteinWID;
-    }
-
-    public void setProteinWID(long proteinWID) {
-        this.proteinWID = proteinWID;
     }
 
     public String getAccessionNumber() {
@@ -63,7 +51,6 @@ public class ProteinAccessionNumber implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 79 * hash + (int) (this.proteinWID ^ (this.proteinWID >>> 32));
         hash = 79 * hash + (this.accessionNumber != null ? this.accessionNumber.hashCode() : 0);
         hash = 79 * hash + this.orderNumber;
         return hash;
@@ -78,9 +65,6 @@ public class ProteinAccessionNumber implements Serializable {
             return false;
         }
         final ProteinAccessionNumber other = (ProteinAccessionNumber) obj;
-        if (this.proteinWID != other.proteinWID) {
-            return false;
-        }
         if ((this.accessionNumber == null) ? (other.accessionNumber != null) : !this.accessionNumber.equals(other.accessionNumber)) {
             return false;
         }
@@ -89,6 +73,6 @@ public class ProteinAccessionNumber implements Serializable {
 
     @Override
     public String toString() {
-        return "ProteinAccessionNumber{" + "proteinWID=" + proteinWID + ", accessionNumber=" + accessionNumber + ", orderNumber=" + orderNumber + '}';
+        return "ProteinAccessionNumber{accessionNumber=" + accessionNumber + ", orderNumber=" + orderNumber + '}';
     }
 }

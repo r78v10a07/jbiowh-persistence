@@ -7,75 +7,56 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * This Class is the OMIMED entity
  *
- * $Author: r78v10a07@gmail.com $
- * $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
- * $LastChangedRevision: 270 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
  * @since Jul 16, 2012
  */
-@Entity
+@Embeddable
 @Table(name = "OMIMED")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "OMIMED.findAll", query = "SELECT o FROM OMIMED o"),
-    @NamedQuery(name = "OMIMED.findByOmimWid", query = "SELECT o FROM OMIMED o WHERE o.oMIMEDPK.omimWid = :omimWid"),
-    @NamedQuery(name = "OMIMED.findByEd", query = "SELECT o FROM OMIMED o WHERE o.oMIMEDPK.ed = :ed")})
 public class OMIMED implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected OMIMEDPK oMIMEDPK;
-    @ManyToOne
-    @JoinColumn(name = "OMIM_WID", insertable = false, unique = false, nullable = true, updatable = false)
-    private OMIM omim;
+    @Basic(optional = false)
+    @Column(name = "ED")
+    private String ed;
 
     public OMIMED() {
     }
 
-    public OMIMED(OMIMEDPK oMIMEDPK) {
-        this.oMIMEDPK = oMIMEDPK;
+    public OMIMED(String ed) {
+        this.ed = ed;
     }
 
-    public OMIMED(long omimWid, String ed) {
-        this.oMIMEDPK = new OMIMEDPK(omimWid, ed);
+    public String getEd() {
+        return ed;
     }
 
-    public OMIM getOmim() {
-        return omim;
-    }
-
-    public void setOmim(OMIM omim) {
-        this.omim = omim;
-    }
-
-    public OMIMEDPK getOMIMEDPK() {
-        return oMIMEDPK;
-    }
-
-    public void setOMIMEDPK(OMIMEDPK oMIMEDPK) {
-        this.oMIMEDPK = oMIMEDPK;
+    public void setEd(String ed) {
+        this.ed = ed;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (oMIMEDPK != null ? oMIMEDPK.hashCode() : 0);
+        int hash = 5;
+        hash = 71 * hash + (this.ed != null ? this.ed.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof OMIMED)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        OMIMED other = (OMIMED) object;
-        if ((this.oMIMEDPK == null && other.oMIMEDPK != null) || (this.oMIMEDPK != null && !this.oMIMEDPK.equals(other.oMIMEDPK))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final OMIMED other = (OMIMED) obj;
+        return !((this.ed == null) ? (other.ed != null) : !this.ed.equals(other.ed));
     }
 
     @Override
     public String toString() {
-        return "OMIMED{" + "oMIMEDPK=" + oMIMEDPK + '}';
+        return "OMIMED{ed=" + ed + '}';
     }
 }

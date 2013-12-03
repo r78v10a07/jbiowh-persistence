@@ -18,26 +18,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class OntologyPMID implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "Ontology_WID")
-    private long ontologyWID;
-    @Basic(optional = false)
     @Column(name = "PMID")
     private long pmid;
 
     public OntologyPMID() {
     }
 
-    public OntologyPMID(long ontologyWID, long pmid) {
-        this.ontologyWID = ontologyWID;
+    public OntologyPMID(long pmid) {
         this.pmid = pmid;
-    }
-
-    public long getOntologyWID() {
-        return ontologyWID;
-    }
-
-    public void setOntologyWID(long ontologyWID) {
-        this.ontologyWID = ontologyWID;
     }
 
     public long getPmid() {
@@ -51,7 +39,6 @@ public class OntologyPMID implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 23 * hash + (int) (this.ontologyWID ^ (this.ontologyWID >>> 32));
         hash = 23 * hash + (int) (this.pmid ^ (this.pmid >>> 32));
         return hash;
     }
@@ -65,14 +52,11 @@ public class OntologyPMID implements Serializable {
             return false;
         }
         final OntologyPMID other = (OntologyPMID) obj;
-        if (this.ontologyWID != other.ontologyWID) {
-            return false;
-        }
         return this.pmid == other.pmid;
     }
 
     @Override
     public String toString() {
-        return "OntologyPMID{" + "ontologyWID=" + ontologyWID + ", pmid=" + pmid + '}';
+        return "OntologyPMID{pmid=" + pmid + '}';
     }
 }

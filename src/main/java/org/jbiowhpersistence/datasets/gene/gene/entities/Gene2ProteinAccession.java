@@ -28,9 +28,6 @@ public class Gene2ProteinAccession implements Serializable {
     @Basic(optional = false)
     @Column(name = "ProteinAccessionVersion")
     private int proteinAccessionVersion;
-    @Basic(optional = false)
-    @Column(name = "GeneInfo_WID")
-    private long geneInfoWID;
 
     public Gene2ProteinAccession() {
     }
@@ -39,11 +36,10 @@ public class Gene2ProteinAccession implements Serializable {
         this.proteinGi = proteinGi;
     }
 
-    public Gene2ProteinAccession(Long proteinGi, String proteinAccession, int proteinAccessionVersion, long geneInfoWID) {
+    public Gene2ProteinAccession(Long proteinGi, String proteinAccession, int proteinAccessionVersion) {
         this.proteinGi = proteinGi;
         this.proteinAccession = proteinAccession;
         this.proteinAccessionVersion = proteinAccessionVersion;
-        this.geneInfoWID = geneInfoWID;
     }
 
     public Long getProteinGi() {
@@ -70,14 +66,6 @@ public class Gene2ProteinAccession implements Serializable {
         this.proteinAccessionVersion = proteinAccessionVersion;
     }
 
-    public long getGeneInfoWID() {
-        return geneInfoWID;
-    }
-
-    public void setGeneInfoWID(long geneInfoWID) {
-        this.geneInfoWID = geneInfoWID;
-    }
-
     @Override
     public int hashCode() {
         int hash = 3;
@@ -102,14 +90,11 @@ public class Gene2ProteinAccession implements Serializable {
         if ((this.proteinAccession == null) ? (other.proteinAccession != null) : !this.proteinAccession.equals(other.proteinAccession)) {
             return false;
         }
-        if (this.proteinAccessionVersion != other.proteinAccessionVersion) {
-            return false;
-        }
-        return this.geneInfoWID == other.geneInfoWID;
+        return this.proteinAccessionVersion == other.proteinAccessionVersion;
     }
 
     @Override
     public String toString() {
-        return "Gene2ProteinAccession{" + "proteinGi=" + proteinGi + ", proteinAccession=" + proteinAccession + ", proteinAccessionVersion=" + proteinAccessionVersion + ", geneInfoWID=" + geneInfoWID + '}';
+        return "Gene2ProteinAccession{" + "proteinGi=" + proteinGi + ", proteinAccession=" + proteinAccession + ", proteinAccessionVersion=" + proteinAccessionVersion + '}';
     }
 }

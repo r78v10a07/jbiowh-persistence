@@ -46,7 +46,7 @@ public class OMIMTransfer extends JpaTransferBackEnd {
             OMIM obj = (OMIM) object;
             if (instance.findOMIM(obj.getWid()) == null) {
                 if (!JpaEntitiesSelected.getInstance().getEntities().contains(GeneInfo.class)) {
-                    obj.setGeneInfos(null);
+                    obj.setGeneInfo(null);
                 }
                 instance.create(obj);
             }
