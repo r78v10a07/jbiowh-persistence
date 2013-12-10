@@ -135,9 +135,9 @@ public class SearchDrugBank extends SearchFactory implements JBioWHSearch {
         HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
             if (field.equals(CATEGORY)) {
-                data.put(field, "g.drugBankCategories");
+                data.put(field, "g.drugBankCategory");
             } else if (field.equals(SYNONYM)) {
-                data.put(field, "g.drugBankSynonyms");
+                data.put(field, "g.drugBankSynonym");
             } else {
                 data.put(field, "");
             }

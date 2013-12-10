@@ -5,7 +5,7 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * This class is the DrugBankGeneralRef entity
+ * This class is the DrugBankEnzymeRef entity
  *
  * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
  * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
@@ -13,9 +13,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @since Oct 6, 2011
  */
 @Embeddable
-@Table(name = "DrugBankGeneralRef")
+@Table(name = "DrugBankEnzymeRef")
 @XmlRootElement
-public class DrugBankGeneralRef implements Serializable {
+public class DrugBankEnzymeRef implements Serializable {
 
     @Lob
     @Column(name = "Cite")
@@ -24,10 +24,10 @@ public class DrugBankGeneralRef implements Serializable {
     @Column(name = "Link")
     private String link;
 
-    public DrugBankGeneralRef() {
+    public DrugBankEnzymeRef() {
     }
 
-    public DrugBankGeneralRef(String cite, String link) {
+    public DrugBankEnzymeRef(String cite, String link) {
         this.cite = cite;
         this.link = link;
     }
@@ -51,8 +51,8 @@ public class DrugBankGeneralRef implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + (this.cite != null ? this.cite.hashCode() : 0);
-        hash = 97 * hash + (this.link != null ? this.link.hashCode() : 0);
+        hash = 31 * hash + (this.cite != null ? this.cite.hashCode() : 0);
+        hash = 31 * hash + (this.link != null ? this.link.hashCode() : 0);
         return hash;
     }
 
@@ -64,7 +64,7 @@ public class DrugBankGeneralRef implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final DrugBankGeneralRef other = (DrugBankGeneralRef) obj;
+        final DrugBankEnzymeRef other = (DrugBankEnzymeRef) obj;
         if ((this.cite == null) ? (other.cite != null) : !this.cite.equals(other.cite)) {
             return false;
         }
@@ -73,6 +73,6 @@ public class DrugBankGeneralRef implements Serializable {
 
     @Override
     public String toString() {
-        return "DrugBankGeneralRef{" + "cite=" + cite + ", link=" + link + '}';
+        return "DrugBankEnzymeRef{" + "cite=" + cite + ", link=" + link + '}';
     }
 }

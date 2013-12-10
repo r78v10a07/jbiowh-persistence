@@ -1,0 +1,197 @@
+package org.jbiowhpersistence.datasets.drug.drugbank.entities;
+
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Objects;
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+/**
+ * This class is the DrugBankTarget entity
+ *
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
+ * @since Oct 6, 2011
+ */
+@Entity
+@Table(name = "DrugBankTarget")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "DrugBankTarget.findAll", query = "SELECT d FROM DrugBankTarget d"),
+    @NamedQuery(name = "DrugBankTarget.findByWid", query = "SELECT d FROM DrugBankTarget d WHERE d.wid = :wid"),
+    @NamedQuery(name = "DrugBankTarget.findByDrugBankWID", query = "SELECT d FROM DrugBankTarget d WHERE d.drugBankWID = :drugBankWID"),
+    @NamedQuery(name = "DrugBankTarget.findByPartner", query = "SELECT d FROM DrugBankTarget d WHERE d.partner = :partner"),
+    @NamedQuery(name = "DrugBankTarget.findByPosition", query = "SELECT d FROM DrugBankTarget d WHERE d.position = :position"),
+    @NamedQuery(name = "DrugBankTarget.findByKnownAction", query = "SELECT d FROM DrugBankTarget d WHERE d.knownAction = :knownAction")})
+public class DrugBankTarget implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "WID")
+    private Long wid;
+    @Basic(optional = false)
+    @Column(name = "DrugBank_WID")
+    private long drugBankWID;
+    @Basic(optional = false)
+    @Column(name = "Partner")
+    private int partner;
+    @Column(name = "Position")
+    private Integer position;
+    @Column(name = "KnownAction")
+    private String knownAction;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "DrugBank_WID", insertable = false, unique = false, nullable = true, updatable = false)
+    private DrugBank drugBank;
+    @ElementCollection
+    @CollectionTable(
+            name = "DrugBankTargetRef",
+            joinColumns
+            = @JoinColumn(name = "DrugBankTarget_WID"))
+    @XmlElementWrapper(name = "DrugBankTargetRefs")
+    private Collection<DrugBankTargetRef> drugBankTargetRef;
+    @ElementCollection
+    @CollectionTable(
+            name = "DrugBankTargetAction",
+            joinColumns
+            = @JoinColumn(name = "DrugBankTarget_WID"))
+    @XmlElementWrapper(name = "DrugBankTargetActions")
+    private Collection<DrugBankTargetAction> drugBankTargetAction;
+
+    public DrugBankTarget() {
+    }
+
+    public DrugBankTarget(Long wid) {
+        this.wid = wid;
+    }
+
+    public DrugBankTarget(Long wid, long drugBankWID, int partner) {
+        this.wid = wid;
+        this.drugBankWID = drugBankWID;
+        this.partner = partner;
+    }
+
+    public Long getWid() {
+        return wid;
+    }
+
+    public void setWid(Long wid) {
+        this.wid = wid;
+    }
+
+    public long getDrugBankWID() {
+        return drugBankWID;
+    }
+
+    public void setDrugBankWID(long drugBankWID) {
+        this.drugBankWID = drugBankWID;
+    }
+
+    public int getPartner() {
+        return partner;
+    }
+
+    public void setPartner(int partner) {
+        this.partner = partner;
+    }
+
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
+    }
+
+    public String getKnownAction() {
+        return knownAction;
+    }
+
+    public void setKnownAction(String knownAction) {
+        this.knownAction = knownAction;
+    }
+
+    @XmlTransient
+    public DrugBank getDrugBank() {
+        return drugBank;
+    }
+
+    public void setDrugBank(DrugBank drugBank) {
+        this.drugBank = drugBank;
+    }
+
+    public Collection<DrugBankTargetRef> getDrugBankTargetRef() {
+        return drugBankTargetRef;
+    }
+
+    public void setDrugBankTargetRef(Collection<DrugBankTargetRef> drugBankTargetRef) {
+        this.drugBankTargetRef = drugBankTargetRef;
+    }
+
+    public Collection<DrugBankTargetAction> getDrugBankTargetAction() {
+        return drugBankTargetAction;
+    }
+
+    public void setDrugBankTargetAction(Collection<DrugBankTargetAction> drugBankTargetAction) {
+        this.drugBankTargetAction = drugBankTargetAction;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final DrugBankTarget other = (DrugBankTarget) obj;
+        if (!Objects.equals(this.wid, other.wid)) {
+            return false;
+        }
+        if (this.drugBankWID != other.drugBankWID) {
+            return false;
+        }
+        if (this.partner != other.partner) {
+            return false;
+        }
+        if (!Objects.equals(this.position, other.position)) {
+            return false;
+        }
+        return Objects.equals(this.knownAction, other.knownAction);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (wid != null ? wid.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder pData = new StringBuilder();
+
+        if (drugBankTargetRef != null) {
+            for (DrugBankTargetRef r : drugBankTargetRef) {
+                pData.append("\t").append(r).append("\n");
+            }
+        }
+
+        if (drugBankTargetAction != null) {
+            for (DrugBankTargetAction r : drugBankTargetAction) {
+                pData.append("\t").append(r).append("\n");
+            }
+        }
+
+        return "DrugBankTarget{"
+                + "wid=" + wid
+                + ", drugBankWID=" + drugBankWID
+                + ", partner=" + partner
+                + ", position=" + position
+                + ", knownAction=" + knownAction + "}\n"
+                + pData;
+    }
+}
