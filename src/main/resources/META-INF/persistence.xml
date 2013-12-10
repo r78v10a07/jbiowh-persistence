@@ -5,19 +5,10 @@
     <class>org.jbiowhpersistence.datasets.dataset.entities.DataSet</class>
     <class>org.jbiowhpersistence.datasets.dataset.entities.WidTable</class>
     <class>org.jbiowhpersistence.datasets.disease.omim.entities.OMIM</class>
-    <class>org.jbiowhpersistence.datasets.disease.omim.entities.OMIMAV</class>
-    <class>org.jbiowhpersistence.datasets.disease.omim.entities.OMIMCD</class>
-    <class>org.jbiowhpersistence.datasets.disease.omim.entities.OMIMCN</class>
     <class>org.jbiowhpersistence.datasets.disease.omim.entities.OMIMCS</class>
-    <class>org.jbiowhpersistence.datasets.disease.omim.entities.OMIMCSData</class>
-    <class>org.jbiowhpersistence.datasets.disease.omim.entities.OMIMED</class>
     <class>org.jbiowhpersistence.datasets.disease.omim.entities.OMIMGeneMap</class>
     <class>org.jbiowhpersistence.datasets.disease.omim.entities.OMIMMethod</class>
     <class>org.jbiowhpersistence.datasets.disease.omim.entities.OMIMMorbidMap</class>
-    <class>org.jbiowhpersistence.datasets.disease.omim.entities.OMIMRF</class>
-    <class>org.jbiowhpersistence.datasets.disease.omim.entities.OMIMSA</class>
-    <class>org.jbiowhpersistence.datasets.disease.omim.entities.OMIMTI</class>
-    <class>org.jbiowhpersistence.datasets.disease.omim.entities.OMIMTX</class>
     <class>org.jbiowhpersistence.datasets.domain.pfam.entities.PfamADatabaseLinks</class>
     <class>org.jbiowhpersistence.datasets.domain.pfam.entities.PfamANCBIReg</class>
     <class>org.jbiowhpersistence.datasets.domain.pfam.entities.PfamAPDBReg</class>
@@ -46,42 +37,12 @@
     <class>org.jbiowhpersistence.datasets.domain.pfam.entities.PfamSeqhasProtein</class>
     <class>org.jbiowhpersistence.datasets.domain.pfam.entities.PfamSeqhasUniProtId</class>
     <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBank</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankAHFSCodes</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankATCCodes</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankAffectedOrganisms</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankBrands</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankCalculatedProperties</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankCarriers</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankCarriersActions</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankCarriersRef</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankCategories</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankDosages</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankDrugInteractions</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankEnzymes</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankEnzymesActions</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankEnzymesRef</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankExperimentalProperties</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankExternalIdentifiers</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankExternalLinks</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankFoodInteractions</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankGeneralRef</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankGroup</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankManufacturers</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankMixtures</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankPackagers</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankPatents</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankPrices</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankProteinSequences</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankSecondAccessionNumbers</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankSynonyms</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankTargets</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankTargetsActions</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankTargetsRef</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankTaxonomy</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankTaxonomySubstructures</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankTransporters</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankTransportersActions</class>
-    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankTransportersRef</class>
+    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankCarrier</class>
+    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankCategory</class>
+    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankEnzyme</class>
+    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankPatent</class>
+    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankTarget</class>
+    <class>org.jbiowhpersistence.datasets.drug.drugbank.entities.DrugBankTransporter</class>
     <class>org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo</class>
     <class>org.jbiowhpersistence.datasets.gene.genebank.entities.GeneBank</class>
     <class>org.jbiowhpersistence.datasets.gene.genebank.entities.GeneBankCDS</class>

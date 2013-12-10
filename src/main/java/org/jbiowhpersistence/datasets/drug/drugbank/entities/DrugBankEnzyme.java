@@ -1,0 +1,182 @@
+package org.jbiowhpersistence.datasets.drug.drugbank.entities;
+
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Objects;
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+/**
+ * This class is the DrugBankEnzyme entity
+ *
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
+ * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
+ *
+ * @since Oct 6, 2011
+ */
+@Entity
+@Table(name = "DrugBankEnzyme")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "DrugBankEnzyme.findAll", query = "SELECT d FROM DrugBankEnzyme d"),
+    @NamedQuery(name = "DrugBankEnzyme.findByWid", query = "SELECT d FROM DrugBankEnzyme d WHERE d.wid = :wid"),
+    @NamedQuery(name = "DrugBankEnzyme.findByDrugBankWID", query = "SELECT d FROM DrugBankEnzyme d WHERE d.drugBankWID = :drugBankWID"),
+    @NamedQuery(name = "DrugBankEnzyme.findByPartner", query = "SELECT d FROM DrugBankEnzyme d WHERE d.partner = :partner"),
+    @NamedQuery(name = "DrugBankEnzyme.findByPosition", query = "SELECT d FROM DrugBankEnzyme d WHERE d.position = :position")})
+public class DrugBankEnzyme implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "WID")
+    private Long wid;
+    @Basic(optional = false)
+    @Column(name = "DrugBank_WID")
+    private long drugBankWID;
+    @Basic(optional = false)
+    @Column(name = "Partner")
+    private int partner;
+    @Column(name = "Position")
+    private Integer position;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "DrugBank_WID", insertable = false, unique = false, nullable = true, updatable = false)
+    private DrugBank drugBank;
+    @ElementCollection
+    @CollectionTable(
+            name = "DrugBankEnzymeRef",
+            joinColumns
+            = @JoinColumn(name = "DrugBankEnzyme_WID"))
+    @XmlElementWrapper(name = "DrugBankEnzymeRefs")
+    private Collection<DrugBankEnzymeRef> drugBankEnzymeRef;
+    @ElementCollection
+    @CollectionTable(
+            name = "DrugBankEnzymeAction",
+            joinColumns
+            = @JoinColumn(name = "DrugBankEnzyme_WID"))
+    @XmlElementWrapper(name = "DrugBankEnzymeActions")
+    private Collection<DrugBankEnzymeAction> drugBankEnzymeAction;
+
+    public DrugBankEnzyme() {
+    }
+
+    public DrugBankEnzyme(Long wid) {
+        this.wid = wid;
+    }
+
+    public DrugBankEnzyme(Long wid, long drugBankWID, int partner) {
+        this.wid = wid;
+        this.drugBankWID = drugBankWID;
+        this.partner = partner;
+    }
+
+    public Collection<DrugBankEnzymeRef> getDrugBankEnzymeRef() {
+        return drugBankEnzymeRef;
+    }
+
+    public void setDrugBankEnzymeRef(Collection<DrugBankEnzymeRef> drugBankEnzymeRef) {
+        this.drugBankEnzymeRef = drugBankEnzymeRef;
+    }
+
+    public Collection<DrugBankEnzymeAction> getDrugBankEnzymeAction() {
+        return drugBankEnzymeAction;
+    }
+
+    public void setDrugBankEnzymeAction(Collection<DrugBankEnzymeAction> drugBankEnzymeAction) {
+        this.drugBankEnzymeAction = drugBankEnzymeAction;
+    }
+
+    @XmlTransient
+    public DrugBank getDrugBank() {
+        return drugBank;
+    }
+
+    public void setDrugBank(DrugBank drugBank) {
+        this.drugBank = drugBank;
+    }
+
+    public Long getWid() {
+        return wid;
+    }
+
+    public void setWid(Long wid) {
+        this.wid = wid;
+    }
+
+    public long getDrugBankWID() {
+        return drugBankWID;
+    }
+
+    public void setDrugBankWID(long drugBankWID) {
+        this.drugBankWID = drugBankWID;
+    }
+
+    public int getPartner() {
+        return partner;
+    }
+
+    public void setPartner(int partner) {
+        this.partner = partner;
+    }
+
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final DrugBankEnzyme other = (DrugBankEnzyme) obj;
+        if (!Objects.equals(this.wid, other.wid)) {
+            return false;
+        }
+        if (this.drugBankWID != other.drugBankWID) {
+            return false;
+        }
+        if (this.partner != other.partner) {
+            return false;
+        }
+        return Objects.equals(this.position, other.position);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (wid != null ? wid.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder pData = new StringBuilder();
+
+        if (drugBankEnzymeAction != null) {
+            for (DrugBankEnzymeAction a : drugBankEnzymeAction) {
+                pData.append("\t").append(a).append("\n");
+            }
+        }
+
+        if (drugBankEnzymeRef != null) {
+            for (DrugBankEnzymeRef a : drugBankEnzymeRef) {
+                pData.append("\t").append(a).append("\n");
+            }
+        }
+
+        return "DrugBankEnzyme{"
+                + "wid=" + wid
+                + ", drugBankWID=" + drugBankWID
+                + ", partner=" + partner
+                + ", position=" + position + "}\n"
+                + pData;
+    }
+}

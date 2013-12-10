@@ -5,18 +5,18 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * This class is the DrugBankGeneralRef entity
- *
- * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2012-10-03 22:11:05 +0200
- * (Wed, 03 Oct 2012) $ $LastChangedRevision: 270 $
- *
+ * This class is the DrugBankCarrierRef entity
+
+ $Author: r78v10a07@gmail.com $
+ $LastChangedDate: 2012-10-03 22:11:05 +0200 (Wed, 03 Oct 2012) $
+ $LastChangedRevision: 270 $
  * @since Oct 6, 2011
  */
 @Embeddable
-@Table(name = "DrugBankGeneralRef")
+@Table(name = "DrugBankCarrierRef")
 @XmlRootElement
-public class DrugBankGeneralRef implements Serializable {
-
+public class DrugBankCarrierRef implements Serializable {
+    
     @Lob
     @Column(name = "Cite")
     private String cite;
@@ -24,10 +24,10 @@ public class DrugBankGeneralRef implements Serializable {
     @Column(name = "Link")
     private String link;
 
-    public DrugBankGeneralRef() {
+    public DrugBankCarrierRef() {
     }
 
-    public DrugBankGeneralRef(String cite, String link) {
+    public DrugBankCarrierRef(String cite, String link) {
         this.cite = cite;
         this.link = link;
     }
@@ -51,8 +51,8 @@ public class DrugBankGeneralRef implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + (this.cite != null ? this.cite.hashCode() : 0);
-        hash = 97 * hash + (this.link != null ? this.link.hashCode() : 0);
+        hash = 59 * hash + (this.cite != null ? this.cite.hashCode() : 0);
+        hash = 59 * hash + (this.link != null ? this.link.hashCode() : 0);
         return hash;
     }
 
@@ -64,7 +64,7 @@ public class DrugBankGeneralRef implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final DrugBankGeneralRef other = (DrugBankGeneralRef) obj;
+        final DrugBankCarrierRef other = (DrugBankCarrierRef) obj;
         if ((this.cite == null) ? (other.cite != null) : !this.cite.equals(other.cite)) {
             return false;
         }
@@ -73,6 +73,6 @@ public class DrugBankGeneralRef implements Serializable {
 
     @Override
     public String toString() {
-        return "DrugBankGeneralRef{" + "cite=" + cite + ", link=" + link + '}';
+        return "DrugBankCarrierRef{" + "cite=" + cite + ", link=" + link + '}';
     }
 }
