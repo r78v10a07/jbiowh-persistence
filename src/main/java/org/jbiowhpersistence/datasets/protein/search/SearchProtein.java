@@ -15,6 +15,7 @@ import org.jbiowhpersistence.datasets.pathway.kegg.entities.enzyme.KEGGEnzyme;
 import org.jbiowhpersistence.datasets.pathway.kegg.entities.pathway.KEGGPathway;
 import org.jbiowhpersistence.datasets.protclust.entities.UniRefEntry;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
+import org.jbiowhpersistence.datasets.protgroup.pirsf.entities.Pirsf;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
 import org.jbiowhpersistence.utils.search.JBioWHSearch;
 import org.jbiowhpersistence.utils.search.SearchFactory;
@@ -206,6 +207,11 @@ public class SearchProtein extends SearchFactory implements JBioWHSearch {
         listPfS.add("g.pfamAInsignificant");
         listPfS.add("wid");
         data.put(PfamAbioWH.class, listPfS);
+        
+        List listPI = new ArrayList();
+        listPI.add("g.pIRSFhasProtein");
+        listPI.add("pIRSFhasProteinPK.pirsfWid");
+        data.put(Pirsf.class, listPI);
 
         return data;
     }

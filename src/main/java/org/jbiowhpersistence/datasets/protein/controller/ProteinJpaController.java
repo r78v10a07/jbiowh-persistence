@@ -37,6 +37,10 @@ import org.jbiowhpersistence.datasets.protein.entities.ProteinName;
 import org.jbiowhpersistence.datasets.protein.entities.ProteinPDB;
 import org.jbiowhpersistence.datasets.protein.entities.ProteinPFAM;
 import org.jbiowhpersistence.datasets.protein.entities.ProteinPMID;
+import org.jbiowhpersistence.datasets.protgroup.pirsf.controller.PirsfJpaController;
+import org.jbiowhpersistence.datasets.protgroup.pirsf.entities.Pirsf;
+import org.jbiowhpersistence.datasets.protgroup.pirsf.entities.PirsfhasProtein;
+import org.jbiowhpersistence.datasets.protgroup.pirsf.entities.PirsfhasProteinPK;
 import org.jbiowhpersistence.datasets.taxonomy.controller.TaxonomyJpaController;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
 import org.jbiowhpersistence.utils.controller.AbstractJpaController;
@@ -116,6 +120,9 @@ public class ProteinJpaController extends AbstractJpaController<Protein> impleme
         if (protein.getProteinPFAM() == null) {
             protein.setProteinPFAM(new HashSet<ProteinPFAM>());
         }
+        if (protein.getpIRSFhasProtein() == null) {
+            protein.setpIRSFhasProtein(new HashMap<PirsfhasProteinPK, PirsfhasProtein>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -156,7 +163,7 @@ public class ProteinJpaController extends AbstractJpaController<Protein> impleme
                 }
                 protein.setProteinComment(attachedProteinComment);
             }
-            
+
             if (!protein.getProteinKeyword().isEmpty()) {
                 Set<ProteinKeyword> attachedProteinKeyword = new HashSet();
                 for (ProteinKeyword proteinKeywordProteinKeywordToAttach : protein.getProteinKeyword()) {
@@ -198,6 +205,28 @@ public class ProteinJpaController extends AbstractJpaController<Protein> impleme
                     genePTT = em.getReference(GenePTT.class, genePTT.getProteinGi());
                     protein.setGenePTT(genePTT);
                 }
+            }
+            if (!protein.getpIRSFhasProtein().isEmpty()) {
+                PirsfJpaController sController = new PirsfJpaController(emf);
+                Map<PirsfhasProteinPK, PirsfhasProtein> hasSynMap = new HashMap();
+                for (PirsfhasProtein hasSyn : protein.getpIRSFhasProtein().values()) {
+                    PirsfhasProtein hasSynOnDB = em.find(PirsfhasProtein.class, hasSyn.getPIRSFhasProteinPK());
+                    if (hasSynOnDB != null) {
+                        hasSynMap.put(hasSynOnDB.getPIRSFhasProteinPK(), hasSynOnDB);
+                    } else {
+                        Pirsf syn = em.find(Pirsf.class, hasSyn.getPirsf().getWid());
+                        if (syn != null) {
+                            hasSyn.setPirsf(syn);
+                        } else {
+                            syn = hasSyn.getPirsf();
+                            syn.setpIRSFhasProtein(null);
+                            sController.create(syn);
+                            hasSyn.setPirsf(em.getReference(Pirsf.class, hasSyn.getPirsf().getWid()));
+                        }
+                        hasSynMap.put(hasSyn.getPIRSFhasProteinPK(), hasSyn);
+                    }
+                }
+                protein.setpIRSFhasProtein(hasSynMap);
             }
             protein.setOntology(createOntology(emf, em, protein.getOntology()));
             protein.setGeneInfo(createGeneInfo(emf, em, protein.getGeneInfo()));

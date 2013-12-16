@@ -278,6 +278,7 @@ public class JBioWHPersistence {
                 properties.put(PersistenceUnitProperties.JDBC_PASSWORD, factory.getPasswd());
                 properties.put(PersistenceUnitProperties.JDBC_DRIVER, factory.getDriver());
                 properties.put(PersistenceUnitProperties.JDBC_USER, factory.getUser());
+                properties.put(PersistenceUnitProperties.LOGGING_LEVEL, "INFO");
 
                 entityManager = Persistence.createEntityManagerFactory(("JBioWH"), properties);
                 entityManagers.put(factory.getUrl(), entityManager);

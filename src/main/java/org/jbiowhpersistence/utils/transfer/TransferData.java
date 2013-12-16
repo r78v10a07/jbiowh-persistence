@@ -44,6 +44,8 @@ import org.jbiowhpersistence.datasets.protclust.transfer.UniRefEntryTransfer;
 import org.jbiowhpersistence.datasets.protclust.transfer.UniRefMemberTransfer;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
 import org.jbiowhpersistence.datasets.protein.transfer.ProteinTransfer;
+import org.jbiowhpersistence.datasets.protgroup.pirsf.entities.Pirsf;
+import org.jbiowhpersistence.datasets.protgroup.pirsf.transfer.PirsfTransfer;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
 import org.jbiowhpersistence.datasets.taxonomy.transfer.TaxonomyTransfer;
 import org.jbiowhpersistence.utils.controller.exceptions.PreexistingEntityException;
@@ -119,6 +121,8 @@ public class TransferData {
                 transfer = new GeneBankTransfer(factory);
             } else if (toCompare instanceof GeneBankCDS) {
                 transfer = new GeneBankCDSTransfer(factory);
+            }else if (toCompare instanceof Pirsf) {
+                transfer = new PirsfTransfer(factory);
             }
             if (transfer != null) {
                 transfer.transfer(object);
