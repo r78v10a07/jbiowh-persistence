@@ -24,6 +24,8 @@ import org.jbiowhpersistence.datasets.protclust.UniRefTables;
 import org.jbiowhpersistence.datasets.protclust.entities.UniRefEntry;
 import org.jbiowhpersistence.datasets.protclust.entities.UniRefMember;
 import org.jbiowhpersistence.datasets.protein.ProteinTables;
+import org.jbiowhpersistence.datasets.protgroup.pirsf.entities.PirsfhasProtein;
+import org.jbiowhpersistence.datasets.protgroup.pirsf.entities.PirsfhasProteinPK;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
 
 /**
@@ -110,113 +112,113 @@ public class Protein implements Serializable {
             = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
             inverseJoinColumns
             = @JoinColumn(name = "ProteinKeyword_WID", referencedColumnName = "WID"))
-    @XmlElementWrapper( name="ProteinKeywords" )
+    @XmlElementWrapper(name = "ProteinKeywords")
     private Set<ProteinKeyword> proteinKeyword;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
     @XmlElement
-    @XmlInverseReference(mappedBy="protein")
-    @XmlElementWrapper( name="ProteinFeatures" )
+    @XmlInverseReference(mappedBy = "protein")
+    @XmlElementWrapper(name = "ProteinFeatures")
     private Set<ProteinFeature> proteinFeature;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
     @XmlElement
-    @XmlInverseReference(mappedBy="protein")
-    @XmlElementWrapper( name="ProteinComments" )
+    @XmlInverseReference(mappedBy = "protein")
+    @XmlElementWrapper(name = "ProteinComments")
     private Set<ProteinComment> proteinComment;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
     @XmlElement
-    @XmlInverseReference(mappedBy="protein")
-    @XmlElementWrapper( name="ProteinDBReferences" )
+    @XmlInverseReference(mappedBy = "protein")
+    @XmlElementWrapper(name = "ProteinDBReferences")
     private Set<ProteinDBReference> proteinDBReference;
     @ElementCollection
     @CollectionTable(
             name = "ProteinName",
             joinColumns
             = @JoinColumn(name = "Protein_WID"))
-    @XmlElementWrapper( name="ProteinNames" )
+    @XmlElementWrapper(name = "ProteinNames")
     private Collection<ProteinName> proteinName;
     @ElementCollection
     @CollectionTable(
             name = "ProteinAccessionNumber",
             joinColumns
             = @JoinColumn(name = "Protein_WID"))
-    @XmlElementWrapper( name="ProteinAccessionNumbers" )
+    @XmlElementWrapper(name = "ProteinAccessionNumbers")
     private Collection<ProteinAccessionNumber> proteinAccessionNumber;
     @ElementCollection
     @CollectionTable(
             name = "ProteinLongName",
             joinColumns
             = @JoinColumn(name = "Protein_WID"))
-    @XmlElementWrapper( name="ProteinLongNames" )
+    @XmlElementWrapper(name = "ProteinLongNames")
     private Collection<ProteinLongName> proteinLongName;
     @ElementCollection
     @CollectionTable(
             name = "ProteinPMID",
             joinColumns
             = @JoinColumn(name = "Protein_WID"))
-    @XmlElementWrapper( name="ProteinPMIDs" )
+    @XmlElementWrapper(name = "ProteinPMIDs")
     private Collection<ProteinPMID> proteinPMID;
     @ElementCollection
     @CollectionTable(
             name = "ProteinEC",
             joinColumns
             = @JoinColumn(name = "Protein_WID"))
-    @XmlElementWrapper( name="ProteinECs" )
+    @XmlElementWrapper(name = "ProteinECs")
     private Collection<ProteinEC> proteinEC;
     @ElementCollection
     @CollectionTable(
             name = "ProteinKEGG",
             joinColumns
             = @JoinColumn(name = "Protein_WID"))
-    @XmlElementWrapper( name="ProteinKEGGs" )
+    @XmlElementWrapper(name = "ProteinKEGGs")
     private Collection<ProteinKEGG> proteinKEGG;
     @ElementCollection
     @CollectionTable(
             name = "ProteinBioCyc",
             joinColumns
             = @JoinColumn(name = "Protein_WID"))
-    @XmlElementWrapper( name="ProteinBioCycs" )
+    @XmlElementWrapper(name = "ProteinBioCycs")
     private Collection<ProteinBioCyc> proteinBioCyc;
     @ElementCollection
     @CollectionTable(
             name = "ProteinPDB",
             joinColumns
             = @JoinColumn(name = "Protein_WID"))
-    @XmlElementWrapper( name="ProteinPDBs" )
+    @XmlElementWrapper(name = "ProteinPDBs")
     private Collection<ProteinPDB> proteinPDB;
     @ElementCollection
     @CollectionTable(
             name = "ProteinIntAct",
             joinColumns
             = @JoinColumn(name = "Protein_WID"))
-    @XmlElementWrapper( name="ProteinIntActs" )
+    @XmlElementWrapper(name = "ProteinIntActs")
     private Collection<ProteinIntAct> proteinIntAct;
     @ElementCollection
     @CollectionTable(
             name = "ProteinDIP",
             joinColumns
             = @JoinColumn(name = "Protein_WID"))
-    @XmlElementWrapper( name="ProteinDIPs" )
+    @XmlElementWrapper(name = "ProteinDIPs")
     private Collection<ProteinDIP> proteinDIP;
     @ElementCollection
     @CollectionTable(
             name = "ProteinMINT",
             joinColumns
             = @JoinColumn(name = "Protein_WID"))
-    @XmlElementWrapper( name="ProteinMINTs" )
+    @XmlElementWrapper(name = "ProteinMINTs")
     private Collection<ProteinMINT> proteinMINT;
     @ElementCollection
     @CollectionTable(
             name = "ProteinDrugBank",
             joinColumns
             = @JoinColumn(name = "Protein_WID"))
-    @XmlElementWrapper( name="ProteinDrugBanks" )
+    @XmlElementWrapper(name = "ProteinDrugBanks")
     private Collection<ProteinDrugBank> proteinDrugBank;
     @ElementCollection
     @CollectionTable(
             name = "ProteinPFAM",
             joinColumns
             = @JoinColumn(name = "Protein_WID"))
-    @XmlElementWrapper( name="ProteinPFAMs" )
+    @XmlElementWrapper(name = "ProteinPFAMs")
     private Collection<ProteinPFAM> proteinPFAM;
 
     // External Protein relationship
@@ -236,7 +238,7 @@ public class Protein implements Serializable {
             = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
             inverseJoinColumns
             = @JoinColumn(name = "Taxonomy_WID", referencedColumnName = "WID"))
-    @XmlElementWrapper( name="TaxonomyHosts" )
+    @XmlElementWrapper(name = "TaxonomyHosts")
     private Set<Taxonomy> taxonomyHost;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_ONTOLOGY,
@@ -244,7 +246,7 @@ public class Protein implements Serializable {
             = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
             inverseJoinColumns
             = @JoinColumn(name = "Ontology_WID", referencedColumnName = "WID"))
-    @XmlElementWrapper( name="Ontologies" )
+    @XmlElementWrapper(name = "Ontologies")
     private Set<Ontology> ontology;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_GENEINFO,
@@ -266,7 +268,7 @@ public class Protein implements Serializable {
             = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
             inverseJoinColumns
             = @JoinColumn(name = "MIFEntryInteraction_WID", referencedColumnName = "WID"))
-    @XmlElementWrapper( name="MIFEntryInteractions" )
+    @XmlElementWrapper(name = "MIFEntryInteractions")
     private Set<MIFEntryInteraction> mIFEntryInteraction;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
     private Set<UniRefMember> uniRefMember;
@@ -276,7 +278,7 @@ public class Protein implements Serializable {
             = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
             inverseJoinColumns
             = @JoinColumn(name = "UniRefEntry_WID", referencedColumnName = "WID"))
-    @XmlElementWrapper( name="UniRefEntrys" )
+    @XmlElementWrapper(name = "UniRefEntrys")
     private Set<UniRefEntry> uniRefEntry;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_DRUGBANK,
@@ -284,7 +286,7 @@ public class Protein implements Serializable {
             = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
             inverseJoinColumns
             = @JoinColumn(name = "DrugBank_WID", referencedColumnName = "WID"))
-    @XmlElementWrapper( name="DrugBanks" )
+    @XmlElementWrapper(name = "DrugBanks")
     private Set<DrugBank> drugBank;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_DRUGBANKASENZYME,
@@ -292,7 +294,7 @@ public class Protein implements Serializable {
             = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
             inverseJoinColumns
             = @JoinColumn(name = "DrugBank_WID", referencedColumnName = "WID"))
-    @XmlElementWrapper( name="DrugBankAsEnzymes" )
+    @XmlElementWrapper(name = "DrugBankAsEnzymes")
     private Set<DrugBank> drugBankAsEnzyme;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_DRUGBANKASTRANSPORTERS,
@@ -300,7 +302,7 @@ public class Protein implements Serializable {
             = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
             inverseJoinColumns
             = @JoinColumn(name = "DrugBank_WID", referencedColumnName = "WID"))
-    @XmlElementWrapper( name="DrugBankAsTransporters" )
+    @XmlElementWrapper(name = "DrugBankAsTransporters")
     private Set<DrugBank> drugBankAsTransporters;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_DRUGBANKASCARRIERS,
@@ -308,7 +310,7 @@ public class Protein implements Serializable {
             = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
             inverseJoinColumns
             = @JoinColumn(name = "DrugBank_WID", referencedColumnName = "WID"))
-    @XmlElementWrapper( name="DrugBankAsCarriers" )
+    @XmlElementWrapper(name = "DrugBankAsCarriers")
     private Set<DrugBank> drugBankAsCarriers;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_KEGGENZYME,
@@ -316,7 +318,7 @@ public class Protein implements Serializable {
             = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
             inverseJoinColumns
             = @JoinColumn(name = "KEGGEnzyme_WID", referencedColumnName = "WID"))
-    @XmlElementWrapper( name="KEGGEnzymes" )
+    @XmlElementWrapper(name = "KEGGEnzymes")
     private Set<KEGGEnzyme> kEGGEnzymes;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = KEGGTables.KEGGPATHWAY_HAS_PROTEN,
@@ -324,7 +326,7 @@ public class Protein implements Serializable {
             = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
             inverseJoinColumns
             = @JoinColumn(name = "KEGGPathway_WID", referencedColumnName = "WID"))
-    @XmlElementWrapper( name="KEGGPathways" )
+    @XmlElementWrapper(name = "KEGGPathways")
     private Set<KEGGPathway> kEGGPathways;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = PFamTables.PFAMAREGFULLINSIGNIFICANT,
@@ -332,7 +334,7 @@ public class Protein implements Serializable {
             = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
             inverseJoinColumns
             = @JoinColumn(name = "PfamA_WID", referencedColumnName = "WID"))
-    @XmlElementWrapper( name="PfamAInsignificants" )
+    @XmlElementWrapper(name = "PfamAInsignificants")
     private Set<PfamAbioWH> pfamAInsignificant;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = PFamTables.PFAMAREGFULLSIGNIFICANT,
@@ -340,8 +342,11 @@ public class Protein implements Serializable {
             = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
             inverseJoinColumns
             = @JoinColumn(name = "PfamA_WID", referencedColumnName = "WID"))
-    @XmlElementWrapper( name="PfamASignificants" )
+    @XmlElementWrapper(name = "PfamASignificants")
     private Set<PfamAbioWH> pfamASignificant;
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "protein")
+    @MapKey(name = "pIRSFhasProteinPK")
+    private Map<PirsfhasProteinPK, PirsfhasProtein> pIRSFhasProtein;
 
     public Protein() {
     }
@@ -409,6 +414,15 @@ public class Protein implements Serializable {
             return proteinLongName.iterator().next().getName();
         }
         return null;
+    }
+
+    @XmlTransient
+    public Map<PirsfhasProteinPK, PirsfhasProtein> getpIRSFhasProtein() {
+        return pIRSFhasProtein;
+    }
+
+    public void setpIRSFhasProtein(Map<PirsfhasProteinPK, PirsfhasProtein> pIRSFhasProtein) {
+        this.pIRSFhasProtein = pIRSFhasProtein;
     }
 
     public Long getWid() {

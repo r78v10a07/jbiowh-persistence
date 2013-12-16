@@ -139,6 +139,8 @@
     <class>org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomyGenCode</class>
     <class>org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomySynonymNameClass</class>
     <class>org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomyUnParseCitation</class>
+    <class>org.jbiowhpersistence.datasets.protgroup.pirsf.entities.Pirsf</class>
+    <class>org.jbiowhpersistence.datasets.protgroup.pirsf.entities.PIRSFhasProtein</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.logging.level" value="OFF"/>

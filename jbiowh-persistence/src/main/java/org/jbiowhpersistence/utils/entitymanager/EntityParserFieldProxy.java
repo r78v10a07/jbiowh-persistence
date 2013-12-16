@@ -25,6 +25,7 @@ import org.jbiowhpersistence.datasets.protclust.entities.UniRefMember;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
 import org.jbiowhpersistence.datasets.protein.search.SearchProtein;
 import org.jbiowhpersistence.datasets.protein.util.ProteinToFasta;
+import org.jbiowhpersistence.datasets.protgroup.pirsf.entities.Pirsf;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
 
 /**
@@ -32,6 +33,7 @@ import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
  *
  * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2013-03-19 09:38:47 +0100
  * (Tue, 19 Mar 2013) $ $LastChangedRevision: 591 $
+ *
  * @since Feb 15, 2012
  */
 public class EntityParserFieldProxy {
@@ -106,6 +108,8 @@ public class EntityParserFieldProxy {
             return Integer.toString(((MIFEntryInteraction) data).getId());
         } else if (data instanceof GeneBank) {
             return Integer.toString(((GeneBank) data).getGi());
+        } else if (data instanceof Pirsf) {
+            return ((Pirsf) data).getpIRSFnumber();
         }
         return null;
     }
@@ -153,6 +157,8 @@ public class EntityParserFieldProxy {
             return new String[]{((PfamAbioWH) data).getPfamAacc(), ((PfamAbioWH) data).getPfamAid()};
         } else if (data instanceof GeneBank) {
             return new String[]{new Long(((GeneBank) data).getGi()).toString(), ((GeneBank) data).getLocusName(), ((GeneBank) data).getLocation()};
+        } else if (data instanceof Pirsf) {
+            return new String[]{((Pirsf) data).getpIRSFnumber(), ((Pirsf) data).getName(), ((Pirsf) data).getCurationStatus(), ((Pirsf) data).getParent()};
         }
         return null;
     }
@@ -318,6 +324,10 @@ public class EntityParserFieldProxy {
             if (((GeneBank) data).getGi() == new Integer(field)) {
                 return true;
             }
+        } else if (data instanceof Pirsf) {
+            if (((Pirsf) data).getpIRSFnumber().equals(field)) {
+                return true;
+            }
         }
         return false;
     }
@@ -361,6 +371,8 @@ public class EntityParserFieldProxy {
             return ((PfamAbioWH) data).getWid();
         } else if (data instanceof GeneBank) {
             return ((GeneBank) data).getWid();
+        } else if (data instanceof Pirsf) {
+            return ((Pirsf) data).getWid();
         }
         return null;
     }
