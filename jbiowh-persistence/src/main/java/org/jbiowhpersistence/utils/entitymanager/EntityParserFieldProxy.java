@@ -1,5 +1,6 @@
 package org.jbiowhpersistence.utils.entitymanager;
 
+import com.mxgraph.util.mxConstants;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -375,5 +376,82 @@ public class EntityParserFieldProxy {
             return ((Pirsf) data).getWid();
         }
         return null;
+    }
+
+    /**
+     * Get the identifier for each DataSet entity
+     *
+     * @param data the data object to extract its id
+     * @return a String object
+     */
+    public String getJgraphStyle(Object data) {
+        StringBuilder buider = new StringBuilder();
+        if (data instanceof Taxonomy) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_HEXAGON + ";fillColor=#1ffa0f;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=black;");
+        } else if (data instanceof Ontology) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_HEXAGON + ";fillColor=#e708e6;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=white;");
+        } else if (data instanceof GeneInfo) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_RECTANGLE + ";fillColor=#e41117;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=white;");
+        } else if (data instanceof GenePTT) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_RECTANGLE + ";fillColor=#e46b11;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=white;");
+        } else if (data instanceof Protein) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_RECTANGLE + ";fillColor=#1ee7eb;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=black;");
+        } else if (data instanceof DrugBank) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_ELLIPSE + ";fillColor=#33F5B1;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=black;");
+        } else if (data instanceof KEGGCompound) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_ELLIPSE + ";fillColor=#8ef6b1;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=black;");
+        } else if (data instanceof KEGGEnzyme) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_RECTANGLE + ";fillColor=#0f878a;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=white;");
+        } else if (data instanceof KEGGGene) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_RECTANGLE + ";fillColor=#e41178;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=white;");
+        } else if (data instanceof KEGGGlycan) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_ELLIPSE + ";fillColor=#c1f68e;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=black;");
+        } else if (data instanceof KEGGReaction) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_TRIANGLE + ";fillColor=#8611e4;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=white;");
+        } else if (data instanceof KEGGPathway) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_RHOMBUS + ";fillColor=yellow;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=black;");
+        } else if (data instanceof UniRefEntry) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_ELLIPSE + ";fillColor=#d111e4;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=white;");
+        } else if (data instanceof UniRefMember) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_RECTANGLE + ";fillColor=#86d93a;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=black;");
+        } else if (data instanceof OMIM) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_RHOMBUS + ";fillColor=#d0e3c0;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=black;");
+        } else if (data instanceof PfamAbioWH) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_ELLIPSE + ";fillColor=#f9e648;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=black;");
+        } else if (data instanceof MIFEntrySet) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_HEXAGON + ";fillColor=#f6600e;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=black;");
+        } else if (data instanceof MIFEntrySetEntry) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_RHOMBUS + ";fillColor=#db1462;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=white;");
+        } else if (data instanceof MIFEntryInteraction) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_ELLIPSE + ";fillColor=#26e359;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=black;");
+        } else if (data instanceof GeneBank) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_RECTANGLE + ";fillColor=#e41117;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=white;");
+        } else if (data instanceof Pirsf) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_RECTANGLE + ";fillColor=#e41117;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=white;");
+        }
+        buider.append(mxConstants.STYLE_FONTSIZE).append("=8;");
+        buider.append(mxConstants.STYLE_ALIGN).append("=" + mxConstants.ALIGN_CENTER);
+        return buider.toString();
     }
 }

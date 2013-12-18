@@ -3,6 +3,7 @@ package org.jbiowhpersistence.utils.entitymanager;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
@@ -248,6 +249,15 @@ public class JBioWHPersistence {
     }
 
     /**
+     * Return a new EntityManager
+     *
+     * @return a EntityManager object
+     */
+    public EntityManager createEntityManager() {
+        return getWHEntityManager().createEntityManager();
+    }
+
+    /**
      * Return the Persistence EntityManagerFactory
      *
      * @param url
@@ -258,6 +268,16 @@ public class JBioWHPersistence {
             return getWHEntityManager();
         }
         return entityManagers.get(url);
+    }
+
+    /**
+     * Return a new EntityManager
+     *
+     * @param url the URL
+     * @return a EntityManager object
+     */
+    public EntityManager createEntityManager(String url) {
+        return getWHEntityManager(url).createEntityManager();
     }
 
     //TODO Change name
@@ -278,7 +298,7 @@ public class JBioWHPersistence {
                 properties.put(PersistenceUnitProperties.JDBC_PASSWORD, factory.getPasswd());
                 properties.put(PersistenceUnitProperties.JDBC_DRIVER, factory.getDriver());
                 properties.put(PersistenceUnitProperties.JDBC_USER, factory.getUser());
-                properties.put(PersistenceUnitProperties.LOGGING_LEVEL, "INFO");
+                properties.put(PersistenceUnitProperties.LOGGING_LEVEL, "OFF");
 
                 entityManager = Persistence.createEntityManagerFactory(("JBioWH"), properties);
                 entityManagers.put(factory.getUrl(), entityManager);
@@ -287,6 +307,16 @@ public class JBioWHPersistence {
             return entityManager;
         }
         return null;
+    }
+
+    /**
+     * Return a new EntityManager
+     *
+     * @param factory
+     * @return a EntityManager object
+     */
+    public EntityManager createEntityManager(JBioWHUserData factory) {
+        return getWHEntityManager(factory).createEntityManager();
     }
 
     //TODO Change name
