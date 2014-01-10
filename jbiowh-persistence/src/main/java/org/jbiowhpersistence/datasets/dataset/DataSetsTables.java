@@ -6,12 +6,15 @@ import org.jbiowhpersistence.datasets.disease.omim.OMIMTables;
 import org.jbiowhpersistence.datasets.domain.pfam.PFamTables;
 import org.jbiowhpersistence.datasets.drug.drugbank.DrugBankTables;
 import org.jbiowhpersistence.datasets.gene.gene.GeneTables;
+import org.jbiowhpersistence.datasets.gene.genebank.GeneBankTables;
 import org.jbiowhpersistence.datasets.gene.genome.GenePTTTables;
 import org.jbiowhpersistence.datasets.ontology.OntologyTables;
 import org.jbiowhpersistence.datasets.pathway.kegg.KEGGTables;
 import org.jbiowhpersistence.datasets.ppi.MIF25Tables;
 import org.jbiowhpersistence.datasets.protclust.UniRefTables;
 import org.jbiowhpersistence.datasets.protein.ProteinTables;
+import org.jbiowhpersistence.datasets.protgroup.cog.COGTables;
+import org.jbiowhpersistence.datasets.protgroup.pirsf.PirsfTables;
 import org.jbiowhpersistence.datasets.taxonomy.TaxonomyTables;
 
 /**
@@ -57,7 +60,9 @@ public class DataSetsTables {
             tables.addAll(TaxonomyTables.getInstance().getTables());
             tables.addAll(OMIMTables.getInstance().getTables());
             tables.addAll(PFamTables.getInstance().getTables());
-            tables.addAll(GenePTTTables.getInstance().getTables());
+            tables.addAll(GeneBankTables.getInstance().getTables());
+            tables.addAll(PirsfTables.getInstance().getTables());
+            tables.addAll(COGTables.getInstance().getTables());
         }
         return tables;
     }

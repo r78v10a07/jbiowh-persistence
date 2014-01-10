@@ -10,7 +10,6 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import org.jbiowhpersistence.datasets.ontology.entities.OntologySynonym;
 import org.jbiowhpersistence.datasets.protein.controller.ProteinJpaController;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
 import org.jbiowhpersistence.datasets.protgroup.pirsf.entities.Pirsf;

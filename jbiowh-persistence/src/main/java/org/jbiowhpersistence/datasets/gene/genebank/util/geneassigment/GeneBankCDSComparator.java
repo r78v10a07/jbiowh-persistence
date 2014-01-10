@@ -1,4 +1,4 @@
-package org.jbiowhpersistence.datasets.gene.genebank.util;
+package org.jbiowhpersistence.datasets.gene.genebank.util.geneassigment;
 
 import java.util.Comparator;
 import java.util.regex.Matcher;

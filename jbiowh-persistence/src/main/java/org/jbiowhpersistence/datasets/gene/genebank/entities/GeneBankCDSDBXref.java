@@ -8,7 +8,8 @@ import javax.persistence.Embeddable;
 /**
  * This class is the GeneBankCDSDBXref entity
  *
- * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2013-05-29 11:24:54 +0200 (Wed, 29 May 2013) $ $LastChangedRevision: 591 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2013-05-29 11:24:54 +0200
+ * (Wed, 29 May 2013) $ $LastChangedRevision: 591 $
  *
  * @since May 2, 2013
  */
@@ -21,6 +22,14 @@ public class GeneBankCDSDBXref implements Serializable {
     @Basic(optional = false)
     @Column(name = "DBIdent")
     private String dBIdent;
+
+    public GeneBankCDSDBXref() {
+    }
+
+    public GeneBankCDSDBXref(String dBXref, String dBIdent) {
+        this.dBXref = dBXref;
+        this.dBIdent = dBIdent;
+    }
 
     public String getdBXref() {
         return dBXref;

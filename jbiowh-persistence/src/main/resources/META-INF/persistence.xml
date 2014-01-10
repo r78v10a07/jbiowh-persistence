@@ -141,6 +141,18 @@
     <class>org.jbiowhpersistence.datasets.taxonomy.entities.TaxonomyUnParseCitation</class>
     <class>org.jbiowhpersistence.datasets.protgroup.pirsf.entities.Pirsf</class>
     <class>org.jbiowhpersistence.datasets.protgroup.pirsf.entities.PIRSFhasProtein</class>
+    <class>org.jbiowhpersistence.datasets.protgroup.cog.entities.COGMemberTaxId</class>
+    <class>org.jbiowhpersistence.datasets.protgroup.cog.entities.COGMemberhasGi</class>
+    <class>org.jbiowhpersistence.datasets.protgroup.cog.entities.COGFuncClass</class>
+    <class>org.jbiowhpersistence.datasets.protgroup.cog.entities.COGOrthologous</class>
+    <class>org.jbiowhpersistence.datasets.protgroup.cog.entities.COGFuncClassGroups</class>
+    <class>org.jbiowhpersistence.datasets.protgroup.cog.entities.COGOrthologousGroup</class>
+    <class>org.jbiowhpersistence.datasets.protgroup.cog.entities.COGFuncClassGroup</class>
+    <class>org.jbiowhpersistence.datasets.protgroup.orthoxml.entities.OrthoXMLGroup</class>
+    <class>org.jbiowhpersistence.datasets.protgroup.orthoxml.entities.OrthoXML</class>
+    <class>org.jbiowhpersistence.datasets.protgroup.orthoxml.entities.OrthoXMLSpecie</class>
+    <class>org.jbiowhpersistence.datasets.protgroup.orthoxml.entities.OrthoXMLGroupGeneRef</class>
+    <class>org.jbiowhpersistence.datasets.protgroup.orthoxml.entities.OrthoXMLSpeciesDatabase</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.logging.level" value="OFF"/>

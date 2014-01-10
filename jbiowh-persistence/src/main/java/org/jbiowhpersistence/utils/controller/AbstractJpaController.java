@@ -34,16 +34,16 @@ import org.jbiowhpersistence.datasets.protclust.entities.UniRefEntry;
 import org.jbiowhpersistence.datasets.protclust.entities.UniRefMember;
 import org.jbiowhpersistence.datasets.protein.controller.ProteinJpaController;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
+import org.jbiowhpersistence.datasets.protgroup.cog.controller.COGOrthologousGroupJpaController;
+import org.jbiowhpersistence.datasets.protgroup.cog.entities.COGOrthologousGroup;
 import org.jbiowhpersistence.datasets.taxonomy.controller.TaxonomyJpaController;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
 
 /**
  * This Class is the abstract class to JPA controller
  *
- * @param <T> 
- * $Author: r78v10a07@gmail.com $ 
- * $LastChangedDate: 2013-05-29 11:24:54 +0200 (Wed, 29 May 2013) $
- * $LastChangedRevision: 591 $
+ * @param <T> $Author: r78v10a07@gmail.com $ $LastChangedDate: 2013-05-29
+ * 11:24:54 +0200 (Wed, 29 May 2013) $ $LastChangedRevision: 591 $
  * @since Nov 17, 2010
  */
 public abstract class AbstractJpaController<T> {
@@ -101,6 +101,34 @@ public abstract class AbstractJpaController<T> {
             taxController.create(object);
             return em.getReference(Taxonomy.class, object.getWid());
         }
+    }
+
+    /**
+     * Return the Taxonomy list the be persisted
+     *
+     * @param emf Interface used to interact with the entity manager factory for
+     * the persistence unit
+     * @param em Interface used to interact with the persistence context
+     * @param objectList the Taxonomy list the be persisted
+     * @return the COGOrthologousGroup list the be persisted
+     * @throws Exception
+     */
+    protected Set<Taxonomy> createTaxonomy(EntityManagerFactory emf, EntityManager em, Set<Taxonomy> objectList) throws Exception {
+        if (objectList != null && !objectList.isEmpty()) {
+            TaxonomyJpaController instance = new TaxonomyJpaController(emf);
+            Set<Taxonomy> attachObjSet = new HashSet();
+            for (Taxonomy object : objectList) {
+                Taxonomy objectOnDB = em.find(Taxonomy.class, object.getWid());
+                if (objectOnDB != null) {
+                    attachObjSet.add(objectOnDB);
+                } else {
+                    instance.create(object);
+                    attachObjSet.add(em.getReference(Taxonomy.class, object.getWid()));
+                }
+            }
+            return attachObjSet;
+        }
+        return new HashSet();
     }
 
     /**
@@ -249,6 +277,35 @@ public abstract class AbstractJpaController<T> {
     }
 
     /**
+     * Return the COGOrthologousGroup list the be persisted
+     *
+     * @param emf Interface used to interact with the entity manager factory for
+     * the persistence unit
+     * @param em Interface used to interact with the persistence context
+     * @param objectList the COGOrthologousGroup list the be persisted
+     * @return the COGOrthologousGroup list the be persisted
+     * @throws Exception
+     */
+    protected Set<COGOrthologousGroup> createCOGOrthologousGroup(EntityManagerFactory emf, EntityManager em, Set<COGOrthologousGroup> objectList) throws Exception {
+        if (objectList != null && !objectList.isEmpty()) {
+            COGOrthologousGroupJpaController instance = new COGOrthologousGroupJpaController(emf);
+            Set<COGOrthologousGroup> attachObjSet = new HashSet();
+            for (COGOrthologousGroup object : objectList) {
+                COGOrthologousGroup objectOnDB = em.find(COGOrthologousGroup.class, object.getWid());
+                if (objectOnDB != null) {
+                    attachObjSet.add(objectOnDB);
+                } else {
+                    object.setRelationsToNull();
+                    instance.create(object);
+                    attachObjSet.add(em.getReference(COGOrthologousGroup.class, object.getWid()));
+                }
+            }
+            return attachObjSet;
+        }
+        return new HashSet();
+    }
+
+    /**
      * Return the KEGGGene list the be persisted
      *
      * @param emf Interface used to interact with the entity manager factory for
@@ -342,6 +399,7 @@ public abstract class AbstractJpaController<T> {
      * the persistence unit
      * @param em Interface used to interact with the persistence context
      * @param objectList the UniRefEntry list the be persisted
+     * @param protein
      * @return the UniRefEntry list the be persisted
      * @throws Exception
      */
@@ -689,7 +747,7 @@ public abstract class AbstractJpaController<T> {
         em.close();
         return result;
     }
-    
+
     /**
      * This method create and perform the NamedQuery over the selected entity
      * with defined parameters

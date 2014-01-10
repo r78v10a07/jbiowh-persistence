@@ -26,6 +26,8 @@ import org.jbiowhpersistence.datasets.protclust.entities.UniRefMember;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
 import org.jbiowhpersistence.datasets.protein.search.SearchProtein;
 import org.jbiowhpersistence.datasets.protein.util.ProteinToFasta;
+import org.jbiowhpersistence.datasets.protgroup.cog.entities.COGOrthologousGroup;
+import org.jbiowhpersistence.datasets.protgroup.orthoxml.entities.OrthoXMLGroup;
 import org.jbiowhpersistence.datasets.protgroup.pirsf.entities.Pirsf;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
 
@@ -111,6 +113,10 @@ public class EntityParserFieldProxy {
             return Integer.toString(((GeneBank) data).getGi());
         } else if (data instanceof Pirsf) {
             return ((Pirsf) data).getpIRSFnumber();
+        } else if (data instanceof COGOrthologousGroup) {
+            return ((COGOrthologousGroup) data).getId();
+        } else if (data instanceof OrthoXMLGroup) {
+            return ((OrthoXMLGroup) data).getId();
         }
         return null;
     }
@@ -160,6 +166,10 @@ public class EntityParserFieldProxy {
             return new String[]{new Long(((GeneBank) data).getGi()).toString(), ((GeneBank) data).getLocusName(), ((GeneBank) data).getLocation()};
         } else if (data instanceof Pirsf) {
             return new String[]{((Pirsf) data).getpIRSFnumber(), ((Pirsf) data).getName(), ((Pirsf) data).getCurationStatus(), ((Pirsf) data).getParent()};
+        } else if (data instanceof COGOrthologousGroup) {
+            return new String[]{((COGOrthologousGroup) data).getId(), ((COGOrthologousGroup) data).getGroupFunction()};
+        } else if (data instanceof OrthoXMLGroup) {
+            return new String[]{((OrthoXMLGroup) data).getId()};
         }
         return null;
     }
@@ -329,6 +339,14 @@ public class EntityParserFieldProxy {
             if (((Pirsf) data).getpIRSFnumber().equals(field)) {
                 return true;
             }
+        } else if (data instanceof COGOrthologousGroup) {
+            if (((COGOrthologousGroup) data).getId().equals(field)) {
+                return true;
+            }
+        } else if (data instanceof OrthoXMLGroup) {
+            if (((OrthoXMLGroup) data).getId().equals(field)) {
+                return true;
+            }
         }
         return false;
     }
@@ -374,6 +392,10 @@ public class EntityParserFieldProxy {
             return ((GeneBank) data).getWid();
         } else if (data instanceof Pirsf) {
             return ((Pirsf) data).getWid();
+        } else if (data instanceof COGOrthologousGroup) {
+            return ((COGOrthologousGroup) data).getWid();
+        } else if (data instanceof OrthoXMLGroup) {
+            return ((OrthoXMLGroup) data).getWid();
         }
         return null;
     }
@@ -447,6 +469,12 @@ public class EntityParserFieldProxy {
             buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_RECTANGLE + ";fillColor=#e41117;");
             buider.append(mxConstants.STYLE_FONTCOLOR).append("=white;");
         } else if (data instanceof Pirsf) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_RECTANGLE + ";fillColor=#e41117;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=white;");
+        } else if (data instanceof COGOrthologousGroup) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_RECTANGLE + ";fillColor=#e41117;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=white;");
+        } else if (data instanceof OrthoXMLGroup) {
             buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_RECTANGLE + ";fillColor=#e41117;");
             buider.append(mxConstants.STYLE_FONTCOLOR).append("=white;");
         }
