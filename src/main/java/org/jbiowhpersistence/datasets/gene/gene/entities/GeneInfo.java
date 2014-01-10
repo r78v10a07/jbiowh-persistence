@@ -21,6 +21,8 @@ import org.jbiowhpersistence.datasets.pathway.kegg.entities.gene.KEGGGene;
 import org.jbiowhpersistence.datasets.pathway.kegg.entities.pathway.KEGGPathway;
 import org.jbiowhpersistence.datasets.protein.ProteinTables;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
+import org.jbiowhpersistence.datasets.protgroup.cog.COGTables;
+import org.jbiowhpersistence.datasets.protgroup.cog.entities.COGOrthologousGroup;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
 
 /**
@@ -56,7 +58,7 @@ import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
     @NamedQuery(name = "GeneInfo.findBySynonym", query = "SELECT g FROM GeneInfo g INNER JOIN g.geneInfoSynonym p WHERE p.synonyms like :synonyms"),
     @NamedQuery(name = "GeneInfo.findByDBXRef", query = "SELECT g FROM GeneInfo g INNER JOIN g.geneInfoDBXref p WHERE p.id like :id")})
 public class GeneInfo implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -147,6 +149,14 @@ public class GeneInfo implements Serializable {
             = @JoinColumn(name = "OMIM_WID", referencedColumnName = "WID"))
     @XmlElementWrapper(name = "OMIMs")
     private Set<OMIM> omim;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = COGTables.COGORTHOLOGOUSGROUP_HAS_GENEINFO,
+            joinColumns
+            = @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "COGOrthologousGroup_WID", referencedColumnName = "WID"))
+    @XmlElementWrapper(name = "COGOrthologousGroups")
+    private Set<COGOrthologousGroup> cogOrthologousGroup;
     // Internal Gene relationship        
 
     @ElementCollection
@@ -219,304 +229,314 @@ public class GeneInfo implements Serializable {
             = @JoinColumn(name = "GeneInfo_WID"))
     @XmlElementWrapper(name = "Gene2RNANucleotides")
     private Collection<Gene2RNANucleotide> gene2RNANucleotide;
-
+    
     public GeneInfo() {
     }
-
+    
     public GeneInfo(Long wid) {
         this.wid = wid;
     }
-
+    
     public GeneInfo(Long wid, long geneID, long taxID, long dataSetWID) {
         this.wid = wid;
         this.geneID = geneID;
         this.taxID = taxID;
         this.dataSetWID = dataSetWID;
     }
-
+    
     public void setRelationsToNull() {
         setProtein(null);
         setkEGGGenes(null);
         setkEGGPathways(null);
         setOmim(null);
+        setCogOrthologousGroup(null);
     }
-
+    
+    @XmlTransient
+    public Set<COGOrthologousGroup> getCogOrthologousGroup() {
+        return cogOrthologousGroup;
+    }
+    
+    public void setCogOrthologousGroup(Set<COGOrthologousGroup> cogOrthologousGroup) {
+        this.cogOrthologousGroup = cogOrthologousGroup;
+    }
+    
     public Long getWid() {
         return wid;
     }
-
+    
     public void setWid(Long wid) {
         this.wid = wid;
     }
-
+    
     public long getGeneID() {
         return geneID;
     }
-
+    
     public void setGeneID(long geneID) {
         this.geneID = geneID;
     }
-
+    
     public long getTaxID() {
         return taxID;
     }
-
+    
     public void setTaxID(long taxID) {
         this.taxID = taxID;
     }
-
+    
     public String getSymbol() {
         return symbol;
     }
-
+    
     public void setSymbol(String symbol) {
         this.symbol = symbol;
     }
-
+    
     public String getLocusTag() {
         return locusTag;
     }
-
+    
     public void setLocusTag(String locusTag) {
         this.locusTag = locusTag;
     }
-
+    
     public String getChromosome() {
         return chromosome;
     }
-
+    
     public void setChromosome(String chromosome) {
         this.chromosome = chromosome;
     }
-
+    
     public String getMapLocation() {
         return mapLocation;
     }
-
+    
     public void setMapLocation(String mapLocation) {
         this.mapLocation = mapLocation;
     }
-
+    
     public String getDescription() {
         return description;
     }
-
+    
     public void setDescription(String description) {
         this.description = description;
     }
-
+    
     public String getTypeOfGene() {
         return typeOfGene;
     }
-
+    
     public void setTypeOfGene(String typeOfGene) {
         this.typeOfGene = typeOfGene;
     }
-
+    
     public String getSymbolFromNomenclature() {
         return symbolFromNomenclature;
     }
-
+    
     public void setSymbolFromNomenclature(String symbolFromNomenclature) {
         this.symbolFromNomenclature = symbolFromNomenclature;
     }
-
+    
     public String getFullNameFromNomenclatureAuthority() {
         return fullNameFromNomenclatureAuthority;
     }
-
+    
     public void setFullNameFromNomenclatureAuthority(String fullNameFromNomenclatureAuthority) {
         this.fullNameFromNomenclatureAuthority = fullNameFromNomenclatureAuthority;
     }
-
+    
     public String getNomenclatureStatus() {
         return nomenclatureStatus;
     }
-
+    
     public void setNomenclatureStatus(String nomenclatureStatus) {
         this.nomenclatureStatus = nomenclatureStatus;
     }
-
+    
     public String getOtherDesignations() {
         return otherDesignations;
     }
-
+    
     public void setOtherDesignations(String otherDesignations) {
         this.otherDesignations = otherDesignations;
     }
-
+    
     public Date getModificationDate() {
         return modificationDate;
     }
-
+    
     public void setModificationDate(Date modificationDate) {
         this.modificationDate = modificationDate;
     }
-
+    
     public long getDataSetWID() {
         return dataSetWID;
     }
-
+    
     public void setDataSetWID(long dataSetWID) {
         this.dataSetWID = dataSetWID;
     }
-
+    
     public DataSet getDataSet() {
         return dataSet;
     }
-
+    
     public void setDataSet(DataSet dataSet) {
         this.dataSet = dataSet;
     }
-
+    
     public Taxonomy getTaxonomy() {
         return taxonomy;
     }
-
+    
     public void setTaxonomy(Taxonomy taxonomy) {
         this.taxonomy = taxonomy;
     }
-
+    
     public GenePTT getGenePTT() {
         return genePTT;
     }
-
+    
     public void setGenePTT(GenePTT genePTT) {
         this.genePTT = genePTT;
     }
-
+    
     public Set<GeneRNT> getGeneRNT() {
         return geneRNT;
     }
-
+    
     public void setGeneRNT(Set<GeneRNT> geneRNT) {
         this.geneRNT = geneRNT;
     }
-
+    
     public Set<Ontology> getOntology() {
         return ontology;
     }
-
+    
     public void setOntology(Set<Ontology> ontology) {
         this.ontology = ontology;
     }
-
+    
     @XmlTransient
     public Set<Protein> getProtein() {
         return protein;
     }
-
+    
     public void setProtein(Set<Protein> protein) {
         this.protein = protein;
     }
-
+    
     @XmlTransient
     public Set<KEGGGene> getkEGGGenes() {
         return kEGGGenes;
     }
-
+    
     public void setkEGGGenes(Set<KEGGGene> kEGGGenes) {
         this.kEGGGenes = kEGGGenes;
     }
-
+    
     @XmlTransient
     public Set<KEGGPathway> getkEGGPathways() {
         return kEGGPathways;
     }
-
+    
     public void setkEGGPathways(Set<KEGGPathway> kEGGPathways) {
         this.kEGGPathways = kEGGPathways;
     }
-
+    
     public Set<OMIM> getOmim() {
         return omim;
     }
-
+    
     public void setOmim(Set<OMIM> omim) {
         this.omim = omim;
     }
-
+    
     public Collection<Gene2Ensembl> getGene2Ensembl() {
         return gene2Ensembl;
     }
-
+    
     public void setGene2Ensembl(Collection<Gene2Ensembl> gene2Ensembl) {
         this.gene2Ensembl = gene2Ensembl;
     }
-
+    
     @XmlTransient
     public Collection<GeneInfoSynonyms> getGeneInfoSynonym() {
         return geneInfoSynonym;
     }
-
+    
     public void setGeneInfoSynonym(Collection<GeneInfoSynonyms> geneInfoSynonym) {
         this.geneInfoSynonym = geneInfoSynonym;
     }
-
+    
     public Collection<GeneInfoDBXrefs> getGeneInfoDBXref() {
         return geneInfoDBXref;
     }
-
+    
     public void setGeneInfoDBXref(Collection<GeneInfoDBXrefs> geneInfoDBXref) {
         this.geneInfoDBXref = geneInfoDBXref;
     }
-
+    
     public Collection<Gene2PMID> getGene2PMID() {
         return gene2PMID;
     }
-
+    
     public void setGene2PMID(Collection<Gene2PMID> gene2PMID) {
         this.gene2PMID = gene2PMID;
     }
-
+    
     public Collection<Gene2STS> getGene2STS() {
         return gene2STS;
     }
-
+    
     public void setGene2STS(Collection<Gene2STS> gene2STS) {
         this.gene2STS = gene2STS;
     }
-
+    
     public Collection<Gene2UniGene> getGene2UniGene() {
         return gene2UniGene;
     }
-
+    
     public void setGene2UniGene(Collection<Gene2UniGene> gene2UniGene) {
         this.gene2UniGene = gene2UniGene;
     }
-
+    
     public Collection<GeneGroup> getGeneGroup() {
         return geneGroup;
     }
-
+    
     public void setGeneGroup(Collection<GeneGroup> geneGroup) {
         this.geneGroup = geneGroup;
     }
-
+    
     public Collection<Gene2ProteinAccession> getGene2ProteinAccession() {
         return gene2ProteinAccession;
     }
-
+    
     public void setGene2ProteinAccession(Collection<Gene2ProteinAccession> gene2ProteinAccession) {
         this.gene2ProteinAccession = gene2ProteinAccession;
     }
-
+    
     public Collection<Gene2GenomicNucleotide> getGene2GenomicNucleotide() {
         return gene2GenomicNucleotide;
     }
-
+    
     public void setGene2GenomicNucleotide(Collection<Gene2GenomicNucleotide> gene2GenomicNucleotide) {
         this.gene2GenomicNucleotide = gene2GenomicNucleotide;
     }
-
+    
     public Collection<Gene2RNANucleotide> getGene2RNANucleotide() {
         return gene2RNANucleotide;
     }
-
+    
     public void setGene2RNANucleotide(Collection<Gene2RNANucleotide> gene2RNANucleotide) {
         this.gene2RNANucleotide = gene2RNANucleotide;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -524,7 +544,7 @@ public class GeneInfo implements Serializable {
         hash = 79 * hash + (int) (this.geneID ^ (this.geneID >>> 32));
         return hash;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -608,12 +628,12 @@ public class GeneInfo implements Serializable {
         }
         return this.gene2RNANucleotide == other.gene2RNANucleotide || (this.gene2RNANucleotide != null && this.gene2RNANucleotide.equals(other.gene2RNANucleotide));
     }
-
+    
     @Override
     public String toString() {
         String tSynonym = null;
         StringBuilder toAdd = new StringBuilder();
-
+        
         if (taxonomy != null) {
             tSynonym = taxonomy.getTaxonomySynonym();
         }
@@ -667,7 +687,7 @@ public class GeneInfo implements Serializable {
                 toAdd.append("\t").append(g).append("\n");
             }
         }
-
+        
         return "GeneInfo{"
                 + " wid=" + wid
                 + " taxId=" + taxID

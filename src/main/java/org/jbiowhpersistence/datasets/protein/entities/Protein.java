@@ -24,6 +24,8 @@ import org.jbiowhpersistence.datasets.protclust.UniRefTables;
 import org.jbiowhpersistence.datasets.protclust.entities.UniRefEntry;
 import org.jbiowhpersistence.datasets.protclust.entities.UniRefMember;
 import org.jbiowhpersistence.datasets.protein.ProteinTables;
+import org.jbiowhpersistence.datasets.protgroup.cog.COGTables;
+import org.jbiowhpersistence.datasets.protgroup.cog.entities.COGOrthologousGroup;
 import org.jbiowhpersistence.datasets.protgroup.pirsf.entities.PirsfhasProtein;
 import org.jbiowhpersistence.datasets.protgroup.pirsf.entities.PirsfhasProteinPK;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
@@ -347,6 +349,14 @@ public class Protein implements Serializable {
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "protein")
     @MapKey(name = "pIRSFhasProteinPK")
     private Map<PirsfhasProteinPK, PirsfhasProtein> pIRSFhasProtein;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = COGTables.COGORTHOLOGOUSGROUP_HAS_GENEINFO,
+            joinColumns
+            = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "COGOrthologousGroup_WID", referencedColumnName = "WID"))
+    @XmlElementWrapper(name = "COGOrthologousGroups")
+    private Set<COGOrthologousGroup> cogOrthologousGroup;
 
     public Protein() {
     }
@@ -375,6 +385,7 @@ public class Protein implements Serializable {
         setUniRefMember(null);
         setPfamAInsignificant(null);
         setPfamASignificant(null);
+        setCogOrthologousGroup(null);
     }
 
     public String getFastaFormat() {
@@ -414,6 +425,15 @@ public class Protein implements Serializable {
             return proteinLongName.iterator().next().getName();
         }
         return null;
+    }
+
+    @XmlTransient
+    public Set<COGOrthologousGroup> getCogOrthologousGroup() {
+        return cogOrthologousGroup;
+    }
+
+    public void setCogOrthologousGroup(Set<COGOrthologousGroup> cogOrthologousGroup) {
+        this.cogOrthologousGroup = cogOrthologousGroup;
     }
 
     @XmlTransient

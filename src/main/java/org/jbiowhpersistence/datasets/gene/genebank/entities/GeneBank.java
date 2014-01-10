@@ -110,7 +110,7 @@ public class GeneBank implements Serializable {
             name = "GeneBankAccession",
             joinColumns =
             @JoinColumn(name = "GeneBank_WID"))
-    private Collection<GeneBankAccession> geneBankAccessions;
+    private Collection<GeneBankAccession> geneBankAccessions;    
     // Internal relationship
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "geneBank")
     private Collection<GeneBankCDS> geneBankCDSs;

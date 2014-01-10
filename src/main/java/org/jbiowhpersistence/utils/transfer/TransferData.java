@@ -44,6 +44,10 @@ import org.jbiowhpersistence.datasets.protclust.transfer.UniRefEntryTransfer;
 import org.jbiowhpersistence.datasets.protclust.transfer.UniRefMemberTransfer;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
 import org.jbiowhpersistence.datasets.protein.transfer.ProteinTransfer;
+import org.jbiowhpersistence.datasets.protgroup.cog.entities.COGOrthologousGroup;
+import org.jbiowhpersistence.datasets.protgroup.cog.transfer.COGTransfer;
+import org.jbiowhpersistence.datasets.protgroup.orthoxml.entities.OrthoXMLGroup;
+import org.jbiowhpersistence.datasets.protgroup.orthoxml.transfer.OrthoXMLTransfer;
 import org.jbiowhpersistence.datasets.protgroup.pirsf.entities.Pirsf;
 import org.jbiowhpersistence.datasets.protgroup.pirsf.transfer.PirsfTransfer;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
@@ -56,6 +60,7 @@ import org.jbiowhpersistence.utils.jparelationship.JpaTransfer;
  *
  * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2013-03-19 09:38:47 +0100
  * (Tue, 19 Mar 2013) $ $LastChangedRevision: 591 $
+ *
  * @since Oct 4, 2012
  */
 public class TransferData {
@@ -121,8 +126,12 @@ public class TransferData {
                 transfer = new GeneBankTransfer(factory);
             } else if (toCompare instanceof GeneBankCDS) {
                 transfer = new GeneBankCDSTransfer(factory);
-            }else if (toCompare instanceof Pirsf) {
+            } else if (toCompare instanceof Pirsf) {
                 transfer = new PirsfTransfer(factory);
+            } else if (toCompare instanceof COGOrthologousGroup) {
+                transfer = new COGTransfer(factory);
+            } else if (toCompare instanceof OrthoXMLGroup) {
+                transfer = new OrthoXMLTransfer(factory);
             }
             if (transfer != null) {
                 transfer.transfer(object);

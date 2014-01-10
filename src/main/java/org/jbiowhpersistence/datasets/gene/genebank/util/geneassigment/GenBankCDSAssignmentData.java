@@ -1,8 +1,9 @@
-package org.jbiowhpersistence.datasets.gene.genebank.util;
+package org.jbiowhpersistence.datasets.gene.genebank.util.geneassigment;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * This class is the GenBankCDS Assignment Data
@@ -17,12 +18,14 @@ public class GenBankCDSAssignmentData {
     private List<Float> bitScore;
     private List<Float> score;
     private List<Double> evalue;
+    private Set<String> source;
 
     public GenBankCDSAssignmentData(Long geneBankCDS_WID) {
         this.geneBankCDS_WID = geneBankCDS_WID;
         bitScore = new LinkedList<Float>();
         score = new LinkedList<Float>();
         evalue = new LinkedList<Double>();
+        source = new TreeSet<String>();
     }
 
     public Long getGeneBankCDS_WID() {
@@ -55,6 +58,14 @@ public class GenBankCDSAssignmentData {
 
     public void setEvalue(List<Double> evalue) {
         this.evalue = evalue;
+    }
+
+    public Set<String> getSource() {
+        return source;
+    }
+
+    public void setSource(Set<String> source) {
+        this.source = source;
     }
 
     @Override

@@ -2,7 +2,6 @@ package org.jbiowhpersistence.datasets.gene.genebank.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
@@ -45,6 +44,8 @@ import org.jbiowhpersistence.datasets.gene.genome.entities.GenePTT;
     @NamedQuery(name = "GeneBankCDS.findByProteinId", query = "SELECT g FROM GeneBankCDS g WHERE g.proteinId = :proteinId"),
     @NamedQuery(name = "GeneBankCDS.findByGene", query = "SELECT g FROM GeneBankCDS g WHERE g.gene = :gene"),
     @NamedQuery(name = "GeneBankCDS.findByLocusTag", query = "SELECT g FROM GeneBankCDS g WHERE g.locusTag = :locusTag"),
+    @NamedQuery(name = "GeneBankCDS.findByLocationFromGeneBankWID", query = "SELECT g FROM GeneBankCDS g INNER JOIN g.geneBankCDSLocation l WHERE g.geneBankWID = :geneBankWID AND ((l.pFrom <= :pFrom AND l.pTo >= :pFrom) OR (l.pFrom <= :pTo AND l.pTo >= :pTo))"),
+    @NamedQuery(name = "GeneBankCDS.findBypFromGeneBankWID", query = "SELECT g FROM GeneBankCDS g INNER JOIN g.geneBankCDSLocation l WHERE g.geneBankWID = :geneBankWID AND l.pFrom = :pFrom"),
     @NamedQuery(name = "GeneBankCDS.findByGeneBankWID", query = "SELECT g FROM GeneBankCDS g WHERE g.geneBankWID = :geneBankWID")})
 public class GeneBankCDS implements Serializable {
 
@@ -79,12 +80,24 @@ public class GeneBankCDS implements Serializable {
             joinColumns
             = @JoinColumn(name = "GeneBankCDS_WID"))
     private Collection<GeneBankCDSDBXref> geneBankCDSDBXrefs;
+    @ElementCollection
+    @CollectionTable(
+            name = "GeneBankCDSLocation",
+            joinColumns
+            = @JoinColumn(name = "GeneBankCDS_WID"))
+    private Collection<GeneBankCDSLocation> geneBankCDSLocation;
     // Internal relationship
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "GeneBank_WID", insertable = false, unique = false, nullable = true, updatable = false)
     @XmlElement
-    @XmlInverseReference(mappedBy="geneBankCDSs")
+    @XmlInverseReference(mappedBy = "geneBankCDSs")
     private GeneBank geneBank;
+    @ElementCollection
+    @CollectionTable(
+            name = "GeneBankCOG",
+            joinColumns
+            = @JoinColumn(name = "GeneBankCDS_WID"))
+    private Collection<GeneBankCOG> geneBankCOG;
     // External relationship
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = GeneBankTables.GENEBANKCDS_HAS_GENEINFO,
@@ -141,12 +154,28 @@ public class GeneBankCDS implements Serializable {
         this.locusTag = locusTag;
     }
 
+    public Collection<GeneBankCOG> getGeneBankCOG() {
+        return geneBankCOG;
+    }
+
+    public void setGeneBankCOG(Collection<GeneBankCOG> geneBankCOG) {
+        this.geneBankCOG = geneBankCOG;
+    }
+
     public Collection<GeneBankCDSDBXref> getGeneBankCDSDBXrefs() {
         return geneBankCDSDBXrefs;
     }
 
     public void setGeneBankCDSDBXrefs(Collection<GeneBankCDSDBXref> geneBankCDSDBXrefs) {
         this.geneBankCDSDBXrefs = geneBankCDSDBXrefs;
+    }
+
+    public Collection<GeneBankCDSLocation> getGeneBankCDSLocation() {
+        return geneBankCDSLocation;
+    }
+
+    public void setGeneBankCDSLocation(Collection<GeneBankCDSLocation> geneBankCDSLocation) {
+        this.geneBankCDSLocation = geneBankCDSLocation;
     }
 
     public GeneBank getGeneBank() {
@@ -224,23 +253,60 @@ public class GeneBankCDS implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (wid != null ? wid.hashCode() : 0);
+        int hash = 7;
+        hash = 53 * hash + (this.wid != null ? this.wid.hashCode() : 0);
+        hash = 53 * hash + this.proteinGi;
+        hash = 53 * hash + (this.location != null ? this.location.hashCode() : 0);
+        hash = 53 * hash + (this.product != null ? this.product.hashCode() : 0);
+        hash = 53 * hash + (this.proteinId != null ? this.proteinId.hashCode() : 0);
+        hash = 53 * hash + (this.gene != null ? this.gene.hashCode() : 0);
+        hash = 53 * hash + (this.locusTag != null ? this.locusTag.hashCode() : 0);
+        hash = 53 * hash + (this.translation != null ? this.translation.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof GeneBankCDS)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        GeneBankCDS other = (GeneBankCDS) object;
-        return (this.wid != null || other.wid == null) && (this.wid == null || this.wid.equals(other.wid));
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final GeneBankCDS other = (GeneBankCDS) obj;
+        if (this.wid != other.wid && (this.wid == null || !this.wid.equals(other.wid))) {
+            return false;
+        }
+        if (this.proteinGi != other.proteinGi) {
+            return false;
+        }
+        if ((this.location == null) ? (other.location != null) : !this.location.equals(other.location)) {
+            return false;
+        }
+        if ((this.product == null) ? (other.product != null) : !this.product.equals(other.product)) {
+            return false;
+        }
+        if ((this.proteinId == null) ? (other.proteinId != null) : !this.proteinId.equals(other.proteinId)) {
+            return false;
+        }
+        if ((this.gene == null) ? (other.gene != null) : !this.gene.equals(other.gene)) {
+            return false;
+        }
+        if ((this.locusTag == null) ? (other.locusTag != null) : !this.locusTag.equals(other.locusTag)) {
+            return false;
+        }
+        return this.translation == other.translation || (this.translation != null && this.translation.equals(other.translation));
     }
 
     @Override
     public String toString() {
         StringBuilder buider = new StringBuilder();
+
+        if (geneBankCDSLocation != null && !geneBankCDSLocation.isEmpty()) {
+            for (GeneBankCDSLocation f : geneBankCDSLocation) {
+                buider.append("\t\t").append(f.toString()).append("\n");
+            }
+        }
 
         if (!geneBankCDSDBXrefs.isEmpty()) {
             buider.append("\n");
@@ -248,6 +314,13 @@ public class GeneBankCDS implements Serializable {
                 buider.append("\t\t").append(f.toString()).append("\n");
             }
         }
+
+        if (geneBankCOG != null && !geneBankCOG.isEmpty()) {
+            for (GeneBankCOG f : geneBankCOG) {
+                buider.append("\t\t").append(f.toString()).append("\n");
+            }
+        }
+
         return "GeneBankCDS{" + "wid=" + wid
                 + ", proteinGi=" + proteinGi
                 + ", location=" + location

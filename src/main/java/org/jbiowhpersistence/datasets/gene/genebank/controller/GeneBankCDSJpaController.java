@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import org.jbiowhcore.logger.VerbLogger;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
 import org.jbiowhpersistence.datasets.gene.genebank.entities.GeneBank;
 import org.jbiowhpersistence.datasets.gene.genebank.entities.GeneBankCDS;
@@ -40,7 +41,7 @@ public class GeneBankCDSJpaController extends AbstractJpaController<GeneBankCDS>
     }
 
     public void create(GeneBankCDS geneBankCDS) throws PreexistingEntityException, Exception {
-        //VerbLogger.getInstance().log(this.getClass(), "Creating " + this.getClass().getSimpleName() + ": " + geneBankCDS.getWid());
+        VerbLogger.getInstance().log(this.getClass(), "Creating " + this.getClass().getSimpleName() + ": " + geneBankCDS.getWid());
         if (geneBankCDS.getGeneInfo() == null) {
             geneBankCDS.setGeneInfo(new HashSet<GeneInfo>());
         }
@@ -91,7 +92,7 @@ public class GeneBankCDSJpaController extends AbstractJpaController<GeneBankCDS>
     }
 
     public void edit(GeneBankCDS geneBankCDS) throws NonexistentEntityException, Exception {
-        //VerbLogger.getInstance().log(this.getClass(), "Editing " + this.getClass().getSimpleName() + ": " + geneBankCDS.getWid());
+        VerbLogger.getInstance().log(this.getClass(), "Editing " + this.getClass().getSimpleName() + ": " + geneBankCDS.getWid());
         EntityManager em = null;
         try {
             em = getEntityManager();
