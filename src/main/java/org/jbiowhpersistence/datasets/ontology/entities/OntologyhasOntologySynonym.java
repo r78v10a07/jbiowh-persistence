@@ -3,6 +3,8 @@ package org.jbiowhpersistence.datasets.ontology.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 /**
  * This class is the Ontology_has_OntologySynonym entity
@@ -27,6 +29,7 @@ public class OntologyhasOntologySynonym implements Serializable {
     protected OntologyhasOntologySynonymPK ontologyhasOntologySynonymPK;
     @ManyToOne
     @JoinColumn(name = "Ontology_WID", insertable = false, unique = false, nullable = true, updatable = false)
+    @XmlInverseReference(mappedBy = "ontology")
     private Ontology ontology;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "OntologySynonym_WID", insertable = false, unique = false, nullable = true, updatable = false)
@@ -43,6 +46,7 @@ public class OntologyhasOntologySynonym implements Serializable {
         this.ontologyhasOntologySynonymPK = new OntologyhasOntologySynonymPK(ontologyWID, ontologySynonymWID, scope);
     }
 
+    @XmlTransient
     public Ontology getOntology() {
         return ontology;
     }

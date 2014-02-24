@@ -206,7 +206,6 @@ public class Pirsf implements Serializable {
                 + ", curationStatus=" + curationStatus
                 + ", name=" + name
                 + ", parent=" + parent
-                + ", dataSetWID=" + dataSetWID + "}\n"
-                /*+ pData.toString()*/;
+                + ", dataSetWID=" + dataSetWID + "}\n" /*+ pData.toString()*/;
     }
 }

@@ -20,7 +20,7 @@ public class GeneBankTables {
     public final String GENEBANKCDSTEMP = "GeneBankCDSTemp";
     public final String GENEBANKFEATURES = "GeneBankFeatures";
     public final String GENEBANKCDSDBXREF = "GeneBankCDSDBXref";
-    public final String GENEBANKCOG = "GeneBankCOG";
+    public static final String GENEBANKCOG = "GeneBankCOG";
     public static final String GENEBANKCDS_HAS_GENEINFO = "GeneBankCDS_has_GeneInfo";
     private static GeneBankTables singleton;
     private static List<String> tables;

@@ -153,6 +153,8 @@
     <class>org.jbiowhpersistence.datasets.protgroup.orthoxml.entities.OrthoXMLSpecie</class>
     <class>org.jbiowhpersistence.datasets.protgroup.orthoxml.entities.OrthoXMLGroupGeneRef</class>
     <class>org.jbiowhpersistence.datasets.protgroup.orthoxml.entities.OrthoXMLSpeciesDatabase</class>
+    <class>org.jbiowhpersistence.datasets.protgroup.ncbiprotclust.entities.ProtClust</class>
+    <class>org.jbiowhpersistence.datasets.protgroup.ncbiprotclust.entities.ProtClustProteins</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.logging.level" value="OFF"/>

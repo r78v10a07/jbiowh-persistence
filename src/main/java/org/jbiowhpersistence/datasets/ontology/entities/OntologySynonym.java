@@ -6,6 +6,7 @@ import java.util.Objects;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 /**
  * This Class is the OntologySynonym entity

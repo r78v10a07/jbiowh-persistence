@@ -21,6 +21,7 @@ public class OntologyToConsider implements Serializable {
     @Basic(optional = false)
     @Column(name = "ToConsiderOntology_WID")
     private long toConsiderOntologyWID;
+    @XmlTransient
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ToConsiderOntology_WID", insertable = false, unique = false, nullable = true, updatable = false)
     private Ontology toConsiderOntology;

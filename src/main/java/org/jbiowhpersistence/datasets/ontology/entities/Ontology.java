@@ -10,8 +10,10 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
+import org.jbiowhpersistence.datasets.protein.ProteinTables;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
 
 /**
@@ -106,10 +108,10 @@ public class Ontology implements Serializable {
             inverseJoinColumns
             = @JoinColumn(name = "OntologySubset_WID", referencedColumnName = "WID"))
     @XmlElementWrapper(name = "OntologySubsets")
-    private Set<OntologySubset> ontologySubset;
-
+    private Set<OntologySubset> ontologySubset; 
+    //@XmlTransient
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ontology")
-    @MapKey(name = "ontologyhasOntologySynonymPK")
+    @MapKey(name = "ontologyhasOntologySynonymPK")    
     private Map<OntologyhasOntologySynonymPK, OntologyhasOntologySynonym> ontologyhasOntologySynonym;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -123,10 +125,14 @@ public class Ontology implements Serializable {
     // External Gene Relationship
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "DataSetWID", referencedColumnName = "WID", insertable = false, unique = false, nullable = false, updatable = false)
-    private DataSet dataSet;
+    private DataSet dataSet;    
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "ontology")
-    private Set<Protein> protein;
+    @XmlElementWrapper(name = "proteins")
+    @XmlTransient
+    private Set<Protein> protein;    
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "ontology")
+    @XmlElementWrapper(name = "geneinfoes")
+    @XmlTransient
     private Collection<GeneInfo> geneInfo;
 
     public Ontology() {
@@ -262,7 +268,7 @@ public class Ontology implements Serializable {
         this.ontologySubset = ontologySubset;
     }
 
-    @XmlTransient
+    //@XmlTransient
     public Map<OntologyhasOntologySynonymPK, OntologyhasOntologySynonym> getOntologyhasOntologySynonym() {
         return ontologyhasOntologySynonym;
     }

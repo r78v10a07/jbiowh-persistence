@@ -21,6 +21,7 @@ public class OntologyIsA implements Serializable {
     @Basic(optional = false)
     @Column(name = "IsAOntology_WID")
     private long isAOntologyWID;
+    @XmlTransient
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "IsAOntology_WID", insertable = false, unique = false, nullable = true, updatable = false)
     private Ontology isAOntology;
@@ -40,7 +41,7 @@ public class OntologyIsA implements Serializable {
         this.isAOntologyWID = isAOntologyWID;
     }
 
-    @XmlTransient
+    @XmlTransient    
     public Ontology getIsAOntology() {
         return isAOntology;
     }

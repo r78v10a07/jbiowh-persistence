@@ -23,6 +23,9 @@ import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
 import org.jbiowhpersistence.datasets.gene.genebank.GeneBankTables;
 import org.jbiowhpersistence.datasets.gene.genome.entities.GenePTT;
+import org.jbiowhpersistence.datasets.protgroup.cog.entities.COGOrthologousGroup;
+import org.jbiowhpersistence.datasets.protgroup.ncbiprotclust.ProtClustTables;
+import org.jbiowhpersistence.datasets.protgroup.ncbiprotclust.entities.ProtClust;
 
 /**
  * This class is the GeneBankCDS entity
@@ -48,7 +51,7 @@ import org.jbiowhpersistence.datasets.gene.genome.entities.GenePTT;
     @NamedQuery(name = "GeneBankCDS.findBypFromGeneBankWID", query = "SELECT g FROM GeneBankCDS g INNER JOIN g.geneBankCDSLocation l WHERE g.geneBankWID = :geneBankWID AND l.pFrom = :pFrom"),
     @NamedQuery(name = "GeneBankCDS.findByGeneBankWID", query = "SELECT g FROM GeneBankCDS g WHERE g.geneBankWID = :geneBankWID")})
 public class GeneBankCDS implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -109,148 +112,180 @@ public class GeneBankCDS implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ProteinGi", insertable = false, unique = false, nullable = true, updatable = false)
     private GenePTT genePTT;
-
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = GeneBankTables.GENEBANKCOG,
+            joinColumns
+            = @JoinColumn(name = "GeneBankCDS_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "COGId", referencedColumnName = "Id"))
+    private Collection<COGOrthologousGroup> cogOrthologousGroup;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = ProtClustTables.PROTCLUSTPROTEINS,
+            joinColumns
+            = @JoinColumn(name = "ProteinGi", referencedColumnName = "ProteinGi"),
+            inverseJoinColumns
+            = @JoinColumn(name = "ProtClust_WID", referencedColumnName = "WID"))
+    private Collection<ProtClust> protClust;
+    
     public GeneBankCDS() {
     }
-
+    
     public GeneBankCDS(Long wid) {
         this.wid = wid;
     }
-
+    
     public GeneBankCDS(Long wid, int proteinGi, String location, long geneBankWID) {
         this.wid = wid;
         this.proteinGi = proteinGi;
         this.location = location;
         this.geneBankWID = geneBankWID;
     }
-
+    
     public void setRelationsToNull() {
         setGeneInfo(null);
         setGenePTT(null);
         setGeneBank(null);
+        setCogOrthologousGroup(null);
+        setProtClust(null);
     }
-
+    
     public Boolean isTranslation() {
         return translation;
     }
-
+    
     public void setTranslation(Boolean translation) {
         this.translation = translation;
     }
-
+    
     public String getGene() {
         return gene;
     }
-
+    
     public void setGene(String gene) {
         this.gene = gene;
     }
-
+    
     public String getLocusTag() {
         return locusTag;
     }
-
+    
     public void setLocusTag(String locusTag) {
         this.locusTag = locusTag;
     }
-
+    
     public Collection<GeneBankCOG> getGeneBankCOG() {
         return geneBankCOG;
     }
-
+    
     public void setGeneBankCOG(Collection<GeneBankCOG> geneBankCOG) {
         this.geneBankCOG = geneBankCOG;
     }
-
+    
+    public Collection<ProtClust> getProtClust() {
+        return protClust;
+    }
+    
+    public void setProtClust(Collection<ProtClust> protClust) {
+        this.protClust = protClust;
+    }
+    
+    public Collection<COGOrthologousGroup> getCogOrthologousGroup() {
+        return cogOrthologousGroup;
+    }
+    
+    public void setCogOrthologousGroup(Collection<COGOrthologousGroup> cogOrthologousGroup) {
+        this.cogOrthologousGroup = cogOrthologousGroup;
+    }
+    
     public Collection<GeneBankCDSDBXref> getGeneBankCDSDBXrefs() {
         return geneBankCDSDBXrefs;
     }
-
+    
     public void setGeneBankCDSDBXrefs(Collection<GeneBankCDSDBXref> geneBankCDSDBXrefs) {
         this.geneBankCDSDBXrefs = geneBankCDSDBXrefs;
     }
-
+    
     public Collection<GeneBankCDSLocation> getGeneBankCDSLocation() {
         return geneBankCDSLocation;
     }
-
+    
     public void setGeneBankCDSLocation(Collection<GeneBankCDSLocation> geneBankCDSLocation) {
         this.geneBankCDSLocation = geneBankCDSLocation;
     }
-
+    
     public GeneBank getGeneBank() {
         return geneBank;
     }
-
+    
     public void setGeneBank(GeneBank geneBank) {
         this.geneBank = geneBank;
     }
-
+    
     @XmlTransient
     public Collection<GeneInfo> getGeneInfo() {
         return geneInfo;
     }
-
+    
     public void setGeneInfo(Collection<GeneInfo> geneInfo) {
         this.geneInfo = geneInfo;
     }
-
+    
     public GenePTT getGenePTT() {
         return genePTT;
     }
-
+    
     public void setGenePTT(GenePTT genePTT) {
         this.genePTT = genePTT;
     }
-
+    
     public Long getWid() {
         return wid;
     }
-
+    
     public void setWid(Long wid) {
         this.wid = wid;
     }
-
+    
     public int getProteinGi() {
         return proteinGi;
     }
-
+    
     public void setProteinGi(int proteinGi) {
         this.proteinGi = proteinGi;
     }
-
+    
     public String getLocation() {
         return location;
     }
-
+    
     public void setLocation(String location) {
         this.location = location;
     }
-
+    
     public String getProduct() {
         return product;
     }
-
+    
     public void setProduct(String product) {
         this.product = product;
     }
-
+    
     public String getProteinId() {
         return proteinId;
     }
-
+    
     public void setProteinId(String proteinId) {
         this.proteinId = proteinId;
     }
-
+    
     public long getGeneBankWID() {
         return geneBankWID;
     }
-
+    
     public void setGeneBankWID(long geneBankWID) {
         this.geneBankWID = geneBankWID;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -264,7 +299,7 @@ public class GeneBankCDS implements Serializable {
         hash = 53 * hash + (this.translation != null ? this.translation.hashCode() : 0);
         return hash;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -297,30 +332,30 @@ public class GeneBankCDS implements Serializable {
         }
         return this.translation == other.translation || (this.translation != null && this.translation.equals(other.translation));
     }
-
+    
     @Override
     public String toString() {
         StringBuilder buider = new StringBuilder();
-
+        
         if (geneBankCDSLocation != null && !geneBankCDSLocation.isEmpty()) {
             for (GeneBankCDSLocation f : geneBankCDSLocation) {
                 buider.append("\t\t").append(f.toString()).append("\n");
             }
         }
-
+        
         if (!geneBankCDSDBXrefs.isEmpty()) {
             buider.append("\n");
             for (GeneBankCDSDBXref f : geneBankCDSDBXrefs) {
                 buider.append("\t\t").append(f.toString()).append("\n");
             }
         }
-
+        
         if (geneBankCOG != null && !geneBankCOG.isEmpty()) {
             for (GeneBankCOG f : geneBankCOG) {
                 buider.append("\t\t").append(f.toString()).append("\n");
             }
         }
-
+        
         return "GeneBankCDS{" + "wid=" + wid
                 + ", proteinGi=" + proteinGi
                 + ", location=" + location

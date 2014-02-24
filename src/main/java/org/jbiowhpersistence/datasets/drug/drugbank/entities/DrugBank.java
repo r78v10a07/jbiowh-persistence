@@ -290,6 +290,7 @@ public class DrugBank implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "DataSet_WID", referencedColumnName = "WID", insertable = false, unique = false, nullable = false, updatable = false)
     private DataSet dataSet;
+    @XmlTransient
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_DRUGBANK,
             joinColumns
@@ -297,6 +298,7 @@ public class DrugBank implements Serializable {
             inverseJoinColumns
             = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"))
     private Set<Protein> protein;
+    @XmlTransient
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_DRUGBANKASENZYME,
             joinColumns
@@ -304,6 +306,7 @@ public class DrugBank implements Serializable {
             inverseJoinColumns
             = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"))
     private Set<Protein> proteinAsEnzyme;
+    @XmlTransient
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_DRUGBANKASTRANSPORTERS,
             joinColumns
@@ -311,6 +314,7 @@ public class DrugBank implements Serializable {
             inverseJoinColumns
             = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"))
     private Set<Protein> proteinAsTransporters;
+    @XmlTransient
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_DRUGBANKASCARRIERS,
             joinColumns
@@ -318,6 +322,7 @@ public class DrugBank implements Serializable {
             inverseJoinColumns
             = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"))
     private Set<Protein> proteinAsCarriers;
+    @XmlTransient
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = KEGGTables.KEGGCOMPOUND_HAS_DRUGBANK,
             joinColumns
@@ -756,7 +761,7 @@ public class DrugBank implements Serializable {
         this.dataSet = dataSet;
     }
 
-    @XmlTransient
+    @XmlTransient    
     public Set<Protein> getProtein() {
         return protein;
     }
@@ -765,7 +770,7 @@ public class DrugBank implements Serializable {
         this.protein = protein;
     }
 
-    @XmlTransient
+    @XmlTransient    
     public Set<Protein> getProteinAsEnzyme() {
         return proteinAsEnzyme;
     }
@@ -774,7 +779,7 @@ public class DrugBank implements Serializable {
         this.proteinAsEnzyme = proteinAsEnzyme;
     }
 
-    @XmlTransient
+    @XmlTransient    
     public Set<Protein> getProteinAsTransporters() {
         return proteinAsTransporters;
     }
@@ -783,7 +788,7 @@ public class DrugBank implements Serializable {
         this.proteinAsTransporters = proteinAsTransporters;
     }
 
-    @XmlTransient
+    @XmlTransient    
     public Set<Protein> getProteinAsCarriers() {
         return proteinAsCarriers;
     }
@@ -792,7 +797,7 @@ public class DrugBank implements Serializable {
         this.proteinAsCarriers = proteinAsCarriers;
     }
 
-    @XmlTransient
+    @XmlTransient    
     public Set<KEGGCompound> getkEGGCompounds() {
         return kEGGCompounds;
     }

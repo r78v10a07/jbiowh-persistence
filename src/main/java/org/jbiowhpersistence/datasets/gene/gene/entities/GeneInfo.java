@@ -23,6 +23,8 @@ import org.jbiowhpersistence.datasets.protein.ProteinTables;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
 import org.jbiowhpersistence.datasets.protgroup.cog.COGTables;
 import org.jbiowhpersistence.datasets.protgroup.cog.entities.COGOrthologousGroup;
+import org.jbiowhpersistence.datasets.protgroup.ncbiprotclust.ProtClustTables;
+import org.jbiowhpersistence.datasets.protgroup.ncbiprotclust.entities.ProtClust;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
 
 /**
@@ -112,6 +114,7 @@ public class GeneInfo implements Serializable {
     @XmlInverseReference(mappedBy = "geneInfo")
     @XmlElementWrapper(name = "GeneRNTs")
     private Set<GeneRNT> geneRNT;
+    @XmlTransient
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = GeneTables.GENEINFO_HAS_ONTOLOGY,
             joinColumns
@@ -120,6 +123,7 @@ public class GeneInfo implements Serializable {
             = @JoinColumn(name = "Ontology_WID", referencedColumnName = "WID"))
     @XmlElementWrapper(name = "Ontologies")
     private Set<Ontology> ontology;
+    @XmlTransient    
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_GENEINFO,
             joinColumns
@@ -127,6 +131,7 @@ public class GeneInfo implements Serializable {
             inverseJoinColumns
             = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"))
     private Set<Protein> protein;
+    @XmlTransient    
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = GeneTables.GENEINFO_HAS_KEGGGENE,
             joinColumns
@@ -134,6 +139,7 @@ public class GeneInfo implements Serializable {
             inverseJoinColumns
             = @JoinColumn(name = "KEGGGene_WID", referencedColumnName = "WID"))
     private Set<KEGGGene> kEGGGenes;
+    @XmlTransient    
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = KEGGTables.KEGGPATHWAY_HAS_GENEINFO,
             joinColumns
@@ -141,6 +147,7 @@ public class GeneInfo implements Serializable {
             inverseJoinColumns
             = @JoinColumn(name = "KEGGPathway_WID", referencedColumnName = "WID"))
     private Set<KEGGPathway> kEGGPathways;
+    @XmlTransient    
     @ManyToMany
     @JoinTable(name = GeneTables.GENEINFO_HAS_OMIM,
             joinColumns
@@ -149,6 +156,7 @@ public class GeneInfo implements Serializable {
             = @JoinColumn(name = "OMIM_WID", referencedColumnName = "WID"))
     @XmlElementWrapper(name = "OMIMs")
     private Set<OMIM> omim;
+    @XmlTransient    
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = COGTables.COGORTHOLOGOUSGROUP_HAS_GENEINFO,
             joinColumns
@@ -157,6 +165,14 @@ public class GeneInfo implements Serializable {
             = @JoinColumn(name = "COGOrthologousGroup_WID", referencedColumnName = "WID"))
     @XmlElementWrapper(name = "COGOrthologousGroups")
     private Set<COGOrthologousGroup> cogOrthologousGroup;
+    @XmlTransient    
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = ProtClustTables.PROTCLUST_HAS_GENEINFO,
+            joinColumns
+            = @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"),
+            inverseJoinColumns
+            = @JoinColumn(name = "ProtClust_WID", referencedColumnName = "WID"))
+    private Collection<ProtClust> protClust;
     // Internal Gene relationship        
 
     @ElementCollection
@@ -250,9 +266,19 @@ public class GeneInfo implements Serializable {
         setkEGGPathways(null);
         setOmim(null);
         setCogOrthologousGroup(null);
+        setProtClust(null);
     }
     
-    @XmlTransient
+    @XmlTransient    
+    public Collection<ProtClust> getProtClust() {
+        return protClust;
+    }
+    
+    public void setProtClust(Collection<ProtClust> protClust) {
+        this.protClust = protClust;
+    }
+    
+    @XmlTransient    
     public Set<COGOrthologousGroup> getCogOrthologousGroup() {
         return cogOrthologousGroup;
     }
@@ -397,6 +423,7 @@ public class GeneInfo implements Serializable {
         this.taxonomy = taxonomy;
     }
     
+    @XmlTransient    
     public GenePTT getGenePTT() {
         return genePTT;
     }
@@ -405,6 +432,7 @@ public class GeneInfo implements Serializable {
         this.genePTT = genePTT;
     }
     
+    @XmlTransient    
     public Set<GeneRNT> getGeneRNT() {
         return geneRNT;
     }
@@ -413,6 +441,7 @@ public class GeneInfo implements Serializable {
         this.geneRNT = geneRNT;
     }
     
+    @XmlTransient    
     public Set<Ontology> getOntology() {
         return ontology;
     }
@@ -421,7 +450,7 @@ public class GeneInfo implements Serializable {
         this.ontology = ontology;
     }
     
-    @XmlTransient
+    @XmlTransient    
     public Set<Protein> getProtein() {
         return protein;
     }
@@ -430,7 +459,7 @@ public class GeneInfo implements Serializable {
         this.protein = protein;
     }
     
-    @XmlTransient
+    @XmlTransient    
     public Set<KEGGGene> getkEGGGenes() {
         return kEGGGenes;
     }
@@ -439,7 +468,7 @@ public class GeneInfo implements Serializable {
         this.kEGGGenes = kEGGGenes;
     }
     
-    @XmlTransient
+    @XmlTransient    
     public Set<KEGGPathway> getkEGGPathways() {
         return kEGGPathways;
     }
@@ -448,6 +477,7 @@ public class GeneInfo implements Serializable {
         this.kEGGPathways = kEGGPathways;
     }
     
+    @XmlTransient    
     public Set<OMIM> getOmim() {
         return omim;
     }
@@ -464,7 +494,6 @@ public class GeneInfo implements Serializable {
         this.gene2Ensembl = gene2Ensembl;
     }
     
-    @XmlTransient
     public Collection<GeneInfoSynonyms> getGeneInfoSynonym() {
         return geneInfoSynonym;
     }
