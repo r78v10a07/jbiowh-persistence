@@ -114,6 +114,7 @@ public class OMIM implements Serializable {
      * External links
      *
      */
+    @XmlTransient
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = GeneTables.GENEINFO_HAS_OMIM,
             joinColumns

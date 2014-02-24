@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -30,6 +31,8 @@ import org.jbiowhpersistence.datasets.gene.genebank.controller.GeneBankCDSJpaCon
 import org.jbiowhpersistence.datasets.gene.genebank.controller.GeneBankJpaController;
 import org.jbiowhpersistence.datasets.gene.genebank.entities.GeneBank;
 import org.jbiowhpersistence.datasets.gene.genebank.entities.GeneBankCDS;
+import org.jbiowhpersistence.datasets.protgroup.cog.entities.COGOrthologousGroup;
+import org.jbiowhpersistence.datasets.protgroup.ncbiprotclust.entities.ProtClust;
 import org.jbiowhpersistence.utils.entitymanager.JBioWHPersistence;
 
 /**
@@ -69,6 +72,76 @@ public class GenBankCDSAssignment {
      */
     public Set<Long> getMissingGi() {
         return missingGi;
+    }
+
+    public List<GeneBank> getLocusByTaxId(int taxId) {
+        List<GeneBank> genBanks = new ArrayList();
+
+        for (Long genBank_WID : getGenBankWIDMap().keySet()) {
+            GeneBank g = JBioWHPersistence.getInstance().createEntityManager().find(GeneBank.class, genBank_WID);
+            if (g.getTaxId() == taxId) {
+                genBanks.add(g);
+            }
+        }
+        return genBanks;
+    }
+
+    public List<GeneBankCDS> getCDSByTaxId(int taxId) {
+        List<GeneBankCDS> genBankCDSs = new ArrayList();
+
+        for (Long genBank_WID : getGenBankWIDMap().keySet()) {
+            GeneBank g = JBioWHPersistence.getInstance().createEntityManager().find(GeneBank.class, genBank_WID);
+            if (g.getTaxId() == taxId) {
+                for (GenBankCDSAssignmentData assData : getGenBankWIDMap().get(genBank_WID)) {
+                    genBankCDSs.add(JBioWHPersistence.getInstance().createEntityManager().find(GeneBankCDS.class, assData.getGeneBankCDS_WID()));
+                }
+            }
+        }
+        return genBankCDSs;
+    }
+
+    public List<COGOrthologousGroup> getCOGByTaxId(int taxId) {
+        List<COGOrthologousGroup> cogGroups = new ArrayList();
+
+        for (Long genBank_WID : getGenBankWIDMap().keySet()) {
+            GeneBank g = JBioWHPersistence.getInstance().createEntityManager().find(GeneBank.class, genBank_WID);
+            if (g.getTaxId() == taxId) {
+                for (GenBankCDSAssignmentData assData : getGenBankWIDMap().get(genBank_WID)) {
+                    GeneBankCDS c = JBioWHPersistence.getInstance().createEntityManager().find(GeneBankCDS.class, assData.getGeneBankCDS_WID());
+                    if (c.getCogOrthologousGroup() != null) {
+                        for (COGOrthologousGroup o : c.getCogOrthologousGroup()) {
+                            cogGroups.add(o);
+                        }
+                    }
+                }
+            }
+        }
+        return cogGroups;
+    }
+
+    public List<ProtClust> getProtClustByTaxId(int taxId) {
+        List<ProtClust> protClust = new ArrayList();
+
+        for (Long genBank_WID : getGenBankWIDMap().keySet()) {
+            GeneBank g = JBioWHPersistence.getInstance().createEntityManager().find(GeneBank.class, genBank_WID);
+            if (g.getTaxId() == taxId) {
+                for (GenBankCDSAssignmentData assData : getGenBankWIDMap().get(genBank_WID)) {
+                    GeneBankCDS c = JBioWHPersistence.getInstance().createEntityManager().find(GeneBankCDS.class, assData.getGeneBankCDS_WID());
+                    if (c.getProtClust() != null) {
+                        if (c.getGeneInfo() != null) {
+                            for (GeneInfo gene : c.getGeneInfo()) {
+                                if (gene.getProtClust() != null) {
+                                    for (ProtClust p : gene.getProtClust()) {
+                                        protClust.add(p);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return protClust;
     }
 
     /**

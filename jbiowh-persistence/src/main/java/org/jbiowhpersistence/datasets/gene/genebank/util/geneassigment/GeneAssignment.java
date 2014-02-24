@@ -17,9 +17,12 @@ import java.util.TreeSet;
 import javax.xml.bind.JAXBException;
 import org.jbiowhcore.logger.VerbLogger;
 import org.jbiowhcore.utility.utils.JBioWHMessage;
+import org.jbiowhpersistence.datasets.gene.gene.entities.GeneInfo;
 import org.jbiowhpersistence.datasets.gene.genebank.entities.GeneBank;
 import org.jbiowhpersistence.datasets.gene.genebank.entities.GeneBankCDS;
 import org.jbiowhpersistence.datasets.gene.genebank.entities.GeneBankCDSLocation;
+import org.jbiowhpersistence.datasets.gene.genebank.entities.GeneBankCOG;
+import org.jbiowhpersistence.datasets.protgroup.ncbiprotclust.entities.ProtClust;
 import org.jbiowhpersistence.utils.entitymanager.JBioWHPersistence;
 
 /**
@@ -211,9 +214,11 @@ public class GeneAssignment {
             for (GenBankCDSAssignmentData assData : genBankCDSAssignment.getGenBankWIDMap().get(geneBank_WID)) {
                 GeneBankCDS c = JBioWHPersistence.getInstance().createEntityManager().find(GeneBankCDS.class, assData.getGeneBankCDS_WID());
                 GeneBankCDSLocation loc = c.getGeneBankCDSLocation().iterator().next();
-                String COG = "";
-                if (c.getGeneBankCOG() != null && !c.getGeneBankCOG().isEmpty()) {
-                    COG = c.getGeneBankCOG().iterator().next().getCogId();
+                StringBuilder COG = new StringBuilder("");
+                if (c.getGeneBankCOG() != null) {
+                    for (GeneBankCOG cog : c.getGeneBankCOG()) {
+                        COG.append(cog.getCogId()).append(",");
+                    }
                 }
                 String locus = "";
                 if (c.getLocusTag() != null) {
@@ -223,6 +228,16 @@ public class GeneAssignment {
                 if (c.getProteinId() != null) {
                     prot = c.getProteinId();
                 }
+                StringBuilder ncbiProtClust = new StringBuilder("");
+                if (c.getGeneInfo() != null) {
+                    for (GeneInfo gene : c.getGeneInfo()) {
+                        if (gene.getProtClust() != null) {
+                            for (ProtClust p : gene.getProtClust()) {
+                                ncbiProtClust.append(p.getEntry()).append(",");
+                            }
+                        }
+                    }
+                }
                 String line = assData.getSource().iterator().next() + "\t"
                         + g.getLocusName() + "\t"
                         + g.getTaxId() + "\t"
@@ -231,7 +246,8 @@ public class GeneAssignment {
                         + assData.getScore().size() + "\t"
                         + loc.getpFrom().toString() + "\t"
                         + loc.getpTo().toString() + "\t"
-                        + COG;
+                        + COG.toString().replaceAll(",$", "") + "\t"
+                        + ncbiProtClust.toString().replaceAll(",$", "");
                 geneAssignedData.add(new GeneAssignedData(Arrays.asList(line.split("\t"))));
             }
         }
@@ -285,7 +301,7 @@ public class GeneAssignment {
         return genBankCDSAssignment;
     }
 
-    public List<List<Integer>> getTaxResume(int[] indexes, int[] indToSum) {
+    public List<List<Integer>> getTaxResume(int[] indexes, int[] indToSum, int[] indSplit) {
         Map<Integer, SortedMap<Integer, Object>> taxMap = new HashMap();
         List<List<Integer>> taxs = new ArrayList<List<Integer>>();
 
@@ -304,7 +320,18 @@ public class GeneAssignment {
                         }
                         if (!flag) {
                             if (a.getData().size() > indexes[i] && a.getData().get(indexes[i]) != null && !a.getData().get(indexes[i]).isEmpty()) {
-                                ((Set) internal.get(i)).add(a.getData().get(indexes[i]));
+                                boolean flagSplit = false;
+                                for (int j = 0; j < indSplit.length; j++) {
+                                    if (indexes[i] == indSplit[j]) {
+                                        flagSplit = true;
+                                        break;
+                                    }
+                                }
+                                if (!flagSplit) {
+                                    ((Set) internal.get(i)).add(a.getData().get(indexes[i]));
+                                } else {
+                                    ((Set) internal.get(i)).addAll(Arrays.asList(a.getData().get(indexes[i]).split(",")));
+                                }
                             }
                         } else {
                             if (a.getData().size() > indexes[i] && a.getData().get(indexes[i]) != null && !a.getData().get(indexes[i]).isEmpty()) {
@@ -313,7 +340,22 @@ public class GeneAssignment {
                         }
                     } else {
                         if (a.getData().size() > indexes[i] && a.getData().get(indexes[i]) != null && !a.getData().get(indexes[i]).isEmpty()) {
-                            ((Set) internal.get(i)).add(a.getData().get(indexes[i]));
+                            if (indSplit == null) {
+                                ((Set) internal.get(i)).add(a.getData().get(indexes[i]));
+                            } else {
+                                boolean flagSplit = false;
+                                for (int j = 0; j < indSplit.length; j++) {
+                                    if (indexes[i] == indSplit[j]) {
+                                        flagSplit = true;
+                                        break;
+                                    }
+                                }
+                                if (!flagSplit) {
+                                    ((Set) internal.get(i)).add(a.getData().get(indexes[i]));
+                                } else {
+                                    ((Set) internal.get(i)).addAll(Arrays.asList(a.getData().get(indexes[i]).split(",")));
+                                }
+                            }
                         }
                     }
                 }
@@ -331,7 +373,18 @@ public class GeneAssignment {
                         if (!flag) {
                             if (a.getData().size() > indexes[i] && a.getData().get(indexes[i]) != null && !a.getData().get(indexes[i]).isEmpty()) {
                                 Set tree = new TreeSet();
-                                tree.add(a.getData().get(indexes[i]));
+                                boolean flagSplit = false;
+                                for (int j = 0; j < indSplit.length; j++) {
+                                    if (indexes[i] == indSplit[j]) {
+                                        flagSplit = true;
+                                        break;
+                                    }
+                                }
+                                if (!flagSplit) {
+                                    tree.add(a.getData().get(indexes[i]));
+                                } else {
+                                    tree.addAll(Arrays.asList(a.getData().get(indexes[i]).split(",")));
+                                }
                                 internal.put(i, tree);
                             } else {
                                 Set tree = new TreeSet();
@@ -347,11 +400,22 @@ public class GeneAssignment {
                     } else {
                         if (a.getData().size() > indexes[i] && a.getData().get(indexes[i]) != null && !a.getData().get(indexes[i]).isEmpty()) {
                             Set tree = new TreeSet();
-                            tree.add(a.getData().get(indexes[i]));
-                            internal.put(i, tree);
-                        } else {
-                            Set tree = new TreeSet();
-                            tree.add(a.getData().get(indexes[i]));
+                            if (indSplit == null) {
+                                tree.add(a.getData().get(indexes[i]));
+                            } else {
+                                boolean flagSplit = false;
+                                for (int j = 0; j < indSplit.length; j++) {
+                                    if (indexes[i] == indSplit[j]) {
+                                        flagSplit = true;
+                                        break;
+                                    }
+                                }
+                                if (!flagSplit) {
+                                    tree.add(a.getData().get(indexes[i]));
+                                } else {
+                                    tree.addAll(Arrays.asList(a.getData().get(indexes[i]).split(",")));
+                                }
+                            }
                             internal.put(i, tree);
                         }
                     }
@@ -374,9 +438,6 @@ public class GeneAssignment {
                         ts.add(((Integer) o));
                     }
                 }
-
-                System.out.println(ts);
-
                 taxs.add(ts);
             }
         }

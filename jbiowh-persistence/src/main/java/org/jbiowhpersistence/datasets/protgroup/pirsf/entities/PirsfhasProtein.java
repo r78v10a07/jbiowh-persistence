@@ -12,6 +12,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 import org.jbiowhpersistence.datasets.protein.entities.Protein;
 
 /**
@@ -39,9 +40,12 @@ public class PirsfhasProtein implements Serializable {
     private Integer status;
     @Column(name = "Seed")
     private Integer seed;
+    @XmlTransient
     @ManyToOne
     @JoinColumn(name = "PIRSF_WID", insertable = false, unique = false, nullable = true, updatable = false)
+    @XmlInverseReference(mappedBy = "pIRSFhasProtein")
     private Pirsf pirsf;
+    @XmlTransient
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Protein_WID", insertable = false, unique = false, nullable = true, updatable = false)
     private Protein protein;
@@ -57,7 +61,7 @@ public class PirsfhasProtein implements Serializable {
         this.pIRSFhasProteinPK = new PirsfhasProteinPK(pirsfWid, proteinWID);
     }
 
-    @XmlTransient
+    @XmlTransient    
     public Pirsf getPirsf() {
         return pirsf;
     }
@@ -66,7 +70,7 @@ public class PirsfhasProtein implements Serializable {
         this.pirsf = pirsf;
     }
 
-    @XmlTransient
+    @XmlTransient    
     public Protein getProtein() {
         return protein;
     }

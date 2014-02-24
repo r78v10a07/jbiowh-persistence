@@ -24,6 +24,7 @@ public class OntologyRelation implements Serializable {
     @Basic(optional = false)
     @Column(name = "Type")
     private String type;
+    @XmlTransient
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "OtherOntology_WID", insertable = false, unique = false, nullable = true, updatable = false)
     private Ontology otherOntology;

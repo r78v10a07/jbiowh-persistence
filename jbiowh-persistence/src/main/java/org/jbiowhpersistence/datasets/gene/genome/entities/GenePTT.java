@@ -21,6 +21,7 @@ import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
  *
  * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2013-03-19 09:38:47 +0100
  * (Tue, 19 Mar 2013) $ $LastChangedRevision: 591 $
+ *
  * @since Jul 22, 2012
  */
 @Entity
@@ -92,7 +93,8 @@ public class GenePTT implements Serializable {
     // External Gene Relationship
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dataSetWID", referencedColumnName = "WID", insertable = false, unique = false, nullable = false, updatable = false)
-    private DataSet dataSet;    
+    private DataSet dataSet;
+    @XmlTransient
     @OneToOne(cascade = CascadeType.ALL)
     @JoinTable(name = GeneTables.GENEINFO_HAS_GENEPTT,
             joinColumns
@@ -100,16 +102,17 @@ public class GenePTT implements Serializable {
             inverseJoinColumns
             = @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"))
     @XmlElement
-    @XmlInverseReference(mappedBy="genePTT")
+    @XmlInverseReference(mappedBy = "genePTT")
     private GeneInfo geneInfo;
+    @XmlTransient
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "genePTT")
     private Protein protein;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinTable(name = GenePTTTables.GENEPTT_HAS_TAXONOMY,
-            joinColumns =
-            @JoinColumn(name = "GenePTT_ProteinGi", referencedColumnName = "ProteinGi"),
-            inverseJoinColumns =
-            @JoinColumn(name = "Taxonomy_WID", referencedColumnName = "WID"))
+            joinColumns
+            = @JoinColumn(name = "GenePTT_ProteinGi", referencedColumnName = "ProteinGi"),
+            inverseJoinColumns
+            = @JoinColumn(name = "Taxonomy_WID", referencedColumnName = "WID"))
     private Taxonomy taxonomy;
 
     public GenePTT() {
@@ -143,7 +146,7 @@ public class GenePTT implements Serializable {
         this.taxonomy = taxonomy;
     }
 
-    @XmlTransient
+    @XmlTransient    
     public Protein getProtein() {
         return protein;
     }
@@ -164,6 +167,7 @@ public class GenePTT implements Serializable {
         return pFrom;
     }
 
+    @XmlTransient    
     public GeneInfo getGeneInfo() {
         return geneInfo;
     }

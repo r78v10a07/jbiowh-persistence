@@ -249,7 +249,9 @@ public class Protein implements Serializable {
             inverseJoinColumns
             = @JoinColumn(name = "Ontology_WID", referencedColumnName = "WID"))
     @XmlElementWrapper(name = "Ontologies")
+    @XmlTransient
     private Set<Ontology> ontology;
+    @XmlTransient    
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_GENEINFO,
             joinColumns
@@ -257,6 +259,7 @@ public class Protein implements Serializable {
             inverseJoinColumns
             = @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"))
     private Collection<GeneInfo> geneInfo;
+    @XmlTransient    
     @OneToOne(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_GENEPTT,
             joinColumns
@@ -264,6 +267,7 @@ public class Protein implements Serializable {
             inverseJoinColumns
             = @JoinColumn(name = "GenePTT_ProteinGi", referencedColumnName = "ProteinGi"))
     private GenePTT genePTT;
+    @XmlTransient    
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = MIF25Tables.MIFINTERACTION_HAS_PROTEIN,
             joinColumns
@@ -272,8 +276,10 @@ public class Protein implements Serializable {
             = @JoinColumn(name = "MIFEntryInteraction_WID", referencedColumnName = "WID"))
     @XmlElementWrapper(name = "MIFEntryInteractions")
     private Set<MIFEntryInteraction> mIFEntryInteraction;
+    @XmlTransient    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "protein")
     private Set<UniRefMember> uniRefMember;
+    @XmlTransient    
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = UniRefTables.UNIREFENTRY_HAS_PROTEIN,
             joinColumns
@@ -282,6 +288,7 @@ public class Protein implements Serializable {
             = @JoinColumn(name = "UniRefEntry_WID", referencedColumnName = "WID"))
     @XmlElementWrapper(name = "UniRefEntrys")
     private Set<UniRefEntry> uniRefEntry;
+    @XmlTransient    
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_DRUGBANK,
             joinColumns
@@ -290,6 +297,7 @@ public class Protein implements Serializable {
             = @JoinColumn(name = "DrugBank_WID", referencedColumnName = "WID"))
     @XmlElementWrapper(name = "DrugBanks")
     private Set<DrugBank> drugBank;
+    @XmlTransient    
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_DRUGBANKASENZYME,
             joinColumns
@@ -298,6 +306,7 @@ public class Protein implements Serializable {
             = @JoinColumn(name = "DrugBank_WID", referencedColumnName = "WID"))
     @XmlElementWrapper(name = "DrugBankAsEnzymes")
     private Set<DrugBank> drugBankAsEnzyme;
+    @XmlTransient    
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_DRUGBANKASTRANSPORTERS,
             joinColumns
@@ -306,6 +315,7 @@ public class Protein implements Serializable {
             = @JoinColumn(name = "DrugBank_WID", referencedColumnName = "WID"))
     @XmlElementWrapper(name = "DrugBankAsTransporters")
     private Set<DrugBank> drugBankAsTransporters;
+    @XmlTransient    
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_DRUGBANKASCARRIERS,
             joinColumns
@@ -314,6 +324,7 @@ public class Protein implements Serializable {
             = @JoinColumn(name = "DrugBank_WID", referencedColumnName = "WID"))
     @XmlElementWrapper(name = "DrugBankAsCarriers")
     private Set<DrugBank> drugBankAsCarriers;
+    @XmlTransient    
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProteinTables.PROTEIN_HAS_KEGGENZYME,
             joinColumns
@@ -322,6 +333,7 @@ public class Protein implements Serializable {
             = @JoinColumn(name = "KEGGEnzyme_WID", referencedColumnName = "WID"))
     @XmlElementWrapper(name = "KEGGEnzymes")
     private Set<KEGGEnzyme> kEGGEnzymes;
+    @XmlTransient    
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = KEGGTables.KEGGPATHWAY_HAS_PROTEN,
             joinColumns
@@ -330,6 +342,7 @@ public class Protein implements Serializable {
             = @JoinColumn(name = "KEGGPathway_WID", referencedColumnName = "WID"))
     @XmlElementWrapper(name = "KEGGPathways")
     private Set<KEGGPathway> kEGGPathways;
+    @XmlTransient    
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = PFamTables.PFAMAREGFULLINSIGNIFICANT,
             joinColumns
@@ -338,6 +351,7 @@ public class Protein implements Serializable {
             = @JoinColumn(name = "PfamA_WID", referencedColumnName = "WID"))
     @XmlElementWrapper(name = "PfamAInsignificants")
     private Set<PfamAbioWH> pfamAInsignificant;
+    @XmlTransient    
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = PFamTables.PFAMAREGFULLSIGNIFICANT,
             joinColumns
@@ -346,11 +360,13 @@ public class Protein implements Serializable {
             = @JoinColumn(name = "PfamA_WID", referencedColumnName = "WID"))
     @XmlElementWrapper(name = "PfamASignificants")
     private Set<PfamAbioWH> pfamASignificant;
+    @XmlTransient    
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "protein")
     @MapKey(name = "pIRSFhasProteinPK")
     private Map<PirsfhasProteinPK, PirsfhasProtein> pIRSFhasProtein;
+    @XmlTransient    
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = COGTables.COGORTHOLOGOUSGROUP_HAS_GENEINFO,
+    @JoinTable(name = COGTables.COGORTHOLOGOUSGROUP_HAS_PROTEIN,
             joinColumns
             = @JoinColumn(name = "Protein_WID", referencedColumnName = "WID"),
             inverseJoinColumns
@@ -427,7 +443,7 @@ public class Protein implements Serializable {
         return null;
     }
 
-    @XmlTransient
+    @XmlTransient    
     public Set<COGOrthologousGroup> getCogOrthologousGroup() {
         return cogOrthologousGroup;
     }
@@ -436,7 +452,7 @@ public class Protein implements Serializable {
         this.cogOrthologousGroup = cogOrthologousGroup;
     }
 
-    @XmlTransient
+    @XmlTransient    
     public Map<PirsfhasProteinPK, PirsfhasProtein> getpIRSFhasProtein() {
         return pIRSFhasProtein;
     }
@@ -725,6 +741,7 @@ public class Protein implements Serializable {
         this.taxonomyHost = taxonomyHost;
     }
 
+    @XmlTransient    
     public Set<Ontology> getOntology() {
         return ontology;
     }
@@ -733,7 +750,7 @@ public class Protein implements Serializable {
         this.ontology = ontology;
     }
 
-    @XmlTransient
+    @XmlTransient    
     public Collection<GeneInfo> getGeneInfo() {
         return geneInfo;
     }
@@ -742,7 +759,7 @@ public class Protein implements Serializable {
         this.geneInfo = geneInfo;
     }
 
-    @XmlTransient
+    @XmlTransient    
     public GenePTT getGenePTT() {
         return genePTT;
     }
@@ -751,6 +768,7 @@ public class Protein implements Serializable {
         this.genePTT = genePTT;
     }
 
+    @XmlTransient    
     public Set<MIFEntryInteraction> getmIFEntryInteraction() {
         return mIFEntryInteraction;
     }
@@ -759,7 +777,7 @@ public class Protein implements Serializable {
         this.mIFEntryInteraction = mIFEntryInteraction;
     }
 
-    @XmlTransient
+    @XmlTransient    
     public Set<UniRefMember> getUniRefMember() {
         return uniRefMember;
     }
@@ -768,7 +786,7 @@ public class Protein implements Serializable {
         this.uniRefMember = uniRefMember;
     }
 
-    @XmlTransient
+    @XmlTransient    
     public Set<UniRefEntry> getUniRefEntry() {
         return uniRefEntry;
     }
@@ -777,7 +795,7 @@ public class Protein implements Serializable {
         this.uniRefEntry = uniRefEntry;
     }
 
-    @XmlTransient
+    @XmlTransient    
     public Set<DrugBank> getDrugBank() {
         return drugBank;
     }
@@ -786,7 +804,7 @@ public class Protein implements Serializable {
         this.drugBank = drugBank;
     }
 
-    @XmlTransient
+    @XmlTransient    
     public Set<DrugBank> getDrugBankAsEnzyme() {
         return drugBankAsEnzyme;
     }
@@ -795,7 +813,7 @@ public class Protein implements Serializable {
         this.drugBankAsEnzyme = drugBankAsEnzyme;
     }
 
-    @XmlTransient
+    @XmlTransient    
     public Set<DrugBank> getDrugBankAsTransporters() {
         return drugBankAsTransporters;
     }
@@ -804,7 +822,7 @@ public class Protein implements Serializable {
         this.drugBankAsTransporters = drugBankAsTransporters;
     }
 
-    @XmlTransient
+    @XmlTransient    
     public Set<DrugBank> getDrugBankAsCarriers() {
         return drugBankAsCarriers;
     }
@@ -813,7 +831,7 @@ public class Protein implements Serializable {
         this.drugBankAsCarriers = drugBankAsCarriers;
     }
 
-    @XmlTransient
+    @XmlTransient    
     public Set<KEGGEnzyme> getkEGGEnzymes() {
         return kEGGEnzymes;
     }
@@ -822,7 +840,7 @@ public class Protein implements Serializable {
         this.kEGGEnzymes = kEGGEnzymes;
     }
 
-    @XmlTransient
+    @XmlTransient    
     public Set<KEGGPathway> getkEGGPathways() {
         return kEGGPathways;
     }
@@ -831,7 +849,7 @@ public class Protein implements Serializable {
         this.kEGGPathways = kEGGPathways;
     }
 
-    @XmlTransient
+    @XmlTransient    
     public Set<PfamAbioWH> getPfamAInsignificant() {
         return pfamAInsignificant;
     }
@@ -840,7 +858,7 @@ public class Protein implements Serializable {
         this.pfamAInsignificant = pfamAInsignificant;
     }
 
-    @XmlTransient
+    @XmlTransient    
     public Set<PfamAbioWH> getPfamASignificant() {
         return pfamASignificant;
     }

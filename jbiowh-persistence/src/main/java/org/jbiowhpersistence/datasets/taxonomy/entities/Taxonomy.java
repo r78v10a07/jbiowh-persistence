@@ -3,7 +3,6 @@ package org.jbiowhpersistence.datasets.taxonomy.entities;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;

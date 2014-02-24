@@ -80,48 +80,48 @@ public class ProteinComment implements Serializable {
     private Protein protein;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "proteinComment")
     @XmlElement
-    @XmlInverseReference(mappedBy="proteinComment")
-    @XmlElementWrapper( name="ProteinOtherLocations" )
+    @XmlInverseReference(mappedBy = "proteinComment")
+    @XmlElementWrapper(name = "ProteinOtherLocations")
     private Set<ProteinOtherLocation> proteinOtherLocation;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "proteinComment")
     @XmlElement
-    @XmlInverseReference(mappedBy="proteinComment")
-    @XmlElementWrapper( name="ProteinCommentIsoforms" )
+    @XmlInverseReference(mappedBy = "proteinComment")
+    @XmlElementWrapper(name = "ProteinCommentIsoforms")
     private Set<ProteinCommentIsoform> proteinCommentIsoform;
     @ElementCollection
     @CollectionTable(
             name = "ProteinCommentSubCellularLocation",
             joinColumns
             = @JoinColumn(name = "ProteinComment_WID"))
-    @XmlElementWrapper( name="ProteinCommentSubCellularLocations" )
+    @XmlElementWrapper(name = "ProteinCommentSubCellularLocations")
     private Collection<ProteinCommentSubCellularLocation> proteinCommentSubCellularLocation;
     @ElementCollection
     @CollectionTable(
             name = "ProteinCommentConflict",
             joinColumns
             = @JoinColumn(name = "ProteinComment_WID"))
-    @XmlElementWrapper( name="ProteinCommentConflicts" )
+    @XmlElementWrapper(name = "ProteinCommentConflicts")
     private Collection<ProteinCommentConflict> proteinCommentConflict;
     @ElementCollection
     @CollectionTable(
             name = "ProteinCommentLink",
             joinColumns
             = @JoinColumn(name = "ProteinComment_WID"))
-    @XmlElementWrapper( name="ProteinCommentLinks" )
+    @XmlElementWrapper(name = "ProteinCommentLinks")
     private Collection<ProteinCommentLink> proteinCommentLink;
     @ElementCollection
     @CollectionTable(
             name = "ProteinCommentEvent",
             joinColumns
             = @JoinColumn(name = "ProteinComment_WID"))
-    @XmlElementWrapper( name="ProteinCommentEvents" )
+    @XmlElementWrapper(name = "ProteinCommentEvents")
     private Collection<ProteinCommentEvent> proteinCommentEvent;
     @ElementCollection
     @CollectionTable(
             name = "ProteinCommentInteract",
             joinColumns
             = @JoinColumn(name = "ProteinComment_WID"))
-    @XmlElementWrapper( name="ProteinCommentInteracts" )
+    @XmlElementWrapper(name = "ProteinCommentInteracts")
     private Collection<ProteinCommentInteract> proteinCommentInteract;
 
     public ProteinComment() {
@@ -420,26 +420,46 @@ public class ProteinComment implements Serializable {
     public String toString() {
         StringBuilder cData = new StringBuilder();
 
-        for (ProteinOtherLocation p : getProteinOtherLocation()) {
-            cData.append("\t\t").append(p).append("\n");
+        if (getProteinOtherLocation() != null) {
+            for (ProteinOtherLocation p : getProteinOtherLocation()) {
+                cData.append("\t\t").append(p).append("\n");
+            }
         }
-        for (ProteinCommentSubCellularLocation p : getProteinCommentSubCellularLocation()) {
-            cData.append("\t\t").append(p).append("\n");
+
+        if (getProteinCommentSubCellularLocation() != null) {
+            for (ProteinCommentSubCellularLocation p : getProteinCommentSubCellularLocation()) {
+                cData.append("\t\t").append(p).append("\n");
+            }
         }
-        for (ProteinCommentConflict p : getProteinCommentConflict()) {
-            cData.append("\t\t").append(p).append("\n");
+
+        if (getProteinCommentConflict() != null) {
+            for (ProteinCommentConflict p : getProteinCommentConflict()) {
+                cData.append("\t\t").append(p).append("\n");
+            }
         }
-        for (ProteinCommentLink p : getProteinCommentLink()) {
-            cData.append("\t\t").append(p).append("\n");
+
+        if (getProteinCommentLink() != null) {
+            for (ProteinCommentLink p : getProteinCommentLink()) {
+                cData.append("\t\t").append(p).append("\n");
+            }
         }
-        for (ProteinCommentEvent p : getProteinCommentEvent()) {
-            cData.append("\t\t").append(p).append("\n");
+
+        if (getProteinCommentEvent() != null) {
+            for (ProteinCommentEvent p : getProteinCommentEvent()) {
+                cData.append("\t\t").append(p).append("\n");
+            }
         }
-        for (ProteinCommentIsoform p : getProteinCommentIsoform()) {
-            cData.append("\t\t").append(p).append("\n");
+
+        if (getProteinCommentIsoform() != null) {
+            for (ProteinCommentIsoform p : getProteinCommentIsoform()) {
+                cData.append("\t\t").append(p).append("\n");
+            }
         }
-        for (ProteinCommentInteract p : getProteinCommentInteract()) {
-            cData.append("\t\t").append(p).append("\n");
+
+        if (getProteinCommentInteract() != null) {
+            for (ProteinCommentInteract p : getProteinCommentInteract()) {
+                cData.append("\t\t").append(p).append("\n");
+            }
         }
 
         return "ProteinWIDComment{"
