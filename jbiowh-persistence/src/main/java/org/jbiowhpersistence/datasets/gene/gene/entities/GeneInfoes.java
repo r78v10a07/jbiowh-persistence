@@ -32,7 +32,7 @@ public class GeneInfoes {
         return geneInfoes;
     }
 
-    public void setGeneInfoes(List<GeneInfo> proteins) {
-        this.geneInfoes = proteins;
+    public void setGeneInfoes(List<GeneInfo> genePTTs) {
+        this.geneInfoes = genePTTs;
     }
 }
