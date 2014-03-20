@@ -17,6 +17,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
@@ -82,12 +83,14 @@ public class GeneBankCDS implements Serializable {
             name = "GeneBankCDSDBXref",
             joinColumns
             = @JoinColumn(name = "GeneBankCDS_WID"))
-    private Collection<GeneBankCDSDBXref> geneBankCDSDBXrefs;
+    @XmlElementWrapper(name = "geneBankCDSDBXrefs")
+    private Collection<GeneBankCDSDBXref> geneBankCDSDBXref;
     @ElementCollection
     @CollectionTable(
             name = "GeneBankCDSLocation",
             joinColumns
             = @JoinColumn(name = "GeneBankCDS_WID"))
+    @XmlElementWrapper(name = "geneBankCDSLocation")
     private Collection<GeneBankCDSLocation> geneBankCDSLocation;
     // Internal relationship
     @ManyToOne(cascade = CascadeType.ALL)
@@ -100,6 +103,7 @@ public class GeneBankCDS implements Serializable {
             name = "GeneBankCOG",
             joinColumns
             = @JoinColumn(name = "GeneBankCDS_WID"))
+    @XmlElementWrapper(name = "geneBankCOGs")
     private Collection<GeneBankCOG> geneBankCOG;
     // External relationship
     @ManyToMany(cascade = CascadeType.ALL)
@@ -108,9 +112,11 @@ public class GeneBankCDS implements Serializable {
             = @JoinColumn(name = "GeneBankCDS_WID", referencedColumnName = "WID"),
             inverseJoinColumns
             = @JoinColumn(name = "GeneInfo_WID", referencedColumnName = "WID"))
+    @XmlTransient
     private Collection<GeneInfo> geneInfo;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ProteinGi", insertable = false, unique = false, nullable = true, updatable = false)
+    @XmlTransient
     private GenePTT genePTT;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = GeneBankTables.GENEBANKCOG,
@@ -118,6 +124,7 @@ public class GeneBankCDS implements Serializable {
             = @JoinColumn(name = "GeneBankCDS_WID", referencedColumnName = "WID"),
             inverseJoinColumns
             = @JoinColumn(name = "COGId", referencedColumnName = "Id"))
+    @XmlTransient
     private Collection<COGOrthologousGroup> cogOrthologousGroup;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = ProtClustTables.PROTCLUSTPROTEINS,
@@ -125,6 +132,7 @@ public class GeneBankCDS implements Serializable {
             = @JoinColumn(name = "ProteinGi", referencedColumnName = "ProteinGi"),
             inverseJoinColumns
             = @JoinColumn(name = "ProtClust_WID", referencedColumnName = "WID"))
+    @XmlTransient
     private Collection<ProtClust> protClust;
     
     public GeneBankCDS() {
@@ -181,6 +189,7 @@ public class GeneBankCDS implements Serializable {
         this.geneBankCOG = geneBankCOG;
     }
     
+    @XmlTransient
     public Collection<ProtClust> getProtClust() {
         return protClust;
     }
@@ -189,6 +198,7 @@ public class GeneBankCDS implements Serializable {
         this.protClust = protClust;
     }
     
+    @XmlTransient
     public Collection<COGOrthologousGroup> getCogOrthologousGroup() {
         return cogOrthologousGroup;
     }
@@ -197,12 +207,12 @@ public class GeneBankCDS implements Serializable {
         this.cogOrthologousGroup = cogOrthologousGroup;
     }
     
-    public Collection<GeneBankCDSDBXref> getGeneBankCDSDBXrefs() {
-        return geneBankCDSDBXrefs;
+    public Collection<GeneBankCDSDBXref> getGeneBankCDSDBXref() {
+        return geneBankCDSDBXref;
     }
     
-    public void setGeneBankCDSDBXrefs(Collection<GeneBankCDSDBXref> geneBankCDSDBXrefs) {
-        this.geneBankCDSDBXrefs = geneBankCDSDBXrefs;
+    public void setGeneBankCDSDBXref(Collection<GeneBankCDSDBXref> geneBankCDSDBXref) {
+        this.geneBankCDSDBXref = geneBankCDSDBXref;
     }
     
     public Collection<GeneBankCDSLocation> getGeneBankCDSLocation() {
@@ -230,6 +240,7 @@ public class GeneBankCDS implements Serializable {
         this.geneInfo = geneInfo;
     }
     
+    @XmlTransient
     public GenePTT getGenePTT() {
         return genePTT;
     }
@@ -343,9 +354,9 @@ public class GeneBankCDS implements Serializable {
             }
         }
         
-        if (!geneBankCDSDBXrefs.isEmpty()) {
+        if (!geneBankCDSDBXref.isEmpty()) {
             buider.append("\n");
-            for (GeneBankCDSDBXref f : geneBankCDSDBXrefs) {
+            for (GeneBankCDSDBXref f : geneBankCDSDBXref) {
                 buider.append("\t\t").append(f.toString()).append("\n");
             }
         }

@@ -6,15 +6,15 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- * This class is the GeneBankFeatures entity
- *
- * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2013-05-29 11:24:54 +0200
- * (Wed, 29 May 2013) $ $LastChangedRevision: 591 $
+ * This class is the GeneBankFeature entity
+
+ $Author: r78v10a07@gmail.com $ $LastChangedDate: 2013-05-29 11:24:54 +0200
+ (Wed, 29 May 2013) $ $LastChangedRevision: 591 $
  *
  * @since May 2, 2013
  */
 @Embeddable
-public class GeneBankFeatures implements Serializable {
+public class GeneBankFeature implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "KeyName")

@@ -25,7 +25,7 @@ public class SearchGeneBank extends SearchFactory implements JBioWHSearch {
     public final String PROTEINGI = "ProteinGi";
     public final String TAXID = "TaxId";
     public final String LOCUSNAME = "LocusName";
-    public final String DESCRIPTION = "Description";
+    public final String DEFINITION = "Definition";
 
     public SearchGeneBank() {
         HashMap<String, Class> fields = new HashMap();
@@ -33,13 +33,14 @@ public class SearchGeneBank extends SearchFactory implements JBioWHSearch {
         fields.put(PROTEINGI, Long.class);
         fields.put(TAXID, Integer.class);
         fields.put(LOCUSNAME, String.class);
-        fields.put(DESCRIPTION, String.class);
+        fields.put(DEFINITION, String.class);
         setFields(fields);
     }
 
     @Override
     public List search(String search, JPLConstrains constrains)
             throws SQLException {
+        List result;
         List searchList = new ArrayList();
         List searchRow = new ArrayList();
 
@@ -53,11 +54,48 @@ public class SearchGeneBank extends SearchFactory implements JBioWHSearch {
             searchRow.add("=");
             searchRow.add(search);
             searchList.add(searchRow);
+            result = search(searchList, constrains);
+            if (!result.isEmpty()) {
+                return result;
+            }
+
+            searchRow.clear();
+            searchRow.add("");
+            searchRow.add(PROTEINGI);
+            searchRow.add("=");
+            searchRow.add(search);
+            searchList.clear();
+            searchList.add(searchRow);
+            result = search(searchList, constrains);
+            if (!result.isEmpty()) {
+                return result;
+            }
+
+            searchRow.clear();
+            searchRow.add("");
+            searchRow.add(TAXID);
+            searchRow.add("=");
+            searchRow.add(search);
+            searchList.clear();
+            searchList.add(searchRow);
             return search(searchList, constrains);
         } else {
             searchRow.add(LOCUSNAME);
             searchRow.add("like");
             searchRow.add(search);
+            searchList.add(searchRow);
+            result = search(searchList, constrains);
+
+            if (!result.isEmpty()) {
+                return result;
+            }
+
+            searchRow.clear();
+            searchRow.add("");
+            searchRow.add(DEFINITION);
+            searchRow.add("=");
+            searchRow.add(search);
+            searchList.clear();
             searchList.add(searchRow);
             return search(searchList, constrains);
         }
@@ -96,8 +134,8 @@ public class SearchGeneBank extends SearchFactory implements JBioWHSearch {
                 data.put(field, "g.gi");
             } else if (field.equals(LOCUSNAME)) {
                 data.put(field, "g.locusName");
-            } else if (field.equals(DESCRIPTION)) {
-                data.put(field, "g.description");
+            } else if (field.equals(DEFINITION)) {
+                data.put(field, "g.definition");
             } else if (field.equals(TAXID)) {
                 data.put(field, "g.taxId");
             } else if (field.equals(PROTEINGI)) {
@@ -112,7 +150,7 @@ public class SearchGeneBank extends SearchFactory implements JBioWHSearch {
         HashMap<String, String> data = new HashMap();
         for (String field : getFieldsSet()) {
             if (field.equals(PROTEINGI)) {
-                data.put(field, "g.geneBankCDSs");
+                data.put(field, "g.geneBankCDS");
             } else {
                 data.put(field, "");
             }

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.persistence.EntityManagerFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -30,21 +32,24 @@ import org.xml.sax.SAXException;
 /**
  * This Class handled the datasets methods using the persistence
  *
- * $Author$
- * $LastChangedDate$
- * $LastChangedRevision$
+ * $Author$ $LastChangedDate$ $LastChangedRevision$
+ *
  * @since Oct 18, 2013
  */
 public class DataSetPersistence {
 
     private static DataSetPersistence singleton;
-    private DataSet dataSet = null;
-    private boolean droptables = true;
-    private boolean runlinks = true;
+    private DataSet dataSet;
+    private boolean droptables;
+    private boolean runlinks;
     private String tempdir = "/tmp/";
-    private String directory = null;
-    private String xsdfiledef = null;
-    private String type = null;
+    private String directory;
+    private String xsdfiledef;
+    private String type;
+    private String onlineSite;
+    private String onlineUser;
+    private String onlinePasswd;
+    private String onlinePath;
 
     private DataSetPersistence() {
     }
@@ -60,7 +65,7 @@ public class DataSetPersistence {
         }
         return singleton;
     }
-    
+
     /**
      * Read the Data source information from the XML file
      *
@@ -106,7 +111,7 @@ public class DataSetPersistence {
             VerbLogger.getInstance().setLevel(VerbLogger.getInstance().getInitialLevel());
         }
 
-        if (getElement(XMLDRIVER, (Element) nodes.item(0)).contains("mysql")) {            
+        if (getElement(XMLDRIVER, (Element) nodes.item(0)).contains("mysql")) {
             JBioWHPersistence.getInstance().openSchema(new JBioWHUserData(getElement(XMLDRIVER, (Element) nodes.item(0)),
                     getElement(XMLURL, (Element) nodes.item(0)) + getElement(XMLDATABASE, (Element) nodes.item(0)),
                     getElement(XMLDBUSER, (Element) nodes.item(0)),
@@ -213,7 +218,52 @@ public class DataSetPersistence {
         } else {
             insertDataSet();
         }
-    }    
+    }
+
+    /**
+     * Return true is the onlie site is an FTP
+     *
+     * @return true is the onlie site is an FTP
+     */
+    public boolean isonlineFTP() {
+        return directory.startsWith("ftp");
+    }
+
+    /**
+     * Get the Online site
+     *
+     * @return the Online site
+     */
+    public String getOnlineSite() {
+        return onlineSite;
+    }
+
+    /**
+     * Get the online user
+     *
+     * @return the online user
+     */
+    public String getOnlineUser() {
+        return onlineUser;
+    }
+
+    /**
+     * Get the online password
+     *
+     * @return the online password
+     */
+    public String getOnlinePasswd() {
+        return onlinePasswd;
+    }
+
+    /**
+     * Get the online path
+     *
+     * @return the online path
+     */
+    public String getOnlinePath() {
+        return onlinePath;
+    }
 
     /**
      * Return the DataSet object loaded
@@ -251,10 +301,29 @@ public class DataSetPersistence {
         if (File.separator.equals("\\")) {
             dir = dir.replace("\\", "/");
         }
-        if ((new File(dir)).isDirectory() && !dir.endsWith("/")) {
-            directory = dir + "/";
-        } else {
+        if (dir.startsWith("ftp") || dir.startsWith("html")) {
             directory = dir;
+            Pattern p = Pattern.compile("\\w+://(([a-zA-Z_0-9\\.]+):(.*)@)?([a-zA-Z_0-9\\.]+)/([a-zA-Z_0-9\\.\\-/]+)");
+            Matcher m = p.matcher(directory);
+            m.find();
+            onlineSite = m.group(4);
+            if (m.group(2) != null) {
+                onlineUser = m.group(2);
+            } else {
+                onlineUser = "anonymous";
+            }
+            if (m.group(3) != null) {
+                onlinePasswd = m.group(3);
+            }else{
+                onlinePasswd = "";
+            }
+            onlinePath = "/" + m.group(5);
+        } else {
+            if ((new File(dir)).isDirectory() && !dir.endsWith("/")) {
+                directory = dir + "/";
+            } else {
+                directory = dir;
+            }
         }
     }
 
@@ -410,7 +479,7 @@ public class DataSetPersistence {
                 + "Tempdir = " + tempdir + "\n"
                 + "xsdfiledef = " + xsdfiledef + "\n\n";
     }
-        
+
     /**
      * Load all DataSets into a Object[][] object
      *
@@ -450,7 +519,7 @@ public class DataSetPersistence {
         }
         return arrayList;
     }
-    
+
     /**
      * WHDataSet XML Tag Definitions
      */
@@ -471,4 +540,4 @@ public class DataSetPersistence {
     private final String XMLVERBOSE = "verbose";
     private final String XMLDROPTABLES = "droptables";
     private final String XMLRUNLINKS = "runlinks";
- }
+}

@@ -57,7 +57,7 @@ public class GeneBankCDSJpaController extends AbstractJpaController<GeneBankCDS>
                 } else {
                     GeneBankJpaController gController = new GeneBankJpaController(emf);
                     geneBank = geneBankCDS.getGeneBank();
-                    geneBank.setGeneBankCDSs(null);
+                    geneBank.setGeneBankCDS(null);
                     gController.create(geneBank);
                     geneBank = em.getReference(GeneBank.class, geneBank.getWid());
                     geneBankCDS.setGeneBank(geneBank);
@@ -121,11 +121,11 @@ public class GeneBankCDSJpaController extends AbstractJpaController<GeneBankCDS>
             geneBankCDS.setGeneInfo(geneInfoNew);
             geneBankCDS = em.merge(geneBankCDS);
             if (geneBankOld != null && !geneBankOld.equals(geneBankNew)) {
-                geneBankOld.getGeneBankCDSs().remove(geneBankCDS);
+                geneBankOld.getGeneBankCDS().remove(geneBankCDS);
                 geneBankOld = em.merge(geneBankOld);
             }
             if (geneBankNew != null && !geneBankNew.equals(geneBankOld)) {
-                geneBankNew.getGeneBankCDSs().add(geneBankCDS);
+                geneBankNew.getGeneBankCDS().add(geneBankCDS);
                 geneBankNew = em.merge(geneBankNew);
             }
             em.getTransaction().commit();
@@ -159,7 +159,7 @@ public class GeneBankCDSJpaController extends AbstractJpaController<GeneBankCDS>
             }
             GeneBank geneBank = geneBankCDS.getGeneBank();
             if (geneBank != null) {
-                geneBank.getGeneBankCDSs().remove(geneBankCDS);
+                geneBank.getGeneBankCDS().remove(geneBankCDS);
                 geneBank = em.merge(geneBank);
                 geneBankCDS.setGeneBank(null);
             }

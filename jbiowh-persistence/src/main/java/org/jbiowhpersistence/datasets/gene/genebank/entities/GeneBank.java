@@ -20,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
@@ -28,7 +29,8 @@ import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
 /**
  * This class is the GeneBank entity
  *
- * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2013-07-26 09:54:20 +0200 (Fri, 26 Jul 2013) $ $LastChangedRevision: 638 $
+ * $Author: r78v10a07@gmail.com $ $LastChangedDate: 2013-07-26 09:54:20 +0200
+ * (Fri, 26 Jul 2013) $ $LastChangedRevision: 638 $
  *
  * @since May 2, 2013
  */
@@ -49,9 +51,9 @@ import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
     @NamedQuery(name = "GeneBank.findByLocation", query = "SELECT g FROM GeneBank g WHERE g.location = :location"),
     @NamedQuery(name = "GeneBank.findByTaxId", query = "SELECT g FROM GeneBank g WHERE g.taxId = :taxId"),
     @NamedQuery(name = "GeneBank.findByDataSetWID", query = "SELECT g FROM GeneBank g WHERE g.dataSetWID = :dataSetWID"),
-     @NamedQuery(name = "GeneBank.countByFileName", query = "SELECT COUNT(g) FROM GeneBank g WHERE g.fileName = :fileName"),
-    @NamedQuery(name = "GeneBank.findCDSbyGiLocation", query = "SELECT c FROM GeneBank g INNER JOIN g.geneBankCDSs c WHERE g.gi = :gi AND c.location REGEXP :location"),
-    @NamedQuery(name = "GeneBank.findFeaturebyGiLocation", query = "SELECT c FROM GeneBank g INNER JOIN g.geneBankFeatureses c WHERE g.gi = :gi AND c.location REGEXP :location AND c.keyName != 'gene'" )})
+    @NamedQuery(name = "GeneBank.countByFileName", query = "SELECT COUNT(g) FROM GeneBank g WHERE g.fileName = :fileName"),
+    @NamedQuery(name = "GeneBank.findCDSbyGiLocation", query = "SELECT c FROM GeneBank g INNER JOIN g.geneBankCDS c WHERE g.gi = :gi AND c.location REGEXP :location"),
+    @NamedQuery(name = "GeneBank.findFeaturebyGiLocation", query = "SELECT c FROM GeneBank g INNER JOIN g.geneBankFeature c WHERE g.gi = :gi AND c.location REGEXP :location AND c.keyName != 'gene'")})
 public class GeneBank implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -102,18 +104,21 @@ public class GeneBank implements Serializable {
     @ElementCollection
     @CollectionTable(
             name = "GeneBankFeatures",
-            joinColumns =
-            @JoinColumn(name = "GeneBank_WID"))
-    private Collection<GeneBankFeatures> geneBankFeatureses;
+            joinColumns
+            = @JoinColumn(name = "GeneBank_WID"))
+    @XmlElementWrapper(name = "geneBankFeatureses")
+    private Collection<GeneBankFeature> geneBankFeature;
     @ElementCollection
     @CollectionTable(
             name = "GeneBankAccession",
-            joinColumns =
-            @JoinColumn(name = "GeneBank_WID"))
-    private Collection<GeneBankAccession> geneBankAccessions;    
+            joinColumns
+            = @JoinColumn(name = "GeneBank_WID"))
+    @XmlElementWrapper(name = "geneBankAccessions")
+    private Collection<GeneBankAccession> geneBankAccession;
     // Internal relationship
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "geneBank")
-    private Collection<GeneBankCDS> geneBankCDSs;
+    @XmlElementWrapper(name = "geneBankCDSs")
+    private Collection<GeneBankCDS> geneBankCDS;
     // External relationship
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "DataSet_WID", referencedColumnName = "WID", insertable = false, unique = false, nullable = false, updatable = false)
@@ -182,29 +187,29 @@ public class GeneBank implements Serializable {
         this.taxonomy = taxonomy;
     }
 
-    public Collection<GeneBankAccession> getGeneBankAccessions() {
-        return geneBankAccessions;
+    public Collection<GeneBankAccession> getGeneBankAccession() {
+        return geneBankAccession;
     }
 
-    public void setGeneBankAccessions(Collection<GeneBankAccession> geneBankAccessions) {
-        this.geneBankAccessions = geneBankAccessions;
+    public void setGeneBankAccession(Collection<GeneBankAccession> geneBankAccession) {
+        this.geneBankAccession = geneBankAccession;
     }
 
-    public Collection<GeneBankFeatures> getGeneBankFeatureses() {
-        return geneBankFeatureses;
+    public Collection<GeneBankFeature> getGeneBankFeature() {
+        return geneBankFeature;
     }
 
-    public void setGeneBankFeatureses(Collection<GeneBankFeatures> geneBankFeatureses) {
-        this.geneBankFeatureses = geneBankFeatureses;
+    public void setGeneBankFeature(Collection<GeneBankFeature> geneBankFeature) {
+        this.geneBankFeature = geneBankFeature;
     }
 
     @XmlTransient
-    public Collection<GeneBankCDS> getGeneBankCDSs() {
-        return geneBankCDSs;
+    public Collection<GeneBankCDS> getGeneBankCDS() {
+        return geneBankCDS;
     }
 
-    public void setGeneBankCDSs(Collection<GeneBankCDS> geneBankCDSs) {
-        this.geneBankCDSs = geneBankCDSs;
+    public void setGeneBankCDS(Collection<GeneBankCDS> geneBankCDSs) {
+        this.geneBankCDS = geneBankCDSs;
     }
 
     public DataSet getDataSet() {
@@ -334,21 +339,21 @@ public class GeneBank implements Serializable {
     public String toString() {
         StringBuilder buider = new StringBuilder();
 
-        if (!geneBankFeatureses.isEmpty()) {
+        if (!geneBankFeature.isEmpty()) {
             buider.append("\n");
-            for (GeneBankFeatures f : geneBankFeatureses) {
+            for (GeneBankFeature f : geneBankFeature) {
                 buider.append("\t").append(f.toString()).append("\n");
             }
         }
-        if (!geneBankCDSs.isEmpty()) {
+        if (!geneBankCDS.isEmpty()) {
             buider.append("\n");
-            for (GeneBankCDS f : geneBankCDSs) {
+            for (GeneBankCDS f : geneBankCDS) {
                 buider.append("\t").append(f.toString()).append("\n");
             }
         }
-        if (!geneBankAccessions.isEmpty()) {
+        if (!geneBankAccession.isEmpty()) {
             buider.append("\n");
-            for (GeneBankAccession f : geneBankAccessions) {
+            for (GeneBankAccession f : geneBankAccession) {
                 buider.append("\t").append(f.toString()).append("\n");
             }
         }

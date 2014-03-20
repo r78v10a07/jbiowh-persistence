@@ -40,17 +40,17 @@ public class GeneBankJpaController extends AbstractJpaController<GeneBank> imple
     public void create(GeneBank geneBank) throws PreexistingEntityException, Exception {
 
         //VerbLogger.getInstance().log(this.getClass(), "Creating " + this.getClass().getSimpleName() + ": " + geneBank.getWid());
-        if (geneBank.getGeneBankCDSs() == null) {
-            geneBank.setGeneBankCDSs(new HashSet<GeneBankCDS>());
+        if (geneBank.getGeneBankCDS() == null) {
+            geneBank.setGeneBankCDS(new HashSet<GeneBankCDS>());
         }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            if (!geneBank.getGeneBankCDSs().isEmpty()) {
+            if (!geneBank.getGeneBankCDS().isEmpty()) {
                 GeneBankCDSJpaController cController = new GeneBankCDSJpaController(emf);
                 Set<GeneBankCDS> attachedGeneBankCDSs = new HashSet();
-                for (GeneBankCDS geneBankCDSsGeneBankCDSToAttach : geneBank.getGeneBankCDSs()) {
+                for (GeneBankCDS geneBankCDSsGeneBankCDSToAttach : geneBank.getGeneBankCDS()) {
                     GeneBankCDS geneBankCDSsGeneBankCDSToAttachToDB = em.find(geneBankCDSsGeneBankCDSToAttach.getClass(), geneBankCDSsGeneBankCDSToAttach.getWid());
                     if (geneBankCDSsGeneBankCDSToAttachToDB == null) {
                         geneBankCDSsGeneBankCDSToAttachToDB = geneBankCDSsGeneBankCDSToAttach;
@@ -60,7 +60,7 @@ public class GeneBankJpaController extends AbstractJpaController<GeneBank> imple
                     }
                     attachedGeneBankCDSs.add(geneBankCDSsGeneBankCDSToAttachToDB);
                 }
-                geneBank.setGeneBankCDSs(attachedGeneBankCDSs);
+                geneBank.setGeneBankCDS(attachedGeneBankCDSs);
             }
             em.persist(geneBank);
             em.getTransaction().commit();
@@ -78,15 +78,15 @@ public class GeneBankJpaController extends AbstractJpaController<GeneBank> imple
             em = getEntityManager();
             em.getTransaction().begin();
             GeneBank persistentGeneBank = em.find(GeneBank.class, geneBank.getWid());
-            Collection<GeneBankCDS> geneBankCDSsOld = persistentGeneBank.getGeneBankCDSs();
-            Collection<GeneBankCDS> geneBankCDSsNew = geneBank.getGeneBankCDSs();
+            Collection<GeneBankCDS> geneBankCDSsOld = persistentGeneBank.getGeneBankCDS();
+            Collection<GeneBankCDS> geneBankCDSsNew = geneBank.getGeneBankCDS();
             Collection<GeneBankCDS> attachedGeneBankCDSsNew = new HashSet();
             for (GeneBankCDS geneBankCDSsNewGeneBankCDSToAttach : geneBankCDSsNew) {
                 geneBankCDSsNewGeneBankCDSToAttach = em.getReference(geneBankCDSsNewGeneBankCDSToAttach.getClass(), geneBankCDSsNewGeneBankCDSToAttach.getWid());
                 attachedGeneBankCDSsNew.add(geneBankCDSsNewGeneBankCDSToAttach);
             }
             geneBankCDSsNew = attachedGeneBankCDSsNew;
-            geneBank.setGeneBankCDSs(geneBankCDSsNew);
+            geneBank.setGeneBankCDS(geneBankCDSsNew);
             geneBank = em.merge(geneBank);
             for (GeneBankCDS geneBankCDSsOldGeneBankCDS : geneBankCDSsOld) {
                 if (!geneBankCDSsNew.contains(geneBankCDSsOldGeneBankCDS)) {
@@ -100,7 +100,7 @@ public class GeneBankJpaController extends AbstractJpaController<GeneBank> imple
                     geneBankCDSsNewGeneBankCDS.setGeneBank(geneBank);
                     geneBankCDSsNewGeneBankCDS = em.merge(geneBankCDSsNewGeneBankCDS);
                     if (oldGeneBankOfGeneBankCDSsNewGeneBankCDS != null && !oldGeneBankOfGeneBankCDSsNewGeneBankCDS.equals(geneBank)) {
-                        oldGeneBankOfGeneBankCDSsNewGeneBankCDS.getGeneBankCDSs().remove(geneBankCDSsNewGeneBankCDS);
+                        oldGeneBankOfGeneBankCDSsNewGeneBankCDS.getGeneBankCDS().remove(geneBankCDSsNewGeneBankCDS);
                         oldGeneBankOfGeneBankCDSsNewGeneBankCDS = em.merge(oldGeneBankOfGeneBankCDSsNewGeneBankCDS);
                     }
                 }
@@ -134,7 +134,7 @@ public class GeneBankJpaController extends AbstractJpaController<GeneBank> imple
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The geneBank with id " + id + " no longer exists.", enfe);
             }
-            Collection<GeneBankCDS> geneBankCDSs = geneBank.getGeneBankCDSs();
+            Collection<GeneBankCDS> geneBankCDSs = geneBank.getGeneBankCDS();
             for (GeneBankCDS geneBankCDSsGeneBankCDS : geneBankCDSs) {
                 geneBankCDSsGeneBankCDS.setGeneBank(null);
                 geneBankCDSsGeneBankCDS = em.merge(geneBankCDSsGeneBankCDS);

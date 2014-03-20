@@ -518,7 +518,7 @@ public class JBioWHGraph {
      */
     protected void populate(GeneBank o, int varDepth) {
         if (JpaEntitiesSelected.getInstance().getEntities().contains(GeneBankCDS.class)) {
-            populateCollection(o.getGeneBankCDSs(), o, varDepth);
+            populateCollection(o.getGeneBankCDS(), o, varDepth);
         }
     }
 

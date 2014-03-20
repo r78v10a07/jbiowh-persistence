@@ -45,7 +45,7 @@ public class GeneBankTransfer extends JpaTransferBackEnd {
             GeneBank obj = (GeneBank) object;
             if (instance.findGeneBank(obj.getWid()) == null) {
                 if (!JpaEntitiesSelected.getInstance().getEntities().contains(GeneBankCDS.class)) {
-                    obj.setGeneBankCDSs(null);
+                    obj.setGeneBankCDS(null);
                 }
                 instance.create(obj);
             }
