@@ -48,6 +48,7 @@ public class GeneTables {
     public final String GENEINFOWIDSYNONYMSTEMP = "GeneInfoWIDSynonymsTemp";
     public final String GENEREFSEQUNIPROT = "GeneRefseqUniProt";
     public final String MIM2GENE = "mim2gene";
+    public final String MIM2GENEFILE = "mim2gene_medgen";
     public final String GENE2ACCESSIONFILE = "gene2accession";
     public final String GENE2ENSEMBLFILE = "gene2ensembl";
     public final String GENE2GOFILE = "gene2go";

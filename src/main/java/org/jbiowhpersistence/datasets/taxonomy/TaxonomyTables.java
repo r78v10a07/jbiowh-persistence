@@ -30,12 +30,12 @@ public class TaxonomyTables {
     public final String TAXONOMYSYNONYM = "TaxonomySynonym";
     public final String TAXONOMYSYNONYMNAMECLASS = "TaxonomySynonymNameClass";
     public final String TAXONOMYUNPARSECITATION = "TaxonomyUnParseCitation";
-    public final String DIVISIONFILE = "division.dmp";
-    public final String GENCODEFILE = "gencode.dmp";
-    public final String CITATIONSFILE = "citations.dmp";
-    public final String CITTAXFILE = "cittax.tsv";
-    public final String NAMESFILE = "names.dmp";
-    public final String NODESFILE = "nodes.dmp";
+    public static final String DIVISIONFILE = "division.dmp";
+    public static final String GENCODEFILE = "gencode.dmp";
+    public static final String CITATIONSFILE = "citations.dmp";
+    public static final String CITTAXFILE = "cittax.tsv";
+    public static final String NAMESFILE = "names.dmp";
+    public static final String NODESFILE = "nodes.dmp";
     private static TaxonomyTables singleton;
     private static List<String> tables;
 
