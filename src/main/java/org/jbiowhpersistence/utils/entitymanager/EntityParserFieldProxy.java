@@ -27,6 +27,7 @@ import org.jbiowhpersistence.datasets.protein.entities.Protein;
 import org.jbiowhpersistence.datasets.protein.search.SearchProtein;
 import org.jbiowhpersistence.datasets.protein.util.ProteinToFasta;
 import org.jbiowhpersistence.datasets.protgroup.cog.entities.COGOrthologousGroup;
+import org.jbiowhpersistence.datasets.protgroup.ncbiprotclust.entities.ProtClust;
 import org.jbiowhpersistence.datasets.protgroup.orthoxml.entities.OrthoXMLGroup;
 import org.jbiowhpersistence.datasets.protgroup.pirsf.entities.Pirsf;
 import org.jbiowhpersistence.datasets.taxonomy.entities.Taxonomy;
@@ -117,8 +118,68 @@ public class EntityParserFieldProxy {
             return ((COGOrthologousGroup) data).getId();
         } else if (data instanceof OrthoXMLGroup) {
             return ((OrthoXMLGroup) data).getId();
+        } else if (data instanceof ProtClust) {
+            return ((ProtClust) data).getEntry();
         }
         return null;
+    }
+
+    public Class getClassType(String type) {
+        Class toReturn = null;
+        switch (type) {
+            case "Taxonomy":
+                toReturn = Taxonomy.class;
+                break;
+            case "Ontology":
+                toReturn = Ontology.class;
+                break;
+            case "Gene":
+                toReturn = GeneInfo.class;
+                break;
+            case "GenePTT":
+                toReturn = GenePTT.class;
+                break;
+            case "Protein":
+                toReturn = Protein.class;
+                break;
+            case "MIF25":
+                toReturn = MIFEntrySetEntry.class;
+                break;
+            case "UniRef":
+                toReturn = UniRefMember.class;
+                break;
+            case "Drug":
+                toReturn = DrugBank.class;
+                break;
+            case "Pathway":
+                toReturn = KEGGPathway.class;
+                break;
+            case "OMIM":
+                toReturn = OMIM.class;
+                break;
+            case "PFAM":
+                toReturn = PfamAbioWH.class;
+                break;
+            case "GeneBank":
+                toReturn = GeneBank.class;
+                break;
+            case "PIRSF":
+                toReturn = Pirsf.class;
+                break;
+            case "COG":
+                toReturn = COGOrthologousGroup.class;
+                break;
+            case "EggNOG":
+                toReturn = COGOrthologousGroup.class;
+                break;
+            case "OrthoXML":
+                toReturn = OrthoXMLGroup.class;
+                break;
+            case "NCBIProtClust":
+                toReturn = ProtClust.class;
+                break;
+        }
+        return toReturn;
     }
 
     /**
@@ -129,16 +190,16 @@ public class EntityParserFieldProxy {
      */
     public String[] getTxtData(Object data) {
         if (data instanceof Taxonomy) {
-            return new String[]{new Long(((Taxonomy) data).getTaxId()).toString(), ((Taxonomy) data).getTaxonomySynonym()};
+            return new String[]{Long.toString(((Taxonomy) data).getTaxId()), ((Taxonomy) data).getTaxonomySynonym()};
         } else if (data instanceof Ontology) {
             return new String[]{((Ontology) data).getId(), ((Ontology) data).getName()};
         } else if (data instanceof GeneInfo) {
-            return new String[]{new Long(((GeneInfo) data).getGeneID()).toString(), ((GeneInfo) data).getSymbol(), ((GeneInfo) data).getLocusTag()};
+            return new String[]{Long.toString(((GeneInfo) data).getGeneID()), ((GeneInfo) data).getSymbol(), ((GeneInfo) data).getLocusTag()};
         } else if (data instanceof GenePTT) {
-            return new String[]{new Long(((GenePTT) data).getProteinGi()).toString(),
+            return new String[]{((GenePTT) data).getProteinGi().toString(),
                 ((GenePTT) data).getGeneSymbol(), ((GenePTT) data).getCog(),
-                new Long(((GenePTT) data).getPFrom()).toString(),
-                new Long(((GenePTT) data).getPTo()).toString(),
+                Long.toString(((GenePTT) data).getPFrom()),
+                Long.toString(((GenePTT) data).getPTo()),
                 ((GenePTT) data).getPTTFile()};
         } else if (data instanceof Protein) {
             return new String[]{((Protein) data).getProteinNameDirected(), ((Protein) data).getProteinFirstAccessionNumber()};
@@ -163,13 +224,15 @@ public class EntityParserFieldProxy {
         } else if (data instanceof PfamAbioWH) {
             return new String[]{((PfamAbioWH) data).getPfamAacc(), ((PfamAbioWH) data).getPfamAid()};
         } else if (data instanceof GeneBank) {
-            return new String[]{new Long(((GeneBank) data).getGi()).toString(), ((GeneBank) data).getLocusName(), ((GeneBank) data).getLocation()};
+            return new String[]{Integer.toString(((GeneBank) data).getGi()), ((GeneBank) data).getLocusName(), ((GeneBank) data).getLocation()};
         } else if (data instanceof Pirsf) {
             return new String[]{((Pirsf) data).getpIRSFnumber(), ((Pirsf) data).getName(), ((Pirsf) data).getCurationStatus(), ((Pirsf) data).getParent()};
         } else if (data instanceof COGOrthologousGroup) {
             return new String[]{((COGOrthologousGroup) data).getId(), ((COGOrthologousGroup) data).getGroupFunction()};
         } else if (data instanceof OrthoXMLGroup) {
             return new String[]{((OrthoXMLGroup) data).getId()};
+        } else if (data instanceof ProtClust) {
+            return new String[]{((ProtClust) data).getEntry()};
         }
         return null;
     }
@@ -347,6 +410,10 @@ public class EntityParserFieldProxy {
             if (((OrthoXMLGroup) data).getId().equals(field)) {
                 return true;
             }
+        } else if (data instanceof ProtClust) {
+            if (((ProtClust) data).getEntry().equals(field)) {
+                return true;
+            }
         }
         return false;
     }
@@ -396,6 +463,8 @@ public class EntityParserFieldProxy {
             return ((COGOrthologousGroup) data).getWid();
         } else if (data instanceof OrthoXMLGroup) {
             return ((OrthoXMLGroup) data).getWid();
+        } else if (data instanceof ProtClust) {
+            return ((ProtClust) data).getWid();
         }
         return null;
     }
@@ -475,6 +544,9 @@ public class EntityParserFieldProxy {
             buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_RECTANGLE + ";fillColor=#e41117;");
             buider.append(mxConstants.STYLE_FONTCOLOR).append("=white;");
         } else if (data instanceof OrthoXMLGroup) {
+            buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_RECTANGLE + ";fillColor=#e41117;");
+            buider.append(mxConstants.STYLE_FONTCOLOR).append("=white;");
+        } else if (data instanceof ProtClust) {
             buider.append(mxConstants.STYLE_SHAPE).append("=" + mxConstants.SHAPE_RECTANGLE + ";fillColor=#e41117;");
             buider.append(mxConstants.STYLE_FONTCOLOR).append("=white;");
         }

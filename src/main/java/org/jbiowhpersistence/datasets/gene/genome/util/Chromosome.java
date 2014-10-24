@@ -196,7 +196,7 @@ public class Chromosome extends AbstractController {
     /**
      * Create a Chromosome from one its PTT file name
      *
-     * @param parm theHasMap with the parameters
+     * @param parm the HashMap with the parameters
      * @throws java.sql.SQLException
      */
     public void createChromosomeFromParm(HashMap parm) throws SQLException {

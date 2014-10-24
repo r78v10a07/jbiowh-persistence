@@ -27,6 +27,7 @@ import org.jbiowhpersistence.datasets.dataset.entities.DataSet;
     @NamedQuery(name = "Taxonomy.findByWid", query = "SELECT t FROM Taxonomy t WHERE t.wid = :wid"),
     @NamedQuery(name = "Taxonomy.findByTaxId", query = "SELECT t FROM Taxonomy t WHERE t.taxId = :taxId"),
     @NamedQuery(name = "Taxonomy.findByParentTaxId", query = "SELECT t FROM Taxonomy t WHERE t.parentTaxId = :parentTaxId"),
+    @NamedQuery(name = "Taxonomy.findTaxIdByParentTaxIds", query = "SELECT t.taxId FROM Taxonomy t WHERE t.parentTaxId IN :parentTaxId"),
     @NamedQuery(name = "Taxonomy.findByRank", query = "SELECT t FROM Taxonomy t WHERE t.rank = :rank"),
     @NamedQuery(name = "Taxonomy.findByEMBLCode", query = "SELECT t FROM Taxonomy t WHERE t.eMBLCode = :eMBLCode"),
     @NamedQuery(name = "Taxonomy.findByTaxonomyDivisionWID", query = "SELECT t FROM Taxonomy t WHERE t.taxonomyDivisionWID = :taxonomyDivisionWID"),
