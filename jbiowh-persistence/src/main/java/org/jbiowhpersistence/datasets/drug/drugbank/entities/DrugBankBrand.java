@@ -1,6 +1,7 @@
 package org.jbiowhpersistence.datasets.drug.drugbank.entities;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -19,6 +20,8 @@ public class DrugBankBrand implements Serializable {
 
     @Column(name = "Brand")
     private String brand;
+    @Column(name = "Company")
+    private String company;
 
     public DrugBankBrand() {
     }
@@ -35,10 +38,19 @@ public class DrugBankBrand implements Serializable {
         this.brand = brand;
     }
 
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 41 * hash + (this.brand != null ? this.brand.hashCode() : 0);
+        hash = 47 * hash + Objects.hashCode(this.brand);
+        hash = 47 * hash + Objects.hashCode(this.company);
         return hash;
     }
 
@@ -51,11 +63,14 @@ public class DrugBankBrand implements Serializable {
             return false;
         }
         final DrugBankBrand other = (DrugBankBrand) obj;
-        return !((this.brand == null) ? (other.brand != null) : !this.brand.equals(other.brand));
+        if (!Objects.equals(this.brand, other.brand)) {
+            return false;
+        }
+        return Objects.equals(this.company, other.company);
     }
 
     @Override
     public String toString() {
-        return "DrugBankBrand{" + "brand=" + brand + '}';
+        return "DrugBankBrand{" + "brand=" + brand + "company=" + company + '}';
     }
 }

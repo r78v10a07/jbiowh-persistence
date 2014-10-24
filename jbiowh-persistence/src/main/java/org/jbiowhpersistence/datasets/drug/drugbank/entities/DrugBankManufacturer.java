@@ -1,6 +1,7 @@
 package org.jbiowhpersistence.datasets.drug.drugbank.entities;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -20,12 +21,12 @@ public class DrugBankManufacturer implements Serializable {
     @Column(name = "Manufacturer")
     private String manufacturer;
     @Column(name = "Generic")
-    private String generic;
+    private boolean generic;
 
     public DrugBankManufacturer() {
     }
 
-    public DrugBankManufacturer(String manufacturer, String generic) {
+    public DrugBankManufacturer(String manufacturer, boolean generic) {
         this.manufacturer = manufacturer;
         this.generic = generic;
     }
@@ -38,19 +39,19 @@ public class DrugBankManufacturer implements Serializable {
         this.manufacturer = manufacturer;
     }
 
-    public String getGeneric() {
+    public boolean isGeneric() {
         return generic;
     }
 
-    public void setGeneric(String generic) {
+    public void setGeneric(boolean generic) {
         this.generic = generic;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 23 * hash + (this.manufacturer != null ? this.manufacturer.hashCode() : 0);
-        hash = 23 * hash + (this.generic != null ? this.generic.hashCode() : 0);
+        int hash = 7;
+        hash = 31 * hash + Objects.hashCode(this.manufacturer);
+        hash = 31 * hash + (this.generic ? 1 : 0);
         return hash;
     }
 
@@ -63,10 +64,10 @@ public class DrugBankManufacturer implements Serializable {
             return false;
         }
         final DrugBankManufacturer other = (DrugBankManufacturer) obj;
-        if ((this.manufacturer == null) ? (other.manufacturer != null) : !this.manufacturer.equals(other.manufacturer)) {
+        if (!Objects.equals(this.manufacturer, other.manufacturer)) {
             return false;
         }
-        return !((this.generic == null) ? (other.generic != null) : !this.generic.equals(other.generic));
+        return this.generic == other.generic;
     }
 
     @Override

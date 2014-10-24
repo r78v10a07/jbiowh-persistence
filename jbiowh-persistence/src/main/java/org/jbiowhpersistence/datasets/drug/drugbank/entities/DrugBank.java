@@ -32,7 +32,6 @@ import org.jbiowhpersistence.datasets.protein.entities.Protein;
     @NamedQuery(name = "DrugBank.findByCASNumber", query = "SELECT d FROM DrugBank d WHERE d.cASNumber = :cASNumber"),
     @NamedQuery(name = "DrugBank.findByIndication", query = "SELECT d FROM DrugBank d WHERE d.indication like :indication"),
     @NamedQuery(name = "DrugBank.findByType", query = "SELECT d FROM DrugBank d WHERE d.type = :type"),
-    @NamedQuery(name = "DrugBank.findByVersion", query = "SELECT d FROM DrugBank d WHERE d.version = :version"),
     @NamedQuery(name = "DrugBank.findByUpdated", query = "SELECT d FROM DrugBank d WHERE d.updated = :updated"),
     @NamedQuery(name = "DrugBank.findByCreated", query = "SELECT d FROM DrugBank d WHERE d.created = :created"),
     @NamedQuery(name = "DrugBank.findByDataSetWID", query = "SELECT d FROM DrugBank d WHERE d.dataSetWID = :dataSetWID")})
@@ -68,10 +67,7 @@ public class DrugBank implements Serializable {
     private String mechanismOfAction;
     @Lob
     @Column(name = "Toxicity")
-    private String toxicity;
-    @Lob
-    @Column(name = "Biotransformation")
-    private String biotransformation;
+    private String toxicity;    
     @Lob
     @Column(name = "Absorption")
     private String absorption;
@@ -92,8 +88,6 @@ public class DrugBank implements Serializable {
     private String clearance;
     @Column(name = "Type")
     private String type;
-    @Column(name = "Version")
-    private String version;
     @Column(name = "Updated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
@@ -433,14 +427,6 @@ public class DrugBank implements Serializable {
         this.toxicity = toxicity;
     }
 
-    public String getBiotransformation() {
-        return biotransformation;
-    }
-
-    public void setBiotransformation(String biotransformation) {
-        this.biotransformation = biotransformation;
-    }
-
     public String getAbsorption() {
         return absorption;
     }
@@ -495,14 +481,6 @@ public class DrugBank implements Serializable {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
     }
 
     public Date getUpdated() {
@@ -819,14 +797,12 @@ public class DrugBank implements Serializable {
         hash = 73 * hash + (this.pharmacology != null ? this.pharmacology.hashCode() : 0);
         hash = 73 * hash + (this.mechanismOfAction != null ? this.mechanismOfAction.hashCode() : 0);
         hash = 73 * hash + (this.toxicity != null ? this.toxicity.hashCode() : 0);
-        hash = 73 * hash + (this.biotransformation != null ? this.biotransformation.hashCode() : 0);
         hash = 73 * hash + (this.absorption != null ? this.absorption.hashCode() : 0);
         hash = 73 * hash + (this.halfLife != null ? this.halfLife.hashCode() : 0);
         hash = 73 * hash + (this.proteinBinding != null ? this.proteinBinding.hashCode() : 0);
         hash = 73 * hash + (this.volumeOfDistribution != null ? this.volumeOfDistribution.hashCode() : 0);
         hash = 73 * hash + (this.clearance != null ? this.clearance.hashCode() : 0);
         hash = 73 * hash + (this.type != null ? this.type.hashCode() : 0);
-        hash = 73 * hash + (this.version != null ? this.version.hashCode() : 0);
         hash = 73 * hash + (this.updated != null ? this.updated.hashCode() : 0);
         hash = 73 * hash + (this.created != null ? this.created.hashCode() : 0);
         return hash;
@@ -871,9 +847,6 @@ public class DrugBank implements Serializable {
         if ((this.toxicity == null) ? (other.toxicity != null) : !this.toxicity.equals(other.toxicity)) {
             return false;
         }
-        if ((this.biotransformation == null) ? (other.biotransformation != null) : !this.biotransformation.equals(other.biotransformation)) {
-            return false;
-        }
         if ((this.absorption == null) ? (other.absorption != null) : !this.absorption.equals(other.absorption)) {
             return false;
         }
@@ -893,9 +866,6 @@ public class DrugBank implements Serializable {
             return false;
         }
         if ((this.type == null) ? (other.type != null) : !this.type.equals(other.type)) {
-            return false;
-        }
-        if ((this.version == null) ? (other.version != null) : !this.version.equals(other.version)) {
             return false;
         }
         if (this.updated != other.updated && (this.updated == null || !this.updated.equals(other.updated))) {
@@ -1174,7 +1144,6 @@ public class DrugBank implements Serializable {
                 + ", pharmacology=" + pharmacology
                 + ", mechanismOfAction=" + mechanismOfAction
                 + ", toxicity=" + toxicity
-                + ", biotransformation=" + biotransformation
                 + ", absorption=" + absorption
                 + ", halfLife=" + halfLife
                 + ", proteinBinding=" + proteinBinding
@@ -1182,7 +1151,6 @@ public class DrugBank implements Serializable {
                 + ", volumeOfDistribution=" + volumeOfDistribution
                 + ", clearance=" + clearance
                 + ", type=" + type
-                + ", version=" + version
                 + ", updated=" + updated
                 + ", created=" + created
                 + ", dataSetWID=" + dataSetWID + "}\n"
