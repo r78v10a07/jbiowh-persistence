@@ -23,8 +23,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "DrugBankTarget.findAll", query = "SELECT d FROM DrugBankTarget d"),
     @NamedQuery(name = "DrugBankTarget.findByWid", query = "SELECT d FROM DrugBankTarget d WHERE d.wid = :wid"),
     @NamedQuery(name = "DrugBankTarget.findByDrugBankWID", query = "SELECT d FROM DrugBankTarget d WHERE d.drugBankWID = :drugBankWID"),
-    @NamedQuery(name = "DrugBankTarget.findByPartner", query = "SELECT d FROM DrugBankTarget d WHERE d.partner = :partner"),
-    @NamedQuery(name = "DrugBankTarget.findByPosition", query = "SELECT d FROM DrugBankTarget d WHERE d.position = :position"),
+    @NamedQuery(name = "DrugBankTarget.findById", query = "SELECT d FROM DrugBankTarget d WHERE d.id = :id"),
+    @NamedQuery(name = "DrugBankTarget.findByName", query = "SELECT d FROM DrugBankTarget d WHERE d.name = :name"),
     @NamedQuery(name = "DrugBankTarget.findByKnownAction", query = "SELECT d FROM DrugBankTarget d WHERE d.knownAction = :knownAction")})
 public class DrugBankTarget implements Serializable {
 
@@ -37,10 +37,10 @@ public class DrugBankTarget implements Serializable {
     @Column(name = "DrugBank_WID")
     private long drugBankWID;
     @Basic(optional = false)
-    @Column(name = "Partner")
-    private int partner;
-    @Column(name = "Position")
-    private Integer position;
+    @Column(name = "Id")
+    private String id;
+    @Column(name = "Name")
+    private String name;
     @Column(name = "KnownAction")
     private String knownAction;
     @ManyToOne(cascade = CascadeType.ALL)
@@ -60,6 +60,13 @@ public class DrugBankTarget implements Serializable {
             = @JoinColumn(name = "DrugBankTarget_WID"))
     @XmlElementWrapper(name = "DrugBankTargetActions")
     private Collection<DrugBankTargetAction> drugBankTargetAction;
+    @ElementCollection
+    @CollectionTable(
+            name = "DrugBankTargetPolypeptide",
+            joinColumns
+            = @JoinColumn(name = "DrugBankTarget_WID"))
+    @XmlElementWrapper(name = "DrugBankTargetPolypeptides")
+    private Collection<DrugBankTargetPolypeptide> drugBankTargetPolypeptide;
 
     public DrugBankTarget() {
     }
@@ -68,10 +75,9 @@ public class DrugBankTarget implements Serializable {
         this.wid = wid;
     }
 
-    public DrugBankTarget(Long wid, long drugBankWID, int partner) {
+    public DrugBankTarget(Long wid, long drugBankWID) {
         this.wid = wid;
         this.drugBankWID = drugBankWID;
-        this.partner = partner;
     }
 
     public Long getWid() {
@@ -90,28 +96,28 @@ public class DrugBankTarget implements Serializable {
         this.drugBankWID = drugBankWID;
     }
 
-    public int getPartner() {
-        return partner;
-    }
-
-    public void setPartner(int partner) {
-        this.partner = partner;
-    }
-
-    public Integer getPosition() {
-        return position;
-    }
-
-    public void setPosition(Integer position) {
-        this.position = position;
-    }
-
     public String getKnownAction() {
         return knownAction;
     }
 
     public void setKnownAction(String knownAction) {
         this.knownAction = knownAction;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @XmlTransient
@@ -139,6 +145,25 @@ public class DrugBankTarget implements Serializable {
         this.drugBankTargetAction = drugBankTargetAction;
     }
 
+    public Collection<DrugBankTargetPolypeptide> getDrugBankTargetPolypeptide() {
+        return drugBankTargetPolypeptide;
+    }
+
+    public void setDrugBankTargetPolypeptide(Collection<DrugBankTargetPolypeptide> drugBankTargetPolypeptide) {
+        this.drugBankTargetPolypeptide = drugBankTargetPolypeptide;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.wid);
+        hash = 53 * hash + (int) (this.drugBankWID ^ (this.drugBankWID >>> 32));
+        hash = 53 * hash + Objects.hashCode(this.id);
+        hash = 53 * hash + Objects.hashCode(this.name);
+        hash = 53 * hash + Objects.hashCode(this.knownAction);
+        return hash;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -154,20 +179,13 @@ public class DrugBankTarget implements Serializable {
         if (this.drugBankWID != other.drugBankWID) {
             return false;
         }
-        if (this.partner != other.partner) {
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.position, other.position)) {
+        if (!Objects.equals(this.name, other.name)) {
             return false;
         }
         return Objects.equals(this.knownAction, other.knownAction);
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (wid != null ? wid.hashCode() : 0);
-        return hash;
     }
 
     @Override
@@ -186,12 +204,19 @@ public class DrugBankTarget implements Serializable {
             }
         }
 
+        if (drugBankTargetPolypeptide != null) {
+            for (DrugBankTargetPolypeptide r : drugBankTargetPolypeptide) {
+                pData.append("\t").append(r).append("\n");
+            }
+        }
+
         return "DrugBankTarget{"
                 + "wid=" + wid
                 + ", drugBankWID=" + drugBankWID
-                + ", partner=" + partner
-                + ", position=" + position
-                + ", knownAction=" + knownAction + "}\n"
+                + ", id=" + id
+                + ", name=" + name
+                + ", knownAction=" + knownAction
+                + "}\n"
                 + pData;
     }
 }

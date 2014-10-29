@@ -24,8 +24,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "DrugBankCarrier.findAll", query = "SELECT d FROM DrugBankCarrier d"),
     @NamedQuery(name = "DrugBankCarrier.findByWid", query = "SELECT d FROM DrugBankCarrier d WHERE d.wid = :wid"),
     @NamedQuery(name = "DrugBankCarrier.findByDrugBankWID", query = "SELECT d FROM DrugBankCarrier d WHERE d.drugBankWID = :drugBankWID"),
-    @NamedQuery(name = "DrugBankCarrier.findByPartner", query = "SELECT d FROM DrugBankCarrier d WHERE d.partner = :partner"),
-    @NamedQuery(name = "DrugBankCarrier.findByPosition", query = "SELECT d FROM DrugBankCarrier d WHERE d.position = :position")})
+    @NamedQuery(name = "DrugBankCarrier.findById", query = "SELECT d FROM DrugBankCarrier d WHERE d.id = :id"),
+    @NamedQuery(name = "DrugBankCarrier.findByName", query = "SELECT d FROM DrugBankCarrier d WHERE d.name = :name")})
 public class DrugBankCarrier implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,10 +37,10 @@ public class DrugBankCarrier implements Serializable {
     @Column(name = "DrugBank_WID")
     private long drugBankWID;
     @Basic(optional = false)
-    @Column(name = "Partner")
-    private int partner;
-    @Column(name = "Position")
-    private Integer position;
+    @Column(name = "Id")
+    private String id;
+    @Column(name = "Name")
+    private String name;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "DrugBank_WID", insertable = false, unique = false, nullable = true, updatable = false)
     private DrugBank drugBank;
@@ -58,6 +58,13 @@ public class DrugBankCarrier implements Serializable {
             = @JoinColumn(name = "DrugBankCarrier_WID"))
     @XmlElementWrapper(name = "DrugBankCarrierActions")
     private Collection<DrugBankCarrierAction> drugBankCarrierAction;
+    @ElementCollection
+    @CollectionTable(
+            name = "DrugBankCarrierPolypeptide",
+            joinColumns
+            = @JoinColumn(name = "DrugBankCarrier_WID"))
+    @XmlElementWrapper(name = "DrugBankCarrierPolypeptides")
+    private Collection<DrugBankCarrierPolypeptide> drugBankCarrierPolypeptide;
 
     public DrugBankCarrier() {
     }
@@ -66,10 +73,9 @@ public class DrugBankCarrier implements Serializable {
         this.wid = wid;
     }
 
-    public DrugBankCarrier(Long wid, long drugBankWID, int partner) {
+    public DrugBankCarrier(Long wid, long drugBankWID) {
         this.wid = wid;
         this.drugBankWID = drugBankWID;
-        this.partner = partner;
     }
 
     public Collection<DrugBankCarrierRef> getDrugBankCarrierRef() {
@@ -113,20 +119,38 @@ public class DrugBankCarrier implements Serializable {
         this.drugBankWID = drugBankWID;
     }
 
-    public int getPartner() {
-        return partner;
+    public String getId() {
+        return id;
     }
 
-    public void setPartner(int partner) {
-        this.partner = partner;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public Integer getPosition() {
-        return position;
+    public String getName() {
+        return name;
     }
 
-    public void setPosition(Integer position) {
-        this.position = position;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Collection<DrugBankCarrierPolypeptide> getDrugBankCarrierPolypeptide() {
+        return drugBankCarrierPolypeptide;
+    }
+
+    public void setDrugBankCarrierPolypeptide(Collection<DrugBankCarrierPolypeptide> drugBankCarrierPolypeptide) {
+        this.drugBankCarrierPolypeptide = drugBankCarrierPolypeptide;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.wid);
+        hash = 97 * hash + (int) (this.drugBankWID ^ (this.drugBankWID >>> 32));
+        hash = 97 * hash + Objects.hashCode(this.id);
+        hash = 97 * hash + Objects.hashCode(this.name);
+        return hash;
     }
 
     @Override
@@ -144,17 +168,10 @@ public class DrugBankCarrier implements Serializable {
         if (this.drugBankWID != other.drugBankWID) {
             return false;
         }
-        if (this.partner != other.partner) {
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        return Objects.equals(this.position, other.position);
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (wid != null ? wid.hashCode() : 0);
-        return hash;
+        return Objects.equals(this.name, other.name);
     }
 
     @Override
@@ -174,11 +191,18 @@ public class DrugBankCarrier implements Serializable {
             }
         }
 
+        if (drugBankCarrierPolypeptide != null) {
+            for (DrugBankCarrierPolypeptide r : drugBankCarrierPolypeptide) {
+                pData.append("\t").append(r).append("\n");
+            }
+        }
+
         return "DrugBankCarrier{"
                 + "wid=" + wid
                 + ", drugBankWID=" + drugBankWID
-                + ", partner=" + partner
-                + ", position=" + position + "}\n"
+                + ", id=" + id
+                + ", name=" + name
+                + "}\n"
                 + pData;
     }
 }

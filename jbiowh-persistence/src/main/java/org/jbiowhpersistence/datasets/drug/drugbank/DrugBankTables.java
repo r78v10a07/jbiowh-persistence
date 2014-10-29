@@ -24,6 +24,7 @@ public class DrugBankTables {
     public final String DRUGBANKBRANDS = "DrugBankBrand";
     public final String DRUGBANKCALCULATEDPROPERTIES = "DrugBankCalculatedProperty";
     public final String DRUGBANKCARRIERS = "DrugBankCarrier";
+    public final String DRUGBANKCARRIERSPOLYPEPTIDE = "DrugBankCarrierPolypeptide";
     public final String DRUGBANKCARRIERSACTIONS = "DrugBankCarrierAction";
     public final String DRUGBANKCARRIERSREF = "DrugBankCarrierRef";
     public final String DRUGBANKCATEGORIES = "DrugBankCategory";
@@ -32,6 +33,7 @@ public class DrugBankTables {
     public final String DRUGBANKDRUGINTERACTIONS = "DrugBankDrugInteraction";
     public final String DRUGBANKDRUGINTERACTIONSTEMP = "DrugBankDrugInteractionsTemp";
     public final String DRUGBANKENZYMES = "DrugBankEnzyme";
+    public final String DRUGBANKENZYMESPOLYPEPTIDE = "DrugBankEnzymePolypeptide";
     public final String DRUGBANKENZYMESACTIONS = "DrugBankEnzymeAction";
     public final String DRUGBANKENZYMESREF = "DrugBankEnzymeRef";
     public final String DRUGBANKEXPERIMENTALPROPERTIES = "DrugBankExperimentalProperty";
@@ -43,11 +45,6 @@ public class DrugBankTables {
     public final String DRUGBANKMANUFACTURERS = "DrugBankManufacturer";
     public final String DRUGBANKMIXTURES = "DrugBankMixture";
     public final String DRUGBANKPACKAGERS = "DrugBankPackager";
-    public final String DRUGBANKPARTNERS = "DrugBankPartners";
-    public final String DRUGBANKPARTNEREXTERNALIDENTIFIERS = "DrugBankPartnerExternalIdentifiers";
-    public final String DRUGBANKPARTNERPFAM = "DrugBankPartnerPFam";
-    public final String DRUGBANKPARTNERREF = "DrugBankPartnerRef";
-    public final String DRUGBANKPARTNERSYNONYMS = "DrugBankPartnerSynonyms";
     public final String DRUGBANKPATENTS = "DrugBankPatent";
     public final String DRUGBANKPATENTSTEMP = "DrugBankPatentsTemp";
     public final String DRUGBANKPRICES = "DrugBankPrice";
@@ -55,11 +52,13 @@ public class DrugBankTables {
     public final String DRUGBANKSECONDACCESSIONNUMBERS = "DrugBankSecondAccessionNumber";
     public final String DRUGBANKSYNONYMS = "DrugBankSynonym";
     public final String DRUGBANKTARGETS = "DrugBankTarget";
+    public final String DRUGBANKTARGETSPOLYPEPTIDE = "DrugBankTargetPolypeptide";
     public final String DRUGBANKTARGETSACTIONS = "DrugBankTargetAction";
     public final String DRUGBANKTARGETSREF = "DrugBankTargetRef";
     public final String DRUGBANKTAXONOMYSUBSTRUCTURES = "DrugBankTaxonomySubstructure";
     public final String DRUGBANKTAXONOMY = "DrugBankTaxonomy";
     public final String DRUGBANKTRANSPORTERS = "DrugBankTransporter";
+    public final String DRUGBANKTRANSPORTERSPOLYPEPTIDE = "DrugBankTransporterPolypeptide";
     public final String DRUGBANKTRANSPORTERSACTIONS = "DrugBankTransporterAction";
     public final String DRUGBANKTRANSPORTERSREF = "DrugBankTransporterRef";
 
@@ -96,6 +95,7 @@ public class DrugBankTables {
             tables.add(DRUGBANKBRANDS);
             tables.add(DRUGBANKCALCULATEDPROPERTIES);
             tables.add(DRUGBANKCARRIERS);
+            tables.add(DRUGBANKCARRIERSPOLYPEPTIDE);
             tables.add(DRUGBANKCARRIERSACTIONS);
             tables.add(DRUGBANKCARRIERSREF);
             tables.add(DRUGBANKCATEGORIES);
@@ -104,6 +104,7 @@ public class DrugBankTables {
             tables.add(DRUGBANKDRUGINTERACTIONS);
             tables.add(DRUGBANKDRUGINTERACTIONSTEMP);
             tables.add(DRUGBANKENZYMES);
+            tables.add(DRUGBANKENZYMESPOLYPEPTIDE);
             tables.add(DRUGBANKENZYMESACTIONS);
             tables.add(DRUGBANKENZYMESREF);
             tables.add(DRUGBANKEXPERIMENTALPROPERTIES);
@@ -115,11 +116,6 @@ public class DrugBankTables {
             tables.add(DRUGBANKMANUFACTURERS);
             tables.add(DRUGBANKMIXTURES);
             tables.add(DRUGBANKPACKAGERS);
-            tables.add(DRUGBANKPARTNERS);
-            tables.add(DRUGBANKPARTNEREXTERNALIDENTIFIERS);
-            tables.add(DRUGBANKPARTNERPFAM);
-            tables.add(DRUGBANKPARTNERREF);
-            tables.add(DRUGBANKPARTNERSYNONYMS);
             tables.add(DRUGBANKPATENTS);
             tables.add(DRUGBANKPATENTSTEMP);
             tables.add(DRUGBANKPRICES);
@@ -127,11 +123,13 @@ public class DrugBankTables {
             tables.add(DRUGBANKSECONDACCESSIONNUMBERS);
             tables.add(DRUGBANKSYNONYMS);
             tables.add(DRUGBANKTARGETS);
+            tables.add(DRUGBANKTARGETSPOLYPEPTIDE);
             tables.add(DRUGBANKTARGETSACTIONS);
             tables.add(DRUGBANKTARGETSREF);
             tables.add(DRUGBANKTAXONOMY);
             tables.add(DRUGBANKTAXONOMYSUBSTRUCTURES);
             tables.add(DRUGBANKTRANSPORTERS);
+            tables.add(DRUGBANKTRANSPORTERSPOLYPEPTIDE);
             tables.add(DRUGBANKTRANSPORTERSACTIONS);
             tables.add(DRUGBANKTRANSPORTERSREF);
         }
