@@ -4,7 +4,7 @@
 
     <groupId>org</groupId>
     <artifactId>jbiowh-persistence</artifactId>
-    <version>6.1.1</version>
+    <version>6.1.2</version>
     <packaging>jar</packaging>
 
     <name>jbiowh-persistence</name>
@@ -14,7 +14,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>3.2</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
@@ -23,7 +23,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
+                <version>2.5</version>
                 <configuration>
                     <resource>
                         <filtering>true</filtering>
@@ -50,7 +50,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>2.6</version>
+                <version>2.7</version>
                 <executions>
                     <execution>
                         <id>copy-resources-taxonomy</id>
@@ -246,7 +246,7 @@
         <dependency>
             <groupId>org</groupId>
             <artifactId>jbiowh-core</artifactId>
-            <version>6.1.1</version>
+            <version>6.1.2</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.persistence</groupId>

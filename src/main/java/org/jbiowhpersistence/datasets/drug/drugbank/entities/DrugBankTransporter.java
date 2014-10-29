@@ -23,8 +23,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "DrugBankTransporter.findAll", query = "SELECT d FROM DrugBankTransporter d"),
     @NamedQuery(name = "DrugBankTransporter.findByWid", query = "SELECT d FROM DrugBankTransporter d WHERE d.wid = :wid"),
     @NamedQuery(name = "DrugBankTransporter.findByDrugBankWID", query = "SELECT d FROM DrugBankTransporter d WHERE d.drugBankWID = :drugBankWID"),
-    @NamedQuery(name = "DrugBankTransporter.findByPartner", query = "SELECT d FROM DrugBankTransporter d WHERE d.partner = :partner"),
-    @NamedQuery(name = "DrugBankTransporter.findByPosition", query = "SELECT d FROM DrugBankTransporter d WHERE d.position = :position")})
+    @NamedQuery(name = "DrugBankTransporter.findById", query = "SELECT d FROM DrugBankTransporter d WHERE d.id = :id"),
+    @NamedQuery(name = "DrugBankTransporter.findByName", query = "SELECT d FROM DrugBankTransporter d WHERE d.name = :name")})
 public class DrugBankTransporter implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,10 +36,10 @@ public class DrugBankTransporter implements Serializable {
     @Column(name = "DrugBank_WID")
     private long drugBankWID;
     @Basic(optional = false)
-    @Column(name = "Partner")
-    private int partner;
-    @Column(name = "Position")
-    private Integer position;
+    @Column(name = "Id")
+    private String id;
+    @Column(name = "Name")
+    private String name;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "DrugBank_WID", insertable = false, unique = false, nullable = true, updatable = false)
     private DrugBank drugBank;
@@ -57,6 +57,13 @@ public class DrugBankTransporter implements Serializable {
             = @JoinColumn(name = "DrugBankTransporter_WID"))
     @XmlElementWrapper(name = "DrugBankTransporterActions")
     private Collection<DrugBankTransporterAction> drugBankTransporterAction;
+    @ElementCollection
+    @CollectionTable(
+            name = "DrugBankTransporterPolypeptide",
+            joinColumns
+            = @JoinColumn(name = "DrugBankTransporter_WID"))
+    @XmlElementWrapper(name = "DrugBankTransporterPolypeptides")
+    private Collection<DrugBankTransporterPolypeptide> drugBankTransporterPolypeptide;
 
     public DrugBankTransporter() {
     }
@@ -65,10 +72,9 @@ public class DrugBankTransporter implements Serializable {
         this.wid = wid;
     }
 
-    public DrugBankTransporter(Long wid, long drugBankWID, int partner) {
+    public DrugBankTransporter(Long wid, long drugBankWID) {
         this.wid = wid;
         this.drugBankWID = drugBankWID;
-        this.partner = partner;
     }
 
     public Collection<DrugBankTransporterRef> getDrugBankTransporterRef() {
@@ -112,20 +118,38 @@ public class DrugBankTransporter implements Serializable {
         this.drugBankWID = drugBankWID;
     }
 
-    public int getPartner() {
-        return partner;
+    public String getId() {
+        return id;
     }
 
-    public void setPartner(int partner) {
-        this.partner = partner;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public Integer getPosition() {
-        return position;
+    public String getName() {
+        return name;
     }
 
-    public void setPosition(Integer position) {
-        this.position = position;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Collection<DrugBankTransporterPolypeptide> getDrugBankTransporterPolypeptide() {
+        return drugBankTransporterPolypeptide;
+    }
+
+    public void setDrugBankTransporterPolypeptide(Collection<DrugBankTransporterPolypeptide> drugBankTransporterPolypeptide) {
+        this.drugBankTransporterPolypeptide = drugBankTransporterPolypeptide;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 79 * hash + Objects.hashCode(this.wid);
+        hash = 79 * hash + (int) (this.drugBankWID ^ (this.drugBankWID >>> 32));
+        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.name);
+        return hash;
     }
 
     @Override
@@ -143,17 +167,10 @@ public class DrugBankTransporter implements Serializable {
         if (this.drugBankWID != other.drugBankWID) {
             return false;
         }
-        if (this.partner != other.partner) {
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        return Objects.equals(this.position, other.position);
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (wid != null ? wid.hashCode() : 0);
-        return hash;
+        return Objects.equals(this.name, other.name);
     }
 
     @Override
@@ -172,11 +189,18 @@ public class DrugBankTransporter implements Serializable {
             }
         }
 
+        if (drugBankTransporterPolypeptide != null) {
+            for (DrugBankTransporterPolypeptide r : drugBankTransporterPolypeptide) {
+                pData.append("\t").append(r).append("\n");
+            }
+        }
+
         return "DrugBankTransporter{"
                 + "wid=" + wid
                 + ", drugBankWID=" + drugBankWID
-                + ", partner=" + partner
-                + ", position=" + position + "}\n"
+                + ", id=" + id
+                + ", name=" + name
+                + "}\n"
                 + pData;
     }
 }
